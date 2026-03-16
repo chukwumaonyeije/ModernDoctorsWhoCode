@@ -11,6 +11,12 @@ const featuredPost = sortedPosts.find(p => p.data.featured) ?? sortedPosts[0];
 const recentPosts = sortedPosts.filter(p => p.id !== featuredPost?.id).slice(0, 4);
 
 const hexTerms = ['AI', 'MFM', 'LLM', 'API', 'CGM', 'NLP', 'EMR', 'ML', 'ICD', 'CPT', 'FHIR', 'RAG'];
+const stats = [
+  { number: '30+', label: 'Years in Medicine' },
+  { number: '89',  label: 'Articles Published' },
+  { number: 'MFM', label: 'Specialty' },
+  { number: 'AI',  label: 'Powered Tools' },
+];
 ---
 
 <BaseLayout
@@ -25,13 +31,20 @@ const hexTerms = ['AI', 'MFM', 'LLM', 'API', 'CGM', 'NLP', 'EMR', 'ML', 'ICD', '
         <span class="live-dot" style="margin-right: 0.5rem;"></span>
         Physician-Developer Blog
       </p>
-      <h1 style="font-size: 3.25rem; line-height: 1.1; margin-bottom: 1.25rem;">
+      <h1 class="gradient-text" style="font-size: 3.25rem; line-height: 1.1; margin-bottom: 1.25rem;">
         Where Medicine<br />Meets Code
       </h1>
-      <p style="font-size: 1.125rem; color: var(--dwc-muted); margin-bottom: 2rem; line-height: 1.7;">
+      <p style="font-size: 1.125rem; color: var(--dwc-muted); margin-bottom: 1.75rem; line-height: 1.7;">
         I am Chukwuma Onyeije, MD, FACOG. I practice Maternal-Fetal Medicine and build AI tools
         for physicians. This is where I document the work and make the case for doctors who code.
       </p>
+      <!-- Search bar -->
+      <form id="hero-search" style="display: flex; margin-bottom: 1.75rem;">
+        <input type="text" id="hero-q" placeholder="Search articles..."
+          style="flex: 1; background: var(--dwc-card); border: 1px solid var(--dwc-border); border-right: none; border-radius: 8px 0 0 8px; padding: 0.625rem 1rem; font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-white); outline: none;" />
+        <button type="submit"
+          style="background: var(--dwc-blue); color: var(--dwc-white); border: none; border-radius: 0 8px 8px 0; padding: 0.625rem 1.25rem; font-family: var(--font-mono); font-size: 0.8125rem; cursor: pointer;">Search</button>
+      </form>
       <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
         <a
           href="/blog"
@@ -52,25 +65,43 @@ const hexTerms = ['AI', 'MFM', 'LLM', 'API', 'CGM', 'NLP', 'EMR', 'ML', 'ICD', '
     </div>
   </section>
 
+  <!-- Stats strip -->
+  <section style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 3rem;">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+      {stats.map(stat => (
+        <div style="background: var(--dwc-card); border: 1px solid var(--dwc-border); border-radius: 12px; padding: 1.5rem; text-align: center;">
+          <p class="gradient-text" style="font-family: var(--font-display); font-size: 2rem; font-weight: 800; margin: 0 0 0.25rem 0; line-height: 1;">{stat.number}</p>
+          <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dwc-muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 0;">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
   <!-- Featured Post -->
   {featuredPost && (
     <section style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 4rem;">
       <p class="label" style="margin-bottom: 1.25rem;">Featured</p>
       <a href={`/blog/${featuredPost.id}`} style="display: block; text-decoration: none;">
-        <div class="card" style="padding: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;">
-          {featuredPost.data.image && (
-            <img
-              src={featuredPost.data.image.url}
-              alt={featuredPost.data.image.alt}
-              style="width: 100%; border-radius: 8px; border: 1px solid var(--dwc-border);"
-            />
+        <div class="card" style="overflow: hidden; position: relative;">
+          {featuredPost.data.image ? (
+            <>
+              <img src={featuredPost.data.image.url} alt={featuredPost.data.image.alt}
+                style="width: 100%; height: 420px; object-fit: cover; display: block; border-radius: 0;" />
+              <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(to top, rgba(10,13,26,0.97) 0%, rgba(10,13,26,0.7) 70%, transparent 100%);">
+                <span class="label" style="margin-bottom: 0.5rem; display: block;">{featuredPost.data.category}</span>
+                <h2 class="gradient-text" style="font-size: 1.75rem; margin-bottom: 0.5rem;">{featuredPost.data.title}</h2>
+                <p style="color: var(--dwc-muted); margin: 0; font-size: 0.9375rem; line-height: 1.5;">{featuredPost.data.description}</p>
+                <span style="display: inline-block; margin-top: 1rem; font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-cyan);">Read article &rarr;</span>
+              </div>
+            </>
+          ) : (
+            <div style="padding: 2rem;">
+              <span class="label" style="margin-bottom: 0.75rem; display: block;">{featuredPost.data.category}</span>
+              <h2 class="gradient-text" style="font-size: 1.75rem; margin-bottom: 0.75rem;">{featuredPost.data.title}</h2>
+              <p style="color: var(--dwc-muted); margin-bottom: 1.25rem; line-height: 1.6;">{featuredPost.data.description}</p>
+              <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-cyan);">Read article &rarr;</span>
+            </div>
           )}
-          <div style={featuredPost.data.image ? '' : 'grid-column: 1 / -1;'}>
-            <span class="label" style="margin-bottom: 0.75rem; display: block;">{featuredPost.data.category}</span>
-            <h2 style="font-size: 1.75rem; margin-bottom: 0.75rem;">{featuredPost.data.title}</h2>
-            <p style="color: var(--dwc-muted); margin-bottom: 1.25rem; line-height: 1.6;">{featuredPost.data.description}</p>
-            <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-cyan);">Read article &rarr;</span>
-          </div>
         </div>
       </a>
     </section>
@@ -106,7 +137,7 @@ const hexTerms = ['AI', 'MFM', 'LLM', 'API', 'CGM', 'NLP', 'EMR', 'ML', 'ICD', '
     <div style="max-width: 1200px; margin: 0 auto; padding: 4rem 1.5rem; display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; align-items: center;">
       <div>
         <p class="label" style="margin-bottom: 1rem;">The Author</p>
-        <h2 style="font-size: 1.75rem; margin-bottom: 1rem;">Chukwuma Onyeije, MD, FACOG</h2>
+        <h2 class="gradient-text" style="font-size: 1.75rem; margin-bottom: 1rem;">Chukwuma Onyeije, MD, FACOG</h2>
         <p style="color: var(--dwc-muted); margin-bottom: 1rem; line-height: 1.7;">
           Maternal-Fetal Medicine specialist at Atlanta Perinatal Associates. I build AI-powered
           clinical tools because physicians with domain expertise build better healthcare technology
@@ -134,8 +165,16 @@ const hexTerms = ['AI', 'MFM', 'LLM', 'API', 'CGM', 'NLP', 'EMR', 'ML', 'ICD', '
   </section>
 
   <!-- Newsletter -->
-  <section style="max-width: 700px; margin: 0 auto; padding: 0 1.5rem 5rem;">
+  <section id="newsletter" style="max-width: 700px; margin: 0 auto; padding: 0 1.5rem 5rem;">
     <NewsletterForm />
   </section>
 
 </BaseLayout>
+
+<script>
+  document.getElementById('hero-search')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const q = (document.getElementById('hero-q') as HTMLInputElement)?.value.trim();
+    if (q) window.location.href = '/blog?q=' + encodeURIComponent(q);
+  });
+</script>

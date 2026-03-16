@@ -89,28 +89,30 @@ const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
       </div>
 
       <!-- Title -->
-      <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">{title}</h1>
+      <h1 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 1rem;">{title}</h1>
 
       <!-- Description -->
       <p style="font-size: 1.125rem; color: var(--dwc-muted); margin-bottom: 1.5rem; line-height: 1.6;">{description}</p>
 
-      <!-- Meta row -->
-      <div style="display: flex; align-items: center; gap: 1rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--dwc-border); margin-bottom: 2rem;">
-        <span style="font-size: 0.875rem; color: var(--dwc-muted);">
-          By <a href={authorUrl} style="color: var(--dwc-cyan);">{author}</a>
-        </span>
-        <span style="color: var(--dwc-border);">&middot;</span>
-        <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-muted);">
-          <FormattedDate date={pubDate} />
-        </span>
-        {updatedDate && (
-          <>
-            <span style="color: var(--dwc-border);">&middot;</span>
-            <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-muted);">
-              Updated <FormattedDate date={updatedDate} />
-            </span>
-          </>
-        )}
+      <!-- Enhanced author block -->
+      <div style="padding: 1.25rem 1.5rem; background: var(--dwc-card); border: 1px solid var(--dwc-border); border-left: 3px solid; border-image: linear-gradient(to bottom, #a855f7, #38bdf8) 1; border-radius: 0 8px 8px 0; margin-bottom: 2rem;">
+        <p style="font-size: 0.9375rem; font-weight: 600; color: var(--dwc-white); margin: 0 0 0.25rem 0;">
+          By Dr. Chukwuma Onyeije, MD, FACOG
+        </p>
+        <p style="font-size: 0.8125rem; color: var(--dwc-muted); margin: 0 0 0.5rem 0;">
+          Maternal-Fetal Medicine Specialist &amp; Medical Director, Atlanta Perinatal Associates
+        </p>
+        <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dwc-muted); margin: 0; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center;">
+          <span>Founder, Doctors Who Code &middot; OpenMFM.org &middot; CodeCraftMD</span>
+          <span style="color: var(--dwc-border);">&middot;</span>
+          <span><FormattedDate date={pubDate} /></span>
+          {readingTime && (
+            <>
+              <span style="color: var(--dwc-border);">&middot;</span>
+              <span>{readingTime} min read</span>
+            </>
+          )}
+        </p>
       </div>
 
       <!-- Featured image -->
@@ -133,7 +135,7 @@ const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
           {tags.map(tag => (
             <a
               href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`}
-              style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dwc-cyan); background-color: var(--dwc-card); border: 1px solid var(--dwc-border); padding: 0.25rem 0.625rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;"
+              class="tag-pill"
             >
               {tag}
             </a>
