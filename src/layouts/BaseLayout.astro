@@ -1,0 +1,161 @@
+---
+import '../styles/global.css';
+import { SITE_TITLE, SITE_URL, AUTHOR_NAME, TWITTER_HANDLE, OG_DEFAULT_IMAGE } from '../consts';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: string;
+  pubDate?: Date;
+  updatedDate?: Date;
+  articleSchema?: object;
+}
+
+const {
+  title,
+  description,
+  canonical = Astro.url.href,
+  ogImage = OG_DEFAULT_IMAGE,
+  ogType = 'website',
+  pubDate,
+  updatedDate,
+  articleSchema,
+} = Astro.props;
+
+const fullTitle = `${title} | ${SITE_TITLE}`;
+const ogImageAbsolute = ogImage.startsWith('http') ? ogImage : `${SITE_URL}${ogImage}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary SEO -->
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={AUTHOR_NAME} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageAbsolute} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE_TITLE} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content={TWITTER_HANDLE} />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageAbsolute} />
+
+    <!-- Dates for articles -->
+    {pubDate && <meta property="article:published_time" content={pubDate.toISOString()} />}
+    {updatedDate && <meta property="article:modified_time" content={updatedDate.toISOString()} />}
+
+    <!-- Structured data -->
+    {articleSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    )}
+
+    <!-- Sitelinks searchbox for homepage -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": SITE_TITLE,
+      "url": SITE_URL,
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": `${SITE_URL}/blog?q={search_term_string}`
+        },
+        "query-input": "required name=search_term_string"
+      }
+    })} />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- RSS -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={SITE_TITLE}
+      href={`${SITE_URL}/rss.xml`}
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <header style="border-bottom: 1px solid var(--dwc-border); position: sticky; top: 0; z-index: 50; background-color: rgba(13, 27, 42, 0.95); backdrop-filter: blur(8px);">
+      <nav style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 64px;">
+        <a href="/" style="font-family: var(--font-display); font-size: 1.125rem; font-weight: 800; color: var(--dwc-white); display: flex; align-items: center; gap: 0.5rem;">
+          <span class="live-dot"></span>
+          Doctors Who Code
+        </a>
+        <div style="display: flex; align-items: center; gap: 2rem;">
+          <a href="/blog" style="font-size: 0.9375rem; color: var(--dwc-muted); transition: color 0.2s;">Blog</a>
+          <a href="/about" style="font-size: 0.9375rem; color: var(--dwc-muted); transition: color 0.2s;">About</a>
+          <a href="/contact" style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-navy); background-color: var(--dwc-cyan); padding: 0.375rem 0.875rem; border-radius: 6px; font-weight: 500;">Subscribe</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Page content -->
+    <main>
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer style="border-top: 1px solid var(--dwc-border); margin-top: 5rem; padding: 3rem 1.5rem;">
+      <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem;">
+        <div>
+          <p style="font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--dwc-white); margin-bottom: 0.5rem;">Doctors Who Code</p>
+          <p style="font-size: 0.875rem; color: var(--dwc-muted); margin-bottom: 0;">Where medicine meets code.</p>
+          <p style="font-size: 0.875rem; color: var(--dwc-muted);">Written by Chukwuma Onyeije, MD, FACOG</p>
+        </div>
+        <div>
+          <p class="label" style="margin-bottom: 0.75rem;">Projects</p>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem;">
+            <li><a href="https://codecraftmd.com" style="font-size: 0.875rem; color: var(--dwc-muted);">CodeCraftMD</a></li>
+            <li><a href="https://openmfm.org" style="font-size: 0.875rem; color: var(--dwc-muted);">OpenMFM.org</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="label" style="margin-bottom: 0.75rem;">Connect</p>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem;">
+            <li><a href="https://linkedin.com/in/chukwumaonyeije" style="font-size: 0.875rem; color: var(--dwc-muted);">LinkedIn</a></li>
+            <li><a href="https://x.com/chukwumaonyeije" style="font-size: 0.875rem; color: var(--dwc-muted);">X / Twitter</a></li>
+            <li><a href="/contact" style="font-size: 0.875rem; color: var(--dwc-muted);">Newsletter</a></li>
+          </ul>
+        </div>
+      </div>
+      <div style="max-width: 1200px; margin: 2rem auto 0; padding-top: 1.5rem; border-top: 1px solid var(--dwc-border); display: flex; justify-content: space-between; align-items: center;">
+        <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dwc-muted); margin: 0;">
+          &copy; {new Date().getFullYear()} Chukwuma Onyeije, MD, FACOG
+        </p>
+        <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dwc-muted); margin: 0;">
+          <a href="/rss.xml" style="color: var(--dwc-muted);">RSS</a> &middot;
+          <a href="/sitemap-index.xml" style="color: var(--dwc-muted);">Sitemap</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

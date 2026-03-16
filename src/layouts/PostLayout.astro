@@ -1,0 +1,202 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import AuthorBio from '../components/AuthorBio.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { SITE_URL, AUTHOR_NAME, AUTHOR_URL, SITE_TITLE } from '../consts';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  author?: string;
+  authorUrl?: string;
+  tags?: string[];
+  category?: string;
+  image?: { url: string; alt: string };
+  readingTime?: number;
+  canonical?: string;
+  headings?: { depth: number; slug: string; text: string }[];
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  author = AUTHOR_NAME,
+  authorUrl = AUTHOR_URL,
+  tags = [],
+  category = 'Technology',
+  image,
+  readingTime,
+  canonical = Astro.url.href,
+  headings = [],
+} = Astro.props;
+
+const ogImage = image?.url ?? '/images/og-default.jpg';
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "author": {
+    "@type": "Person",
+    "name": author,
+    "url": authorUrl,
+    "jobTitle": "Maternal-Fetal Medicine Specialist",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Atlanta Perinatal Associates"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": SITE_TITLE,
+    "url": SITE_URL
+  },
+  "datePublished": pubDate.toISOString(),
+  "dateModified": (updatedDate ?? pubDate).toISOString(),
+  "image": ogImage.startsWith('http') ? ogImage : `${SITE_URL}${ogImage}`,
+  "url": canonical,
+};
+
+// Only show TOC if there are headings at depth 2 or 3
+const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  ogImage={ogImage}
+  ogType="article"
+  pubDate={pubDate}
+  updatedDate={updatedDate}
+  articleSchema={articleSchema}
+>
+  <div style="max-width: 1200px; margin: 0 auto; padding: 3rem 1.5rem; display: grid; grid-template-columns: 1fr 280px; gap: 4rem; align-items: start;">
+
+    <!-- Main post content -->
+    <article>
+      <!-- Category + reading time -->
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;">
+        <span class="label">{category}</span>
+        {readingTime && (
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dwc-muted);">{readingTime} min read</span>
+        )}
+      </div>
+
+      <!-- Title -->
+      <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">{title}</h1>
+
+      <!-- Description -->
+      <p style="font-size: 1.125rem; color: var(--dwc-muted); margin-bottom: 1.5rem; line-height: 1.6;">{description}</p>
+
+      <!-- Meta row -->
+      <div style="display: flex; align-items: center; gap: 1rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--dwc-border); margin-bottom: 2rem;">
+        <span style="font-size: 0.875rem; color: var(--dwc-muted);">
+          By <a href={authorUrl} style="color: var(--dwc-cyan);">{author}</a>
+        </span>
+        <span style="color: var(--dwc-border);">&middot;</span>
+        <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-muted);">
+          <FormattedDate date={pubDate} />
+        </span>
+        {updatedDate && (
+          <>
+            <span style="color: var(--dwc-border);">&middot;</span>
+            <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-muted);">
+              Updated <FormattedDate date={updatedDate} />
+            </span>
+          </>
+        )}
+      </div>
+
+      <!-- Featured image -->
+      {image && (
+        <img
+          src={image.url}
+          alt={image.alt}
+          style="width: 100%; border-radius: 12px; margin-bottom: 2rem; border: 1px solid var(--dwc-border);"
+        />
+      )}
+
+      <!-- Post body -->
+      <div class="prose">
+        <slot />
+      </div>
+
+      <!-- Tags -->
+      {tags.length > 0 && (
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--dwc-border);">
+          {tags.map(tag => (
+            <a
+              href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+              style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dwc-cyan); background-color: var(--dwc-card); border: 1px solid var(--dwc-border); padding: 0.25rem 0.625rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;"
+            >
+              {tag}
+            </a>
+          ))}
+        </div>
+      )}
+
+      <!-- Share links -->
+      <div style="display: flex; align-items: center; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--dwc-border);">
+        <span class="label">Share</span>
+        <a
+          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(canonical)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style="font-size: 0.875rem; color: var(--dwc-muted);"
+        >X / Twitter</a>
+        <a
+          href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonical)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style="font-size: 0.875rem; color: var(--dwc-muted);"
+        >LinkedIn</a>
+      </div>
+
+      <!-- Author bio -->
+      <div style="margin-top: 3rem;">
+        <AuthorBio />
+      </div>
+    </article>
+
+    <!-- Sidebar TOC -->
+    <aside style="position: sticky; top: 84px;">
+      {tocHeadings.length > 0 && (
+        <div style="background-color: var(--dwc-card); border: 1px solid var(--dwc-border); border-radius: 12px; padding: 1.5rem;">
+          <p class="label" style="margin-bottom: 1rem;">On this page</p>
+          <nav>
+            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+              {tocHeadings.map(h => (
+                <li style={h.depth === 3 ? 'padding-left: 1rem;' : ''}>
+                  <a
+                    href={`#${h.slug}`}
+                    style="font-size: 0.875rem; color: var(--dwc-muted); line-height: 1.4; display: block; transition: color 0.2s;"
+                  >
+                    {h.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      )}
+    </aside>
+
+  </div>
+</BaseLayout>
+
+<style>
+  @media (max-width: 900px) {
+    div[style*="grid-template-columns"] {
+      grid-template-columns: 1fr !important;
+    }
+    aside {
+      display: none;
+    }
+  }
+</style>

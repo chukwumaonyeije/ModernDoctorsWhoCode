@@ -1,0 +1,44 @@
+# Doctors Who Code
+> A blog at the intersection of medicine, software development, and health technology — written by Chukwuma Onyeije, MD, FACOG, a practicing Maternal-Fetal Medicine specialist and physician-developer.
+
+- Website: https://www.doctorswhocode.blog
+
+## Contact
+- Contact Page: https://www.doctorswhocode.blog/contact
+- LinkedIn: https://linkedin.com/in/chukwumaonyeije
+
+## What We Do
+- Medical AI Education
+- Physician-Developer Content
+- Health Technology Commentary
+- Clinical Documentation Insights
+- Open-Source Medical Tools
+
+## What We Do Not Do
+- Medical advice or clinical consultation
+- Patient care services
+- Legal or financial advice
+- Software development services for hire
+- Medical billing services directly to patients
+
+## Service Areas
+- Worldwide
+
+## Key People
+- Chukwuma Onyeije, MD, FACOG (https://www.linkedin.com/in/chukwumaonyeije) — Founder & Author
+  - Specialty: Maternal-Fetal Medicine
+  - Institution: Atlanta Perinatal Associates, Atlanta, GA
+  - Credentials: MD, FACOG, Board Certified MFM
+
+## Social Media
+- https://linkedin.com/in/chukwumaonyeije
+- https://x.com/chukwumaonyeije
+- https://x.com/CodeCraftMD
+
+## Related Projects
+- OpenMFM.org — Open-source MFM clinical knowledge platform
+- CodeCraftMD — AI-powered medical billing and documentation (https://codecraftmd.com)
+
+## Feed
+- https://www.doctorswhocode.blog/rss.xml
+- https://www.doctorswhocode.blog/sitemap-index.xml

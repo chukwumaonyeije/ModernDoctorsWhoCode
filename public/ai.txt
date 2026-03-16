@@ -1,0 +1,21 @@
+AI-Content-Usage: allow-with-attribution
+AI-Training: restrict
+Content-Licence: CC BY-NC 4.0
+Citation-Format: Chukwuma Onyeije, MD, FACOG | DoctorsWhoCode.blog
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+Contact: https://www.doctorswhocode.blog/contact

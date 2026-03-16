@@ -1,0 +1,141 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
+import { SITE_DESCRIPTION } from '../consts';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const featuredPost = sortedPosts.find(p => p.data.featured) ?? sortedPosts[0];
+const recentPosts = sortedPosts.filter(p => p.id !== featuredPost?.id).slice(0, 4);
+
+const hexTerms = ['AI', 'MFM', 'LLM', 'API', 'CGM', 'NLP', 'EMR', 'ML', 'ICD', 'CPT', 'FHIR', 'RAG'];
+---
+
+<BaseLayout
+  title="Where Medicine Meets Code"
+  description={SITE_DESCRIPTION}
+>
+
+  <!-- Hero -->
+  <section style="max-width: 1200px; margin: 0 auto; padding: 5rem 1.5rem 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+    <div>
+      <p class="label" style="margin-bottom: 1rem;">
+        <span class="live-dot" style="margin-right: 0.5rem;"></span>
+        Physician-Developer Blog
+      </p>
+      <h1 style="font-size: 3.25rem; line-height: 1.1; margin-bottom: 1.25rem;">
+        Where Medicine<br />Meets Code
+      </h1>
+      <p style="font-size: 1.125rem; color: var(--dwc-muted); margin-bottom: 2rem; line-height: 1.7;">
+        I am Chukwuma Onyeije, MD, FACOG. I practice Maternal-Fetal Medicine and build AI tools
+        for physicians. This is where I document the work and make the case for doctors who code.
+      </p>
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <a
+          href="/blog"
+          style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-white); background-color: var(--dwc-blue); padding: 0.625rem 1.5rem; border-radius: 6px;"
+        >Read the Blog</a>
+        <a
+          href="/about"
+          style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-cyan); border: 1px solid var(--dwc-border); padding: 0.625rem 1.5rem; border-radius: 6px;"
+        >About Dr. Onyeije</a>
+      </div>
+    </div>
+
+    <!-- Animated hex grid of tech terms -->
+    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; align-items: center;">
+      {hexTerms.map((term, i) => (
+        <div style={`font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 500; color: ${i % 3 === 0 ? 'var(--dwc-cyan)' : 'var(--dwc-muted)'}; background-color: var(--dwc-card); border: 1px solid var(--dwc-border); padding: 0.5rem 1rem; border-radius: 8px; opacity: ${0.5 + (i % 3) * 0.25};`}>{term}</div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Featured Post -->
+  {featuredPost && (
+    <section style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 4rem;">
+      <p class="label" style="margin-bottom: 1.25rem;">Featured</p>
+      <a href={`/blog/${featuredPost.id}`} style="display: block; text-decoration: none;">
+        <div class="card" style="padding: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;">
+          {featuredPost.data.image && (
+            <img
+              src={featuredPost.data.image.url}
+              alt={featuredPost.data.image.alt}
+              style="width: 100%; border-radius: 8px; border: 1px solid var(--dwc-border);"
+            />
+          )}
+          <div style={featuredPost.data.image ? '' : 'grid-column: 1 / -1;'}>
+            <span class="label" style="margin-bottom: 0.75rem; display: block;">{featuredPost.data.category}</span>
+            <h2 style="font-size: 1.75rem; margin-bottom: 0.75rem;">{featuredPost.data.title}</h2>
+            <p style="color: var(--dwc-muted); margin-bottom: 1.25rem; line-height: 1.6;">{featuredPost.data.description}</p>
+            <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-cyan);">Read article &rarr;</span>
+          </div>
+        </div>
+      </a>
+    </section>
+  )}
+
+  <!-- Recent Posts -->
+  {recentPosts.length > 0 && (
+    <section style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 4rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <p class="label">Recent Posts</p>
+        <a href="/blog" style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-cyan);">All posts &rarr;</a>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+        {recentPosts.map(post => (
+          <PostCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            slug={post.id}
+            tags={post.data.tags}
+            category={post.data.category}
+            readingTime={post.data.readingTime}
+            image={post.data.image}
+            featured={post.data.featured}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- About Strip -->
+  <section style="background-color: var(--dwc-card); border-top: 1px solid var(--dwc-border); border-bottom: 1px solid var(--dwc-border); margin-bottom: 4rem;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 4rem 1.5rem; display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; align-items: center;">
+      <div>
+        <p class="label" style="margin-bottom: 1rem;">The Author</p>
+        <h2 style="font-size: 1.75rem; margin-bottom: 1rem;">Chukwuma Onyeije, MD, FACOG</h2>
+        <p style="color: var(--dwc-muted); margin-bottom: 1rem; line-height: 1.7;">
+          Maternal-Fetal Medicine specialist at Atlanta Perinatal Associates. I build AI-powered
+          clinical tools because physicians with domain expertise build better healthcare technology
+          than external vendors ever will.
+        </p>
+        <p style="color: var(--dwc-muted); line-height: 1.7;">
+          Founder of CodeCraftMD (AI medical documentation) and OpenMFM.org (open-source MFM education).
+        </p>
+        <a href="/about" style="display: inline-block; margin-top: 1.25rem; font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-cyan);">Full biography &rarr;</a>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        {[
+          { label: 'Specialty', value: 'MFM / High-Risk OB' },
+          { label: 'Credential', value: 'MD, FACOG' },
+          { label: 'Project', value: 'CodeCraftMD' },
+          { label: 'Project', value: 'OpenMFM.org' },
+        ].map(item => (
+          <div style="background-color: var(--dwc-navy); border: 1px solid var(--dwc-border); border-radius: 8px; padding: 0.875rem;">
+            <p class="label" style="margin-bottom: 0.25rem; font-size: 0.65rem;">{item.label}</p>
+            <p style="font-size: 0.875rem; font-weight: 600; margin: 0; color: var(--dwc-white);">{item.value}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section style="max-width: 700px; margin: 0 auto; padding: 0 1.5rem 5rem;">
+    <NewsletterForm />
+  </section>
+
+</BaseLayout>

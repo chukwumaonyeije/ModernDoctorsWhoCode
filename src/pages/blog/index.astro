@@ -1,0 +1,128 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Collect all unique tags
+const allTags = [...new Set(sortedPosts.flatMap(p => p.data.tags))].sort();
+---
+
+<BaseLayout
+  title="Blog"
+  description="Physician-developer insights on AI in medicine, clinical software, MFM practice, and building tools that actually work."
+>
+  <div style="max-width: 1200px; margin: 0 auto; padding: 3rem 1.5rem 5rem;">
+
+    <!-- Header -->
+    <div style="margin-bottom: 3rem;">
+      <p class="label" style="margin-bottom: 0.75rem;">All Posts</p>
+      <h1 style="font-size: 2.5rem; margin-bottom: 0.75rem;">The Blog</h1>
+      <p style="font-size: 1.0625rem; color: var(--dwc-muted); max-width: 600px;">
+        Clinical medicine, software development, AI tools, and the physician-developer perspective.
+        No hype. No filler.
+      </p>
+    </div>
+
+    <!-- Tag filter bar -->
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem;" id="tag-filters">
+      <button
+        class="tag-btn active"
+        data-tag="all"
+        style="font-family: var(--font-mono); font-size: 0.75rem; padding: 0.3rem 0.75rem; border-radius: 4px; border: 1px solid var(--dwc-cyan); color: var(--dwc-navy); background-color: var(--dwc-cyan); cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em;"
+      >All</button>
+      {allTags.map(tag => (
+        <button
+          class="tag-btn"
+          data-tag={tag}
+          style="font-family: var(--font-mono); font-size: 0.75rem; padding: 0.3rem 0.75rem; border-radius: 4px; border: 1px solid var(--dwc-border); color: var(--dwc-muted); background-color: transparent; cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em;"
+        >{tag}</button>
+      ))}
+    </div>
+
+    <!-- Search -->
+    <div style="margin-bottom: 2.5rem;">
+      <input
+        type="search"
+        id="post-search"
+        placeholder="Search posts..."
+        style="width: 100%; max-width: 400px; background-color: var(--dwc-card); border: 1px solid var(--dwc-border); border-radius: 8px; padding: 0.625rem 1rem; color: var(--dwc-white); font-family: var(--font-body); font-size: 0.9375rem;"
+      />
+    </div>
+
+    <!-- Posts grid -->
+    <div id="posts-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+      {sortedPosts.map(post => (
+        <div class="post-item" data-tags={post.data.tags.join(',')} data-title={post.data.title.toLowerCase()} data-description={post.data.description.toLowerCase()}>
+          <PostCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            slug={post.id}
+            tags={post.data.tags}
+            category={post.data.category}
+            readingTime={post.data.readingTime}
+            image={post.data.image}
+            featured={post.data.featured}
+          />
+        </div>
+      ))}
+    </div>
+
+    <!-- Empty state -->
+    <div id="no-results" style="display: none; text-align: center; padding: 4rem 0;">
+      <p style="color: var(--dwc-muted); font-family: var(--font-mono);">No posts match that filter.</p>
+    </div>
+
+  </div>
+</BaseLayout>
+
+<script>
+  const tagBtns = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
+  const postItems = document.querySelectorAll<HTMLElement>('.post-item');
+  const searchInput = document.getElementById('post-search') as HTMLInputElement;
+  const noResults = document.getElementById('no-results')!;
+
+  let activeTag = 'all';
+  let searchQuery = '';
+
+  function filterPosts() {
+    let visible = 0;
+    postItems.forEach(item => {
+      const tags = item.dataset.tags ?? '';
+      const title = item.dataset.title ?? '';
+      const desc = item.dataset.description ?? '';
+      const matchesTag = activeTag === 'all' || tags.split(',').includes(activeTag);
+      const matchesSearch = !searchQuery || title.includes(searchQuery) || desc.includes(searchQuery);
+      if (matchesTag && matchesSearch) {
+        item.style.display = '';
+        visible++;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+    noResults.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  tagBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeTag = btn.dataset.tag ?? 'all';
+      tagBtns.forEach(b => {
+        b.style.borderColor = 'var(--dwc-border)';
+        b.style.color = 'var(--dwc-muted)';
+        b.style.backgroundColor = 'transparent';
+      });
+      btn.style.borderColor = 'var(--dwc-cyan)';
+      btn.style.color = 'var(--dwc-navy)';
+      btn.style.backgroundColor = 'var(--dwc-cyan)';
+      filterPosts();
+    });
+  });
+
+  searchInput.addEventListener('input', () => {
+    searchQuery = searchInput.value.toLowerCase().trim();
+    filterPosts();
+  });
+</script>

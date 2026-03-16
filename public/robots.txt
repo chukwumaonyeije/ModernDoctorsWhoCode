@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+Disallow: /404
+
+# AI crawlers — allowed
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://www.doctorswhocode.blog/sitemap-index.xml
