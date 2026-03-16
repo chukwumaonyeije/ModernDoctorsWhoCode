@@ -1,0 +1,84 @@
+{
+  "redirects": [
+    {
+      "source": "https://doctorswhocode.blog/:path*",
+      "destination": "https://www.doctorswhocode.blog/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/infographics/pgis-infographic.html",
+      "destination": "/blog/pgis-performance-glycemic-intelligence-system",
+      "permanent": true
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/sitemap-index.xml",
+      "permanent": true
+    },
+    {
+      "source": "/feeds/all.atom.xml",
+      "destination": "/rss.xml",
+      "permanent": true
+    },
+    {
+      "source": "/feed",
+      "destination": "/rss.xml",
+      "permanent": true
+    },
+    {
+      "source": "/feed/",
+      "destination": "/rss.xml",
+      "permanent": true
+    },
+    {
+      "source": "/category/:slug*",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/:slug*",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/author/:slug*",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/about-me",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/about-me/",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/lets-keep-in-touch",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/lets-keep-in-touch/",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/page/:num",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/:slug((?!blog|about|contact|rss\\.xml|sitemap|llms\\.txt|ai\\.txt|robots\\.txt|images|fonts|favicon).*)",
+      "destination": "/blog/:slug",
+      "permanent": true
+    }
+  ]
+}
