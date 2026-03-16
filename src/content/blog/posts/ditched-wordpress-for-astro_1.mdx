@@ -1,0 +1,145 @@
+---
+title: "I Ditched Headless WordPress for Astro — Here's Why a Physician-Developer Should Too"
+description: "After spending a day fighting a WordPress plugin that wouldn't respect a domain change, I rebuilt DoctorsWhoCode.blog from scratch with Astro and MDX. The migration took one afternoon. The clarity was immediate."
+pubDate: 2026-03-16
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags: ["Astro", "WordPress", "physician-developer", "web development", "static sites"]
+category: "Technology"
+image:
+  url: "/images/posts/ditched-wordpress-for-astro.jpg"
+  alt: "Terminal window showing Astro build output alongside a stethoscope"
+draft: false
+featured: true
+readingTime: 8
+---
+
+import Callout from '../../components/Callout.astro';
+import AuthorBio from '../../components/AuthorBio.astro';
+
+I spent most of March 16, 2026 fighting a WordPress plugin.
+
+The plugin — designed to help AI systems discover and cite my website — kept writing the wrong URL into its configuration. Not the production URL, `doctorswhocode.blog`. The staging URL that Hostinger assigns by default: a 47-character string that starts with a color, a reptile, and a six-digit number.
+
+I tried editing `wp-config.php`. I tried direct database queries in phpMyAdmin. I tried a URL replacement plugin. I tried a PHP hook that intercepts WordPress's own URL resolution. I wrote a standalone PHP script to patch the serialized database row directly.
+
+None of it worked cleanly.
+
+By early afternoon, I had made a decision I had been putting off for months: I was rebuilding the site from scratch.
+
+By evening, `doctorswhocode.blog` was running on Astro, 89 posts migrated, deployed to Vercel, and live.
+
+## Why I Was Using Headless WordPress in the First Place
+
+I started DoctorsWhoCode.blog on WordPress because I knew WordPress. I had used it for years. It had a visual editor, plugin ecosystem, and enough flexibility to do almost anything.
+
+But I wanted the site to feel modern. So I made it headless — I kept WordPress as the content backend and built a Next.js frontend that fetched posts via GraphQL. It looked great. The design was clean, the typography was sharp, and it felt like the kind of site a physician-developer should have.
+
+What I did not anticipate was the maintenance surface area.
+
+Headless WordPress gives you the worst of both worlds: WordPress's operational complexity without the ease of use that makes WordPress worthwhile. Every plugin has to work with both the WordPress backend and the decoupled frontend. Every URL configuration touches two systems. Every domain change becomes a three-layer problem — the WordPress database, the `wp-config.php` file, and the Next.js environment variables.
+
+When something breaks, you debug in two places.
+
+## What I Replaced It With
+
+The new stack is simpler by design:
+
+- **Astro** as the framework — builds static HTML by default, fast, built for content sites
+- **MDX** for posts — markdown with optional React components
+- **Tailwind CSS** for styling — I already knew it from the Next.js work
+- **GitHub** as the content management system — every post is a `.mdx` file in the repo
+- **Vercel** for deployment — push to main, live in 60 seconds
+
+There is no database. There is no PHP. There are no plugins. There is no admin panel.
+
+There is a folder of markdown files and a `git push`.
+
+## The Migration
+
+I expected the migration to take a weekend. It took an afternoon.
+
+The content export was one command:
+
+```bash
+npx wordpress-export-to-markdown \
+  --input=wordpress-export.xml \
+  --output=src/content/posts
+```
+
+That converted all 95 WordPress posts to clean markdown files with frontmatter. I excluded 6 drafts, fixed frontmatter fields across the remaining 89 with a script, and cleaned some Unicode artifacts that came over from the WordPress editor.
+
+The build and deployment took about three hours — scaffolding the Astro project, building the layout system, designing the component library, and configuring Vercel.
+
+I set up 301 redirects in `vercel.json` to preserve SEO equity from the old URLs. I pointed the domain. The site was live.
+
+## What I Lost
+
+Practically nothing of consequence.
+
+WordPress gave me:
+- A visual editor — I write in VS Code and markdown anyway
+- Plugin-based SEO — Astro gives me full control over every meta tag
+- Comments — I removed them years ago (nobody was using them)
+- A contact form — replaced with a Beehiiv newsletter embed and a LinkedIn link
+- Plugin-based AI discovery files — replaced with two static text files I edit directly
+
+The one thing I genuinely miss is the WordPress media library. Managing images in a static site requires a bit more intention — images go in `/public/images/`, references go in frontmatter, and there is no drag-and-drop upload. I have adapted.
+
+## What I Gained
+
+**Speed.** Astro outputs pure static HTML. There are no database queries, no PHP execution, no GraphQL roundtrips. The site is fast by default.
+
+**Simplicity.** The entire site lives in one GitHub repository. Content, code, styles, AI discovery files, robots.txt — all of it is files I can read, edit, and version control. There is nothing hidden in a database.
+
+**Control.** I write SEO metadata directly in frontmatter. I write JSON-LD structured data in my layout files. I write `llms.txt` in a text editor. Nothing is abstracted behind a plugin that may or may not respect my domain configuration.
+
+**Brand alignment.** DoctorsWhoCode.blog is a site about physician-developers building things. Running it on a modern static stack with git-based publishing is not just a technical choice — it is consistent with what I write about.
+
+<Callout type="technical">
+The complete migration — from WordPress XML export to live Astro site — took one afternoon. The bottleneck was not the technology. It was the decision to start.
+</Callout>
+
+## The AI Discovery Problem That Started All of This
+
+The irony of this story is that the plugin causing the trouble was designed to make the site more discoverable to AI systems. It writes `llms.txt` and `ai.txt` files that tell crawlers like GPTBot, ClaudeBot, and Perplexity how to use and cite the site's content.
+
+On the new Astro site, those files are here:
+
+```
+public/
+├── llms.txt    ← plain text, edit directly
+└── ai.txt      ← plain text, edit directly
+```
+
+No plugin. No database. No serialized PHP. No 47-character staging URL embedded in a row I cannot update.
+
+I open the file, type the URL I want, save it, commit, push. Done.
+
+## Should You Do This?
+
+If you are a physician-developer running a WordPress blog and you write primarily in markdown or a code editor — yes. The migration is not as intimidating as it looks, and the resulting setup is dramatically simpler.
+
+If you are a physician who is not comfortable with the command line, GitHub, or text editors — WordPress still makes sense. The visual editor and plugin ecosystem exist for good reasons.
+
+The honest question is not "which is better." It is "which matches how you actually work."
+
+I write posts in VS Code. I commit code to GitHub. I think in terms of files, not admin panels. The new stack fits the way I work. The old one did not.
+
+## The Stack, For Reference
+
+```
+Framework:  Astro 4.x
+Content:    MDX (Markdown + JSX components)
+Styling:    Tailwind CSS
+Fonts:      Syne + DM Sans + JetBrains Mono
+Deployment: Vercel (auto-deploy on git push)
+Domain:     doctorswhocode.blog
+Repo:       github.com/chukwumaonyeije/ModernDoctorsWhoCode
+```
+
+The site you are reading right now runs on exactly this. The post you are reading was written in VS Code, committed to GitHub, and deployed to Vercel in under a minute.
+
+That is the whole system.
+
+<AuthorBio />
