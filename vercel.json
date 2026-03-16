@@ -1,11 +1,6 @@
 {
   "redirects": [
     {
-      "source": "https://doctorswhocode.blog/:path*",
-      "destination": "https://www.doctorswhocode.blog/:path*",
-      "permanent": true
-    },
-    {
       "source": "/infographics/pgis-infographic.html",
       "destination": "/blog/pgis-performance-glycemic-intelligence-system",
       "permanent": true
