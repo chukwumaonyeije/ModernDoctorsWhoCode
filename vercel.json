@@ -70,10 +70,5 @@
       "destination": "/blog",
       "permanent": true
     },
-    {
-      "source": "/:slug((?!blog|about|contact|rss\\.xml|sitemap|llms\\.txt|ai\\.txt|robots\\.txt|images|fonts|favicon).*)",
-      "destination": "/blog/:slug",
-      "permanent": true
-    }
   ]
 }
