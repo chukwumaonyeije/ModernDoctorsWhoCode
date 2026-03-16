@@ -1,0 +1,121 @@
+---
+title: "How I Used Code (and AI) to Fix One of Healthcare’s Most Painful Bottlenecks: Prior Authorizations"
+pubDate: 2026-02-03
+category: "Healthcare Technology"
+tags: 
+- "ai-in-healthcare"
+- "atlanta-perinatal-associates"
+- "clinical-workflow-optimization"
+- "codecraftmd-2"
+- "doctors-who-code"
+- "ehr-data-extraction"
+- "health-tech"
+- "healthcare-innovation"
+- "hipaa-compliant-ai"
+- "llm-in-medicine"
+- "maternal-fetal-medicine"
+- "medical-automation"
+- "medical-coding"
+- "mfm-specialist"
+- "physician-burnout-solutions"
+- "prior-authorization"
+- "revenue-cycle-management"
+author: "Chukwuma Onyeije, MD, FACOG"
+draft: false
+
+description: "Specifically, the Prior Authorization (PA)."
+---
+
+
+## In the world of high-risk pregnancy, minutes matter. Whether we are managing a case of preeclampsia or coordinating a fetal intervention, the clinical stakes are immense. Yet, as a Maternal-Fetal Medicine (MFM) specialist, I’ve found that the biggest hurdle to patient care often isn’t the pathology—it’s the paperwork.
+
+![](https://lightslategray-turtle-256743.hostingersite.com/wp-content/uploads/2026/02/Gemini_Generated_Image_evdq2xevdq2xevdq.png)
+
+Specifically, the **Prior Authorization (PA)**.
+
+At **CodeCraftMD**, we believe that when physicians understand the "logic" of software, we stop being victims of inefficient systems and start becoming the architects of their solutions. Here is how I applied a "Doctors Who Code" mindset to solve one of medicine’s most notorious administrative bottlenecks.
+
+
+### I. The Invisible Friction in Healthcare
+
+To a patient, a doctor’s order feels like the final word. In reality, it’s often just the start of a negotiation. A Prior Authorization is essentially a request asking an insurer, _"Is this medically necessary, and will you pay for it?"_
+
+While designed to control costs, PAs have evolved into a massive engine of friction. They impact:
+
+- **Specialized Medications:** Life-saving biologics or anticoagulants.
+
+- **Advanced Imaging:** Detailed fetal echos and targeted ultrasounds.
+
+- **Medical Devices:** Continuous glucose monitors or insulin pumps.
+
+**The Insight:** Prior authorizations aren't just an administrative chore; they are a data-translation problem that introduces dangerous delays for patients and burnout for clinicians.
+
+### II. The MFM Struggle: High Stakes, High Paperwork
+
+At **My MFM practice**, my patients require frequent surveillance. Every ultrasound, every consult, and every specialized lab can trigger a new PA.
+
+The process was always the same: a medical assistant or nurse would have to comb through pages of ultrasound reports and clinical prose to find specific diagnosis codes (ICD-10) and procedure codes (CPT). They then had to synthesize this into a "clinical justification" written in the specific "payer-speak" the insurance company requires.
+
+The data already existed in the Electronic Health Record (EHR), but it was trapped in unstructured notes. We were losing hours to manual "copy-and-paste" cognition.
+
+### III. The "Aha" Moment: This Is a Coding Problem
+
+As I worked on my various health-tech builds, it hit me: the PA form is just a **structured representation** of the data already in the patient chart.
+
+If the data is there, and the form is the target, the gap between them is simply a transformation layer. I asked myself: _What if software could extract exactly what insurers want—without making things up?_
+
+
+### IV. Designing a Safer AI Workflow (No Hallucinations Allowed)
+
+When applying AI to clinical workflows, the margin for error is zero. We cannot tolerate "hallucinations"—fabricated lab values or invented diagnoses. To bridge this gap I focused on three pillars:
+
+1. **HIPAA Compliance:** Ensuring all data handling meets federal privacy standards.
+
+3. **Source-Grounded Outputs:** The AI is instructed to _only_ use provided text. If it isn't in the note, the AI cannot "infer" it.
+
+5. **Explicit "Missing Data" Flags:** If the insurer requires a BMI and it’s not in the report, the system must flag it rather than guess.
+
+### V. The Technical Build: From Prose to Form
+
+The workflow I developed involves a specialized "Clinical Extraction Engine." Here is the logic:
+
+- **Inputs:** We feed the system the patient’s clinical ultrasound report and the specific insurance requirements.
+
+- **The Processing Layer:** Using a structured prompt within a HIPAA-compliant LLM, we extract:
+    - **Validated ICD-10 & CPT Codes:** Directly supported by clinical evidence.
+    
+    - **High-Risk Indicators:** Identifying specific maternal or fetal comorbidities.
+    
+    - **Automated Justification:** Generating a draft letter that mirrors the payer's medical necessity criteria.
+
+- **The Gap Analysis:** The system identifies missing fields (e.g., "Missing: Last LMP date") so the staff knows exactly what to look for.
+
+### VI. The Human-in-the-Loop Model
+
+We advocate for **Augmented Intelligence**, not replaced intelligence. The AI does not submit the form.
+
+Instead, the Medical Assistant reviews the clean, structured output, confirms its accuracy against the original chart, and then performs the final submission. This ensures that **accountability remains human**, while the "heavy lifting" of data mining is handled by code.
+
+
+### VII. Impact: Better Software as a Form of Care
+
+The results in practice have been transformative:
+
+- **Time Savings:** Reduced chart-review time by over 70%.
+
+- **Consistency:** Every submission now uses the same high-standard evidence base.
+
+- **Reduced Burnout:** Staff spend less time digging through notes and more time interacting with patients.
+
+- **Patient Outcomes:** Faster authorizations mean faster treatment.
+
+### VIII. Final Reflection: Why Doctors Should Build
+
+This project wasn't the result of a multi-million dollar venture-backed startup. It was a physician seeing a systems problem and applying a software-thinking mindset to fix it.
+
+**Doctors don’t need to become full-time engineers. We need to become problem-literate.**
+
+Sometimes the fastest way to care for a high-risk patient isn’t a new drug or a more expensive ultrasound machine—it’s better software built by the people who actually do the work.
+
+
+**Chukwuma I. Onyeije, MD, FACOG** _Medical Director, Atlanta Perinatal Associates_ and _Founder, CodeCraftMD_
