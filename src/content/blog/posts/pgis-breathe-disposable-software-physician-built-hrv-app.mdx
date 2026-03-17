@@ -1,0 +1,219 @@
+---
+title: "I Didn't Download an App. I Described My Problem to an AI and It Built One for Me."
+description: "A Maternal-Fetal Medicine specialist describes how his personal AI health system identified low HRV, recommended breathing exercises, and prompted him to build a custom evidence-based breathing app in a single afternoon. A case study in disposable software, physician agency, and the future of personal health technology."
+pubDate: 2026-03-16
+updatedDate: 2026-03-16
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.doctorswhocode.blog/about"
+image:
+  url: "/images/posts/pgis-breathe-blog-hero.jpg"
+  alt: "A physician reviews his HRV trend chart and PGIS Breathe app at dawn, Garmin watch on his wrist, running shoes in the background."
+category: "Physician Development"
+tags:
+  - HRV
+  - heart rate variability
+  - AI in medicine
+  - physician developer
+  - disposable software
+  - PGIS
+  - breathing exercises
+  - autonomic nervous system
+  - doctors who code
+  - medical software development
+  - Railway
+  - React
+  - personal health technology
+  - Garmin
+  - endurance athlete
+canonical: "https://www.doctorswhocode.blog/blog/pgis-breathe-disposable-software-physician-built-hrv-app"
+readingTime: 9
+featured: true
+draft: false
+---
+
+
+
+{/* Hero image — rendered by Astro's built-in Image component for automatic optimization */}
+<figure class="not-prose mb-10 -mx-4 sm:-mx-8 lg:-mx-16">
+  <img
+    src={frontmatter.heroImage}
+    alt={frontmatter.heroImageAlt}
+    class="w-full rounded-none sm:rounded-xl object-cover max-h-[520px]"
+    loading="eager"
+    decoding="async"
+  />
+  <figcaption class="text-center text-sm text-muted-foreground mt-3 italic px-4">
+    {frontmatter.heroImageCaption}
+  </figcaption>
+</figure>
+
+**A case study in disposable software, physician agency, and the future of personal health technology.**
+
+---
+
+## The Morning the Data Told Me to Stop
+
+I was planning a long run. My route was mapped, my nutrition staged, my Garmin charged. By every external measure, I was ready. But before I laced up, I did what I always do: I fed the morning's data into my **Performance Glycemic Intelligence System (PGIS)** — my personal AI-powered training and metabolic dashboard that integrates continuous glucose monitoring, heart rate variability, sleep quality, and training load into a daily readiness assessment.
+
+The PGIS came back with a clear signal: **not today.**
+
+My HRV had been trending low for three to four consecutive days. Not catastrophically low — but low enough that the system flagged it as a pattern rather than a single-day outlier. The recommendation was direct: hold the long run, reduce training intensity, and — this is the part that started a chain of thinking — begin **structured evening breathing exercises** to support autonomic recovery and improve parasympathetic tone.
+
+I have written before about the concept of *logs before intelligence* — the idea that data discipline must precede AI insight. This was that principle in action. The PGIS was not guessing. It was reading a three-day trend in a validated physiological biomarker and making a clinically grounded recommendation. And the recommendation pointed me toward a well-established intervention: **HRV-targeted breathing protocols.**
+
+---
+
+## The Reflex I Did Not Have
+
+Here is where I want to be honest about something. My first instinct was the same reflex most people have: *I'll find an app for that.*
+
+I opened the App Store. I searched "HRV breathing." I found dozens of options — some beautiful, some functional, most generic. None of them knew anything about me. None of them knew that my HRV had been suppressed for four days. None of them were connected to the PGIS. None of them were built around the specific evidence base I wanted — resonance frequency breathing, extended exhale ratios, the 4-7-8 protocol for pre-sleep parasympathetic activation. They were built for a hypothetical average user. I am not that user.
+
+So I closed the App Store. And I did something different.
+
+---
+
+## I Described My Problem. The Agent Built the Solution.
+
+I opened Manus — an AI agent with full development capabilities — and I described exactly what I needed. Not in technical specifications. In plain clinical language:
+
+> *"I need an evidence-based HRV breathing app. My PGIS identified that my HRV has been low for several days and recommended evening breathing exercises to improve autonomic tone. I want protocols that are grounded in the research — resonance breathing, extended exhale, 4-7-8 — with a day mode and a night mode. I want to be able to track my Garmin HRV readings over time. I want it to be a web app I can put on my phone. I'm deploying to Railway."*
+
+Within the same session, the agent researched the evidence base for HRV-targeted breathing protocols, citing Chaitanya et al. (2022), Magnon et al. (2021), Vierra et al. (2022), Laborde et al. (2022), and Steffen et al. (2017). It designed and built a full-stack React web application with six evidence-based protocols, an animated breathing orb, phase-specific audio cues synthesized via the Web Audio API, and a real-time waveform visualizer. It added a Garmin HRV logging tab with a daily entry modal, a 30-day SVG trend chart with HRV zone color coding, and a 7-day rolling average line. It configured Railway deployment files — a `Dockerfile`, `nixpacks.toml`, and `railway.json` — so the app could be pushed to production the same day.
+
+I named it **PGIS Breathe**, because it is not a standalone app. It is a component of a larger personal health intelligence system.
+
+The entire process took a few hours. The code is on [GitHub](https://github.com/chukwumaonyeije/PGIS-Breathe). The app is [live on Railway](https://pgis-breathe-production.up.railway.app/).
+
+---
+
+## What This Actually Is: Disposable Software
+
+I have written about the concept of **disposable software** before — the idea that in an era of AI-assisted development, the unit economics of building software have collapsed so dramatically that it becomes rational to build a custom application for a single use case, a single user, or a single moment in time.
+
+PGIS Breathe is a concrete example of that thesis.
+
+This is not a commercial product. I am not building it to sell. I am building it because it solves a specific problem I have, right now, in a way that no existing product does. It is integrated with my PGIS data model. It reflects the exact evidence base I trust. It is branded to my system. It runs on infrastructure I control. And it cost me an afternoon, not a development team.
+
+The economics of this are worth sitting with. A traditional software development cycle for an app of this complexity — design, development, testing, deployment — would cost tens of thousands of dollars and take months. The AI-assisted version cost me a conversation and a few hours of iteration. The quality is not identical to a polished commercial product, but it is **more than sufficient** for its purpose. And critically, it is *mine* — shaped by my clinical knowledge, my data, my preferences.
+
+This is what I mean when I say these are great times to be a physician who codes.
+
+---
+
+## The Evidence Behind the App
+
+I want to be precise about the science here, because this is a medical blog and precision matters. The protocols in PGIS Breathe are not arbitrary. They are drawn from a specific and growing literature on **heart rate variability biofeedback** and **slow-paced breathing** as interventions for autonomic nervous system regulation.
+
+| Protocol | Phases | Rate | Primary Mechanism | Key Evidence |
+|:---|:---|:---|:---|:---|
+| **Resonance Breathing** | 5s inhale / 5s exhale | 6.0 BPM | Maximizes HRV amplitude at ~0.1 Hz resonance frequency | Chaitanya et al. (2022); Steffen et al. (2017) |
+| **Extended Exhale (1:2)** | 4s inhale / 8s exhale | 5.0 BPM | Prolonged exhalation increases high-frequency HRV via vagal activation | Magnon et al. (2021); Birdee et al. (2023) |
+| **4-7-8 Breathing** | 4s in / 7s hold / 8s out | 3.2 BPM | Extended exhale + breath hold activates parasympathetic NS; pre-sleep protocol | Vierra et al. (2022) |
+| **Box Breathing** | 4s in / 4s hold / 4s out / 4s hold | 3.75 BPM | Equal-phase breathing for stress recovery and sympathetic reset | Kasap et al. (2025) |
+| **Slow Deep Breathing** | 5s in / 2s pause / 7s out | 4.3 BPM | Diaphragmatic activation increases vagal tone | Laborde et al. (2022); Westbrook et al. (2011) |
+| **Sleep Preparation** | 4s in / 4s hold / 8s out | 3.75 BPM | Combines extended exhale and hold for pre-sleep parasympathetic dominance | Vierra et al. (2022); Magnon et al. (2021) |
+
+The foundational mechanism across all of these protocols is the same: **slow-paced breathing synchronizes respiratory sinus arrhythmia with the Mayer wave oscillation**, creating resonance at approximately 0.1 Hz and maximizing the amplitude of HRV oscillations.[^lehrer2014] This is not a wellness trend. It is applied autonomic physiology.
+
+For a 60-year-old endurance athlete with Type 2 diabetes — which is my clinical profile — HRV is not just a training metric. It is a window into autonomic function that has direct implications for glycemic regulation, cardiovascular risk, and recovery capacity.[^laborde2017] The PGIS takes this seriously. PGIS Breathe is the intervention arm of that system.
+
+---
+
+## The Larger Argument: Physicians Must Build
+
+I want to step back from the specific app and make a broader argument, because I think what happened this week is a signal about where medicine and software development are heading.
+
+For most of the history of medical software, the workflow has been linear and physician-passive: a clinical need is identified, a technology company builds a product to address it, and physicians adopt — or are forced to adopt — that product. The software is designed for the average patient, the average workflow, the average institution. The physician is a consumer. The fit is imperfect.
+
+What AI-assisted development enables is a fundamentally different workflow. A clinical need is identified — by a physician, for themselves or their patients. The physician describes the need to an AI agent in clinical language. The agent builds a custom solution, grounded in the evidence the physician specifies. The physician deploys it to infrastructure they control. The software is specific, personal, and immediately useful. The physician is a builder. The fit is exact.
+
+This is not science fiction. I did this today. The app is real. The code is on GitHub. The deployment is live.
+
+---
+
+## What This Means for Physicians Who Code
+
+I am not arguing that every physician needs to become a software engineer in the traditional sense. The barrier to entry for AI-assisted development is falling so rapidly that the relevant skill is no longer syntax — it is **clinical reasoning applied to software requirements**.
+
+The physician who can say, clearly and precisely, *"I need a tool that does X, grounded in evidence Y, integrated with system Z, deployed on platform W"* — that physician can build. Not because they know React or TypeScript or Docker, but because they know the problem deeply enough to describe it to an agent that does.
+
+This is a new kind of technical literacy. It is not about writing code. It is about **thinking architecturally about clinical problems** and having enough familiarity with the development ecosystem to guide an AI agent toward a working solution. The physicians who develop this literacy will have capabilities that no app store can provide: the ability to build tools that are precisely calibrated to their clinical context, their patient population, their data systems, and their personal practice philosophy.
+
+---
+
+## A Note on "Disposable" Software
+
+I want to address the word "disposable" directly, because it can sound dismissive. It is not meant to be.
+
+Disposable software does not mean low-quality software. It means software whose value is **contextual and temporal** rather than universal and permanent. PGIS Breathe may be exactly what I need for the next three months while I work on improving my HRV baseline. In six months, my needs may change. The PGIS may recommend a different intervention. I may build a different component.
+
+The ability to build, use, and retire software at the pace of clinical need — rather than at the pace of commercial software development cycles — is a genuine capability expansion. It is analogous to the difference between ordering a custom prosthetic and buying one off the shelf. Both are prosthetics. Only one fits.
+
+---
+
+## What I Am Doing Next
+
+PGIS Breathe is live. I am using it. The evening resonance breathing sessions are underway. I will track my Garmin HRV readings in the app's log tab and report back on whether the intervention moves the needle over the next two to four weeks.
+
+More broadly, I am continuing to build out the PGIS ecosystem — integrating CGM data, HRV trends, training load, and sleep quality into a unified personal performance intelligence system. Each component is a small, focused application. Each one is built to solve a specific problem I have identified in my own data.
+
+This is the practice of medicine applied to the self. And it is, I believe, a preview of how a growing number of physicians will practice software development in the years ahead.
+
+---
+
+## The Takeaway
+
+If you are a physician reading this, here is what I want you to hold onto.
+
+The next time you have a clinical problem — for yourself, for your patients, for your practice — before you open the App Store, ask yourself: *Could I describe this problem clearly enough for an AI agent to build a solution?*
+
+If the answer is yes, you are already most of the way there.
+
+These are great times to be a physician who codes. Not because the tools are perfect. But because the barrier between having a clinical insight and having a working piece of software to act on it has never been lower.
+
+Build the thing. Deploy it. Use it. Retire it when it no longer serves you. Build the next thing.
+
+That is disposable software. And it is a superpower.
+
+---
+
+## Try PGIS Breathe
+
+The app is free, open-source, and runs in your mobile browser — no download required.
+
+- **Live app:** [pgis-breathe-production.up.railway.app](https://pgis-breathe-production.up.railway.app/)
+- **GitHub:** [github.com/chukwumaonyeije/PGIS-Breathe](https://github.com/chukwumaonyeije/PGIS-Breathe)
+- **Add to iPhone:** Open in Safari → Share → "Add to Home Screen"
+
+---
+
+## References
+
+[^lehrer2014]: Lehrer, P. M., & Gevirtz, R. (2014). Heart rate variability biofeedback: how and why does it work? *Frontiers in Psychology, 5*, 756. https://doi.org/10.3389/fpsyg.2014.00756
+
+[^laborde2017]: Laborde, S., Mosley, E., & Thayer, J. F. (2017). Heart rate variability and cardiac vagal tone in psychophysiological research — Recommendations for experiment planning, data analysis, and data reporting. *Frontiers in Psychology, 8*, 213. https://doi.org/10.3389/fpsyg.2017.00213
+
+Additional studies cited in the protocol table: Chaitanya, G., et al. (2022). *Frontiers in Physiology*; Magnon, V., et al. (2021). *Scientific Reports*; Vierra, J., et al. (2022). *Applied Psychophysiology and Biofeedback*; Steffen, P. R., et al. (2017). *Frontiers in Public Health*; Kasap, Z., et al. (2025). *Stress and Health*; Laborde, S., et al. (2022). *International Journal of Environmental Research and Public Health*; Westbrook, A., et al. (2011). *Applied Psychophysiology and Biofeedback*; Birdee, G. S., et al. (2023). *Journal of Integrative and Complementary Medicine*.
+
+---
+
+{/* Author bio component — works with most Astro blog themes */}
+<aside class="not-prose mt-12 border-t border-border pt-8 flex flex-col sm:flex-row gap-6 items-start">
+  <div class="shrink-0">
+    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center text-white text-2xl font-bold">
+      CO
+    </div>
+  </div>
+  <div>
+    <p class="font-semibold text-foreground text-lg">Dr. Chukwuma Onyeije</p>
+    <p class="text-muted-foreground text-sm mb-3">Maternal-Fetal Medicine Specialist · Physician-Developer · Founder, CodeCraftMD</p>
+    <p class="text-sm text-foreground/80">
+      Dr. Onyeije writes about the intersection of clinical medicine, software development, and artificial intelligence at{' '}
+      <a href="https://DoctorsWhoCode.blog" class="text-teal-600 dark:text-teal-400 underline underline-offset-2 hover:no-underline">
+        DoctorsWhoCode.blog
+      </a>
+      . He is the creator of the Performance Glycemic Intelligence System (PGIS) and the founder of CodeCraftMD.
+    </p>
+  </div>
+</aside>
