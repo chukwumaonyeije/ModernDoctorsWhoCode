@@ -16,6 +16,8 @@ draft: false
 description: "By Dr. Chukwuma Onyeije, MFM Specialist & Founder of CodeCraftMD"
 ---
 
+import FAQ from '../../../components/FAQ.astro';
+
 **"Why Your AI Scribe Isn't Saving You Time (And What Will)"**
 
 _By Dr. Chukwuma Onyeije, MFM Specialist & Founder of CodeCraftMD_
@@ -356,6 +358,29 @@ Afshar M, et al. University of Wisconsin [AI Scribe RCT](https://ai.nejm.org/doi
 
 Lukac M, et al. UCLA [AI Scribe Implementation Study](https://www.uclahealth.org/news/release/ucla-study-finds-ai-scribes-may-reduce-documentation-time)
 
+
+<FAQ items={[
+  {
+    question: "How much time do AI medical scribes actually save?",
+    answer: "Two major RCTs showed 7-12 minutes saved per clinical session in real-world conditions (UCLA, 29-33% adoption). Best-case results under optimal implementation (University of Wisconsin) reached approximately 22 minutes per day. Both studies confirmed burnout reduction and improved patient satisfaction — but neither showed meaningful productivity gains."
+  },
+  {
+    question: "Why are physicians still charting at 10 PM even with AI scribes?",
+    answer: "Because AI scribes only automate one step in a multi-step administrative workflow: the progress note. After the note is written, physicians still manually enter orders, code the encounter, draft prior authorizations, respond to patient messages, and close clinical loops. One step automated out of six is not a productivity solution."
+  },
+  {
+    question: "What is the difference between documentation automation and workflow automation?",
+    answer: "Documentation automation — what current AI scribes provide — captures the clinical visit and generates a note. Workflow automation extends downstream: auto-drafting orders based on the clinical plan, generating accurate billing codes, pre-populating prior authorization language, creating billing summaries, and triggering appropriate follow-ups. The NEJM editorial concluded that true productivity gains require automating downstream tasks, not just the note."
+  },
+  {
+    question: "Which AI scribe platforms were studied in the 2025 NEJM research?",
+    answer: "The NEJM AI editorial analyzed RCTs covering three platforms: Abridge, Microsoft DAX Copilot, and Nabla. Physician adoption rates ranged from 29-71% depending on implementation quality, institutional support, and deployment context."
+  },
+  {
+    question: "What is CodeCraftMD and how does it address the workflow automation gap?",
+    answer: "CodeCraftMD is a clinical workflow automation platform built to handle the downstream tasks that AI scribes leave behind: accurate ICD-10 and CPT code generation, prior authorization language extraction, billing summaries, and structured documentation for EHR import. Where AI scribes generate the note, CodeCraftMD automates the administrative translation that follows it. It was built by an MFM specialist who experiences this gap daily."
+  }
+]} />
 
 **Related Reading:**
 

@@ -26,6 +26,7 @@ draft: false
 description: "Specifically, the Prior Authorization (PA)."
 ---
 
+import FAQ from '../../../components/FAQ.astro';
 
 ## In the world of high-risk pregnancy, minutes matter. Whether we are managing a case of preeclampsia or coordinating a fetal intervention, the clinical stakes are immense. Yet, as a Maternal-Fetal Medicine (MFM) specialist, I’ve found that the biggest hurdle to patient care often isn’t the pathology—it’s the paperwork.
 
@@ -117,5 +118,28 @@ This project wasn't the result of a multi-million dollar venture-backed startup.
 
 Sometimes the fastest way to care for a high-risk patient isn’t a new drug or a more expensive ultrasound machine—it’s better software built by the people who actually do the work.
 
+
+<FAQ items={[
+  {
+    question: "What is a prior authorization and why does it cause problems in high-risk obstetric care?",
+    answer: "A prior authorization (PA) is an insurer's requirement that a physician justify medical necessity before a service or medication is covered. In MFM practice, every ultrasound, specialized lab, and consultation can trigger a new PA. Staff must manually extract diagnosis codes, procedure codes, and clinical justification from unstructured EHR notes — a process that takes 20-30 minutes per case and introduces dangerous delays for high-risk patients."
+  },
+  {
+    question: "How does AI-powered prior authorization extraction work without fabricating clinical data?",
+    answer: "By using source-grounded extraction: the system is instructed to pull only information that exists in the provided clinical note. If required data is absent — such as the last menstrual period date or BMI — the system flags the gap explicitly rather than inferring or inventing it. This design is essential for clinical safety. The AI generates a structured draft; clinical staff verify it against the source chart before submission."
+  },
+  {
+    question: "What results did the prior authorization automation system produce in practice?",
+    answer: "The system reduced chart-review time for PA preparation by over 70%. Submission quality improved because every authorization used the same structured evidence base. Staff spent less time on manual data extraction and more time on direct patient interaction. Faster approvals directly reduced treatment delays for high-risk maternal-fetal patients."
+  },
+  {
+    question: "What does HIPAA compliance require in an AI-powered clinical workflow tool?",
+    answer: "HIPAA compliance means all data handling meets federal privacy standards at every processing step: secure transmission, access controls, audit trails, and use of only HIPAA-compliant platforms with signed Business Associate Agreements (BAAs). Clinical notes must never be processed on consumer AI platforms. For the PA workflow specifically, the system uses BAA-covered services and produces compliance-ready audit trails as a standard output."
+  },
+  {
+    question: "Is this prior authorization approach applicable to specialties other than MFM?",
+    answer: "Yes. The core logic — clinical note to structured extraction to gap-flagged PA draft with verified codes — is designed to be specialty-agnostic. Any subspecialty with frequent high-stakes authorizations (cardiology, oncology, nephrology, rare disease management) faces the same translation problem. The physician-built workflow described here is a component of CodeCraftMD, which is being developed for broader clinical deployment."
+  }
+]} />
 
 **Chukwuma I. Onyeije, MD, FACOG** _Medical Director, Atlanta Perinatal Associates_ and _Founder, CodeCraftMD_

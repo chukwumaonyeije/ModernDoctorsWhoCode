@@ -28,6 +28,8 @@ draft: false
 description: "A manifesto for physicians who want to build software, solve clinical problems, and actually ship products."
 ---
 
+import FAQ from '../../../components/FAQ.astro';
+
 A manifesto for physicians who want to build software, solve clinical problems, and actually ship products.
 
 
@@ -208,4 +210,27 @@ The path is not through 100 hours of videos. It’s through curiosity, evidence-
 > _“Help me build this.”_
 
 This is how I learned. This is how I built **[CodeCraftMD](https://codecraftmd.com/)**. And this is how you—the modern physician—can build the future of medicine.
+
+<FAQ items={[
+  {
+    question: "What is LLM-accelerated learning for physician-developers?",
+    answer: "LLM-accelerated learning replaces passive tutorial consumption with conversational, project-driven development. Instead of watching hours of video courses, you describe a clinical problem to a language model and ask it to help you build a solution. The model handles syntax and architecture suggestions; you bring clinical reasoning and problem definition. This approach is faster, stays current, and is anchored to real problems you actually need to solve."
+  },
+  {
+    question: "What is tutorial hell and why is it particularly damaging for busy physicians?",
+    answer: "Tutorial hell is the trap of consuming educational content without building anything real. For physicians, it carries extra costs: passive learning is easily forgotten when not connected to an actual clinical problem, tutorials quickly become outdated, and busy schedules make it hard to maintain momentum through a 20-hour course with no connection to your practice. Physicians don't need 100 hours of video — they need a working solution to one real problem."
+  },
+  {
+    question: "How is clinical reasoning similar to software development?",
+    answer: "Both require asking precise questions, reasoning about complex systems, iterating based on feedback, testing hypotheses, and translating domain knowledge into structured processes. Diagnosis is problem-solving. Software development is problem-solving. Clinical decision-making is pattern recognition built on evidence — so is building software. Physicians already have the cognitive architecture that modern development requires."
+  },
+  {
+    question: "How long does it take a physician to get a working prototype running?",
+    answer: "With the LLM-first approach, a working prototype can be running on a cloud platform in under 30 minutes. The process: identify one clinical workflow problem, describe it in plain English, prompt an AI assistant to generate a starter template, deploy to Vercel or Firebase. Functional complexity grows through iteration — but the first working version can happen the same day you decide to start."
+  },
+  {
+    question: "Do physician-developers need to know Python, React, or specific languages before starting?",
+    answer: "No. In 2026 the relevant skill is clinical reasoning applied to software requirements — the ability to describe a problem precisely enough for an AI agent to build a solution. You learn by building, not by completing a syllabus. Familiarity with tools like Python or deployment platforms grows naturally through the process of building something you actually care about solving."
+  }
+]} />
 

@@ -22,6 +22,8 @@ draft: false
 description: "It was a Tuesday evening consult. A doctor called with a patient at 31 weeks small for gestational age, elevated umbilical artery resistance, and a wo..."
 ---
 
+import FAQ from '../../../components/FAQ.astro';
+
 **By Chukwuma Onyeije, MD, FACOG** | _Maternal-Fetal Medicine Specialist & Founder, Doctors Who Code_ _Atlanta Perinatal Associates_
 
 
@@ -54,7 +56,143 @@ The SMFM evidence base is clear. Delivery timing in FGR hinges on two primary va
 | Reversed End-Diastolic Flow (REDF) | Highest Risk | 30–32 weeks |
 | Absent End-Diastolic Flow (AEDF) | High Risk | 33–34 weeks |
 | Decreased Diastolic Flow | Moderate–High Risk | ~37 weeks |
-| EFW <3rd Percentile, Normal UA | Severe FGR | ~37 weeks |
+| EFW &lt;3rd Percentile, Normal UA | Severe FGR | ~37 weeks |
+| Normal UA, EFW 3–10th Percentile | Elevated Surveillance | 38–39 weeks |
+
+The protocol is sound. The problem is the **interface** through which clinicians access it. A physician on overnight call, an MFM fellow rounding on a complex service, a community OB navigating a new diagnosis in a busy office — all of them are one Google search and two PDF scrolls away from the answer they need right now. That's a problem with real clinical consequences.
+
+**[FGRManager](https://openmfm.org/microsites/FGRManager/landing.html) operationalizes this protocol in real time.** Enter gestational age, EFW percentile, and Doppler category. The tool instantly returns: risk tier, recommended delivery window, days to target, surveillance schedule, and corticosteroid eligibility. No PDFs. No manual date math. No ambiguity.
+
+This isn't about replacing clinical judgment — it's about eliminating the cognitive overhead that gets in the way of exercising it.
+
+
+**Why I Built This Instead of Waiting for Someone Else To**
+
+I want to be direct about something. In the three decades I've been practicing Maternal-Fetal Medicine, I've watched our field's clinical infrastructure lag far behind the quality of the evidence it generates. Brilliant investigators publish landmark trials. SMFM produces rigorous, well-organized guidance. And then that guidance gets embedded in a static PDF that's usually three clicks deep on a society website.
+
+The vendors who build "[clinical decision support](https://www.ncbi.nlm.nih.gov/books/NBK543516/)" into EHR systems are — and I say this as someone who has now spent years building software — largely not solving this problem. They're building billing-friendly feature sets, not workflow tools designed around how MFM specialists actually think through complex cases.
+
+So I started building my own. [FGRManager](https://openmfm.org/microsites/FGRManager/landing.html) is part of a larger ecosystem I've been developing under the **Doctors Who Code** umbrella — the idea that the most valuable clinical software will increasingly be built by the clinicians who understand the problems firsthand, not by product teams who have to learn the medicine after the fact.
+
+
+**Design Philosophy: Clinical Tools Don't Have to Be Ugly**
+
+Let me say what many of us think but rarely say out loud: most clinical software is visually exhausting. Dense, cluttered interfaces layered with design debt from three EHR generations ago. The assumption, implicit and almost never examined, is that clinicians don't notice or don't care about design quality.
+
+They do. I do.
+
+FGRManager borrows its aesthetic from my [**Performance Glycemic Intelligence System (PGIS)**](https://pgis-web-4hsukajb.manus.space/) — a design language I've been refining across multiple physician-built tools. The principles are:
+
+- **Dark-First Architecture.** A dark, high-contrast theme reduces eye strain during long call shifts and late-night consults. It also conveys the precision and focus the clinical context demands. (Light mode is available, but it's secondary.)
+
+- **Animated Context Background.** A subtle canvas animation showing clinical terminology reinforces the tool's domain without demanding attention. It's atmosphere, not decoration.
+
+- **Glassmorphism and Teal Accent Glows.** Frosted-glass card surfaces and glowing teal highlights create visual hierarchy that draws the eye to the output that matters — the risk classification and delivery window — before anything else on screen.
+
+- **Monospace Typography for Data Output.** Gestational age, delivery windows, and countdowns render in a monospace font. This is a deliberate signal: _this is quantitative information, treat it accordingly._
+
+Good design in clinical tools isn't cosmetic. It's a trust signal. A well-designed tool feels more reliable. It gets adopted. An ugly tool, even a functionally correct one, gets abandoned.
+
+
+**Technical Architecture: The Case for Vanilla JavaScript**
+
+Here's the technical decision that will surprise some developers and be immediately understood by others: FGRManager is a **single index.html file with zero external dependencies**. No React. No Vue. No build pipeline. No npm install. Just HTML, CSS, and vanilla JavaScript.
+
+This was a deliberate choice, and I'd make it again.
+
+**Why Single-File, Zero-Dependency?**
+
+**Portability is clinical infrastructure.** This file can be dropped into any static host — GitHub Pages, Netlify, Vercel, a hospital intranet — and it works immediately. There is no environment to configure. No version conflicts. No deployment engineer required. For a tool whose users might include a program coordinator trying to host it for her residents, or an MFM fellow who wants it on a personal server, this matters enormously.
+
+**Longevity is a clinical requirement.** The web's core platform — HTML, CSS, and the browser's native JavaScript APIs — is extraordinarily stable. Code written against these primitives today will run, unmodified, a decade from now. That cannot be said of any JavaScript framework. I've watched frameworks with massive adoption communities become maintenance liabilities in under five years. For a tool that encodes clinical guidance, stability is a feature.
+
+**Performance compounds trust.** FGRManager loads and becomes interactive in milliseconds. That immediacy matters in a clinical environment. A tool that makes a resident wait — even 800 milliseconds — introduces doubt. Speed, paradoxically, is part of the clinical experience.
+
+**The Core Logic: Protocol-as-Functions**
+
+Every branch of the SMFM guidance was translated into a pure JavaScript function. Pure functions are testable, composable, and easy to reason about — a natural fit for encoding clinical decision logic.
+
+```js
+// parseGA(): Accepts multiple GA formats and normalizes to a structured object
+// Input: "32.4" | "32+4" | "32w4d" => Output: { weeks, days, totalDays }
+// classify(): Core protocol engine
+// Input: EFW percentile + Doppler category => Output: risk tier, delivery window, notes
+// surveillancePlan(): Returns surveillance schedule (NST/BPP frequency, UA Doppler interval)
+// steroidEligibility(): Checks standard and late-preterm corticosteroid thresholds
+// countdown(): Calculates weeks/days to delivery window midpoint
+```
+
+A simplified view of the classification logic:
+
+```js
+function classify(efw, doppler) {
+  if (doppler === 'redf') {
+    return { tier: 'Highest Risk - REDF', delivery: '30-32 weeks' };
+  } else if (doppler === 'aedf') {
+    return { tier: 'High Risk - AEDF', delivery: '33-34 weeks' };
+  } else if (efw < 3) {
+    return { tier: 'Severe FGR - EFW under 3rd Percentile', delivery: '~37 weeks' };
+  }
+  // ... all five clinical scenarios
+}
+```Physician-Developer's Blueprint for Turning Clinical Protocols into Bedside Tools"
+pubDate: 2026-03-08
+category: "Blogging"
+image:
+  url: "/images/posts/fgrmanager-hero.jpeg"
+  alt: "FGRManager clinical decision support tool"
+tags: 
+- "bedside-clinical-tool"
+- "clinical-decision-support-tool"
+- "doctors-who-code"
+- "fetal-growth-restriction"
+- "fgr-management"
+- "maternal-fetal-medicine-software"
+- "mfm-tool"
+- "physician-developer"
+- "smfm-guidelines"
+- "vanilla-javascript-clinical-tool"
+author: "Chukwuma Onyeije, MD, FACOG"
+draft: false
+
+description: "It was a Tuesday evening consult. A doctor called with a patient at 31 weeks small for gestational age, elevated umbilical artery resistance, and a wo..."
+---
+
+import FAQ from '../../../components/FAQ.astro';
+
+**By Chukwuma Onyeije, MD, FACOG** | _Maternal-Fetal Medicine Specialist & Founder, Doctors Who Code_ _Atlanta Perinatal Associates_
+
+
+**Suggested Meta Description:** A practicing MFM physician-developer deconstructs how to build a zero-dependency clinical decision support tool for fetal growth restriction management — from SMFM protocol to deployed microsite.
+
+
+![](https://lightslategray-turtle-256743.hostingersite.com/wp-content/uploads/2026/03/Gemini_Generated_Image_5za3kn5za3kn5za3-803x1024.jpeg)
+
+It was a Tuesday evening consult. A doctor called with a patient at 31 weeks — small for gestational age, elevated umbilical artery resistance, and a worried family in the room. The clinical question was straightforward: _when do we deliver?_
+
+The answer, of course, lives inside the SMFM Consult Series #52 guidance on fetal growth restriction management. Getting to it, however, required opening a PDF, hunting for the right table, mentally cross-referencing gestational age with Doppler category, and then calculating how many days away the delivery window actually was — all while a patient and her family waited for an answer.
+
+![](https://lightslategray-turtle-256743.hostingersite.com/wp-content/uploads/2026/03/clinical-decision.png)
+
+That friction is what I built **[FGRManager](https://openmfm.org/microsites/FGRManager/landing.html)** to eliminate.
+
+I'm a Maternal-Fetal Medicine specialist. I'm also a physician-developer. From where I sit, the gap between a well-written clinical protocol and a usable bedside tool isn't a technology problem — it's a _translation_ problem. And that translation is exactly what doctors who code are uniquely positioned to do.
+
+This post is a complete teardown of [FGRManager](https://openmfm.org/microsites/FGRManager/landing.html): what clinical problem it solves, how it was built, and why the technical choices matter. More importantly, it's a replicable blueprint for any physician-developer who wants to transform their own specialty's protocols into tools that actually live in the workflow.
+
+
+**The Clinical Problem: Why FGR Management Demands a Better Interface**
+
+Fetal Growth Restriction (FGR) is one of the highest-stakes diagnoses in obstetrics. The central management challenge is a real-time tradeoff: the ongoing risks of a hostile intrauterine environment on one side, and the risks of iatrogenic prematurity on the other.
+
+The SMFM evidence base is clear. Delivery timing in FGR hinges on two primary variables — **umbilical artery (UA) Doppler findings** and **gestational age (GA)** — and the SMFM Consult Series #52 specifies delivery thresholds for each risk category \[1\]:
+
+| **UA Doppler Category** | **Risk Tier** | **Recommended Delivery Window** |
+| --- | --- | --- |
+| Reversed End-Diastolic Flow (REDF) | Highest Risk | 30–32 weeks |
+| Absent End-Diastolic Flow (AEDF) | High Risk | 33–34 weeks |
+| Decreased Diastolic Flow | Moderate–High Risk | ~37 weeks |
+| EFW &lt;3rd Percentile, Normal UA | Severe FGR | ~37 weeks |
 | Normal UA, EFW 3–10th Percentile | Elevated Surveillance | 38–39 weeks |
 
 The protocol is sound. The problem is the **interface** through which clinicians access it. A physician on overnight call, an MFM fellow rounding on a complex service, a community OB navigating a new diagnosis in a busy office — all of them are one Google search and two PDF scrolls away from the answer they need right now. That's a problem with real clinical consequences.
@@ -177,17 +315,28 @@ This is what I built lightslategray-turtle-256743.hostingersite.com to address. 
 **What protocol in your specialty is still living in a PDF?**
 
 
-**Frequently Asked Questions**
-
-**Is FGRManager validated against the SMFM guidelines?** Yes. The classification logic is directly derived from SMFM Consult Series #52, and all five clinical scenarios are covered by an automated test suite embedded in the tool. That said, FGRManager is a decision support tool — clinical judgment remains with the treating physician.
-
-**Does FGRManager work on mobile?** Yes. The interface is fully responsive. It was designed with on-call residents and bedside use in mind.
-
-**Can I host FGRManager at my institution?** The single-file architecture was chosen specifically to make this easy. You can host the index.html file on any static server, an institutional intranet, or a personal domain with no configuration required.
-
-**Can I fork or modify the code?** Yes. This is open architecture by design. The goal is to model a pattern, not to protect a product.
-
-**Is this the same design system as PGIS?** Yes. FGRManager uses the same dark-first, glassmorphism aesthetic I developed for the Performance Glycemic Intelligence System. I'm building a consistent visual language across physician-built tools that signals precision, trustworthiness, and domain expertise.
+<FAQ items={[
+  {
+    question: "What clinical problem does FGRManager solve?",
+    answer: "FGRManager eliminates the cognitive overhead of accessing SMFM delivery timing guidance for fetal growth restriction at the bedside. Instead of opening a PDF and manually cross-referencing gestational age with Doppler category, a clinician enters three inputs and instantly receives the risk tier, recommended delivery window, days to target, surveillance schedule, and corticosteroid eligibility. No manual date math, no PDF hunting, no ambiguity during a consult."
+  },
+  {
+    question: "Is FGRManager validated against SMFM guidelines?",
+    answer: "Yes. The classification logic is directly derived from SMFM Consult Series #52, covering all five clinical scenarios: reversed end-diastolic flow (REDF), absent end-diastolic flow (AEDF), decreased diastolic flow, EFW below the 3rd percentile with normal UA, and normal UA with EFW in the 3rd-10th percentile. An automated test suite runs all five scenarios on every code change. FGRManager is a decision support tool — clinical judgment remains with the treating physician."
+  },
+  {
+    question: "Why was FGRManager built as a single HTML file with zero external dependencies?",
+    answer: "For portability and longevity. A zero-dependency single file can be dropped onto any static host — GitHub Pages, a hospital intranet, a personal domain — and works immediately with no configuration and no build process. Core browser APIs are extraordinarily stable; JavaScript frameworks are not. For a tool encoding clinical guidance, a decade of reliable operation is a first-order requirement."
+  },
+  {
+    question: "Can I host FGRManager at my institution or fork the code?",
+    answer: "Yes to both. The single-file architecture was chosen specifically to make institutional hosting trivial. Drop the index.html on any static server — no npm install, no deployment engineer, no environment configuration required. The code is open architecture by design. The goal is to model a replicable pattern for physician-developers, not to protect a product."
+  },
+  {
+    question: "What is the broader vision behind FGRManager and tools like it?",
+    answer: "Every medical specialty has algorithm-driven protocols currently trapped in static PDFs. SMFM alone has dozens of Consult Series that could become bedside tools. The gap between these protocols and usable clinical tools is not a technology problem — it is an access problem. Physician-developers sit at the intersection of clinical knowledge and software skills needed to close that gap. FGRManager is one example of the pattern. The blueprint scales to any specialty."
+  }
+]} />
 
 
 **Get the Tool**

@@ -10,6 +10,8 @@ draft: false
 description: "Medical Director, Atlanta Perinatal Associates | Founder, CodeCraftMD"
 ---
 
+import FAQ from '../../../components/FAQ.astro';
+
 # **The adoption crisis in clinical AI isn't technical — it's generational. Here's what 18 months building CodeCraftMD taught me about who actually uses physician-built tools.**
 
 By Chukwuma Onyeije, MD, FACOG  
@@ -148,5 +150,28 @@ Which side of that divide do you want to be on?
 
 **— Chukwuma Onyeije, MD, FACOG**  
 _Writing about physician-built tools, clinical AI, and the future of medical software at [DoctorsWhoCode.blog](http://DoctorsWhoCode.blog)_
+
+<FAQ items={[
+  {
+    question: "Why do most physician-built AI tools fail to get adopted?",
+    answer: "The failure is usually not technical — it is generational. Tools built by experienced physicians often reflect deep clinical insight but lack the technical fluency to iterate quickly. Tools built by AI-native trainees ship fast but may miss clinical pattern recognition that prevents dangerous edge cases. Both alone are insufficient. Successful tools require experienced clinician insight into what to build and AI-native technical fluency in how to build it."
+  },
+  {
+    question: "What is the difference between how experienced physicians and AI-native trainees approach clinical software?",
+    answer: "Experienced physicians have irreplaceable domain insight: they recognize broken workflows, know where clinical logic fails, and understand which safety constraints actually matter. AI-native trainees have technical fluency and operational fearlessness — they prototype quickly and iterate without hesitation. The risk is that trainees can build something technically elegant with a dangerous clinical blind spot. A triage tool that deprioritizes decreased fetal movement because the message lacks the word 'urgent' is a concrete example of that failure mode."
+  },
+  {
+    question: "What is the adoption pattern for clinical tools that actually succeed?",
+    answer: "Successful clinical tools spread laterally through trusted peers, not top-down from administration. The sequence: an experienced clinician identifies an authentic pain point, an AI-native trainee builds and iterates the prototype, the tool gets stress-tested in real clinical flow, senior physicians adopt after seeing it work in practice, and administration buys in once the ROI is visible. Innovation in medicine doesn't flow from the top — it propagates through peer trust."
+  },
+  {
+    question: "Why should physicians build AI tools rather than waiting for enterprise vendors?",
+    answer: "Vendor teams building clinical AI have not managed a precipitous delivery at 2 AM, explained a devastating diagnosis to a family, or made a split-second decision with incomplete information. Those experiences encode safety constraints, clinical epistemology, and interface requirements that no product specification document can capture. Physicians who build now preserve clinical reasoning in automated systems. Those who wait inherit tools built to someone else's priorities."
+  },
+  {
+    question: "What is the generational divide in clinical AI adoption and why does it matter?",
+    answer: "Experienced physicians (10+ years in practice) approach new software expecting stability, rigorous validation, and institutional approval. AI-native trainees expect tools to work immediately and are comfortable iterating without formal sign-off. This creates a gap: experienced physicians know which problems matter most but resist early adoption; trainees adopt quickly but may underweight clinical safety edge cases. Bridging this gap — through co-development between generations — is the structural opportunity in physician-built AI."
+  }
+]} />
 
 _Next post: Inside CodeCraftMD — Why I built billing automation first (and what it taught me about clinical AI adoption)_
