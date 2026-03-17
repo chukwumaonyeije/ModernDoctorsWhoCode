@@ -1,0 +1,137 @@
+---
+title: "The AMA Is Right About Augmented Intelligence — They're Wrong About Who Should Build It"
+description: "The AMA's 2026 survey shows 81% of physicians now use AI in practice. But read the fine print. Physicians want a seat at the table. The best way to earn that seat is to be the person who wrote the code."
+pubDate: 2026-03-17
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags: ["augmented intelligence", "AMA", "physician-developer", "AI in medicine", "clinical informatics"]
+category: "AI in Medicine"
+image:
+  url: "/images/posts/ama-augmented-intelligence-hero.jpeg"
+  alt: "Physician at dual-monitor workstation with EHR on one screen and code on the other"
+draft: false
+featured: true
+readingTime: 9
+series: "The Physician-Developer Imperative"
+seriesPart: 1
+seriesTotal: 3
+---
+
+import Callout from '../../../components/Callout.astro';
+import AuthorBio from '../../../components/AuthorBio.astro';
+
+<Callout type="note">
+This is Part 1 of a three-part series on the AMA's 2026 Augmented Intelligence Survey and what it means for physicians who build. Part 2 examines the real risk hidden inside the skill-loss debate. Part 3 issues the direct challenge.
+</Callout>
+
+I opened the AMA's 2026 survey on augmented intelligence between a consult and a prior auth callback on Tuesday.
+
+The lead number stopped me: 81% of physicians now use AI in practice. Three years ago that number was 38%. The jump is real, and it happened faster than almost anyone predicted.
+
+The AMA deserves credit for how it framed this. The organization deliberately uses "augmented intelligence" rather than "artificial intelligence." That is not a branding choice. It is a philosophical position: these tools should support physician judgment, not replace it. I agree with that framing completely.
+
+But there is a gap in the argument. And that gap matters for everyone reading this blog.
+
+## What the Survey Actually Says
+
+Nearly 1,700 physicians from across specialties and practice settings responded to the 2026 survey.
+
+Eighty-five percent want to be consulted or directly involved in AI adoption decisions at their institutions. That is nearly every physician in the room raising their hand.
+
+Seventy percent see AI as a tool to automate what drives burnout: documentation, chart review, prior authorizations. AMA data from 2024 showed that physicians average a 57.8-hour workweek, with 13 hours spent on indirect patient care — order entry, documentation, inbox management.[^2] Tasks that consume physician time but rarely deliver direct clinical value to the patient in front of you.
+
+Eighty-eight percent worry about skill loss, particularly among physicians with ten years or less in practice.
+
+Physician confidence is also growing. More than three-quarters now believe AI improves their ability to care for patients, up from 65% in 2023. The most common uses are medical research summarization (39%) and clinical documentation (28-30%). That tells you exactly where physicians feel the weight most acutely.
+
+These numbers describe a profession that is increasingly using AI, increasingly anxious about what that means, and increasingly insistent on having a voice in how these tools are designed and deployed.
+
+I take all of that seriously. But I want to push on one phrase: "consulted or directly involved in decisions about AI adoption."
+
+Being consulted is a ceiling, not a floor.
+
+## The Administrative Crisis That Made This Inevitable
+
+The answer to why AI adoption accelerated this fast is not enthusiasm for technology. It is desperation around documentation.
+
+EHR documentation requirements are among the primary structural drivers of physician burnout.[^3] Physicians spend more time with computers than with patients. The cognitive load of data entry, inbox management, and prior authorizations compounds across every clinical day. When ambient documentation tools started producing draft notes that actually sounded like a physician wrote them, adoption followed immediately.
+
+Not because physicians love software. Because the alternative was another night of pajama-time charting.
+
+The 70% of physicians who want AI to reduce burnout are not making a casual observation. They are describing a workforce that has been running past capacity for years, looking for any structural relief the technology can provide.
+
+That context matters for the physician-developer argument. If you understand the clinical problem from inside a practice, you build differently than a software team that has never waited three hours for a prior authorization callback. The best tools in this space will be built by people who have felt the problem personally.
+
+## The Governance Seat vs. the Builder's Seat
+
+When a hospital system buys an ambient documentation tool, who gets consulted? Usually a physician champion. Maybe a committee. The vendor presents the product, the committee asks questions, and someone signs a contract.
+
+That is what "being consulted" looks like in practice. It is reactive. It happens after the architecture decisions have already been made. After the training data has been assembled. After the model has been fine-tuned on clinical patterns that may or may not reflect your patient population.
+
+Governance matters. Physician input into institutional AI adoption matters. But there is a different kind of seat at the table, and it is more powerful.
+
+The builder's seat.
+
+The physician-developer does not wait for an AI tool to be brought to committee. The physician-developer identifies a clinical workflow problem, designs a solution, writes the code, tests it against real clinical scenarios, and deploys something that reflects actual bedside judgment.
+
+That is not theory. That is what I did when I built FGRManager, a zero-dependency clinical decision support tool for fetal growth restriction. I did not petition a vendor. I opened a code editor. The tool reflects how I actually think through a growth-restricted fetus at 30 weeks: the thresholds I use, the decision branches, the guideline references. No vendor would have built it that way, because no vendor has run that differential at midnight.
+
+Research supports this directly: clinicians involved in identifying clinical problems, designing data structures, and validating outputs produce AI tools better calibrated to real-world care delivery.[^4] The development process is a series of clinical judgment calls. Having a physician at those inflection points is not a nice-to-have. It is the difference between a tool that works in a demo and one that holds up under actual clinical pressure.
+
+## The AMA's Framing Demands More Than They're Asking For
+
+The AMA's "augmented intelligence" language implies an active relationship. Augmentation is not passive. Something is being augmented: a physician's reasoning, judgment, clinical intuition built over years of training.
+
+If that is the goal, then the physician needs to understand the augmenting tool well enough to know when to trust it and when to override it. That is not a governance skill. It is a technical skill.
+
+You cannot evaluate what you cannot interrogate. You cannot interrogate a system you did not build and have never opened.
+
+The AMA survey found that clear liability frameworks rank as the highest regulatory priority for physicians around AI adoption. That concern is legitimate. But liability frameworks are downstream of technical architecture. The question of who is responsible when an AI tool produces a wrong recommendation is inseparable from the question of how that tool was designed, what training data it used, and whether anyone with clinical expertise was in the room when those decisions were made.
+
+The 85% of physicians who want to be involved in AI adoption decisions are asking for the right thing. They may be underselling the level of involvement required to actually protect what matters: the integrity of clinical reasoning.
+
+## What This Means for Physicians Who Build
+
+If you are reading DoctorsWhoCode.blog, you are already asking different questions than your colleagues.
+
+Not "Should I use AI?" but "How does it work, and can I build something better?"
+
+Not "When will AI be regulated?" but "What does the regulatory landscape mean for what I can deploy today?"
+
+Not "Am I going to be replaced?" but "What can I build that I could not have built before?"
+
+The AMA survey is useful data. It tells us where the profession is. It does not tell us where it should be going. That is the work of physician-developers.
+
+The next decade of medicine will not be defined by how many physicians use AI. It will be defined by how many helped design it.
+
+## Where to Start
+
+Start with a clinical problem you know intimately. Something that frustrates you in practice every single day. A documentation inefficiency. A repetitive lookup. A workflow that makes no sense. The problems are not hard to find. They are layered into every EHR interaction, every prior auth, every progress note that takes twenty minutes and communicates ten seconds of actual clinical thinking.
+
+Then learn enough to build a solution. Python. A language model API. A simple automation. The tools are accessible. The barrier is lower than it has ever been.
+
+You do not need to become a software engineer. You need to become a physician who can build.
+
+That distinction matters. The goal is not perfect code. The goal is to be the person in the room who understands both the clinical problem and the technical architecture well enough to make sure the solution actually serves patients.
+
+<Callout type="clinical">
+The AMA is right that physicians should be involved in augmented intelligence. The honest question is not whether to be involved. It is what kind of involvement is worth having. Building is better than consulting.
+</Callout>
+
+---
+
+*Next in this series: Skill Loss Is the Wrong Fear. Here's the Right One.*
+
+---
+
+## References
+
+[^1]: American Medical Association. *2026 Physician Survey on Augmented Intelligence*. AMA Center for Digital Health and AI, March 2026. Available at: [ama-assn.org](https://www.ama-assn.org/practice-management/digital-health/more-80-physicians-use-ai-professionally-ama-survey)
+
+[^2]: American Medical Association. *Doctors Work Fewer Hours, but the EHR Still Follows Them Home*. AMA Organizational Biopsy 2024 National Data Report. Available at: [ama-assn.org](https://www.ama-assn.org/practice-management/physician-health/doctors-work-fewer-hours-ehr-still-follows-them-home)
+
+[^3]: Wu Y, Wu M, Wang C, et al. Evaluating the Prevalence of Burnout Among Health Care Professionals Related to Electronic Health Record Use: Systematic Review and Meta-Analysis. *JMIR Medical Informatics*. 2024;12:e54811. doi:10.2196/54811. Available at: [medinform.jmir.org](https://medinform.jmir.org/2024/1/e54811)
+
+[^4]: Khan AH, Farghaly M, Byers J, et al. Artificial intelligence tool development: what clinicians need to know? *PMC/NCBI*. 2025. Available at: [pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC12023651/)
+
+<AuthorBio />
