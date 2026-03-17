@@ -1,0 +1,141 @@
+---
+title: "Augmented Intelligence Is a Physician Problem. That Makes It a Physician-Developer Opportunity."
+description: "The AMA opened the door. Physicians must decide what to do with it. The survey data is not a comfort. It's a challenge. Here's what physician-developers do next."
+pubDate: 2026-03-19
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags: ["augmented intelligence", "AMA", "physician-developer", "clinical AI", "build"]
+category: "AI in Medicine"
+image:
+  url: "/images/posts/physician-developer-opportunity-hero.jpeg"
+  alt: "Physician standing at the threshold of a modern software development workspace, one step from entering"
+draft: true
+featured: true
+readingTime: 9
+series: "The Physician-Developer Imperative"
+seriesPart: 3
+seriesTotal: 3
+---
+
+import Callout from '../../../components/Callout.astro';
+import AuthorBio from '../../../components/AuthorBio.astro';
+
+<Callout type="note">
+This is Part 3 of a three-part series on the AMA's 2026 Augmented Intelligence Survey. [Part 1](/blog/ama-augmented-intelligence-physician-developer) argued that being consulted is a ceiling, not a floor. [Part 2](/blog/skill-loss-wrong-fear) identified the real risk hiding inside the skill-loss debate.
+</Callout>
+
+I got a message last week from a hospitalist who had read the first two posts in this series. She wanted to know: where do I actually start?
+
+That question is the whole point of this post.
+
+The AMA calls it "augmented intelligence." I call it a job description. Here is the position, stated plainly: AI should enhance physician judgment, not replace it. Technology should be subordinate to clinical reasoning. The physician must remain at the center of care.
+
+I agree with all of it. What the AMA statement does not resolve is the implementation question. Who actually ensures that augmented intelligence enhances judgment rather than displacing it? Who builds the systems with enough clinical fidelity to be genuinely useful? Who designs the workflows that keep the physician at the center?
+
+The answer the AMA implies, but does not quite say, is: physicians.
+
+The answer I am prepared to say directly is: physician-developers.
+
+## The Gap Between Policy and Product
+
+The AMA's 2026 survey is the third in an annual series. Adoption has jumped from 38% to 81% in three years. The AMA's advocacy has been meaningful in shaping how organized medicine talks about these tools.
+
+But policy documents and survey reports do not build software. They do not write APIs. They do not design clinical decision support logic. They do not test model outputs against edge cases in maternal-fetal medicine or nephrology or emergency medicine.
+
+Products do that. And products are built by people.
+
+Right now, most of the people building clinical AI tools are not physicians. They are engineers, data scientists, and entrepreneurs with varying degrees of clinical exposure. Some of them do excellent work. Some build tools that look impressive in demos and fail quietly at the bedside.
+
+The physician-developer exists at the intersection where that failure becomes preventable.
+
+## What Physician-Developers Actually Do
+
+"Physician who codes" can mean many things. Let me be specific.
+
+It can mean a physician who automates their own documentation workflow using a Python script and a language model API. That is a physician-developer.
+
+It can mean a fellowship-trained specialist who builds a clinical decision support tool for their subspecialty, validated against real cases, published openly for colleagues to use. That is also a physician-developer.
+
+It can mean a practicing clinician who joins an AI startup as a co-founder or clinical lead, reviewing model outputs with the technical depth to catch errors before they become patient harm. That too.
+
+It can mean a department chair who builds a dashboard to monitor AI tool performance across a division, creating accountability infrastructure that would not otherwise exist.
+
+None of these require abandoning clinical practice. All of them require moving beyond passive consumption.
+
+## The Structural Opportunity Right Now
+
+Three things are true simultaneously that were not all true five years ago.
+
+First, the tools for building are accessible. Language model APIs, low-code automation platforms, modern development frameworks, and pre-trained clinical models have lowered the barrier substantially. A physician with six months of deliberate learning can build meaningful clinical tools today.
+
+Second, the clinical problems are enormous and well-defined. Documentation burden, prior authorization bottlenecks, care coordination gaps, clinical decision support for rare conditions, patient-facing education tools. Every physician reading this has a list. The demand for solutions is not hypothetical.
+
+Third, the regulatory and institutional environment is beginning to catch up. FDA guidance on clinical AI is evolving. Institutions are building governance frameworks. The window for physician input is open. It will not stay open indefinitely.
+
+The physicians who build now will be the ones shaping what the governance frameworks actually protect against. The ones who wait will be filing comments on frameworks built by others.
+
+## What the Survey Is Actually Saying
+
+Read the survey data as a challenge rather than a comfort, and this is what it says.
+
+Eighty-five percent of physicians want to be involved in AI adoption decisions. But involvement without technical literacy produces theater. Committees nodding at vendor demos. Approval processes that assess whether a tool has FDA clearance rather than whether it performs well on the patient population in front of you.
+
+Seventy percent see AI as a tool to reduce administrative burden. That is the lowest possible ambition for what physician-built AI could accomplish. The real opportunity is redesigning workflows, not just speeding them up.
+
+Eighty-eight percent worry about skill loss. As I argued in Part 2, this is the wrong fear if it leads to avoidance. Building tools requires more clinical engagement, not less. The physician who builds a differential diagnosis tool has to specify, explicitly, what counts as good clinical reasoning. That specification process is a form of clinical mastery.
+
+## The Starting Point Is One Problem
+
+The question I ask at the start of any project: what do I do repeatedly that a machine could do better?
+
+A lookup I run manually. A decision framework I carry in my head that could be codified. A patient question I answer the same way every single time.
+
+That is the starting point. Not a career change. One concrete problem.
+
+Build a solution to it. Not a perfect one. A first version. Use Python. Use Claude's API. Use n8n for a no-code workflow. Use whatever is accessible right now. The tool does not have to be production-ready. It has to be built, tested, and evaluated against actual clinical judgment.
+
+That process, done once, changes how you think about every AI tool you use afterward. You stop being a passive user. You start being an evaluator with a technical frame of reference.
+
+Then do it again. What starts as a small automation can become something worth sharing with colleagues, submitting to a journal, or turning into a product that serves the specialty you trained in.
+
+## The Larger Argument
+
+The AMA has used its institutional authority to say: physicians must remain at the center of AI-augmented care. That is the right position.
+
+But the center is not a place you get handed. It is a place you build infrastructure to occupy.
+
+Physician-developers are building that infrastructure. We are the ones who translate clinical complexity into technical specifications. We are the ones who know what the model gets wrong because we have seen the wrong outcomes. We are the ones who can design evaluation frameworks that reflect what good medicine actually looks like.
+
+The AMA opened the door when it endorsed augmented intelligence as the framework for physician-AI interaction. The question now is whether physicians walk through that door as consultants or as architects.
+
+I know which one I am.
+
+I know which one I am working to help more physicians become.
+
+## What This Blog Is For
+
+Not inspiration. Infrastructure.
+
+DoctorsWhoCode.blog exists to document real work: tools built, decisions made, tradeoffs acknowledged. The posts here cover the technical stack, the clinical use cases, the ethical frameworks, and the practical steps for physicians who want to move from user to builder.
+
+The AMA survey tells us where the profession is.
+
+<Callout type="clinical">
+The honest question is not whether physicians should be involved in augmented intelligence. It is what kind of involvement is worth having. Building is the answer. The problems are real, the tools are ready, and the need for physician-developers has never been more visible.
+</Callout>
+
+---
+
+*This concludes the Physician-Developer Imperative series.*
+
+*[Part 1: The AMA Is Right About Augmented Intelligence — They're Wrong About Who Should Build It](/blog/ama-augmented-intelligence-physician-developer)*
+
+*[Part 2: Skill Loss Is the Wrong Fear. Here's the Right One.](/blog/skill-loss-wrong-fear)*
+
+---
+
+## References
+
+[^1]: American Medical Association. *2026 Physician Survey on Augmented Intelligence*. AMA Center for Digital Health and AI, March 2026. Available at: [ama-assn.org](https://www.ama-assn.org/practice-management/digital-health/more-80-physicians-use-ai-professionally-ama-survey)
+
+<AuthorBio />
