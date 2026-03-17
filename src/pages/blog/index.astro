@@ -6,8 +6,15 @@ import PostCard from '../../components/PostCard.astro';
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-// Collect all unique tags
-const allTags = [...new Set(sortedPosts.flatMap(p => p.data.tags))].sort();
+// Collect tags used by 3+ posts only
+const tagCounts = sortedPosts.flatMap(p => p.data.tags).reduce((acc, tag) => {
+  acc[tag] = (acc[tag] ?? 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+const allTags = Object.entries(tagCounts)
+  .filter(([, count]) => count >= 3)
+  .sort((a, b) => b[1] - a[1])
+  .map(([tag]) => tag);
 ---
 
 <BaseLayout
@@ -17,39 +24,31 @@ const allTags = [...new Set(sortedPosts.flatMap(p => p.data.tags))].sort();
   <div style="max-width: 1200px; margin: 0 auto; padding: 3rem 1.5rem 5rem;">
 
     <!-- Header -->
-    <div style="margin-bottom: 3rem;">
-      <p class="label" style="margin-bottom: 0.75rem;">All Posts</p>
-      <h1 style="font-size: 2.5rem; margin-bottom: 0.75rem;">The Blog</h1>
-      <p style="font-size: 1.0625rem; color: var(--dwc-muted); max-width: 600px;">
-        Clinical medicine, software development, AI tools, and the physician-developer perspective.
-        No hype. No filler.
-      </p>
-    </div>
-
-    <!-- Tag filter bar -->
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem;" id="tag-filters">
-      <button
-        class="tag-btn active"
-        data-tag="all"
-        style="font-family: var(--font-mono); font-size: 0.75rem; padding: 0.3rem 0.75rem; border-radius: 4px; border: 1px solid var(--dwc-cyan); color: var(--dwc-navy); background-color: var(--dwc-cyan); cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em;"
-      >All</button>
-      {allTags.map(tag => (
-        <button
-          class="tag-btn"
-          data-tag={tag}
-          style="font-family: var(--font-mono); font-size: 0.75rem; padding: 0.3rem 0.75rem; border-radius: 4px; border: 1px solid var(--dwc-border); color: var(--dwc-muted); background-color: transparent; cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em;"
-        >{tag}</button>
-      ))}
-    </div>
-
-    <!-- Search -->
-    <div style="margin-bottom: 2.5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem;">
+      <div>
+        <p class="label" style="margin-bottom: 0.5rem;">All Posts</p>
+        <h1 class="gradient-text" style="font-size: 2.5rem; margin: 0;">The Blog</h1>
+      </div>
       <input
         type="search"
         id="post-search"
         placeholder="Search posts..."
-        style="width: 100%; max-width: 400px; background-color: var(--dwc-card); border: 1px solid var(--dwc-border); border-radius: 8px; padding: 0.625rem 1rem; color: var(--dwc-white); font-family: var(--font-body); font-size: 0.9375rem;"
+        style="background-color: var(--dwc-card); border: 1px solid var(--dwc-border); border-radius: 8px; padding: 0.625rem 1rem; color: var(--dwc-white); font-family: var(--font-mono); font-size: 0.875rem; width: 260px; outline: none;"
       />
+    </div>
+
+    <!-- Tag filter — single scrollable row -->
+    <div style="overflow-x: auto; padding-bottom: 0.5rem; margin-bottom: 2rem;">
+      <div style="display: flex; gap: 0.5rem; min-width: max-content;" id="tag-filters">
+        <button class="tag-btn active" data-tag="all"
+          style="font-family: var(--font-mono); font-size: 0.7rem; padding: 0.3rem 0.75rem; border-radius: 4px; border: 1px solid var(--dwc-cyan); color: var(--dwc-navy); background-color: var(--dwc-cyan); cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;"
+        >All</button>
+        {allTags.map(tag => (
+          <button class="tag-btn" data-tag={tag}
+            style="font-family: var(--font-mono); font-size: 0.7rem; padding: 0.3rem 0.75rem; border-radius: 4px; border: 1px solid var(--dwc-border); color: var(--dwc-muted); background-color: transparent; cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;"
+          >{tag}</button>
+        ))}
+      </div>
     </div>
 
     <!-- Posts grid -->
