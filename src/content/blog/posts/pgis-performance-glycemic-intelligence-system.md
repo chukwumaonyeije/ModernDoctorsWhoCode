@@ -5,6 +5,9 @@ category: "Blogging"
 
 author: "Chukwuma Onyeije, MD, FACOG"
 draft: false
+image:
+  url: "/images/posts/pgis-post-infographic.png"
+  alt: "PGIS Performance Glycemic Intelligence System infographic"
 
 description: "<iframe src='https://doctorswhocode.blog/infographics/pgis-infographic.html' width='100%' height='1000' frameborder='0' style='border:none; display:bloc..."
 ---
