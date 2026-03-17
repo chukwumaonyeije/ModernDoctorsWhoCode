@@ -19,6 +19,7 @@ seriesTotal: 3
 
 import Callout from '../../../components/Callout.astro';
 import AuthorBio from '../../../components/AuthorBio.astro';
+import FAQ from '../../../components/FAQ.astro';
 
 <Callout type="note">
 This is Part 1 of a three-part series on the AMA's 2026 Augmented Intelligence Survey and what it means for physicians who build. Part 2 examines the real risk hidden inside the skill-loss debate. Part 3 issues the direct challenge.
@@ -119,6 +120,29 @@ The AMA is right that physicians should be involved in augmented intelligence. T
 </Callout>
 
 ---
+
+<FAQ items={[
+  {
+    question: "What does the AMA mean by augmented intelligence?",
+    answer: "The AMA uses 'augmented intelligence' rather than 'artificial intelligence' as a deliberate philosophical position: these tools should support physician judgment, not replace it. The framing implies an active, subordinate relationship between the AI system and the clinician — the physician remains the decision-maker."
+  },
+  {
+    question: "How many physicians use AI in practice in 2026?",
+    answer: "According to the AMA's 2026 Augmented Intelligence Survey, 81% of physicians now use AI in practice — up from 38% in 2023. The most common uses are medical research summarization (39%) and clinical documentation (28-30%). More than three-quarters believe AI improves their ability to care for patients."
+  },
+  {
+    question: "What is a physician-developer?",
+    answer: "A physician-developer is a clinician who builds software to solve clinical problems — someone who can write code, design decision support tools, or automate clinical workflows. The distinction from a physician who simply uses AI is presence: a physician-developer is in the room when architectural decisions, training data, and clinical logic are defined."
+  },
+  {
+    question: "Why is being consulted on AI adoption not sufficient for physicians?",
+    answer: "Being consulted happens after the architecture decisions have already been made, the training data assembled, and the model fine-tuned. Physician input at that stage is reactive. The physician-developer occupies the builder's seat — identifying the problem, designing the solution, and writing the code — which is where actual influence over the tool's clinical fidelity lives."
+  },
+  {
+    question: "Where should a physician who wants to start building AI tools begin?",
+    answer: "Start with a clinical problem you encounter every day — a documentation inefficiency, a repetitive lookup, a workflow that makes no sense. Then learn enough to build a solution: Python, a language model API, a simple automation. The goal is not perfect code. It is to be the person who understands both the clinical problem and the technical architecture well enough to make sure the solution actually serves patients."
+  }
+]} />
 
 *Next in this series: Skill Loss Is the Wrong Fear. Here's the Right One.*
 

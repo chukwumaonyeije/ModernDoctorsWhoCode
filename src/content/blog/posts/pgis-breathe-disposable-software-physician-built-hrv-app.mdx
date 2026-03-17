@@ -31,7 +31,7 @@ featured: true
 draft: false
 ---
 
-
+import FAQ from '../../../components/FAQ.astro';
 
 {/* Hero image — rendered by Astro's built-in Image component for automatic optimization */}
 <figure class="not-prose mb-10 -mx-4 sm:-mx-8 lg:-mx-16">
@@ -177,6 +177,29 @@ Build the thing. Deploy it. Use it. Retire it when it no longer serves you. Buil
 That is disposable software. And it is a superpower.
 
 ---
+
+<FAQ items={[
+  {
+    question: "What is PGIS and what does it track?",
+    answer: "PGIS stands for Performance Glycemic Intelligence System. It is a personal AI-powered training and metabolic dashboard that integrates continuous glucose monitoring (CGM), heart rate variability (HRV), sleep quality, and training load into a daily readiness assessment. It was built by Dr. Onyeije to inform training decisions as a physician and endurance athlete managing Type 2 diabetes."
+  },
+  {
+    question: "What is disposable software in the context of physician-built tools?",
+    answer: "Disposable software is software built for a specific use case, user, or moment in time — not for commercial release or universal adoption. The value is contextual and temporal rather than permanent. AI-assisted development has made this economically rational: a custom clinical tool that would have cost tens of thousands of dollars and months of development can now be built in an afternoon. Disposable does not mean low quality. It means precisely fitted."
+  },
+  {
+    question: "What breathing protocols does PGIS Breathe include and what is the evidence?",
+    answer: "PGIS Breathe includes six protocols: Resonance Breathing (6 BPM, maximizes HRV at 0.1 Hz), Extended Exhale 1:2 ratio (vagal activation via prolonged exhalation), 4-7-8 Breathing (parasympathetic activation pre-sleep), Box Breathing (sympathetic reset), Slow Deep Breathing (diaphragmatic/vagal tone), and a Sleep Preparation protocol. All are grounded in peer-reviewed research on HRV biofeedback. The core mechanism: slow-paced breathing synchronizes respiratory sinus arrhythmia with Mayer wave oscillation, maximizing HRV amplitude."
+  },
+  {
+    question: "Can a physician build a custom health app without traditional coding skills?",
+    answer: "Yes — if they can describe a clinical problem precisely. The relevant skill is no longer syntax. It is clinical reasoning applied to software requirements. A physician who can say clearly what a tool needs to do, what evidence it should reflect, and what system it should integrate with can guide an AI development agent to a working solution. PGIS Breathe was built by describing the clinical need in plain language to an AI agent, not by writing React from scratch."
+  },
+  {
+    question: "What is heart rate variability and why is it clinically relevant?",
+    answer: "Heart rate variability (HRV) is the variation in time between consecutive heartbeats, reflecting the balance between sympathetic and parasympathetic nervous system activity. Higher HRV generally indicates better autonomic regulation and recovery capacity. For a physician and endurance athlete with Type 2 diabetes, HRV carries direct clinical implications for glycemic regulation, cardiovascular risk, and training adaptation. The PGIS treats HRV as a primary readiness biomarker, not simply a fitness metric."
+  }
+]} />
 
 ## Try PGIS Breathe
 

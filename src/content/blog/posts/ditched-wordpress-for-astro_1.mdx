@@ -16,6 +16,7 @@ readingTime: 8
 
 import Callout from '../../../components/Callout.astro';
 import AuthorBio from '../../../components/AuthorBio.astro';
+import FAQ from '../../../components/FAQ.astro';
 
 I spent most of March 16, 2026 fighting a WordPress plugin.
 
@@ -141,5 +142,28 @@ Repo:       github.com/chukwumaonyeije/ModernDoctorsWhoCode
 The site you are reading right now runs on exactly this. The post you are reading was written in VS Code, committed to GitHub, and deployed to Vercel in under a minute.
 
 That is the whole system.
+
+<FAQ items={[
+  {
+    question: "What is headless WordPress and why did it create problems for this site?",
+    answer: "Headless WordPress keeps WordPress as the content backend while serving the frontend through a separate framework — in this case, Next.js via GraphQL. The problem is that it combines WordPress's operational complexity with none of the ease of use that makes WordPress worthwhile. Every URL configuration touches two systems. Every domain change is a three-layer problem: the WordPress database, wp-config.php, and the frontend environment variables. When something breaks, you debug in two places."
+  },
+  {
+    question: "How long does a WordPress-to-Astro migration actually take?",
+    answer: "For DoctorsWhoCode.blog — 89 posts — the migration took one afternoon. A single command converts the WordPress XML export to clean markdown files. Build, layout, and Vercel deployment took about three hours total. The bottleneck was not the technology. It was the decision to start."
+  },
+  {
+    question: "What is the tech stack for DoctorsWhoCode.blog?",
+    answer: "The site runs on Astro 4.x as the framework, MDX for post content, Tailwind CSS for styling, GitHub as the content management system, and Vercel for deployment. There is no database, no PHP, and no plugins. The entire site is a folder of markdown files and a git push."
+  },
+  {
+    question: "What do you lose by moving from WordPress to Astro?",
+    answer: "Primarily the media library — there is no drag-and-drop image upload. You also lose the visual editor, plugin-based SEO, and any features that relied on WordPress plugins. If you already write in markdown and work in a code editor, these losses are minimal. Plugin-based SEO is replaced by direct control over every meta tag in the layout files."
+  },
+  {
+    question: "Is Astro the right choice for every physician-developer who blogs?",
+    answer: "Only if you are comfortable with the command line, GitHub, and text editors. The honest question is not which stack is objectively better — it is which one matches how you actually work. If your workflow is already file and code-based, Astro is dramatically simpler than WordPress. If you rely on visual editors and plugin ecosystems, WordPress still makes sense."
+  }
+]} />
 
 <AuthorBio />

@@ -1,0 +1,58 @@
+---
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  items: FAQItem[];
+}
+
+const { items } = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": items.map(({ question, answer }) => ({
+    "@type": "Question",
+    "name": question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": answer,
+    },
+  })),
+};
+---
+
+<section style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--dwc-border);">
+  <h2 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--dwc-white); margin-bottom: 1.5rem;">
+    Frequently Asked Questions
+  </h2>
+
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    {items.map(({ question, answer }) => (
+      <details style="background-color: var(--dwc-card); border: 1px solid var(--dwc-border); border-radius: 8px; padding: 1.125rem 1.25rem;">
+        <summary style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--dwc-white); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+          <span>{question}</span>
+          <span class="faq-icon" style="font-family: var(--font-mono); font-size: 1.25rem; color: var(--dwc-cyan); flex-shrink: 0; user-select: none;">+</span>
+        </summary>
+        <p style="font-size: 0.9375rem; color: var(--dwc-muted); line-height: 1.7; margin-top: 0.875rem; margin-bottom: 0;">
+          {answer}
+        </p>
+      </details>
+    ))}
+  </div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+<style>
+  details[open] .faq-icon {
+    content: "−";
+    transform: rotate(45deg);
+    display: inline-block;
+  }
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
