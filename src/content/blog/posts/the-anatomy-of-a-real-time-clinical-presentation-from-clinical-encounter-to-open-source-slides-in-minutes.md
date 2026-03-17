@@ -4,6 +4,9 @@ pubDate: 2026-02-23
 category: "Technology"
 author: "Chukwuma Onyeije, MD, FACOG"
 draft: false
+image:
+  url: "/images/posts/clinical-presentation-hero.png"
+  alt: "AI-generated clinical presentation workflow visualization"
 
 description: "A few days ago, a consult reminded me why I started this blog . A colleague mentioned a new patient with a complex presentation of placenta accreta spec..."
 ---

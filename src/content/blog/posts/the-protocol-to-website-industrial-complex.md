@@ -2,6 +2,9 @@
 title: "The Protocol-to-Website Industrial Complex:"
 pubDate: 2026-03-15
 category: "Blogging"
+image:
+  url: "/images/posts/protocol-to-website.png"
+  alt: "Physician-developer building clinical knowledge infrastructure"
 tags: 
 - "acog-guidelines"
 - "clinical-knowledge-management"

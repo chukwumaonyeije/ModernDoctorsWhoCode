@@ -2,6 +2,9 @@
 title: "How I Built FGRManager: A Physician-Developer's Blueprint for Turning Clinical Protocols into Bedside Tools"
 pubDate: 2026-03-08
 category: "Blogging"
+image:
+  url: "/images/posts/fgrmanager-hero.jpeg"
+  alt: "FGRManager clinical decision support tool"
 tags: 
 - "bedside-clinical-tool"
 - "clinical-decision-support-tool"

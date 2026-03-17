@@ -4,6 +4,9 @@ pubDate: 2026-02-25
 category: "Technology"
 author: "Chukwuma Onyeije, MD, FACOG"
 draft: false
+image:
+  url: "/images/posts/pgis-infographic.png"
+  alt: "PGIS Performance Glycemic Intelligence System infographic"
 
 description: "As a physician-developer and a 60-year-old endurance athlete living with Type 2 diabetes for over two decades, I have navigated a unique intersection of..."
 ---
