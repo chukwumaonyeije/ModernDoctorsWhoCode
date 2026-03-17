@@ -1,0 +1,129 @@
+---
+title: "Skill Loss Is the Wrong Fear. Here's the Right One."
+description: "88% of physicians fear AI will erode their clinical instincts. That fear is real but misdirected. The greater risk is intellectual dependency on systems we didn't build and cannot interrogate."
+pubDate: 2026-03-18
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags: ["augmented intelligence", "AMA", "clinical skills", "AI in medicine", "physician-developer"]
+category: "AI in Medicine"
+image:
+  url: "/images/posts/skill-loss-wrong-fear-hero.jpg"
+  alt: "Senior physician and resident reviewing AI diagnostic output on a tablet in a hospital corridor"
+draft: true
+featured: true
+readingTime: 8
+series: "The Physician-Developer Imperative"
+seriesPart: 2
+seriesTotal: 3
+---
+
+import Callout from '../../../components/Callout.astro';
+import AuthorBio from '../../../components/AuthorBio.astro';
+
+<Callout type="note">
+This is Part 2 of a three-part series on the AMA's 2026 Augmented Intelligence Survey and what it means for physicians who build. [Part 1](/blog/ama-augmented-intelligence-physician-developer) made the case that being consulted is a ceiling, not a floor. Part 3 issues the direct challenge.
+</Callout>
+
+A fellow stopped me after rounds last month. She had been using an AI-assisted diagnostic tool embedded in the EHR and wanted to know: was she building clinical judgment, or building dependence?
+
+It is the right question. Most of the answers I hear are the wrong answer.
+
+The AMA's 2026 survey found that 88% of physicians worry AI will erode their clinical skills. That concern runs deepest among physicians with ten years or less in practice. Residents. Fellows. Attendings who trained in the era of clinical informatics. They watched AI arrive during their formative years, and they are asking something legitimate: what happens to diagnostic reasoning when you outsource it before it fully develops?
+
+I understand that fear. I share part of it.
+
+But I think most of us are afraid of the wrong thing.
+
+## The Skill Loss We're Actually Worried About
+
+The concern goes like this: if AI writes our notes, we stop synthesizing. If AI generates differentials, we stop reasoning from first principles. If AI reads the EKG, we stop pattern-recognizing. Over time, through disuse, the clinical muscles atrophy.
+
+There is historical precedent. Calculators changed how we do arithmetic. GPS changed how we navigate. Spell-check changed how we proofread. The question is whether clinical reasoning is more like arithmetic or more like judgment, and whether its erosion would be survivable.
+
+My view: skill loss from AI tools is real, worth managing carefully, and ultimately survivable.
+
+It is survivable because the profession has mechanisms for this. Residency training. Clinical simulation. Direct supervision. Board examinations. Certification requirements. We already have infrastructure for maintaining and evaluating clinical competence. That infrastructure can adapt.
+
+What the infrastructure cannot easily fix is the other problem. The one the survey did not name.
+
+## The Fear No One Is Naming
+
+Here is the scenario I actually find troubling.
+
+A physician is using a clinical decision support tool embedded in the EHR. The tool surfaces a recommendation. The physician, trained to defer to evidence-based guidelines and pressed for time, accepts it. The note reflects it. The order is placed.
+
+What the physician does not know: the model was trained on data that underrepresents the specific demographic of the patient in front of them. The recommendation reflects population-level patterns that do not apply cleanly to this case. The confidence score displayed by the tool does not capture this limitation.
+
+The physician was not negligent. The physician used an approved, deployed, institutionally sanctioned tool. But the physician had no technical vocabulary to interrogate the output. No way to ask: what was this trained on? Whose data shaped these weights? What does this confidence interval actually mean?
+
+That is the real risk. Not skill loss. Intellectual dependency.
+
+## The Difference Between Using and Understanding
+
+There is a distinction I find essential.
+
+Using a tool means providing inputs and accepting outputs. Understanding a tool means knowing enough about its architecture to have a principled basis for when to trust it, when to override it, and when to escalate to someone who built it.
+
+Aviation figured this out the hard way. The transition from manual flight to highly automated cockpits produced a generation of pilots who were skilled operators of automated systems but increasingly less practiced at manual control. When the automation failed, the fallback was underdeveloped.
+
+The aviation industry responded not by removing automation but by requiring manual flight proficiency alongside automation literacy. Both. Not one or the other.
+
+Medicine needs the same framework. Clinical skills and technical literacy. The ability to diagnose and the ability to interrogate the diagnostic support tool.
+
+Right now, we are building one without the other.
+
+## Why Building Is the Antidote
+
+When I built FGRManager, my clinical decision support tool for fetal growth restriction, I had to make explicit every assumption baked into the logic. Which guidelines was I following? How was I weighting competing data points? What would the tool output if the gestational age was uncertain? What did it do at the edges of its intended use?
+
+I had to answer those questions because I was writing the code. There was no black box. Every decision branch was visible to me.
+
+That process did something I did not expect. It deepened my clinical knowledge. I found gaps in my own reasoning that I had papered over for years with pattern recognition. Translating clinical judgment into explicit logic forced a level of precision that bedside practice had not required.
+
+Building AI tools, it turns out, is a form of clinical education.
+
+When you write a prompt for a clinical language model, you have to specify what counts as a correct output. When you fine-tune a model on clinical notes, you have to think carefully about what patterns you want it to learn. When you design an evaluation set, you have to define what good clinical reasoning looks like.
+
+These are not software engineering tasks. They are clinical reasoning tasks expressed in technical form.
+
+## What the AMA Survey Is Missing
+
+The survey is well-designed. The findings are important. But it is measuring adoption and anxiety, not architecture.
+
+It tells us that 81% of physicians use AI. It does not tell us how many of those physicians could explain in basic terms how the tool they use every day actually works.
+
+My guess is that number is small. Very small.
+
+That is the gap worth worrying about. Not whether AI will make residents worse at reading chest X-rays. Whether an entire profession will become expert operators of systems they cannot evaluate, holding clinical sovereignty in theory while having surrendered it in practice.
+
+The physicians who navigate this well are not the ones who avoided AI. They are the ones who went deep enough to understand it. And the shortest path to that understanding is to build something yourself.
+
+## The Honest Question
+
+The honest question is not "Am I using AI too much?" It is "Do I understand what I'm using well enough to know when to trust it?"
+
+If the answer is no, using it less is not the solution. Going deeper is.
+
+Start with one tool you already use in practice. Read the documentation. Find out what data it was trained on. Look for the validation studies. Ask the vendor: what are the known failure modes?
+
+Then go one step further. Build something simple. A structured prompt for a common clinical task. A basic automation for a repetitive workflow. A data query that helps you analyze your own practice patterns.
+
+You do not need to become a software engineer. You need enough technical literacy to be a critical consumer, not a passive user.
+
+<Callout type="clinical">
+Skill loss from using AI is a manageable risk. Intellectual dependency on systems you cannot interrogate is not. The antidote to both is the same: build.
+</Callout>
+
+---
+
+*Previously: [The AMA Is Right About Augmented Intelligence — They're Wrong About Who Should Build It](/blog/ama-augmented-intelligence-physician-developer)*
+
+*Next in this series: Augmented Intelligence Is a Physician Problem. That Makes It a Physician-Developer Opportunity.*
+
+---
+
+## References
+
+[^1]: American Medical Association. *2026 Physician Survey on Augmented Intelligence*. AMA Center for Digital Health and AI, March 2026. Available at: [ama-assn.org](https://www.ama-assn.org/practice-management/digital-health/more-80-physicians-use-ai-professionally-ama-survey)
+
+<AuthorBio />
