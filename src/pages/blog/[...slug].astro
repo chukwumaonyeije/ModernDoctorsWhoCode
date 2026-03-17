@@ -14,6 +14,9 @@ type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content, headings } = await render(post);
+
+// Use hero image if set, otherwise fall back to the generated OG card
+const ogImage = post.data.image?.url ?? `/og/${post.id}.png`;
 ---
 
 <PostLayout
@@ -26,6 +29,7 @@ const { Content, headings } = await render(post);
   tags={post.data.tags}
   category={post.data.category}
   image={post.data.image}
+  ogImage={ogImage}
   readingTime={post.data.readingTime}
   canonical={post.data.canonical}
   headings={headings}

@@ -14,6 +14,7 @@ interface Props {
   tags?: string[];
   category?: string;
   image?: { url: string; alt: string };
+  ogImage?: string;
   readingTime?: number;
   canonical?: string;
   headings?: { depth: number; slug: string; text: string }[];
@@ -29,12 +30,11 @@ const {
   tags = [],
   category = 'Technology',
   image,
+  ogImage = image?.url ?? '/images/og-default.jpg',
   readingTime,
   canonical = Astro.url.href,
   headings = [],
 } = Astro.props;
-
-const ogImage = image?.url ?? '/images/og-default.jpg';
 
 const articleSchema = {
   "@context": "https://schema.org",
