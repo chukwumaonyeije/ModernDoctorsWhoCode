@@ -17,6 +17,20 @@ const { Content, headings } = await render(post);
 
 // Use hero image if set, otherwise fall back to the generated OG card
 const ogImage = post.data.image?.url ?? `/og/${post.id}.png`;
+
+// Auto reading time: strip MDX/markdown syntax, count words, assume 200 wpm
+const wordCount = (post.body ?? '')
+  .replace(/```[\s\S]*?```/g, '')   // remove code blocks
+  .replace(/`[^`]*`/g, '')          // remove inline code
+  .replace(/!\[.*?\]\(.*?\)/g, '')  // remove images
+  .replace(/\[.*?\]\(.*?\)/g, '$1') // remove link syntax
+  .replace(/<[^>]+>/g, '')          // remove HTML tags
+  .replace(/[#*_~>\-|]/g, '')       // remove markdown symbols
+  .trim()
+  .split(/\s+/)
+  .filter(Boolean)
+  .length;
+const readingTime = post.data.readingTime ?? Math.max(1, Math.ceil(wordCount / 200));
 ---
 
 <PostLayout
@@ -30,7 +44,7 @@ const ogImage = post.data.image?.url ?? `/og/${post.id}.png`;
   category={post.data.category}
   image={post.data.image}
   ogImage={ogImage}
-  readingTime={post.data.readingTime}
+  readingTime={readingTime}
   canonical={post.data.canonical}
   headings={headings}
 >

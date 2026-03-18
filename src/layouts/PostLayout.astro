@@ -159,20 +159,31 @@ const relatedPosts = allPosts
       )}
 
       <!-- Share links -->
-      <div style="display: flex; align-items: center; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--dwc-border);">
+      <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--dwc-border);">
         <span class="label">Share</span>
         <a
           href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(canonical)}`}
           target="_blank"
           rel="noopener noreferrer"
-          style="font-size: 0.875rem; color: var(--dwc-muted);"
+          style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-muted); text-decoration: none; padding: 0.375rem 0.75rem; border: 1px solid var(--dwc-border); border-radius: 6px; transition: color 0.2s, border-color 0.2s;"
         >X / Twitter</a>
+        <a
+          href={`https://bsky.app/intent/compose?text=${encodeURIComponent(title + ' ' + canonical)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-muted); text-decoration: none; padding: 0.375rem 0.75rem; border: 1px solid var(--dwc-border); border-radius: 6px; transition: color 0.2s, border-color 0.2s;"
+        >Bluesky</a>
         <a
           href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonical)}`}
           target="_blank"
           rel="noopener noreferrer"
-          style="font-size: 0.875rem; color: var(--dwc-muted);"
+          style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-muted); text-decoration: none; padding: 0.375rem 0.75rem; border: 1px solid var(--dwc-border); border-radius: 6px; transition: color 0.2s, border-color 0.2s;"
         >LinkedIn</a>
+        <button
+          id="copy-link-btn"
+          data-url={canonical}
+          style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-muted); background: none; border: 1px solid var(--dwc-border); border-radius: 6px; padding: 0.375rem 0.75rem; cursor: pointer; transition: color 0.2s, border-color 0.2s;"
+        >Copy link</button>
       </div>
 
       <!-- Newsletter -->
@@ -236,6 +247,22 @@ const relatedPosts = allPosts
 
   </div>
 </BaseLayout>
+
+<script>
+  const btn = document.getElementById('copy-link-btn');
+  btn?.addEventListener('click', async () => {
+    const url = btn.getAttribute('data-url') ?? window.location.href;
+    await navigator.clipboard.writeText(url);
+    btn.textContent = 'Copied!';
+    btn.style.color = 'var(--dwc-cyan)';
+    btn.style.borderColor = 'var(--dwc-cyan)';
+    setTimeout(() => {
+      btn.textContent = 'Copy link';
+      btn.style.color = '';
+      btn.style.borderColor = '';
+    }, 2000);
+  });
+</script>
 
 <style>
   @media (max-width: 900px) {
