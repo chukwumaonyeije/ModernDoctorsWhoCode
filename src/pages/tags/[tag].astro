@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+
+  // Collect every unique tag across all posts
+  const tags = [...new Set(allPosts.flatMap(p => p.data.tags))];
+
+  return tags.map(tag => ({
+    params: { tag: tag.toLowerCase().replace(/\s+/g, '-') },
+    props: { tag },
+  }));
+}
+
+const { tag } = Astro.props;
+const slug = tag.toLowerCase().replace(/\s+/g, '-');
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const taggedPosts = allPosts
+  .filter(p => p.data.tags.some(t => t.toLowerCase().replace(/\s+/g, '-') === slug))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout
+  title={`${tag} | Doctors Who Code`}
+  description={`All posts tagged "${tag}" on Doctors Who Code -- physician-developer insights at the intersection of medicine and software.`}
+>
+  <div style="max-width: 1200px; margin: 0 auto; padding: 3rem 1.5rem 5rem;">
+
+    <!-- Header -->
+    <div style="margin-bottom: 2.5rem;">
+      <a href="/blog" style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-muted); text-decoration: none;">
+        &larr; All posts
+      </a>
+      <p class="label" style="margin-top: 1.25rem; margin-bottom: 0.5rem;">Tag</p>
+      <h1 class="gradient-text" style="font-size: 2.5rem; margin: 0 0 0.5rem;">{tag}</h1>
+      <p style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-muted);">
+        {taggedPosts.length} {taggedPosts.length === 1 ? 'post' : 'posts'}
+      </p>
+    </div>
+
+    <!-- Posts grid -->
+    {taggedPosts.length > 0 ? (
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+        {taggedPosts.map(post => (
+          <PostCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            slug={post.id}
+            tags={post.data.tags}
+            category={post.data.category}
+            readingTime={post.data.readingTime}
+            image={post.data.image}
+            featured={post.data.featured}
+          />
+        ))}
+      </div>
+    ) : (
+      <p style="color: var(--dwc-muted); font-family: var(--font-mono); font-size: 0.875rem;">No posts found for this tag.</p>
+    )}
+
+  </div>
+</BaseLayout>
