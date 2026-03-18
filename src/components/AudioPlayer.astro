@@ -1,0 +1,78 @@
+---
+interface Props {
+  src: string;
+  title: string;
+}
+const { src, title } = Astro.props;
+---
+
+<div style="background: var(--dwc-card); border: 1px solid var(--dwc-border); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
+  <button
+    id="audio-play-btn"
+    aria-label="Play audio"
+    style="flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: var(--dwc-blue); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;"
+  >
+    <svg id="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+    <svg id="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="white" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+  </button>
+
+  <div style="flex: 1; min-width: 0;">
+    <p style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--dwc-cyan); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 0.25rem;">Listen to this post</p>
+    <p style="font-size: 0.875rem; color: var(--dwc-muted); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{title}</p>
+    <div style="margin-top: 0.5rem; position: relative; height: 4px; background: var(--dwc-border); border-radius: 2px; cursor: pointer;" id="audio-progress-bar">
+      <div id="audio-progress" style="height: 100%; width: 0%; background: var(--dwc-cyan); border-radius: 2px; transition: width 0.1s linear;"></div>
+    </div>
+  </div>
+
+  <span id="audio-time" style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dwc-muted); flex-shrink: 0;">0:00</span>
+</div>
+
+<audio id="dwc-audio" src={src} preload="metadata"></audio>
+
+<script>
+  const audio = document.getElementById('dwc-audio') as HTMLAudioElement;
+  const playBtn = document.getElementById('audio-play-btn');
+  const iconPlay = document.getElementById('icon-play');
+  const iconPause = document.getElementById('icon-pause');
+  const progress = document.getElementById('audio-progress');
+  const progressBar = document.getElementById('audio-progress-bar');
+  const timeEl = document.getElementById('audio-time');
+
+  function fmt(s: number) {
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60).toString().padStart(2, '0');
+    return `${m}:${sec}`;
+  }
+
+  playBtn?.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      iconPlay!.style.display = 'none';
+      iconPause!.style.display = 'block';
+    } else {
+      audio.pause();
+      iconPlay!.style.display = 'block';
+      iconPause!.style.display = 'none';
+    }
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    if (!audio.duration) return;
+    const pct = (audio.currentTime / audio.duration) * 100;
+    progress!.style.width = pct + '%';
+    timeEl!.textContent = fmt(audio.currentTime);
+  });
+
+  audio.addEventListener('ended', () => {
+    iconPlay!.style.display = 'block';
+    iconPause!.style.display = 'none';
+    progress!.style.width = '0%';
+    timeEl!.textContent = '0:00';
+  });
+
+  progressBar?.addEventListener('click', (e) => {
+    const rect = progressBar.getBoundingClientRect();
+    const pct = (e.clientX - rect.left) / rect.width;
+    audio.currentTime = pct * audio.duration;
+  });
+</script>
