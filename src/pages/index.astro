@@ -8,7 +8,7 @@ import { SITE_DESCRIPTION } from '../consts';
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const featuredPost = sortedPosts[0];
-const recentPosts = sortedPosts.slice(1, 5);
+const recentPosts = sortedPosts.slice(1, 6);
 
 const hexTerms = ['AI', 'MFM', 'LLM', 'API', 'CGM', 'NLP', 'EMR', 'ML', 'ICD', 'CPT', 'FHIR', 'RAG'];
 const stats = [
@@ -128,9 +128,9 @@ const stats = [
             featured={post.data.featured}
           />
         ))}
-      </div>
-      <div style="text-align: center; margin-top: 2.5rem;">
-        <a href="/blog" style="display: inline-block; font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-white); background-color: var(--dwc-blue); padding: 0.75rem 2rem; border-radius: 6px;">Read the Blog &rarr;</a>
+        <div style="display: flex; align-items: center; justify-content: center; background: var(--dwc-card); border: 1px solid var(--dwc-border); border-radius: 12px; padding: 2rem; min-height: 180px;">
+          <a href="/blog" style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-white); background-color: var(--dwc-blue); padding: 0.75rem 2rem; border-radius: 6px; text-decoration: none;">Read the Blog &rarr;</a>
+        </div>
       </div>
     </section>
   )}
