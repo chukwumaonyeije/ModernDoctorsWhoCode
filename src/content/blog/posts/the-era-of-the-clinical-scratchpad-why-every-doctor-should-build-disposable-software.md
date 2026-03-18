@@ -1,7 +1,10 @@
 ---
 title: "The Era of the Clinical Scratchpad: Why Every Doctor Should Build \"Disposable\" Software"
 pubDate: 2026-02-01
-category: "Blogging"
+category: "Physician Development"
+image:
+  url: "/images/posts/clinicalscratchpad.jpeg"
+  alt: "Disposable paper notepad transforming into a glowing digital interface"
 tags: 
 - "healthcareinnovation-2"
 - "aiinmedicine"

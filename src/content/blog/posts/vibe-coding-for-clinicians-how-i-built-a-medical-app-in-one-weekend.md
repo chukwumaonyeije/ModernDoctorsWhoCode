@@ -3,6 +3,9 @@ title: "Vibe Coding for Clinicians: How I Built a Medical App in One Weekend"
 pubDate: 2026-01-15
 category: "Technology"
 author: "Chukwuma Onyeije, MD, FACOG"
+image:
+  url: "/images/posts/vibe-coding-clinicians.jpeg"
+  alt: "Physician in scrubs coding late at night with multiple browser windows open"
 draft: false
 
 description: "At 3:47 AM on a Tuesday, I was manually transcribing my seventh high-risk OB consultation of the day into our EMR. The patient had a complex fetal cardi..."
