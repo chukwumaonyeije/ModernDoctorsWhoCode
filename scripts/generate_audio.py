@@ -193,6 +193,8 @@ def main():
 
 
 if __name__ == '__main__':
+    import sys
+
     # Load .env if python-dotenv is installed
     try:
         from dotenv import load_dotenv
@@ -200,4 +202,20 @@ if __name__ == '__main__':
     except ImportError:
         pass
 
-    main()
+    # --test flag: process only the first eligible post
+    if '--test' in sys.argv:
+        if not API_KEY or not VOICE_ID:
+            print('ERROR: Set ELEVENLABS_API_KEY and ELEVENLABS_VOICE_ID in .env')
+        else:
+            AUDIO_DIR.mkdir(parents=True, exist_ok=True)
+            posts = sorted(list(POSTS_DIR.glob('*.md')) + list(POSTS_DIR.glob('*.mdx')))
+            posts = [p for p in posts if not p.name.startswith('_')]
+            for post_path in posts:
+                post = frontmatter.load(str(post_path))
+                if not post.metadata.get('audioUrl') and not post.metadata.get('draft', False):
+                    print(f'Test run on: {post_path.name}')
+                    process_post(post_path)
+                    print('\nTest complete. Check public/audio/ for the MP3.')
+                    break
+    else:
+        main()
