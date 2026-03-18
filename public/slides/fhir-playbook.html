@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Practical Interoperability: FHIR and EMR Integration — DoctorsWhoCode.blog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ─── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:       #0A1628;
+  --navy-mid:   #112240;
+  --navy-light: #1a3356;
+  --teal:       #00B4D8;
+  --teal-light: #90E0EF;
+  --teal-dim:   #0096C7;
+  --white:      #FFFFFF;
+  --off-white:  #F0F9FF;
+  --gray:       #64748B;
+  --gray-light: #E2E8F0;
+  --code-bg:    #0F172A;
+  --code-green: #4ADE80;
+  --amber:      #F59E0B;
+  --red:        #EF4444;
+  --teal-dark:  #0D9488;
+  --purple:     #7C3AED;
+  --orange:     #B45309;
+  --slide-ratio: 56.25%; /* 16:9 */
+}
+
+html, body {
+  height: 100%;
+  background: #060d1a;
+  font-family: 'Nunito Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Slideshow Shell ──────────────────────────────────────── */
+.deck-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 12px 8px 60px;
+}
+
+.deck-container {
+  width: 100%;
+  max-width: 960px;
+  position: relative;
+}
+
+/* 16:9 aspect ratio box */
+.slide-viewport {
+  position: relative;
+  width: 100%;
+  padding-top: var(--slide-ratio);
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+}
+
+/* ─── Individual Slides ────────────────────────────────────── */
+.slide {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  transform: translateX(40px);
+}
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(0);
+  z-index: 2;
+}
+.slide.exit-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  z-index: 1;
+}
+
+/* ─── Shared Slide Components ──────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 6.5%;
+  background: var(--navy-mid);
+  display: flex;
+  align-items: center;
+  padding: 0 3%;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: clamp(7px, 1.1vw, 11px);
+  color: #6B8FA8;
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+.slide-footer.light { background: var(--gray-light); color: var(--gray); font-style: normal; }
+
+.accent-bar {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 0.7%;
+  background: var(--teal);
+}
+
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  font-family: 'Barlow', sans-serif;
+  font-size: clamp(6px, 0.9vw, 9px);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 3px;
+}
+
+/* ─── SLIDE 1: Title ───────────────────────────────────────── */
+.s1 { background: var(--navy); }
+.s1 .tag-pill { background: var(--teal); color: var(--navy); position: absolute; top: 6.5%; left: 3%; }
+.s1-title {
+  position: absolute;
+  left: 3%; top: 14%; width: 62%;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  color: var(--white);
+  font-size: clamp(22px, 5.2vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.s1-subtitle {
+  position: absolute;
+  left: 3%; top: 53%; width: 58%;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
+  color: var(--teal);
+  font-size: clamp(10px, 2vw, 20px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.s1-rule {
+  position: absolute;
+  left: 3%; top: 63%; width: 42%;
+  height: 2px;
+  background: var(--teal-light);
+}
+.s1-byline {
+  position: absolute;
+  left: 3%; top: 68%;
+  font-size: clamp(8px, 1.1vw, 11px);
+  color: #8EAFC2;
+  font-style: italic;
+}
+.s1-code-box {
+  position: absolute;
+  right: 2%; top: 5%;
+  width: 30%;
+  height: 85%;
+  background: var(--navy-mid);
+  border: 1px solid var(--teal);
+  border-radius: 6px;
+  overflow: hidden;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(6px, 0.9vw, 9.5px);
+  line-height: 1.65;
+  padding: 8% 6% 6%;
+}
+.s1-code-filename {
+  color: #5B7FA6;
+  position: absolute;
+  top: 3%; left: 6%;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(6px, 0.8vw, 8.5px);
+}
+.s1-footer-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 6.5%;
+  background: var(--navy-mid);
+  display: flex;
+  align-items: center;
+  padding: 0 3%;
+  font-size: clamp(7px, 1vw, 10.5px);
+  color: #6B8FA8;
+  font-style: italic;
+}
+.c-teal { color: var(--teal-light); }
+.c-green { color: var(--code-green); }
+.c-amber { color: var(--amber); }
+.c-white { color: var(--white); }
+.c-dim { color: #64748B; }
+
+/* ─── SLIDE 2: Walled Garden ───────────────────────────────── */
+.s2 { background: var(--off-white); }
+.s2-left {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 42%;
+  background: var(--navy);
+}
+.s2 .accent-bar { z-index: 2; }
+.s2 .tag-pill { background: var(--red); color: var(--white); position: absolute; top: 5.5%; left: 3%; z-index: 3; }
+.s2-title {
+  position: absolute;
+  left: 3%; top: 13%; width: 38%;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  color: var(--white);
+  font-size: clamp(18px, 3.6vw, 36px);
+  line-height: 1.1;
+  z-index: 3;
+}
+.s2-body {
+  position: absolute;
+  left: 3%; top: 54%; width: 37%;
+  font-size: clamp(8px, 1.2vw, 12.5px);
+  color: #A8C4D8;
+  line-height: 1.65;
+  z-index: 3;
+}
+.s2-emphasis {
+  position: absolute;
+  left: 3%; top: 75%; width: 37%;
+  z-index: 3;
+}
+.s2-emphasis p:first-child { font-weight: 700; color: var(--white); font-size: clamp(8px, 1.2vw, 12.5px); }
+.s2-emphasis p:last-child  { font-weight: 700; color: var(--teal); font-size: clamp(8px, 1.2vw, 12.5px); margin-top: 2px; }
+
+.s2-cards {
+  position: absolute;
+  left: 44%; right: 2%; top: 4%; bottom: 8%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.s2-card {
+  background: var(--white);
+  border: 1px solid var(--gray-light);
+  border-radius: 6px;
+  padding: 4% 5% 4% 4%;
+  display: flex;
+  align-items: flex-start;
+  gap: 5%;
+  flex: 1;
+  margin-bottom: 3%;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.s2-card:last-child { margin-bottom: 0; }
+.s2-icon { font-size: clamp(18px, 3vw, 36px); flex-shrink: 0; color: var(--teal); }
+.s2-card-content h3 { font-family: 'Barlow', sans-serif; font-weight: 700; color: var(--navy); font-size: clamp(8px, 1.3vw, 14px); margin-bottom: 4px; }
+.s2-card-content p  { font-size: clamp(7px, 1.1vw, 11.5px); color: var(--gray); line-height: 1.5; }
+
+/* ─── SLIDE 3: What is FHIR ────────────────────────────────── */
+.s3 { background: var(--white); }
+.s3-header {
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 20%;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 3% 3%;
+}
+.s3 .accent-bar { height: 20%; }
+.s3 .tag-pill { background: var(--teal); color: var(--navy); margin-bottom: 4px; align-self: flex-start; }
+.s3-title {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  color: var(--white);
+  font-size: clamp(12px, 2.3vw, 24px);
+}
+.s3-definition {
+  position: absolute;
+  left: 3%; right: 3%; top: 22%;
+  background: var(--navy-mid);
+  border: 1.5px solid var(--teal);
+  border-radius: 5px;
+  padding: 2.5% 3%;
+  font-size: clamp(8px, 1.25vw, 13px);
+  color: var(--white);
+  line-height: 1.6;
+}
+.s3-definition strong { color: var(--teal); }
+.s3-resources {
+  position: absolute;
+  left: 3%; right: 3%; top: 43%; bottom: 9%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5%;
+}
+.s3-resource {
+  background: var(--off-white);
+  border: 1px solid var(--gray-light);
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.s3-res-header {
+  padding: 6% 5% 3%;
+  color: var(--white);
+}
+.s3-res-header .res-label { font-size: clamp(5px, 0.75vw, 7.5px); opacity: 0.8; font-family: 'JetBrains Mono', monospace; }
+.s3-res-header .res-name  { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(6px, 1vw, 10.5px); margin-top: 2px; }
+.s3-res-desc {
+  padding: 8% 8% 5%;
+  font-size: clamp(7px, 1.05vw, 10.5px);
+  color: var(--navy);
+  line-height: 1.5;
+  flex: 1;
+}
+.s3-res-endpoint {
+  padding: 0 8% 8%;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(5.5px, 0.85vw, 8.5px);
+  color: var(--teal-dim);
+  margin-top: auto;
+}
+
+/* ─── SLIDE 4: Opportunity ─────────────────────────────────── */
+.s4 { background: var(--navy); }
+.s4 .accent-bar { background: var(--amber); }
+.s4 .tag-pill { background: var(--amber); color: var(--navy); position: absolute; top: 5.5%; left: 3%; }
+.s4-title {
+  position: absolute;
+  left: 3%; top: 14%; width: 56%;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  color: var(--white);
+  font-size: clamp(13px, 2.8vw, 28px);
+  line-height: 1.12;
+}
+.s4-quote {
+  position: absolute;
+  left: 3%; top: 48%; width: 55%;
+  background: var(--navy-mid);
+  border: 1px solid var(--amber);
+  border-radius: 5px;
+  padding: 4% 4%;
+}
+.s4-quote blockquote {
+  font-size: clamp(8px, 1.15vw, 12px);
+  color: var(--teal-light);
+  font-style: italic;
+  line-height: 1.6;
+}
+.s4-quote cite {
+  display: block;
+  margin-top: 6px;
+  font-size: clamp(7px, 0.95vw, 9.5px);
+  color: var(--gray);
+  font-style: italic;
+}
+.s4-cards {
+  position: absolute;
+  right: 2%; top: 5%; bottom: 8%;
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.s4-card {
+  background: var(--navy-mid);
+  border-left: 4px solid var(--teal);
+  border-radius: 0 5px 5px 0;
+  padding: 5% 6%;
+  flex: 1;
+  margin-bottom: 3%;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.s4-card:last-child { margin-bottom: 0; }
+.s4-card h3 { font-family: 'Barlow', sans-serif; font-weight: 700; color: var(--teal); font-size: clamp(8px, 1.25vw, 12.5px); margin-bottom: 5px; }
+.s4-card p  { font-size: clamp(7px, 1.05vw, 10.5px); color: #A8C4D8; line-height: 1.5; }
+
+/* ─── SLIDE 5: Sandbox Setup ───────────────────────────────── */
+.s5 { background: var(--off-white); }
+.s5-header {
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 20%;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 3% 3%;
+}
+.s5 .accent-bar { height: 20%; }
+.s5 .tag-pill { background: var(--teal); color: var(--navy); margin-bottom: 4px; align-self: flex-start; }
+.s5-header h2 {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  color: var(--white);
+  font-size: clamp(12px, 2.1vw, 22px);
+}
+.s5-steps {
+  position: absolute;
+  left: 3%; right: 3%; top: 23%; bottom: 9%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2%;
+}
+.s5-step {
+  background: var(--white);
+  border: 1px solid var(--gray-light);
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+}
+.s5-num {
+  background: var(--navy);
+  color: var(--teal);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  font-size: clamp(16px, 2.6vw, 28px);
+  min-width: 13%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5% 0;
+  flex-shrink: 0;
+}
+.s5-step-body { padding: 5% 5%; }
+.s5-step-body h3 {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  color: var(--navy);
+  font-size: clamp(8px, 1.3vw, 13px);
+  margin-bottom: 5px;
+}
+.s5-step-body p {
+  font-size: clamp(7px, 1.05vw, 10.5px);
+  color: var(--gray);
+  line-height: 1.55;
+}
+.s5-teal-rule {
+  position: absolute;
+  bottom: 8.5%; left: 3%; right: 3%;
+  height: 3px;
+  background: var(--teal);
+  border-radius: 2px;
+}
+
+/* ─── SLIDE 6: First API Call ──────────────────────────────── */
+.s6 { background: var(--code-bg); }
+.s6 .accent-bar { background: var(--code-green); }
+.s6 .tag-pill { background: var(--code-green); color: var(--code-bg); position: absolute; top: 5.5%; left: 3%; }
+.s6-title {
+  position: absolute;
+  left: 3%; top: 14%; width: 45%;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  color: var(--white);
+  font-size: clamp(13px, 2.5vw, 25px);
+  line-height: 1.1;
+}
+.s6-desc {
+  position: absolute;
+  left: 3%; top: 41%; width: 44%;
+  font-size: clamp(7px, 1.1vw, 11px);
+  color: #8EAFC2;
+  line-height: 1.5;
+}
+.s6-code {
+  position: absolute;
+  left: 3%; top: 50%; bottom: 9%;
+  width: 44%;
+  background: #0A0F1E;
+  border: 1px solid var(--teal);
+  border-radius: 5px;
+  overflow: hidden;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(5.5px, 0.88vw, 9px);
+  line-height: 1.65;
+}
+.s6-code-header {
+  background: #060C1A;
+  padding: 4% 5% 3%;
+  color: #5B7FA6;
+  border-bottom: 1px solid #1E293B;
+}
+.s6-code-body { padding: 4% 5%; }
+.s6-json {
+  position: absolute;
+  right: 2%; top: 5%; bottom: 9%;
+  width: 47%;
+  background: var(--navy-mid);
+  border: 1px solid var(--teal);
+  border-radius: 5px;
+  overflow: hidden;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(5.5px, 0.88vw, 9px);
+  line-height: 1.65;
+}
+.s6-json-header {
+  padding: 3% 5% 2%;
+  color: #5B7FA6;
+  border-bottom: 1px solid #1E293B;
+  font-size: clamp(5px, 0.8vw, 8px);
+}
+.s6-json-body { padding: 4% 5%; }
+
+/* ─── SLIDE 7: SMART Auth ──────────────────────────────────── */
+.s7 { background: var(--white); }
+.s7-header {
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 20%;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 3% 3%;
+}
+.s7 .accent-bar { height: 20%; }
+.s7 .tag-pill { background: var(--teal); color: var(--navy); margin-bottom: 4px; align-self: flex-start; }
+.s7-header h2 {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  color: var(--white);
+  font-size: clamp(12px, 2.2vw, 22px);
+}
+.s7-flow {
+  position: absolute;
+  left: 3%; right: 3%; top: 22%; bottom: 18%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5%;
+}
+.s7-step {
+  background: var(--off-white);
+  border: 1px solid var(--gray-light);
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.s7-step-header {
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 6%;
+  padding: 8% 6%;
+}
+.s7-step-header.teal { background: var(--teal); }
+.s7-step-header.teal .s7-num { color: var(--navy); }
+.s7-step-header.teal .s7-label { color: var(--navy); }
+.s7-num { color: var(--teal); font-family: 'Barlow', sans-serif; font-weight: 800; font-size: clamp(12px, 1.9vw, 20px); }
+.s7-label { color: var(--white); font-family: 'Barlow', sans-serif; font-weight: 700; font-size: clamp(6px, 1vw, 10.5px); line-height: 1.3; }
+.s7-step-body { padding: 8% 8%; font-size: clamp(6px, 0.95vw, 9.5px); color: var(--gray); line-height: 1.5; flex: 1; }
+.s7-connector {
+  position: absolute;
+  top: 44%;
+  height: 3px;
+  background: var(--teal);
+  border-radius: 2px;
+  width: 1.5%;
+}
+.s7-scope-bar {
+  position: absolute;
+  left: 3%; right: 3%; bottom: 8%;
+  background: var(--off-white);
+  border: 1px solid var(--gray-light);
+  border-radius: 4px;
+  padding: 1.5% 2%;
+  font-size: clamp(7px, 1.1vw, 11px);
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.scope-code { font-family: 'JetBrains Mono', monospace; color: var(--purple); font-size: clamp(7px, 1.1vw, 11px); }
+
+/* ─── SLIDE 8: FGRManager Case Study ──────────────────────── */
+.s8 { background: var(--off-white); }
+.s8-left {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 44%;
+  background: var(--navy-mid);
+}
+.s8 .accent-bar { z-index: 3; }
+.s8 .tag-pill { background: var(--teal); color: var(--navy); position: absolute; top: 5%; left: 3%; z-index: 4; }
+.s8-title {
+  position: absolute;
+  left: 3%; top: 13%; width: 40%;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  color: var(--white);
+  font-size: clamp(13px, 2.6vw, 26px);
+  line-height: 1.1;
+  z-index: 4;
+}
+.s8-desc {
+  position: absolute;
+  left: 3%; top: 57%; width: 40%;
+  font-size: clamp(7px, 1.1vw, 11px);
+  color: #A8C4D8;
+  line-height: 1.6;
+  z-index: 4;
+}
+.s8-desc strong { color: var(--teal); font-weight: 700; }
+.s8-transforms {
+  position: absolute;
+  right: 2%; left: 46%; top: 4%; bottom: 8%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.s8-transform {
+  background: var(--white);
+  border: 1px solid var(--gray-light);
+  border-left: 4px solid var(--teal);
+  border-radius: 0 5px 5px 0;
+  padding: 4% 4%;
+  flex: 1;
+  margin-bottom: 2.5%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.s8-transform:last-child { margin-bottom: 0; }
+.s8-transform-header {
+  display: flex;
+  align-items: center;
+  gap: 5%;
+  margin-bottom: 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(6px, 0.95vw, 9.5px);
+  font-weight: 600;
+}
+.s8-from { color: var(--red); }
+.s8-arrow { color: var(--teal); font-size: clamp(8px, 1.2vw, 12px); }
+.s8-to   { color: var(--teal-dark); }
+.s8-transform p { font-size: clamp(7px, 1.05vw, 10.5px); color: var(--gray); line-height: 1.5; }
+
+/* ─── SLIDE 9: Series Roadmap ──────────────────────────────── */
+.s9 { background: var(--white); }
+.s9-header {
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 20%;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 3% 3%;
+}
+.s9 .accent-bar { height: 20%; }
+.s9 .tag-pill { background: var(--teal); color: var(--navy); margin-bottom: 4px; align-self: flex-start; }
+.s9-header h2 {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  color: var(--white);
+  font-size: clamp(12px, 2.1vw, 22px);
+}
+.s9-posts {
+  position: absolute;
+  left: 3%; right: 3%; top: 22%; bottom: 9%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2%;
+}
+.s9-post {
+  background: var(--off-white);
+  border: 1px solid var(--gray-light);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  display: flex;
+  flex-direction: column;
+}
+.s9-post-header {
+  padding: 4% 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.s9-post-header.teal-bg { background: var(--teal); }
+.s9-post-header.navy-bg { background: var(--navy); }
+.s9-post-num { font-family: 'Barlow', sans-serif; font-weight: 800; font-size: clamp(9px, 1.4vw, 14px); }
+.s9-post-header.teal-bg .s9-post-num { color: var(--navy); }
+.s9-post-header.navy-bg .s9-post-num { color: var(--teal); }
+.s9-post-badge { font-size: clamp(6px, 0.85vw, 8.5px); font-weight: 700; letter-spacing: 0.06em; }
+.s9-post-header.teal-bg .s9-post-badge { color: var(--navy); }
+.s9-post-header.navy-bg .s9-post-badge { color: var(--teal); }
+.s9-post-title {
+  padding: 5% 5% 3%;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  color: var(--navy);
+  font-size: clamp(9px, 1.4vw, 14.5px);
+  line-height: 1.25;
+}
+.s9-post-coverage {
+  padding: 0 5% 5%;
+  flex: 1;
+}
+.s9-coverage-label { font-size: clamp(7px, 1.05vw, 10.5px); font-weight: 700; margin-bottom: 5px; }
+.s9-post:first-child .s9-coverage-label { color: var(--teal); }
+.s9-post:last-child  .s9-coverage-label { color: var(--navy); }
+.s9-post-coverage ul { list-style: disc; padding-left: 14px; }
+.s9-post-coverage li { font-size: clamp(6.5px, 1vw, 10px); color: var(--gray); line-height: 1.6; }
+
+/* ─── SLIDE 10: CTA ────────────────────────────────────────── */
+.s10 { background: var(--navy); overflow: hidden; }
+.s10-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 10px;
+  padding: 10px;
+  opacity: 0.18;
+}
+.s10-grid-cell {
+  border: 1px solid #1E3A5F;
+  border-radius: 3px;
+  background: var(--navy-mid);
+}
+.s10-teal-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--teal);
+}
+.s10-teal-bottom {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--teal);
+}
+.s10 .tag-pill {
+  background: var(--teal);
+  color: var(--navy);
+  position: absolute;
+  top: 16%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+.s10-headline {
+  position: absolute;
+  left: 5%; right: 5%; top: 22%;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  color: var(--white);
+  font-size: clamp(16px, 3.4vw, 36px);
+  line-height: 1.15;
+  text-align: center;
+  z-index: 2;
+  letter-spacing: -0.01em;
+}
+.s10-cta-btn {
+  position: absolute;
+  left: 25%; right: 25%; top: 62%;
+  background: var(--teal);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5% 0;
+  z-index: 2;
+}
+.s10-cta-btn span {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  color: var(--navy);
+  font-size: clamp(11px, 1.8vw, 18px);
+  letter-spacing: 0.01em;
+}
+.s10-byline {
+  position: absolute;
+  bottom: 13%; left: 5%; right: 5%;
+  text-align: center;
+  z-index: 2;
+}
+.s10-byline p { font-size: clamp(7px, 1.05vw, 10.5px); color: #6B8FA8; font-style: italic; margin-bottom: 3px; }
+
+/* ─── Navigation Controls ──────────────────────────────────── */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 14px 0 0;
+}
+.nav-btn {
+  background: rgba(0,180,216,0.12);
+  border: 1.5px solid rgba(0,180,216,0.4);
+  color: var(--teal);
+  border-radius: 50%;
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  user-select: none;
+}
+.nav-btn:hover { background: rgba(0,180,216,0.25); border-color: var(--teal); }
+.nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+.dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #2A4060;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  padding: 0;
+}
+.dot.active { background: var(--teal); width: 22px; border-radius: 4px; }
+.dot:hover  { background: #3A5A80; }
+.dot.active:hover { background: var(--teal); }
+
+.slide-counter {
+  color: #4A6080;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  min-width: 38px;
+  text-align: center;
+}
+
+.fullscreen-btn {
+  background: transparent;
+  border: 1px solid #2A4060;
+  color: #4A6080;
+  border-radius: 5px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s;
+  margin-left: 6px;
+}
+.fullscreen-btn:hover { border-color: var(--teal); color: var(--teal); }
+
+/* Progress bar */
+.progress-bar {
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 2px;
+  background: var(--teal);
+  transition: width 0.4s ease;
+  z-index: 10;
+}
+
+/* Swipe hint on mobile */
+.swipe-hint {
+  color: #3A5A70;
+  font-size: 11px;
+  text-align: center;
+  padding-top: 6px;
+  display: none;
+}
+
+/* ─── Responsive ───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .deck-wrapper { padding: 6px 4px 55px; }
+  .nav-btn { width: 32px; height: 32px; font-size: 14px; }
+  .dots { gap: 5px; }
+  .dot { width: 6px; height: 6px; }
+  .dot.active { width: 18px; }
+  .swipe-hint { display: block; }
+  .fullscreen-btn { display: none; }
+  /* Stack 2-col grids on tiny phones */
+  .s5-steps, .s9-posts { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 420px) {
+  .s5-steps, .s9-posts { grid-template-columns: 1fr; }
+  .s7-flow { grid-template-columns: 1fr; gap: 2%; }
+  .s7-flow { overflow-y: auto; }
+  .s3-resources { grid-template-columns: 1fr 1fr; }
+}
+
+/* Fullscreen mode */
+.slide-viewport:fullscreen,
+.slide-viewport:-webkit-full-screen {
+  max-width: 100vw;
+  border-radius: 0;
+}
+.slide-viewport:fullscreen .progress-bar,
+.slide-viewport:-webkit-full-screen .progress-bar {
+  height: 3px;
+}
+
+/* Keyboard focus */
+.nav-btn:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<div class="deck-wrapper">
+  <div class="deck-container">
+    <div class="slide-viewport" id="viewport" tabindex="0" aria-label="Slide presentation: Practical Interoperability">
+
+      <!-- Progress Bar -->
+      <div class="progress-bar" id="progressBar"></div>
+
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- SLIDE 1: Title                                    -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <div class="slide s1 active" role="region" aria-label="Slide 1: Title">
+        <div class="accent-bar"></div>
+        <span class="tag-pill">Doctors Who Code</span>
+        <div class="s1-title">Practical<br>Interoperability</div>
+        <div class="s1-subtitle">FHIR &nbsp;and&nbsp; EMR&nbsp; Integration</div>
+        <div class="s1-rule"></div>
+        <div class="s1-byline">Chukwuma Onyeije, MD &nbsp;·&nbsp; DoctorsWhoCode.blog</div>
+        <div class="s1-code-box">
+          <div class="s1-code-filename"># your_first_fhir_call.py</div>
+          <br>
+          <span class="c-teal">import fhirclient</span><br>
+          <span class="c-teal">from fhirclient import client</span><br>
+          <br>
+          <span class="c-white">settings = {</span><br>
+          &nbsp;&nbsp;<span class="c-amber">'app_id': 'mfm_app',</span><br>
+          &nbsp;&nbsp;<span class="c-amber">'api_base': EPIC_SANDBOX</span><br>
+          <span class="c-white">}</span><br>
+          <br>
+          <span class="c-green">smart = client.FHIRClient(</span><br>
+          &nbsp;&nbsp;<span class="c-teal">settings=settings</span><br>
+          <span class="c-green">)</span>
+        </div>
+        <div class="s1-footer-bar">From Theory to Terminal — Building Real Interoperable Clinical Tools</div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- SLIDE 2: Walled Garden Problem                    -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <div class="slide s2" role="region" aria-label="Slide 2: The Walled Garden Problem">
+        <div class="accent-bar"></div>
+        <div class="s2-left"></div>
+        <span class="tag-pill">The Problem</span>
+        <div class="s2-title">The Walled Garden Problem</div>
+        <div class="s2-body">EMRs hold the most clinically relevant data on the planet — yet most physician-developers cannot programmatically touch it.</div>
+        <div class="s2-emphasis">
+          <p>This isn't a data problem.</p>
+          <p>It's an access problem.</p>
+        </div>
+        <div class="s2-cards">
+          <div class="s2-card">
+            <div class="s2-icon">🗄️</div>
+            <div class="s2-card-content">
+              <h3>Data Silos</h3>
+              <p>Lab results, imaging, notes — locked inside proprietary systems with no standard exit.</p>
+            </div>
+          </div>
+          <div class="s2-card">
+            <div class="s2-icon">🔌</div>
+            <div class="s2-card-content">
+              <h3>No Standard Interface</h3>
+              <p>Every EMR vendor built their own API before FHIR. HL7 v2 messages are a relic of the fax era.</p>
+            </div>
+          </div>
+          <div class="s2-card">
+            <div class="s2-icon">👩‍⚕️</div>
+            <div class="s2-card-content">
+              <h3>Physician Exclusion</h3>
+              <p>Clinicians who understand the data best have historically had zero access to extract or transform it.</p>
+            </div>
+          </div>
+        </div>
+        <div class="slide-footer light">DoctorsWhoCode.blog &nbsp;·&nbsp; Practical Interoperability Series</div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- SLIDE 3: What is FHIR?                            -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <div class="slide s3" role="region" aria-label="Slide 3: What is FHIR">
+        <div class="s3-header">
+          <div class="accent-bar"></div>
+          <span class="tag-pill">FHIR Explained</span>
+          <h2 class="s3-title">What is FHIR — and Why Should You Care?</h2>
+        </div>
+        <div class="s3-definition">
+          <strong>FHIR</strong> (Fast Healthcare Interoperability Resources) is HL7's RESTful API standard for exchanging healthcare data. It uses <strong>JSON/XML resources over HTTPS</strong> — the same stack you already know.
+        </div>
+        <div class="s3-resources">
+          <div class="s3-resource">
+            <div class="s3-res-header" style="background:#0096C7;">
+              <div class="res-label">Resource</div>
+              <div class="res-name">Patient</div>
+            </div>
+            <div class="s3-res-desc">Demographics, identifiers, contact info</div>
+            <div class="s3-res-endpoint">GET /fhir/R4/Patient</div>
+          </div>
+          <div class="s3-resource">
+            <div class="s3-res-header" style="background:#0D9488;">
+              <div class="res-label">Resource</div>
+              <div class="res-name">Observation</div>
+            </div>
+            <div class="s3-res-desc">Vitals, labs, fetal measurements, CGM data</div>
+            <div class="s3-res-endpoint">GET /fhir/R4/Observation</div>
+          </div>
+          <div class="s3-resource">
+            <div class="s3-res-header" style="background:#7C3AED;">
+              <div class="res-label">Resource</div>
+              <div class="res-name">Condition</div>
+            </div>
+            <div class="s3-res-desc">ICD-10-coded diagnoses and clinical findings</div>
+            <div class="s3-res-endpoint">GET /fhir/R4/Condition</div>
+          </div>
+          <div class="s3-resource">
+            <div class="s3-res-header" style="background:#B45309;">
+              <div class="res-label">Resource</div>
+              <div class="res-name">MedicationRequest</div>
+            </div>
+            <div class="s3-res-desc">Prescriptions, dosing, clinical indications</div>
+            <div class="s3-res-endpoint">GET /fhir/R4/MedicationRequest</div>
+          </div>
+        </div>
+        <div class="slide-footer light">DoctorsWhoCode.blog &nbsp;·&nbsp; Practical Interoperability Series</div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- SLIDE 4: The Opportunity                          -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <div class="slide s4" role="region" aria-label="Slide 4: The Physician-Developer Opportunity">
+        <div class="accent-bar" style="background:var(--amber)"></div>
+        <span class="tag-pill" style="background:var(--amber);color:var(--navy);position:absolute;top:5.5%;left:3%;">The Opportunity</span>
+        <div class="s4-title">Why the Physician-Developer<br>Is FHIR's Most Important User</div>
+        <div class="s4-quote">
+          <blockquote>"The clinician who writes the guideline is also the one who can build the API wrapper that puts it to work at the bedside."</blockquote>
+          <cite>— DoctorsWhoCode.blog</cite>
+        </div>
+        <div class="s4-cards">
+          <div class="s4-card">
+            <h3>Clinical Insight</h3>
+            <p>You already know which data points matter. You don't need a product manager to explain the clinical context of a hemoglobin A1c.</p>
+          </div>
+          <div class="s4-card">
+            <h3>Guideline Authority</h3>
+            <p>SMFM, ACOG, ADA guidelines live in your head. FHIR lets you encode them as executable logic, not static PDFs.</p>
+          </div>
+          <div class="s4-card">
+            <h3>Trust &amp; Adoption</h3>
+            <p>Physician-built tools have credibility with clinical colleagues that vendor tools never will.</p>
+          </div>
+        </div>
+        <div class="slide-footer">DoctorsWhoCode.blog &nbsp;·&nbsp; Practical Interoperability Series</div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- SLIDE 5: Sandbox Setup                            -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <div class="slide s5" role="region" aria-label="Slide 5: Setting Up Your FHIR Sandbox">
+        <div class="s5-header">
+          <div class="accent-bar"></div>
+          <span class="tag-pill">Tutorial Step 0</span>
+          <h2>Setting Up Your FHIR Sandbox Environment</h2>
+        </div>
+        <div class="s5-steps">
+          <div class="s5-step">
+            <div class="s5-num">01</div>
+            <div class="s5-step-body">
+              <h3>Register on Epic's Open Portal</h3>
+              <p>Visit open.epic.com and create a free developer account. No EHR contract or enterprise agreement required.</p>
+            </div>
+          </div>
+          <div class="s5-step">
+            <div class="s5-num">02</div>
+            <div class="s5-step-body">
+              <h3>Create a Sandbox Application</h3>
+              <p>Generate client credentials (Client ID + SMART launch URL). Select FHIR R4 as the API version — this is the current standard.</p>
+            </div>
+          </div>
+          <div class="s5-step">
+            <div class="s5-num">03</div>
+            <div class="s5-step-body">
+              <h3>Install the Python FHIR Client</h3>
+              <p><code style="font-family:monospace;color:#0096C7;">pip install fhirclient</code> — The canonical Python wrapper over the FHIR REST API. Wraps OAuth 2.0 and resource serialization.</p>
+            </div>
+          </div>
+          <div class="s5-step">
+            <div class="s5-num">04</div>
+            <div class="s5-step-body">
+              <h3>Point to the Sandbox Base URL</h3>
+              <p>Epic sandbox base: <code style="font-family:monospace;font-size:0.9em;color:#0096C7;">fhir.epic.com/interconnect-amcurr-oauth/api/FHIR/R4</code>. All API calls target this endpoint with your credentials.</p>
+            </div>
+          </div>
+        </div>
+        <div class="s5-teal-rule"></div>
+        <div class="slide-footer light">DoctorsWhoCode.blog &nbsp;·&nbsp; Practical Interoperability Series</div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- SLIDE 6: First API Call                           -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <div class="slide s6" role="region" aria-label="Slide 6: Your First FHIR API Call">
+        <div class="accent-bar" style="background:var(--code-green)"></div>
+        <span class="tag-pill" style="background:var(--code-green);color:#0F172A;position:absolute;top:5.5%;left:3%;">Tutorial: First API Call</span>
+        <div class="s6-title">Demystifying FHIR:<br>Your First Patient<br>Record Pull</div>
+        <div class="s6-desc">Pull a mock patient record from the Epic sandbox using 6 lines of Python.</div>
+        <div class="s6-code">
+          <div class="s6-code-header"># patient_pull.py</div>
+          <div class="s6-code-body">
+            <span class="c-teal">import fhirclient.models.patient as p</span><br>
+            <span class="c-teal">from fhirclient import client</span><br>
+            <br>
+            <span class="c-white">settings = {</span><br>
+            &nbsp;&nbsp;<span class="c-amber">'app_id': 'my_mfm_app',</span><br>
+            &nbsp;&nbsp;<span class="c-amber">'api_base': 'https://fhir.epic.com/...'</span><br>
+            <span class="c-white">}</span><br>
+            <br>
+            <span class="c-green">smart = client.FHIRClient(settings=settings)</span><br>
+            <br>
+            <span class="c-dim"># Fetch a test patient by FHIR ID</span><br>
+            <span class="c-green">patient = p.Patient.read('eD4W...', smart.server)</span><br>
+            <br>
+            <span class="c-white">print(patient.name[0].given,</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-white">patient.name[0].family)</span>
+          </div>
+        </div>
+        <div class="s6-json">
+          <div class="s6-json-header">JSON Response (excerpt)</div>
+          <div class="s6-json-body">
+            <span class="c-white">{</span><br>
+            &nbsp;&nbsp;<span class="c-teal">"resourceType": "Patient",</span><br>
+            &nbsp;&nbsp;<span class="c-amber">"id": "eD4WJsigGxQHXMp...",</span><br>
+            &nbsp;&nbsp;<span class="c-white">"name": [{</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-green">"family": "Johnson",</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-green">"given": ["Maria"]</span><br>
+            &nbsp;&nbsp;<span class="c-white">}],</span><br>
+            &nbsp;&nbsp;<span class="c-teal">"birthDate": "1991-04-17",</span><br>
+            &nbsp;&nbsp;<span class="c-teal">"gender": "female",</span><br>
+            &nbsp;&nbsp;<span class="c-white">"identifier": [{</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#8EAFC2">"system": "urn:oid:1.2.840...",</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#8EAFC2">"value": "202031"</span><br>
+            &nbsp;&nbsp;<span class="c-white">}]</span><br>
+            <span class="c-white">}</span>
+          </div>
+        </div>
+        <div class="slide-footer" style="background:#0A0F1E;color:#4B6280;">DoctorsWhoCode.blog &nbsp;·&nbsp; Practical Interoperability Series</div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- SLIDE 7: SMART on FHIR Auth                       -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <div class="slide s7" role="region" aria-label="Slide 7: SMART on FHIR Authorization Standard">
+        <div class="s7-header">
+          <div class="accent-bar"></div>
+          <span class="tag-pill">Authentication Layer</span>
+          <h2>SMART on FHIR: The Authorization Standard</h2>
+        </div>
+        <div class="s7-flow">
+          <div class="s7-step">
+            <div class="s7-step-header"><span class="s7-num">1</span><span class="s7-label">App Launch</span></div>
+            <div class="s7-step-body">EHR opens your app via SMART launch URL with context parameters</div>
+          </div>
+          <div class="s7-step">
+            <div class="s7-step-header"><span class="s7-num">2</span><span class="s7-label">Auth Request</span></div>
+            <div class="s7-step-body">App redirects to EHR authorization server with scopes (patient/*.read)</div>
+          </div>
+          <div class="s7-step">
+            <div class="s7-step-header"><span class="s7-num">3</span><span class="s7-label">User Consent</span></div>
+            <div class="s7-step-body">Clinician approves access. EHR issues authorization code.</div>
+          </div>
+          <div class="s7-step">
+            <div class="s7-step-header"><span class="s7-num">4</span><span class="s7-label">Token Exchange</span></div>
+            <div class="s7-step-body">App exchanges code for access token + patient context ID</div>
+          </div>
+          <div class="s7-step">
+            <div class="s7-step-header teal"><span class="s7-num" style="color:var(--navy)">5</span><span class="s7-label">FHIR API Call</span></div>
+            <div class="s7-step-body">App calls FHIR endpoints using Bearer token in Authorization header</div>
+          </div>
+        </div>
+        <div class="s7-scope-bar">
+          <strong>Key scope:</strong>&nbsp;<span class="scope-code">patient/*.read</span>&nbsp;— grants read access to all FHIR resources for the in-context patient. Start here; narrow later.
+        </div>
+        <div class="slide-footer light">DoctorsWhoCode.blog &nbsp;·&nbsp; Practical Interoperability Series</div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- SLIDE 8: FGRManager Case Study                    -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <div class="slide s8" role="region" aria-label="Slide 8: FGRManager Case Study">
+        <div class="accent-bar" style="z-index:5"></div>
+        <div class="s8-left"></div>
+        <span class="tag-pill" style="background:var(--teal);color:var(--navy);position:absolute;top:5%;left:3%;z-index:5;">Case Study</span>
+        <div class="s8-title">Escaping the Walled Garden: FGRManager as SMART App</div>
+        <div class="s8-desc">
+          FGRManager operationalizes <strong>SMFM Consult Series #52</strong> — fetal growth restriction surveillance and delivery timing. As a SMART app, it would auto-populate EFW, AC, and umbilical artery Dopplers directly from the FHIR Observation resource.
+        </div>
+        <div class="s8-transforms">
+          <div class="s8-transform">
+            <div class="s8-transform-header">
+              <span class="s8-from">Static HTML Tool</span>
+              <span class="s8-arrow">→</span>
+              <span class="s8-to">SMART on FHIR App</span>
+            </div>
+            <p>FGRManager.html receives patient context on EHR launch via SMART protocol</p>
+          </div>
+          <div class="s8-transform">
+            <div class="s8-transform-header">
+              <span class="s8-from">Manual Data Entry</span>
+              <span class="s8-arrow">→</span>
+              <span class="s8-to">Live FHIR Pull</span>
+            </div>
+            <p>Observation resources (EFW, AC percentile) populate fields automatically from the EMR</p>
+          </div>
+          <div class="s8-transform">
+            <div class="s8-transform-header">
+              <span class="s8-from">Isolated Algorithm</span>
+              <span class="s8-arrow">→</span>
+              <span class="s8-to">Interoperable Standard</span>
+            </div>
+            <p>Delivery timing recommendations can be written back as FHIR CarePlan resources</p>
+          </div>
+        </div>
+        <div class="slide-footer" style="background:#0A0F1E;color:#4B6280;">DoctorsWhoCode.blog &nbsp;·&nbsp; Practical Interoperability Series</div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- SLIDE 9: Series Roadmap                           -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <div class="slide s9" role="region" aria-label="Slide 9: Content Series Roadmap">
+        <div class="s9-header">
+          <div class="accent-bar"></div>
+          <span class="tag-pill">Content Series</span>
+          <h2>Practical Interoperability: The Series Roadmap</h2>
+        </div>
+        <div class="s9-posts">
+          <div class="s9-post">
+            <div class="s9-post-header teal-bg">
+              <span class="s9-post-num">POST 01</span>
+              <span class="s9-post-badge">Foundational</span>
+            </div>
+            <div class="s9-post-title">Demystifying FHIR: A Physician's Guide to Making Your First API Call</div>
+            <div class="s9-post-coverage">
+              <div class="s9-coverage-label">Coverage:</div>
+              <ul>
+                <li>Setting up the Epic FHIR sandbox</li>
+                <li>OAuth 2.0 authentication in Python</li>
+                <li>Pulling Patient + Observation resources</li>
+                <li>Parsing JSON responses into clinical data structures</li>
+              </ul>
+            </div>
+          </div>
+          <div class="s9-post">
+            <div class="s9-post-header navy-bg">
+              <span class="s9-post-num">POST 02</span>
+              <span class="s9-post-badge">Advanced</span>
+            </div>
+            <div class="s9-post-title">Escaping the Walled Garden: How to Build a Local SMART on FHIR App</div>
+            <div class="s9-post-coverage">
+              <div class="s9-coverage-label">Coverage:</div>
+              <ul>
+                <li>SMART on FHIR launch protocol</li>
+                <li>Wrapping FGRManager as a SMART app</li>
+                <li>Auto-populating clinical data from EMR</li>
+                <li>Writing CarePlan resources back to EHR</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="slide-footer light">DoctorsWhoCode.blog &nbsp;·&nbsp; Practical Interoperability Series</div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- SLIDE 10: CTA                                     -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <div class="slide s10" role="region" aria-label="Slide 10: Call to Action">
+        <div class="s10-teal-top"></div>
+        <div class="s10-teal-bottom"></div>
+        <div class="s10-grid" aria-hidden="true">
+          <div class="s10-grid-cell"></div><div class="s10-grid-cell"></div><div class="s10-grid-cell"></div><div class="s10-grid-cell"></div><div class="s10-grid-cell"></div>
+          <div class="s10-grid-cell"></div><div class="s10-grid-cell"></div><div class="s10-grid-cell"></div><div class="s10-grid-cell"></div><div class="s10-grid-cell"></div>
+          <div class="s10-grid-cell"></div><div class="s10-grid-cell"></div><div class="s10-grid-cell"></div><div class="s10-grid-cell"></div><div class="s10-grid-cell"></div>
+        </div>
+        <span class="tag-pill">Start Building</span>
+        <div class="s10-headline">The EMR has an API.<br>You have Python.<br>What are you waiting for?</div>
+        <div class="s10-cta-btn"><span>DoctorsWhoCode.blog</span></div>
+        <div class="s10-byline">
+          <p>Chukwuma Onyeije, MD, FACOG &nbsp;·&nbsp; Maternal-Fetal Medicine &nbsp;·&nbsp; Atlanta Perinatal Associates</p>
+          <p style="margin-top:3px;color:#4A6080;">Physician-Developer &nbsp;·&nbsp; OpenMFM.org &nbsp;·&nbsp; CodeCraftMD</p>
+        </div>
+      </div>
+
+    </div><!-- /slide-viewport -->
+
+    <!-- ── Navigation ── -->
+    <div class="nav-bar" role="navigation" aria-label="Slide navigation">
+      <button class="nav-btn" id="prevBtn" aria-label="Previous slide" onclick="navigate(-1)">&#8592;</button>
+      <div class="dots" id="dots" role="tablist" aria-label="Slide indicators"></div>
+      <span class="slide-counter" id="counter" aria-live="polite">1 / 10</span>
+      <button class="nav-btn" id="nextBtn" aria-label="Next slide" onclick="navigate(1)">&#8594;</button>
+      <button class="fullscreen-btn" onclick="toggleFullscreen()" aria-label="Toggle fullscreen">⛶ Full</button>
+    </div>
+    <div class="swipe-hint" aria-hidden="true">← Swipe to navigate →</div>
+  </div>
+</div>
+
+<script>
+const TOTAL = 10;
+let current = 0;
+let isAnimating = false;
+
+const slides   = document.querySelectorAll('.slide');
+const dotsEl   = document.getElementById('dots');
+const counterEl= document.getElementById('counter');
+const prevBtn  = document.getElementById('prevBtn');
+const nextBtn  = document.getElementById('nextBtn');
+const progress = document.getElementById('progressBar');
+const viewport = document.getElementById('viewport');
+
+/* Build dots */
+slides.forEach((_, i) => {
+  const d = document.createElement('button');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.setAttribute('role', 'tab');
+  d.setAttribute('aria-label', `Go to slide ${i+1}`);
+  d.setAttribute('aria-selected', i === 0);
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+});
+
+function updateUI() {
+  const dots = dotsEl.querySelectorAll('.dot');
+  dots.forEach((d, i) => {
+    d.classList.toggle('active', i === current);
+    d.setAttribute('aria-selected', i === current);
+  });
+  counterEl.textContent = `${current+1} / ${TOTAL}`;
+  prevBtn.disabled = current === 0;
+  nextBtn.disabled = current === TOTAL - 1;
+  progress.style.width = `${((current+1)/TOTAL)*100}%`;
+}
+
+function goTo(idx) {
+  if (idx === current || isAnimating) return;
+  isAnimating = true;
+  const dir = idx > current ? 1 : -1;
+  const from = slides[current];
+  const to   = slides[idx];
+
+  from.classList.add('exit-left');
+  to.style.transform = `translateX(${dir * 40}px)`;
+  to.style.opacity = '0';
+  to.classList.add('active');
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      from.classList.remove('active');
+      to.style.transform = '';
+      to.style.opacity = '';
+      setTimeout(() => {
+        from.classList.remove('exit-left');
+        from.style.transform = '';
+        from.style.opacity = '';
+        isAnimating = false;
+      }, 460);
+    });
+  });
+  current = idx;
+  updateUI();
+}
+
+function navigate(dir) {
+  const next = current + dir;
+  if (next >= 0 && next < TOTAL) goTo(next);
+}
+
+/* Keyboard navigation */
+viewport.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); navigate(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); navigate(-1); }
+  if (e.key === 'Home') goTo(0);
+  if (e.key === 'End')  goTo(TOTAL - 1);
+});
+
+/* Touch / swipe */
+let touchStartX = 0;
+viewport.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+viewport.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 40) navigate(dx < 0 ? 1 : -1);
+}, { passive: true });
+
+/* Fullscreen */
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    viewport.requestFullscreen && viewport.requestFullscreen();
+  } else {
+    document.exitFullscreen && document.exitFullscreen();
+  }
+}
+
+/* Init */
+updateUI();
+viewport.focus();
+</script>
+</body>
+</html>
