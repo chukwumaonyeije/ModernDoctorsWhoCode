@@ -15,8 +15,8 @@ type Props = CollectionEntry<'blog'>;
 const post = Astro.props;
 const { Content, headings } = await render(post);
 
-// Use hero image if set, otherwise fall back to the generated OG card
-const ogImage = post.data.image?.url ?? `/og/${post.id}.png`;
+// Use hero image if set, otherwise fall back to default OG image
+const ogImage = post.data.image?.url ?? '/images/og-default.jpg';
 
 // Auto reading time: strip MDX/markdown syntax, count words, assume 200 wpm
 const wordCount = (post.body ?? '')
