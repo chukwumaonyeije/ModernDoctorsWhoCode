@@ -1,28 +1,84 @@
 ---
-// Replace BEEHIIV_EMBED_URL with your actual embed URL from the Beehiiv dashboard
-const BEEHIIV_EMBED_URL = 'https://embeds.beehiiv.com/ae122d20-d362-4ced-ae4d-2f8ed8b5b273';
+const EMBED_ID = 'ae122d20-d362-4ced-ae4d-2f8ed8b5b273';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const {
+  title = 'Physicians who build, delivered weekly.',
+  subtitle = 'Clinical insights + developer tools for the physician-coder. No hype. No filler.',
+} = Astro.props;
 ---
 
 <div style="background-color: var(--dwc-card); border: 1px solid var(--dwc-border); border-radius: 12px; padding: 2rem; text-align: center;">
   <p class="label" style="margin-bottom: 0.5rem;">Newsletter</p>
-  <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Physicians who build, delivered weekly.</h3>
-  <p style="font-size: 0.9375rem; color: var(--dwc-muted); margin-bottom: 1.5rem;">
-    Clinical insights + developer tools for the physician-coder. No hype. No filler.
-  </p>
-  {BEEHIIV_EMBED_URL !== 'BEEHIIV_EMBED_URL' ? (
-    <iframe
-      src={BEEHIIV_EMBED_URL}
-      width="100%"
-      height="320"
-      style="border: none; border-radius: 8px;"
-      title="Newsletter signup"
+  <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">{title}</h3>
+  <p style="font-size: 0.9375rem; color: var(--dwc-muted); margin-bottom: 1.5rem;">{subtitle}</p>
+
+  <form id="newsletter-form" style="display: flex; max-width: 480px; margin: 0 auto 0.75rem;">
+    <input
+      id="newsletter-email"
+      type="email"
+      placeholder="Enter your email"
+      required
+      style="flex: 1; background: var(--dwc-navy); border: 1px solid var(--dwc-border); border-right: none; border-radius: 8px 0 0 8px; padding: 0.625rem 1rem; font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-white); outline: none;"
     />
-  ) : (
-    <a
-      href="/contact"
-      style="display: inline-block; font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-navy); background-color: var(--dwc-cyan); padding: 0.625rem 1.5rem; border-radius: 6px; font-weight: 500;"
-    >
-      Subscribe
-    </a>
-  )}
+    <button
+      type="submit"
+      id="newsletter-btn"
+      style="background: var(--dwc-blue); color: var(--dwc-white); border: none; border-radius: 0 8px 8px 0; padding: 0.625rem 1.25rem; font-family: var(--font-mono); font-size: 0.8125rem; cursor: pointer; white-space: nowrap;"
+    >Subscribe</button>
+  </form>
+
+  <p id="newsletter-msg" style="font-family: var(--font-mono); font-size: 0.8125rem; min-height: 1.25rem; margin: 0;"></p>
+
+  <p style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--dwc-muted); margin-top: 0.75rem;">
+    Powered by <a href="https://beehiiv.com" target="_blank" rel="noopener" style="color: var(--dwc-muted); text-decoration: underline;">beehiiv</a>
+  </p>
 </div>
+
+<script define:vars={{ EMBED_ID }}>
+  const form = document.getElementById('newsletter-form');
+  const emailInput = document.getElementById('newsletter-email');
+  const btn = document.getElementById('newsletter-btn');
+  const msg = document.getElementById('newsletter-msg');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = emailInput?.value?.trim();
+    if (!email) return;
+
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    msg.style.color = 'var(--dwc-muted)';
+    msg.textContent = '';
+
+    try {
+      const res = await fetch(`https://embeds.beehiiv.com/${EMBED_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      if (res.ok || res.status === 201) {
+        msg.style.color = 'var(--dwc-cyan)';
+        msg.textContent = 'You are in. Welcome to the physician-developer community.';
+        form.reset();
+      } else {
+        throw new Error('Bad response');
+      }
+    } catch {
+      // Fallback: redirect to hosted Beehiiv subscribe page
+      msg.style.color = 'var(--dwc-muted)';
+      msg.innerHTML = 'Redirecting to subscribe page...';
+      setTimeout(() => {
+        window.open('https://chukwumas-newsletter.beehiiv.com/subscribe?email=' + encodeURIComponent(email), '_blank');
+      }, 600);
+    } finally {
+      btn.textContent = 'Subscribe';
+      btn.disabled = false;
+    }
+  });
+</script>
