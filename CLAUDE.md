@@ -232,6 +232,32 @@ Every page must include:
 
 ---
 
+## AUDIO NARRATION
+
+Every published post must have an audio version. This is a standing rule.
+
+**Script:** `python -X utf8 scripts/generate_audio.py`
+- Skips posts that already have `audioUrl` in frontmatter
+- Safe to run after any new post — only processes new ones
+- MP3s saved to `public/audio/{slug}.mp3`
+- `audioUrl` frontmatter added automatically
+
+**Provider (set in `.env`):**
+```
+AUDIO_PROVIDER=openai      # default — OpenAI tts-1, onyx voice, ~$0.06/post
+AUDIO_PROVIDER=elevenlabs  # Daniel voice (ZMK5OD2jmsdse3EKE4W5) — requires paid plan
+AUDIO_PROVIDER=custom      # reserved for own voice clone
+```
+
+**Workflow for new posts:**
+1. Write and publish the post
+2. Run `python -X utf8 scripts/generate_audio.py`
+3. Commit the new MP3 and updated frontmatter together
+
+**To switch providers:** Change `AUDIO_PROVIDER` in `.env` — the script checks this before each run. Do NOT remove existing `audioUrl` fields unless regenerating intentionally.
+
+---
+
 ## WHAT I DO NOT WANT
 
 - Do not summarize my background at the start of sessions
