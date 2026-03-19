@@ -93,6 +93,8 @@ def tts_chunk(text: str) -> bytes:
 def write_audio_url(post_path: Path, slug: str) -> None:
     """Add audioUrl to frontmatter using direct text manipulation — no PyYAML encoding issues."""
     text = post_path.read_text(encoding='utf-8')
+    # Strip BOM if present so the replace targets the real opening ---
+    text = text.lstrip('\ufeff')
     audio_line = f'audioUrl: {AUDIO_URL_PREFIX}/{slug}.mp3\n'
     # Insert after the opening --- line only if not already present
     if 'audioUrl:' not in text:
