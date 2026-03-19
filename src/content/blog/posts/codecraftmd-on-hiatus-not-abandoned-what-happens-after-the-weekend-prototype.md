@@ -1,15 +1,17 @@
 ---
-title: "CodeCraftMD on Hiatus, Not Abandoned: What Happens After the Weekend Prototype"
-pubDate: 2026-01-18
-category: "Healthcare Technology"
-tags: 
-- "doctors-who-code"
-- "healthcare-automation"
-- "medical-technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/codecraftmd-on-hiatus-not-abandoned-what-happens-after-the-weekend-prototype.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Healthcare Technology
+description: It was 11:47 PM on a Saturday night, and I was staring at my EMR screen
+  trying to remember whether 'threatened abortion' was O20.0 or O03.4. I had just
+  ...
 draft: false
-
-description: "It was 11:47 PM on a Saturday night, and I was staring at my EMR screen trying to remember whether 'threatened abortion' was O20.0 or O03.4. I had just ..."
+pubDate: 2026-01-18
+tags:
+- doctors-who-code
+- healthcare-automation
+- medical-technology
+title: 'CodeCraftMD on Hiatus, Not Abandoned: What Happens After the Weekend Prototype'
 ---
 
 ![](https://lightslategray-turtle-256743.hostingersite.com/wp-content/uploads/2026/01/ChatGPT-Image-Jan-18-2026-12_03_00-PM-1024x683.png)

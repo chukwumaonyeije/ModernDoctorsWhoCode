@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/vibe-coding-for-clinicians-how-i-built-a-medical-app-in-one-weekend.mp3
 title: "Vibe Coding for Clinicians: How I Built a Medical App in One Weekend"
 pubDate: 2026-01-15
 category: "Technology"

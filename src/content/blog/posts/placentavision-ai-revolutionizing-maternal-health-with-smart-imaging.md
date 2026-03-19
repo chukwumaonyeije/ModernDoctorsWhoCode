@@ -1,27 +1,27 @@
 ---
-title: "PlacentaVision AI: Revolutionizing Maternal Health with Smart Imaging"
-pubDate: 2024-12-17
-category: "Healthcare Technology"
-tags: 
-- "ai-applications"
-- "ai-in-healthcare"
-- "global-healthcare-equity"
-- "healthcare-automation"
-- "maternal-health"
-- "medical-informatics"
-- "medical-software"
-- "medical-technology"
-- "neonatal-outcomes"
-- "placental-imaging"
-- "placentavision-ai"
-- "prenatal-care"
-- "smart-medical-diagnostics"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/placentavision-ai-revolutionizing-maternal-health-with-smart-imaging.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Healthcare Technology
+description: Discover how Placentavision AI transforms maternal healthcare using smartphone-based
+  placental imaging. Learn how this breakthrough technology saves liv...
 draft: false
-
-description: "Discover how Placentavision AI transforms maternal healthcare using smartphone-based placental imaging. Learn how this breakthrough technology saves liv..."
+pubDate: 2024-12-17
+tags:
+- ai-applications
+- ai-in-healthcare
+- global-healthcare-equity
+- healthcare-automation
+- maternal-health
+- medical-informatics
+- medical-software
+- medical-technology
+- neonatal-outcomes
+- placental-imaging
+- placentavision-ai
+- prenatal-care
+- smart-medical-diagnostics
+title: 'PlacentaVision AI: Revolutionizing Maternal Health with Smart Imaging'
 ---
-
 
 ## **Meta Description:**  
 Discover how Placentavision AI transforms maternal healthcare using smartphone-based placental imaging. Learn how this breakthrough technology saves lives globally. Read more now.

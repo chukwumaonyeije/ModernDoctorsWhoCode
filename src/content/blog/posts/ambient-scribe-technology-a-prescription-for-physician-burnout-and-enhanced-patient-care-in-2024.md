@@ -1,12 +1,13 @@
 ---
-title: "Ambient Scribe Technology: A Prescription for Physician Burnout and Enhanced Patient Care in 2024"
-pubDate: 2024-12-15
-category: "Healthcare Technology"
-
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/ambient-scribe-technology-a-prescription-for-physician-burnout-and-enhanced-patient-care-in-2024.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Healthcare Technology
+description: The prevalence of physician burnout has become a critical concern, with
+  nearly half of all physicians reporting symptoms in 2023 . A significant c...
 draft: false
-
-description: "The prevalence of physician burnout has become a critical concern, with nearly half of all physicians reporting symptoms in 2023 . A significant c..."
+pubDate: 2024-12-15
+title: 'Ambient Scribe Technology: A Prescription for Physician Burnout and Enhanced
+  Patient Care in 2024'
 ---
 
 ## Alleviating Physician Burnout and Elevating Patient Care through Ambient Scribe Technology

@@ -1,12 +1,11 @@
 ---
-title: "Building PGIS: A Vibe-Coded Performance Glycemic Intelligence System"
-pubDate: 2026-01-20
-category: "Blogging"
-
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/building-pgis-a-vibe-coded-performance-glycemic-intelligence-system.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Blogging
+description: Why Im tracking blood sugar like a developer and training like an athlete
 draft: false
-
-description: "Why Im tracking blood sugar like a developer and training like an athlete"
+pubDate: 2026-01-20
+title: 'Building PGIS: A Vibe-Coded Performance Glycemic Intelligence System'
 ---
 
 ![Image](https://www.drugdeliverybusiness.com/wp-content/uploads/2021/04/Abbott_monitor.jpg)

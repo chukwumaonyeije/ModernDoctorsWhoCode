@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/the-anatomy-of-a-real-time-clinical-presentation-from-clinical-encounter-to-open-source-slides-in-minutes.mp3
 title: "The Anatomy of a Real-Time Clinical Presentation: From Clinical Encounter to Open-Source Slides in Minutes"
 pubDate: 2026-02-23
 category: "Technology"

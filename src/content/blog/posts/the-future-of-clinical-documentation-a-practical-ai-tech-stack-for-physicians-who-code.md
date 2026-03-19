@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code.mp3
 title: "The Future of Clinical Documentation: A Practical AI Tech Stack for Physicians Who Code"
 pubDate: 2025-11-17
 category: "Blogging"

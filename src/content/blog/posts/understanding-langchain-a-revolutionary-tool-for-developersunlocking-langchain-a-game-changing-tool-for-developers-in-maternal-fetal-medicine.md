@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/understanding-langchain-a-revolutionary-tool-for-developersunlocking-langchain-a-game-changing-tool-for-developers-in-maternal-fetal-medicine.mp3
 title: "Unlocking LangChain: A Game-Changing Tool for Developers in Maternal-Fetal Medicine"
 pubDate: 2024-12-03
 category: "Technology"

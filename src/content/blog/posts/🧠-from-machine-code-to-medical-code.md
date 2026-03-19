@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/🧠-from-machine-code-to-medical-code.mp3
 title: "🧠 From Machine Code to Medical Code"
 pubDate: 2025-10-16
 category: "Blogging"

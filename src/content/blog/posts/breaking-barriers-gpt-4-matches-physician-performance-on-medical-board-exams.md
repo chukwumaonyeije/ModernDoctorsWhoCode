@@ -1,22 +1,24 @@
 ---
-title: "Breaking Barriers: GPT-4 Matches Physician Performance on Medical Board Exams"
-pubDate: 2025-02-07
-tags: 
-- "ai-assisted-diagnosis"
-- "artificial-intelligence-in-medicine"
-- "clinical-decision-support"
-- "future-of-medicine"
-- "gpt-4-in-healthcare"
-- "healthcare-automation"
-- "healthcare-innovation"
-- "medical-ai"
-- "medical-board-exams"
-- "medical-education-technology"
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/breaking-barriers-gpt-4-matches-physician-performance-on-medical-board-exams.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: 'In a groundbreaking development that signals a new era in healthcare,
+  artificial intelligence has achieved what many thought impossible: performing at
+  t...'
 draft: false
-
-description: "In a groundbreaking development that signals a new era in healthcare, artificial intelligence has achieved what many thought impossible: performing at t..."
+pubDate: 2025-02-07
+tags:
+- ai-assisted-diagnosis
+- artificial-intelligence-in-medicine
+- clinical-decision-support
+- future-of-medicine
+- gpt-4-in-healthcare
+- healthcare-automation
+- healthcare-innovation
+- medical-ai
+- medical-board-exams
+- medical-education-technology
+title: 'Breaking Barriers: GPT-4 Matches Physician Performance on Medical Board Exams'
 ---
 
 Deep Dive Podcast:

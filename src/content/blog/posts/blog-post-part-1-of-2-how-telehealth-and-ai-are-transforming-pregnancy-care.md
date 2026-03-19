@@ -1,13 +1,14 @@
 ---
-title: "Blog Post Part 1 of 2:  \"How Telehealth and AI Are Transforming Pregnancy Care\""
-pubDate: 2025-01-02
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/blog-post-part-1-of-2-how-telehealth-and-ai-are-transforming-pregnancy-care.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: Discover how telehealth and AI revolutionize care for hypertension during
+  pregnancy. Learn the latest strategies to improve maternal health outcomes.
 draft: false
-
-description: "Discover how telehealth and AI revolutionize care for hypertension during pregnancy. Learn the latest strategies to improve maternal health outcomes."
+pubDate: 2025-01-02
+title: 'Blog Post Part 1 of 2:  "How Telehealth and AI Are Transforming Pregnancy
+  Care"'
 ---
-
 
 Discover how telehealth and AI revolutionize care for hypertension during pregnancy. Learn the latest strategies to improve maternal health outcomes.
 

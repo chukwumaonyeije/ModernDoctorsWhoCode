@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/why-im-bullish-on-doctors-who-code-in-agreement-with-robert-wachter.mp3
 title: "Why I'm Bullish on Doctors Who Code: In Agreement with Robert Wachter"
 pubDate: 2026-01-20
 category: "Blogging"

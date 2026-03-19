@@ -1,12 +1,13 @@
 ---
-title: "From Walled Gardens to Living Evidence: Why Evidence-Based Medicine Is Being Rewritten by Compute"
-pubDate: 2026-02-04
-category: "Technology"
-
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/from-walled-gardens-to-living-evidence-why-evidence-based-medicine-is-being-rewritten-by-compute.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: The history of medicine is, at its core, a history of how we manage information.
+  For decades, Evidence-Based Medicine (EBM) has been our North Stara ri...
 draft: false
-
-description: "The history of medicine is, at its core, a history of how we manage information. For decades, Evidence-Based Medicine (EBM) has been our North Stara ri..."
+pubDate: 2026-02-04
+title: 'From Walled Gardens to Living Evidence: Why Evidence-Based Medicine Is Being
+  Rewritten by Compute'
 ---
 
 ![](https://lightslategray-turtle-256743.hostingersite.com/wp-content/uploads/2026/02/Gemini_Generated_Image_uzov68uzov68uzov.png)
@@ -99,4 +100,3 @@ We stand at a crossroads. The walls of the old gardens are not being torn down b
 It is time to move from being passive consumers of curated tools to being the architects of computational intelligence. The evidence is clear: the future of medicine is written in code.
 
 Chuck
-

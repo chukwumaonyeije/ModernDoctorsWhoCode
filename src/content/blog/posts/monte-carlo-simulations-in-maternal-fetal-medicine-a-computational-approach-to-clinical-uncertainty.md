@@ -1,11 +1,13 @@
 ---
-title: "Monte Carlo Simulations in Maternal-Fetal Medicine: A Computational Approach to Clinical Uncertainty"
-pubDate: 2025-09-11
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/monte-carlo-simulations-in-maternal-fetal-medicine-a-computational-approach-to-clinical-uncertainty.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: Transforming clinical variability into actionable probabilities for evidence-based
+  maternal-fetal care
 draft: false
-
-description: "Transforming clinical variability into actionable probabilities for evidence-based maternal-fetal care"
+pubDate: 2025-09-11
+title: 'Monte Carlo Simulations in Maternal-Fetal Medicine: A Computational Approach
+  to Clinical Uncertainty'
 ---
 
 _Transforming clinical variability into actionable probabilities for evidence-based maternal-fetal care_

@@ -1,12 +1,11 @@
 ---
-title: "Deep Medicine: AI and the Humanization of Healthcare"
-pubDate: 2024-12-31
-category: "Healthcare Technology"
-
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/deep-medicine-ai-and-the-humanization-of-healthcare.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Healthcare Technology
+description: https://youtu.be/ZWAnjdQy5kE?si=d5EXu5yfbaODsA9j
 draft: false
-
-description: "https://youtu.be/ZWAnjdQy5kE?si=d5EXu5yfbaODsA9j"
+pubDate: 2024-12-31
+title: 'Deep Medicine: AI and the Humanization of Healthcare'
 ---
 
 https://youtu.be/ZWAnjdQy5kE?si=d5EXu5yfbaODsA9j

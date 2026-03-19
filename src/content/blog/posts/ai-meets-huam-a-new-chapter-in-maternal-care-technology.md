@@ -1,11 +1,12 @@
 ---
-title: "AI Meets HUAM: A New Chapter in Maternal Care Technology"
-pubDate: 2024-12-06
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/ai-meets-huam-a-new-chapter-in-maternal-care-technology.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: Home Uterine Activity Monitoring (HUAM) emerged in the 1990s as a promising
+  innovation for detecting preterm labor in high-risk pregnancies. While initi...
 draft: false
-
-description: "Home Uterine Activity Monitoring (HUAM) emerged in the 1990s as a promising innovation for detecting preterm labor in high-risk pregnancies. While initi..."
+pubDate: 2024-12-06
+title: 'AI Meets HUAM: A New Chapter in Maternal Care Technology'
 ---
 
 **_A New Era for Uterine Activity Monitoring_**

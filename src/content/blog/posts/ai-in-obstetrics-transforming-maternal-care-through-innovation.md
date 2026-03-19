@@ -1,28 +1,29 @@
 ---
-title: "AI in Obstetrics: Transforming Maternal Care Through Innovation"
-pubDate: 2024-12-10
-tags: 
-- "ai-in-obstetrics"
-- "digital-health"
-- "ethical-ai"
-- "fetal-monitoring"
-- "genetic-testing"
-- "healthcare-innovation"
-- "healthcare-transformation"
-- "maternal-health"
-- "maternal-fetal-medicine"
-- "medical-software"
-- "medical-technology"
-- "obstetric-imaging"
-- "predictive-analytics"
-- "prenatal-care"
-- "smart-labor-management"
-- "wearable-technology"
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/ai-in-obstetrics-transforming-maternal-care-through-innovation.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: Artificial intelligence (AI) is revolutionizing obstetric care, empowering
+  healthcare providers to deliver precise, timely, and personalized interventio...
 draft: false
-
-description: "Artificial intelligence (AI) is revolutionizing obstetric care, empowering healthcare providers to deliver precise, timely, and personalized interventio..."
+pubDate: 2024-12-10
+tags:
+- ai-in-obstetrics
+- digital-health
+- ethical-ai
+- fetal-monitoring
+- genetic-testing
+- healthcare-innovation
+- healthcare-transformation
+- maternal-health
+- maternal-fetal-medicine
+- medical-software
+- medical-technology
+- obstetric-imaging
+- predictive-analytics
+- prenatal-care
+- smart-labor-management
+- wearable-technology
+title: 'AI in Obstetrics: Transforming Maternal Care Through Innovation'
 ---
 
 # Revolutionizing Maternal-Fetal Health: The Past, Present, and Future of AI in Obstetrics

@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/when-code-meets-care-a-doctors-journey-into-ai-powered-medicine.mp3
 title: "When Code Meets Care: A Doctor's Journey into AI-Powered Medicine"
 pubDate: 2024-12-11
 tags: 

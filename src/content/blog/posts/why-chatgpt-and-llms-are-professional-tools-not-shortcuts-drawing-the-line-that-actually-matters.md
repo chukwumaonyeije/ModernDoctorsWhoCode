@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/why-chatgpt-and-llms-are-professional-tools-not-shortcuts-drawing-the-line-that-actually-matters.mp3
 title: "Why ChatGPT and LLMs Are Professional Tools, Not Shortcuts: Drawing the Line That Actually Matters"
 pubDate: 2026-01-23
 category: "Blogging"

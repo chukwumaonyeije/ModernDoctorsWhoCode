@@ -1,23 +1,25 @@
 ---
-title: "From Misinformation to Implementation: Why Modern Medicine Needs a Guideline-to-App Industrial Complex"
-pubDate: 2026-02-13
-category: "Blogging"
-tags: 
-- "acog"
-- "clinical-decision-support"
-- "clinical-guidelines"
-- "digital-health-tools"
-- "evidence-based-medicine"
-- "healthcare-technology"
-- "interactive-patient-education"
-- "maternal-fetal-medicine"
-- "medical-misinformation"
-- "physician-developer-2"
-- "smfm"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/from-misinformation-to-implementation-why-modern-medicine-needs-a-guideline-to-app-industrial-complex.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Blogging
+description: Maternal-Fetal Medicine Specialist, Medical Director at Atlanta Perinatal
+  Associates, Founder of CodeCraftMD
 draft: false
-
-description: "Maternal-Fetal Medicine Specialist, Medical Director at Atlanta Perinatal Associates, Founder of CodeCraftMD"
+pubDate: 2026-02-13
+tags:
+- acog
+- clinical-decision-support
+- clinical-guidelines
+- digital-health-tools
+- evidence-based-medicine
+- healthcare-technology
+- interactive-patient-education
+- maternal-fetal-medicine
+- medical-misinformation
+- physician-developer-2
+- smfm
+title: 'From Misinformation to Implementation: Why Modern Medicine Needs a Guideline-to-App
+  Industrial Complex'
 ---
 
 ### **By Chukwuma I. Onyeije, MD, FACOG**  
@@ -241,4 +243,3 @@ Dr. Chukwuma Onyeije emphasizes the critical role of physician-designed applicat
 **Tags:** physician-developer, medical misinformation, clinical decision support, healthcare technology, evidence-based medicine, interactive patient education, digital health tools, clinical guidelines, ACOG, SMFM, maternal-fetal medicine
 
 **SEO Title:** Why Medicine Needs Physician-Built Apps to Fight Misinformation | Doctors Who Code
-

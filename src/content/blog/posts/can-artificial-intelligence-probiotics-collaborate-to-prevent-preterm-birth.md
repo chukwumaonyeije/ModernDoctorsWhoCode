@@ -1,19 +1,22 @@
 ---
-title: "Can Artificial Intelligence &amp; Probiotics Collaborate to Prevent Preterm Birth?"
-pubDate: 2024-12-23
-tags: 
-- "ai-applications"
-- "fetal-monitoring"
-- "healthcare-automation"
-- "healthcare-innovation"
-- "medical-informatics"
-- "medical-software"
-- "prenatal-care"
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/can-artificial-intelligence-probiotics-collaborate-to-prevent-preterm-birth.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: Every year, countless families face the heartbreak of preterm birth,
+  with preterm premature rupture of membranes (PPROM) playing a significant role.
+  Ima...
 draft: false
-
-description: "Every year, countless families face the heartbreak of preterm birth, with preterm premature rupture of membranes (PPROM) playing a significant role. Ima..."
+pubDate: 2024-12-23
+tags:
+- ai-applications
+- fetal-monitoring
+- healthcare-automation
+- healthcare-innovation
+- medical-informatics
+- medical-software
+- prenatal-care
+title: Can Artificial Intelligence &amp; Probiotics Collaborate to Prevent Preterm
+  Birth?
 ---
 
 ![](https://doctorswhocode.blog/wp-content/uploads/2024/12/Artificial_Intelligence__Probiotics_.png)

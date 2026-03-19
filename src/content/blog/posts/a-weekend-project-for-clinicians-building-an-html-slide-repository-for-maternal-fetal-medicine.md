@@ -1,13 +1,14 @@
 ---
-title: "A Weekend Project for Clinicians: Building an HTML Slide Repository for Maternal–Fetal Medicine"
-pubDate: 2026-01-04
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/a-weekend-project-for-clinicians-building-an-html-slide-repository-for-maternal-fetal-medicine.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: Most MaternalFetal Medicine (MFM) physicians accumulate years of teaching
+  materialPowerPoint decks, PDFs, screenshots, and handouts scattered across l...
 draft: false
-
-description: "Most MaternalFetal Medicine (MFM) physicians accumulate years of teaching materialPowerPoint decks, PDFs, screenshots, and handouts scattered across l..."
+pubDate: 2026-01-04
+title: 'A Weekend Project for Clinicians: Building an HTML Slide Repository for Maternal–Fetal
+  Medicine'
 ---
-
 
 # Why I Built an HTML Slide Repository
 

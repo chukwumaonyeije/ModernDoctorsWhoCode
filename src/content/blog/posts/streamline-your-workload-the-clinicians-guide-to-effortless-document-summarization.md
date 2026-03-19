@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/streamline-your-workload-the-clinicians-guide-to-effortless-document-summarization.mp3
 title: "Streamline Your Workload:  The Clinician's Guide to Effortless Document Summarization"
 pubDate: 2024-12-23
 category: "Technology"

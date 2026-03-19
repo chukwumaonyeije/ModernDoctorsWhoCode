@@ -1,11 +1,12 @@
 ---
-title: "Doctors Who Code Blog Post"
-pubDate: 2026-01-30
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/doctors-who-code-blog-post.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: 'I just did something that would have been unthinkable five years ago:
+  I cancelled my UpToDate subscription.'
 draft: false
-
-description: "I just did something that would have been unthinkable five years ago: I cancelled my UpToDate subscription."
+pubDate: 2026-01-30
+title: Doctors Who Code Blog Post
 ---
 
 **Why I Finally Cancelled My UpToDate Subscription After 12 Years**

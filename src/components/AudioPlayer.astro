@@ -27,7 +27,7 @@ const { src, title } = Astro.props;
   <span id="audio-time" style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dwc-muted); flex-shrink: 0;">0:00</span>
 </div>
 
-<audio id="dwc-audio" src={src} preload="metadata"></audio>
+<audio id="dwc-audio" src={src} preload="metadata" style="display: none;"></audio>
 
 <script>
   const audio = document.getElementById('dwc-audio') as HTMLAudioElement;

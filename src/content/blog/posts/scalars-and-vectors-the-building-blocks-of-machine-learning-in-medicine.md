@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/scalars-and-vectors-the-building-blocks-of-machine-learning-in-medicine.mp3
 title: "📊 Scalars and Vectors: The Building Blocks of Machine Learning in Medicine"
 pubDate: 2025-10-02
 category: "Blogging"

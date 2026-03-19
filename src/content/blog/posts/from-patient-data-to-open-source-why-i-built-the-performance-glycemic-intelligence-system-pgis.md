@@ -1,14 +1,16 @@
 ---
-title: "From Patient Data to Open Source: Why I Built the Performance Glycemic Intelligence System (PGIS)"
-pubDate: 2026-02-25
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/from-patient-data-to-open-source-why-i-built-the-performance-glycemic-intelligence-system-pgis.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: As a physician-developer and a 60-year-old endurance athlete living with
+  Type 2 diabetes for over two decades, I have navigated a unique intersection of...
 draft: false
 image:
-  url: "/images/posts/pgis-infographic.png"
-  alt: "PGIS Performance Glycemic Intelligence System infographic"
-
-description: "As a physician-developer and a 60-year-old endurance athlete living with Type 2 diabetes for over two decades, I have navigated a unique intersection of..."
+  alt: PGIS Performance Glycemic Intelligence System infographic
+  url: /images/posts/pgis-infographic.png
+pubDate: 2026-02-25
+title: 'From Patient Data to Open Source: Why I Built the Performance Glycemic Intelligence
+  System (PGIS)'
 ---
 
 As a physician-developer and a 60-year-old endurance athlete living with Type 2 diabetes for over two decades, I have navigated a unique intersection of medicine, technology, and personal health. My journey is a constant balancing act between the drive for athletic performance and the non-negotiable demands of glycemic control. This personal challenge is the crucible in which the Performance Glycemic Intelligence System (PGIS) was forged. Today, I am sharing not just the system itself, but the philosophy behind it, by releasing it as an open-source project on GitHub. This post is for my fellow physicians who code and for every individual with Type 2 diabetes striving for a life without limits.

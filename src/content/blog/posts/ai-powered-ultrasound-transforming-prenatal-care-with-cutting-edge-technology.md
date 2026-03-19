@@ -1,21 +1,23 @@
 ---
-title: "AI-Powered Ultrasound: Transforming Prenatal Care with Cutting-Edge Technology"
-pubDate: 2024-12-12
-tags: 
-- "ai-applications"
-- "fetal-monitoring"
-- "genetic-testing"
-- "healthcare-automation"
-- "maternal-health"
-- "medical-informatics"
-- "medical-software"
-- "medical-technology"
-- "prenatal-care"
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/ai-powered-ultrasound-transforming-prenatal-care-with-cutting-edge-technology.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: In recent years, artificial intelligence (AI) has leaped from science
+  fiction into real-world applications, revolutionizing industries from finance to
+  t...
 draft: false
-
-description: "In recent years, artificial intelligence (AI) has leaped from science fiction into real-world applications, revolutionizing industries from finance to t..."
+pubDate: 2024-12-12
+tags:
+- ai-applications
+- fetal-monitoring
+- genetic-testing
+- healthcare-automation
+- maternal-health
+- medical-informatics
+- medical-software
+- medical-technology
+- prenatal-care
+title: 'AI-Powered Ultrasound: Transforming Prenatal Care with Cutting-Edge Technology'
 ---
 
 ### How AI is Enhancing Precision and Accessibility in Prenatal Ultrasound

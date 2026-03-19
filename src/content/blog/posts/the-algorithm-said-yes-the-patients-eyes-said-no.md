@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/the-algorithm-said-yes-the-patients-eyes-said-no.mp3
 title: "The Algorithm Said Yes. The Patient's Eyes Said No."
 pubDate: 2025-11-03
 category: "Blogging"

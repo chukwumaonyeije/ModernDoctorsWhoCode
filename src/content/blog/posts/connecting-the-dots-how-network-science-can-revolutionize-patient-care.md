@@ -1,11 +1,12 @@
 ---
-title: "\"Connecting the Dots\": How Network Science Can Revolutionize Patient Care"
-pubDate: 2024-12-17
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/connecting-the-dots-how-network-science-can-revolutionize-patient-care.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: 'Imagine this: Every prescription, diagnostic scan, or patient encounter
+  you document contributes to a larger, invisible web of dataone with the power t...'
 draft: false
-
-description: "Imagine this: Every prescription, diagnostic scan, or patient encounter you document contributes to a larger, invisible web of dataone with the power t..."
+pubDate: 2024-12-17
+title: '"Connecting the Dots": How Network Science Can Revolutionize Patient Care'
 ---
 
 **"Connecting the Dots": How Network Science Can Revolutionize Patient Care**

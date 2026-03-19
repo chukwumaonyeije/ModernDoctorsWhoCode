@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/the-dangerous-limitations-of-static-ai-in-maternal-care-when-preeclampsia-prediction-models-fail-over-time.mp3
 title: "The Dangerous Limitations of Static AI in Maternal Care: When Preeclampsia Prediction Models Fail Over Time"
 pubDate: 2025-03-25
 tags: 

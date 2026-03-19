@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/the-perform-study-what-happens-when-ai-and-ob-gyn-residents-go-head-to-head.mp3
 title: "The PERFORM Study: What Happens When AI and OB-GYN Residents Go Head-to-Head?"
 pubDate: 2025-08-19
 category: "Technology"

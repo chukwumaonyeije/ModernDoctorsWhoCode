@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/the-era-of-the-clinical-scratchpad-why-every-doctor-should-build-disposable-software.mp3
 title: "The Era of the Clinical Scratchpad: Why Every Doctor Should Build \"Disposable\" Software"
 pubDate: 2026-02-01
 category: "Physician Development"

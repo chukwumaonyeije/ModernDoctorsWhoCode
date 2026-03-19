@@ -1,21 +1,23 @@
 ---
-title: "I Built an OpenClaw Agent to Understand What Developers Are Actually Doing (Not Because I Needed One)"
-pubDate: 2026-02-10
-category: "Blogging"
-tags: 
-- "aiagents"
-- "clinicalinformatics"
-- "doctorswhocode"
-- "halfmarathontraining"
-- "learningbydoing"
-- "openclaw"
-- "pgis"
-- "physiciandeveloper"
-- "type2diabetes"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/i-built-an-openclaw-agent-to-understand-what-developers-are-actually-doing-not-because-i-needed-one.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Blogging
+description: Maternal-Fetal Medicine Specialist | Founder, CodeCraftMD | Atlanta Perinatal
+  Associates
 draft: false
-
-description: "Maternal-Fetal Medicine Specialist | Founder, CodeCraftMD | Atlanta Perinatal Associates"
+pubDate: 2026-02-10
+tags:
+- aiagents
+- clinicalinformatics
+- doctorswhocode
+- halfmarathontraining
+- learningbydoing
+- openclaw
+- pgis
+- physiciandeveloper
+- type2diabetes
+title: I Built an OpenClaw Agent to Understand What Developers Are Actually Doing
+  (Not Because I Needed One)
 ---
 
 ### **By Chukwuma Onyeije, MD, FACOG**  

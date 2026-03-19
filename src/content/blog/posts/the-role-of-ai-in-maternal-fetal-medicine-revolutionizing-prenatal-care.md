@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/the-role-of-ai-in-maternal-fetal-medicine-revolutionizing-prenatal-care.mp3
 title: "The Role of AI in Maternal-Fetal Medicine: Revolutionizing Prenatal Care"
 pubDate: 2024-12-04
 category: "Technology"

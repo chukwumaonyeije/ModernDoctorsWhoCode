@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/the-bridge-builders-mind-progress-by-abstraction.mp3
 title: "The Bridge Builder’s Mind: Progress by Abstraction"
 pubDate: 2025-10-15
 tags: 

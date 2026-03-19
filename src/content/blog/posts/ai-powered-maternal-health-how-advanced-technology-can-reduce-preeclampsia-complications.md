@@ -1,17 +1,19 @@
 ---
-title: "AI-Powered Maternal Health: How Advanced Technology Can Reduce Preeclampsia Complications"
-pubDate: 2025-03-30
-category: "Blogging"
-tags: 
-- "ai-applications"
-- "healthcare-automation"
-- "maternal-health"
-- "medical-informatics"
-- "prenatal-care"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/ai-powered-maternal-health-how-advanced-technology-can-reduce-preeclampsia-complications.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Blogging
+description: Every 7 minutes, a woman dies from complications of pregnancy and childbirth-related
+  hypertensive disorders. Preeclampsia alone affects 5-8% of all preg...
 draft: false
-
-description: "Every 7 minutes, a woman dies from complications of pregnancy and childbirth-related hypertensive disorders. Preeclampsia alone affects 5-8% of all preg..."
+pubDate: 2025-03-30
+tags:
+- ai-applications
+- healthcare-automation
+- maternal-health
+- medical-informatics
+- prenatal-care
+title: 'AI-Powered Maternal Health: How Advanced Technology Can Reduce Preeclampsia
+  Complications'
 ---
 
 ### _By Chukwuma I. Onyeije, MD_

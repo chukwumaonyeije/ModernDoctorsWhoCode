@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/the-scalpel-and-the-algorithm-a-new-era-for-physicians.mp3
 title: "The Scalpel and the Algorithm – A New Era for Physicians"
 pubDate: 2025-03-26
 category: "Blogging"

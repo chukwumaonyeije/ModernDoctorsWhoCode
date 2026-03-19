@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/what-should-be-the-response-for-doctors-who-code-and-humanitys-next-medical-exam.mp3
 title: "What Should Be the Response for \"Doctors Who Code\" and Humanity’s Next Medical Exam"
 pubDate: 2025-10-23
 category: "Blogging"

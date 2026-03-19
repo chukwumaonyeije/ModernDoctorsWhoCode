@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/revolutionizing-maternal-care-how-deep-learning-is-transforming-fetal-monitoring-and-preventing-birth-complications.mp3
 title: "Revolutionizing Maternal Care: How Deep Learning is Transforming Fetal Monitoring and Preventing Birth Complications"
 pubDate: 2025-03-10
 category: "Technology"

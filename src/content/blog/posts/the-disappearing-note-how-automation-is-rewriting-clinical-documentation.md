@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/the-disappearing-note-how-automation-is-rewriting-clinical-documentation.mp3
 title: "The Disappearing Note: How Automation Is Rewriting Clinical Documentation"
 pubDate: 2025-11-19
 tags: 

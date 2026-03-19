@@ -1,11 +1,13 @@
 ---
-title: "From Stethoscopes to Transformers: A Doctor's Deep Dive into \"Attention is All You Need\""
-pubDate: 2026-02-22
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/from-stethoscopes-to-transformers-a-doctors-deep-dive-into-attention-is-all-you-need.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: '''The contents of this file is everything algorithmically needed to
+  train a GPT. Everything else is just efficiency.'''
 draft: false
-
-description: "'The contents of this file is everything algorithmically needed to train a GPT. Everything else is just efficiency.'"
+pubDate: 2026-02-22
+title: 'From Stethoscopes to Transformers: A Doctor''s Deep Dive into "Attention is
+  All You Need"'
 ---
 
 Published on DoctorsWhoCode.blog

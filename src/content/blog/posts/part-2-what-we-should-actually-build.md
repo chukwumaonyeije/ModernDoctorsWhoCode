@@ -1,31 +1,31 @@
 ---
-title: "Part 2: What We Should Actually Build"
-pubDate: 2026-02-08
-category: "Healthcare Technology"
-tags: 
-- "aiinmedicine"
-- "clinicalai"
-- "clinicaldecisionsupport-2"
-- "codecraftmd-2"
-- "digitalhealth-2"
-- "healthcareai-2"
-- "healthcareautomation-2"
-- "healthcarepolicy"
-- "healthequity"
-- "healthit-2"
-- "maternalfetalmedicine-2"
-- "medicalinnovation"
-- "opensourcehealthcare"
-- "physiciandevelopers-2"
-- "pointofcareultrasound"
-- "priorauthorization"
-- "remotepatientmonitoring"
-- "ruralhealthcare"
-- "ruralmedicine"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/part-2-what-we-should-actually-build.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Healthcare Technology
+description: Maternal-Fetal Medicine Specialist & Founder, CodeCraftMD
 draft: false
-
-description: "Maternal-Fetal Medicine Specialist & Founder, CodeCraftMD"
+pubDate: 2026-02-08
+tags:
+- aiinmedicine
+- clinicalai
+- clinicaldecisionsupport-2
+- codecraftmd-2
+- digitalhealth-2
+- healthcareai-2
+- healthcareautomation-2
+- healthcarepolicy
+- healthequity
+- healthit-2
+- maternalfetalmedicine-2
+- medicalinnovation
+- opensourcehealthcare
+- physiciandevelopers-2
+- pointofcareultrasound
+- priorauthorization
+- remotepatientmonitoring
+- ruralhealthcare
+- ruralmedicine
+title: 'Part 2: What We Should Actually Build'
 ---
 
 # The Physician-Developer's Blueprint for Rural AI That Works
@@ -601,5 +601,3 @@ _Dr. Chukwuma Onyeije is a board-certified Maternal-Fetal Medicine specialist an
 
 **Title Tag (60 characters):**  
 "What Rural Healthcare AI Should Actually Look Like"
-
-

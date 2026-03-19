@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/the-marvelous-mind-of-johnny-von-neumann.mp3
 title: "The Marvelous Mind of Johnny von Neumann"
 pubDate: 2025-08-17
 category: "Technology"

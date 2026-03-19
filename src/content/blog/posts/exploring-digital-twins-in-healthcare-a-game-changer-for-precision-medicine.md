@@ -1,11 +1,13 @@
 ---
-title: "Exploring Digital Twins in Healthcare: A Game-Changer for Precision Medicine"
-pubDate: 2024-12-03
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/exploring-digital-twins-in-healthcare-a-game-changer-for-precision-medicine.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: The concept of Digital Twins is transforming healthcare by creating a
+  revolutionary pathway toward personalized and precision medicine. For physicians
+  i...
 draft: false
-
-description: "The concept of Digital Twins is transforming healthcare by creating a revolutionary pathway toward personalized and precision medicine. For physicians i..."
+pubDate: 2024-12-03
+title: 'Exploring Digital Twins in Healthcare: A Game-Changer for Precision Medicine'
 ---
 
 The concept of **Digital Twins** is transforming healthcare by creating a revolutionary pathway toward personalized and precision medicine. For physicians intrigued by cutting-edge technologies, the use of digital twins in metabolic health offers an exciting frontier. Let’s delve into the impact of this innovation, with a particular focus on **Twin Health’s Whole Body Digital Twin™** technology.

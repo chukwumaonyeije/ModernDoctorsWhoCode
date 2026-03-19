@@ -1,18 +1,20 @@
 ---
-title: "Build Better Healthcare Tools: A Physician's Guide to Web Frameworks &amp; APIs"
-pubDate: 2024-12-09
-tags: 
-- "healthcare-automation"
-- "healthcare-technology-tools"
-- "medical-informatics"
-- "patient-monitoring"
-- "telemedicine-apis"
-- "web-frameworks-for-physicians"
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/build-better-healthcare-tools-a-physicians-guide-to-web-frameworks-apis.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: Discover how physicians can harness web frameworks and APIs to improve
+  patient care, streamline practice operations, and drive healthcare innovation. St...
 draft: false
-
-description: "Discover how physicians can harness web frameworks and APIs to improve patient care, streamline practice operations, and drive healthcare innovation. St..."
+pubDate: 2024-12-09
+tags:
+- healthcare-automation
+- healthcare-technology-tools
+- medical-informatics
+- patient-monitoring
+- telemedicine-apis
+- web-frameworks-for-physicians
+title: 'Build Better Healthcare Tools: A Physician''s Guide to Web Frameworks &amp;
+  APIs'
 ---
 
 ![](https://doctorswhocode.blog/wp-content/uploads/2024/12/chukwumaonyeije_A_middle-aged_African_American_male_doctor_1.png)

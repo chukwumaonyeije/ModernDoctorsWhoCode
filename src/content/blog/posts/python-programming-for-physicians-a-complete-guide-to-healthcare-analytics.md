@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/python-programming-for-physicians-a-complete-guide-to-healthcare-analytics.mp3
 title: "Python Programming for Physicians: A Complete Guide to Healthcare Analytics"
 pubDate: 2024-12-08
 category: "Healthcare Technology"

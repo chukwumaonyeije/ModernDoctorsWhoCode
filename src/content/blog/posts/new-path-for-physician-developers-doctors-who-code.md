@@ -1,14 +1,15 @@
 ---
-title: "Stop Searching \"How to Code Like a Software Engineer\": A New Path for Physician-Developers"
-pubDate: 2025-12-09
-category: "Blogging"
-tags: 
-- "doctors-who-code"
-- "healthcare-automation"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/new-path-for-physician-developers-doctors-who-code.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Blogging
+description: Medical Director, Atlanta Perinatal Associates | Creator of CodeCraftMD
+  & PreEclampsiaWatch
 draft: false
-
-description: "Medical Director, Atlanta Perinatal Associates | Creator of CodeCraftMD & PreEclampsiaWatch"
+pubDate: 2025-12-09
+tags:
+- doctors-who-code
+- healthcare-automation
+title: 'Stop Searching "How to Code Like a Software Engineer": A New Path for Physician-Developers'
 ---
 
 By Chukwuma I. Onyeije, MD, FACOG
@@ -153,4 +154,3 @@ Coding in 2026 is not about memorizing syntax. It’s about co-creating with AI 
 
 
 _Dr. Chukwuma I. Onyeije is a Maternal-Fetal Medicine specialist and the founder of Doctors Who Code. He builds AI-driven tools for healthcare, including Preconception Counseling Co-Pilots and diabetes trackers._
-

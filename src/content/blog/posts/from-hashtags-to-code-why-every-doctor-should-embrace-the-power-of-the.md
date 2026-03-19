@@ -1,11 +1,12 @@
 ---
-title: "From #Hashtags to Code: Why Every Doctor Should Embrace the Power of the #"
-pubDate: 2024-12-18
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/from-hashtags-to-code-why-every-doctor-should-embrace-the-power-of-the.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: When Chris Messina first proposed using the pound symbol for grouping
+  content on Twitter in 2007, few could have predicted its impact on healthcare comm...
 draft: false
-
-description: "When Chris Messina first proposed using the pound symbol for grouping content on Twitter in 2007, few could have predicted its impact on healthcare comm..."
+pubDate: 2024-12-18
+title: 'From #Hashtags to Code: Why Every Doctor Should Embrace the Power of the #'
 ---
 
 ### In today's digital healthcare landscape, where medical professionals increasingly straddle the worlds of clinical practice and technology, understanding the intersection of social media and coding has become crucial. As doctors who code, we've discovered that the humble "#" symbol carries far more weight than most realize – it's a digital Swiss Army knife that's transforming healthcare communication and data organization.

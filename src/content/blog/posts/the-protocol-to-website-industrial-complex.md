@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/the-protocol-to-website-industrial-complex.mp3
 title: "The Protocol-to-Website Industrial Complex:"
 pubDate: 2026-03-15
 category: "Blogging"

@@ -1,28 +1,28 @@
 ---
-title: "Part 1: The $50 Billion Bait-and-Switch"
-pubDate: 2026-02-08
-category: "Healthcare Technology"
-tags: 
-- "aiinmedicine"
-- "clinicalai"
-- "digitalhealth-2"
-- "fetal-monitoring"
-- "healthcareaccess"
-- "healthcareinnovation"
-- "healthequity"
-- "healthit-2"
-- "healthpolicy"
-- "highriskob"
-- "maternalfetalmedicine-2"
-- "medicaidcuts"
-- "medicalai"
-- "physiciandevelopers-2"
-- "ruralhealthcare"
-- "ruralmedicine"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/part-1-the-50-billion-bait-and-switch.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Healthcare Technology
+description: Maternal-Fetal Medicine Specialist & Founder, CodeCraftMD
 draft: false
-
-description: "Maternal-Fetal Medicine Specialist & Founder, CodeCraftMD"
+pubDate: 2026-02-08
+tags:
+- aiinmedicine
+- clinicalai
+- digitalhealth-2
+- fetal-monitoring
+- healthcareaccess
+- healthcareinnovation
+- healthequity
+- healthit-2
+- healthpolicy
+- highriskob
+- maternalfetalmedicine-2
+- medicaidcuts
+- medicalai
+- physiciandevelopers-2
+- ruralhealthcare
+- ruralmedicine
+title: 'Part 1: The $50 Billion Bait-and-Switch'
 ---
 
 ## How AI "Transformation" Became Cover for Abandoning Rural America

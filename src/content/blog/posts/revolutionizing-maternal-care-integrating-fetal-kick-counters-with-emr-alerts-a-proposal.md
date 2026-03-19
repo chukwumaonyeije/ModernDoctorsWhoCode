@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/revolutionizing-maternal-care-integrating-fetal-kick-counters-with-emr-alerts-a-proposal.mp3
 title: "Revolutionizing Maternal Care: Integrating Fetal Kick Counters with EMR Alerts - A Proposal"
 pubDate: 2025-04-14
 category: "Blogging"

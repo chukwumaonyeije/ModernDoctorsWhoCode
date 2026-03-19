@@ -1,11 +1,13 @@
 ---
-title: "How AI Can Uncover Hidden Cardiovascular Risks in Pregnancy: A Case for Smarter Screening"
-pubDate: 2025-03-24
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/how-ai-can-uncover-hidden-cardiovascular-risks-in-pregnancy-a-case-for-smarter-screening.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: 'An analysis of: Gestational Blood Pressure Trajectories and 5-Year Postpartum
+  Hypertension Risk in the MADRES Study'
 draft: false
-
-description: "An analysis of: Gestational Blood Pressure Trajectories and 5-Year Postpartum Hypertension Risk in the MADRES Study"
+pubDate: 2025-03-24
+title: 'How AI Can Uncover Hidden Cardiovascular Risks in Pregnancy: A Case for Smarter
+  Screening'
 ---
 
 An analysis of: _[Gestational Blood Pressure Trajectories and 5-Year Postpartum Hypertension Risk in the MADRES Study](https://www.jacc.org/doi/10.1016/j.jacadv.2025.101660)_

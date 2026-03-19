@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/unlock-efficiency-how-document-summarization-transforms-healthcare-for-busy-clinicians.mp3
 title: "Unlock Efficiency: How Document Summarization Transforms Healthcare for Busy Clinicians"
 pubDate: 2024-12-16
 category: "Healthcare Technology"

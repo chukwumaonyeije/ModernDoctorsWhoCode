@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/the-future-of-medicine-embracing-coding-in-healthcare.mp3
 title: "The Future of Medicine: Embracing Coding in Healthcare"
 pubDate: 2024-12-02
 category: "Technology"

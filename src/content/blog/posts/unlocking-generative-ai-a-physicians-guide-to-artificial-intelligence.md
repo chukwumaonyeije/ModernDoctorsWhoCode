@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/unlocking-generative-ai-a-physicians-guide-to-artificial-intelligence.mp3
 title: "Unlocking Generative AI: A Physician’s Guide to Artificial Intelligence"
 pubDate: 2025-01-01
 category: "Technology"

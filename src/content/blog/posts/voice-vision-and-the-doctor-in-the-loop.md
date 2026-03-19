@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/voice-vision-and-the-doctor-in-the-loop.mp3
 title: "Voice, Vision, and the Doctor in the Loop"
 pubDate: 2025-10-17
 category: "Blogging"

@@ -1,11 +1,12 @@
 ---
-title: "Embracing Coding in Medicine: A New Frontier for Clinicians"
-pubDate: 2024-12-02
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/embracing-coding-in-medicine-a-new-frontier-for-clinicians.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: In the rapidly evolving landscape of healthcare, the integration of technology
+  has become undeniably pivotal. As a maternal-fetal medicine specialist, I...
 draft: false
-
-description: "In the rapidly evolving landscape of healthcare, the integration of technology has become undeniably pivotal. As a maternal-fetal medicine specialist, I..."
+pubDate: 2024-12-02
+title: 'Embracing Coding in Medicine: A New Frontier for Clinicians'
 ---
 
 ## The Intersection of Medicine and Technology

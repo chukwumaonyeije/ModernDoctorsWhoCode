@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide.mp3
 title: "Revolutionizing Medical Imaging with Container Technology: A Busy Physician’s Guide"
 pubDate: 2025-01-19
 category: "Blogging"

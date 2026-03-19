@@ -1,11 +1,13 @@
 ---
-title: "AI in Preeclampsia Prediction: Transforming Maternal Healthcare Through Technology"
-pubDate: 2024-12-07
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/ai-in-preeclampsia-prediction-transforming-maternal-healthcare-through-technology.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: Traditional preeclampsia prediction methods have historically relied
+  on clinical risk factors and basic laboratory tests, achieving sensitivity rates
+  of...
 draft: false
-
-description: "Traditional preeclampsia prediction methods have historically relied on clinical risk factors and basic laboratory tests, achieving sensitivity rates of..."
+pubDate: 2024-12-07
+title: 'AI in Preeclampsia Prediction: Transforming Maternal Healthcare Through Technology'
 ---
 
 # _Understanding the Critical Challenge of Preeclampsia_

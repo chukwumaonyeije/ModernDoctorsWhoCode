@@ -1,18 +1,19 @@
 ---
-title: "Ensuring Data Privacy in AI-Powered Healthcare: A Comprehensive Guide"
-pubDate: 2024-12-20
-category: "Healthcare Technology"
-tags: 
-- "ai-applications"
-- "healthcare-automation"
-- "maternal-health"
-- "medical-informatics"
-- "medical-software"
-- "prenatal-care"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/ensuring-data-privacy-in-ai-powered-healthcare-a-comprehensive-guide.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Healthcare Technology
+description: 'Imagine this: a cyberattack exposes the personal and medical information
+  of millions of patients, leaving them vulnerable to identity theft and financia...'
 draft: false
-
-description: "Imagine this: a cyberattack exposes the personal and medical information of millions of patients, leaving them vulnerable to identity theft and financia..."
+pubDate: 2024-12-20
+tags:
+- ai-applications
+- healthcare-automation
+- maternal-health
+- medical-informatics
+- medical-software
+- prenatal-care
+title: 'Ensuring Data Privacy in AI-Powered Healthcare: A Comprehensive Guide'
 ---
 
 ## **Introduction**

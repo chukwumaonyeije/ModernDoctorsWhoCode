@@ -22,7 +22,6 @@ import time
 import frontmatter
 from pathlib import Path
 
-# Load .env before reading environment variables
 try:
     from dotenv import load_dotenv
     load_dotenv()
@@ -35,10 +34,10 @@ POSTS_DIR        = Path(__file__).parent.parent / 'src' / 'content' / 'blog' / '
 AUDIO_DIR        = Path(__file__).parent.parent / 'public' / 'audio'
 AUDIO_URL_PREFIX = '/audio'
 
-VOICE      = 'onyx'          # best professional male voice
-MODEL      = 'tts-1'         # tts-1-hd for higher quality (2x cost)
-MAX_CHARS  = 4096             # OpenAI TTS limit per request
-DELAY_SEC  = 1               # pause between API calls
+VOICE      = 'onyx'    # deep, professional male voice
+MODEL      = 'tts-1'   # tts-1-hd for higher quality (2x cost)
+CHUNK_SIZE = 4096      # OpenAI TTS limit per request
+DELAY_SEC  = 1         # pause between API calls
 
 
 def strip_markdown(text: str) -> str:
@@ -60,22 +59,53 @@ def strip_markdown(text: str) -> str:
     return text.strip()
 
 
-def tts(text: str, api_key: str) -> bytes:
-    """Call OpenAI TTS and return MP3 bytes."""
+def chunk_text(text: str, size: int) -> list[str]:
+    """Split text into chunks at sentence boundaries."""
+    if len(text) <= size:
+        return [text]
+    chunks = []
+    while text:
+        if len(text) <= size:
+            chunks.append(text)
+            break
+        split_at = text.rfind('. ', 0, size)
+        if split_at == -1:
+            split_at = size
+        else:
+            split_at += 1
+        chunks.append(text[:split_at].strip())
+        text = text[split_at:].strip()
+    return chunks
+
+
+def tts_chunk(text: str) -> bytes:
+    """Call OpenAI TTS for a single chunk. Returns MP3 bytes."""
     from openai import OpenAI
-    client = OpenAI(api_key=api_key)
+    client = OpenAI(api_key=API_KEY)
     response = client.audio.speech.create(
         model=MODEL,
         voice=VOICE,
-        input=text[:MAX_CHARS],
+        input=text,
     )
     return response.content
 
 
+def write_audio_url(post_path: Path, slug: str) -> None:
+    """Add audioUrl to frontmatter using direct text manipulation — no PyYAML encoding issues."""
+    text = post_path.read_text(encoding='utf-8')
+    audio_line = f'audioUrl: {AUDIO_URL_PREFIX}/{slug}.mp3\n'
+    # Insert after the opening --- line only if not already present
+    if 'audioUrl:' not in text:
+        text = text.replace('---\n', f'---\n{audio_line}', 1)
+        post_path.write_text(text, encoding='utf-8')
+
+
 def process_post(post_path: Path) -> bool:
-    """Generate audio for a single post. Returns True if generated."""
-    post = frontmatter.load(str(post_path))
+    """Generate audio for a single post. Returns True if processed."""
+    with open(post_path, encoding='utf-8') as f:
+        post = frontmatter.load(f)
     slug = post_path.stem
+    audio_path = AUDIO_DIR / f'{slug}.mp3'
 
     if post.metadata.get('audioUrl'):
         print(f'  [skip] {slug} — already has audio')
@@ -85,25 +115,36 @@ def process_post(post_path: Path) -> bool:
         print(f'  [skip] {slug} — draft')
         return False
 
+    # MP3 already on disk (e.g. from a previous interrupted run) — just update frontmatter
+    if audio_path.exists():
+        print(f'  [fix]  {slug} — MP3 exists, updating frontmatter only')
+        write_audio_url(post_path, slug)
+        print(f'         frontmatter updated')
+        return True
+
     clean = strip_markdown(post.content)
     if not clean:
         print(f'  [skip] {slug} — no content after stripping')
         return False
 
-    title    = post.metadata.get('title', '')
-    full_text = f"{title}.\n\n{clean}"[:MAX_CHARS]
+    title     = post.metadata.get('title', '')
+    full_text = f"{title}.\n\n{clean}"
+    chunks    = chunk_text(full_text, CHUNK_SIZE)
 
-    print(f'  [proc] {slug} — {len(full_text):,} chars')
+    print(f'  [proc] {slug} — {len(full_text):,} chars, {len(chunks)} chunk(s)')
 
-    audio_bytes = tts(full_text, API_KEY)
+    audio_bytes = b''
+    for i, chunk in enumerate(chunks):
+        if len(chunks) > 1:
+            print(f'         chunk {i + 1}/{len(chunks)}...')
+        audio_bytes += tts_chunk(chunk)
+        if i < len(chunks) - 1:
+            time.sleep(DELAY_SEC)
 
-    audio_path = AUDIO_DIR / f'{slug}.mp3'
     audio_path.write_bytes(audio_bytes)
-    print(f'         saved → {audio_path}')
+    print(f'         saved → {audio_path} ({len(audio_bytes):,} bytes)')
 
-    post.metadata['audioUrl'] = f'{AUDIO_URL_PREFIX}/{slug}.mp3'
-    with open(post_path, 'w', encoding='utf-8') as f:
-        f.write(frontmatter.dumps(post))
+    write_audio_url(post_path, slug)
     print(f'         frontmatter updated')
 
     return True

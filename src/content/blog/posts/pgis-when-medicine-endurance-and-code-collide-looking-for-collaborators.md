@@ -1,18 +1,19 @@
 ---
-title: "PGIS: When Medicine, Endurance, and Code Collide — Looking for Collaborators"
-pubDate: 2026-01-22
-category: "Healthcare Technology"
-tags: 
-- "continuous-glucose-monitoring"
-- "diabetes-management-technology"
-- "endurance-training-with-diabetes"
-- "healthcare-technology-development"
-- "medical-ai-systems"
-- "physician-developer"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/pgis-when-medicine-endurance-and-code-collide-looking-for-collaborators.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Healthcare Technology
+description: I'm a maternalfetal medicine physician managing complex, high-risk pregnancies.
+  I have long-standing type 2 diabetes. And right now, I'm training for m...
 draft: false
-
-description: "I'm a maternalfetal medicine physician managing complex, high-risk pregnancies. I have long-standing type 2 diabetes. And right now, I'm training for m..."
+pubDate: 2026-01-22
+tags:
+- continuous-glucose-monitoring
+- diabetes-management-technology
+- endurance-training-with-diabetes
+- healthcare-technology-development
+- medical-ai-systems
+- physician-developer
+title: 'PGIS: When Medicine, Endurance, and Code Collide — Looking for Collaborators'
 ---
 
 ## When Clinical Insight Meets Personal Stakes

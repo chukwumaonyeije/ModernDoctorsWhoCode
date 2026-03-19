@@ -1,11 +1,13 @@
 ---
-title: "Post-Mortem: Why I’m Stepping Back from My OpenClaw Experiment"
-pubDate: 2026-02-12
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/post-mortem-why-im-stepping-back-from-my-openclaw-experiment.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: In my last post, I shared my journey into building an OpenClaw agent
+  to gain deeper visibility into the development process. As someone fascinated by
+  th...
 draft: false
-
-description: "In my last post, I shared my journey into building an OpenClaw agent to gain deeper visibility into the development process. As someone fascinated by th..."
+pubDate: 2026-02-12
+title: 'Post-Mortem: Why I’m Stepping Back from My OpenClaw Experiment'
 ---
 
 In my last post, I shared my journey into building an OpenClaw agent to gain deeper visibility into the development process. As someone fascinated by the intersection of medicine and code, the promise of a highly autonomous, transparent agent was too intriguing to pass up.

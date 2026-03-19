@@ -1,11 +1,13 @@
 ---
-title: "Innovative Solutions That Merge Technology and Community Action Can Transform Maternal Health Outcomes"
-pubDate: 2024-12-05
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/innovative-solutions-that-merge-technology-and-community-action-can-transform-maternal-health-outcomes.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: Maternal health is a cornerstone of public health, yet it remains a challenge
+  in many parts of the world. As a maternal-fetal medicine specialist, Ive ...
 draft: false
-
-description: "Maternal health is a cornerstone of public health, yet it remains a challenge in many parts of the world. As a maternal-fetal medicine specialist, Ive ..."
+pubDate: 2024-12-05
+title: Innovative Solutions That Merge Technology and Community Action Can Transform
+  Maternal Health Outcomes
 ---
 
 **_Harnessing the Power of Innovation and Collaboration to Improve Maternal Health Worldwide_**

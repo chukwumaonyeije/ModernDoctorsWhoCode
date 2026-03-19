@@ -1,11 +1,12 @@
 ---
-title: "Physician-Developers vs. Viral Misinformation"
-pubDate: 2026-02-11
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/physician-developers-vs-viral-misinformation.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: A mother announces she will refuse vitamin K for her newborn. Not because
+  of documented allergy. Not because of carefully researched religious exemption...
 draft: false
-
-description: "A mother announces she will refuse vitamin K for her newborn. Not because of documented allergy. Not because of carefully researched religious exemption..."
+pubDate: 2026-02-11
+title: Physician-Developers vs. Viral Misinformation
 ---
 
 ## Why Code, Clinical Rigor, and Credibility Matter in the Age of TikTok Medicine
@@ -243,4 +244,3 @@ Doctors Who Code
 - Reusable infographic templates for high-risk counseling
 
 - GitHub-hosted clinical education starter kit for physicians
-

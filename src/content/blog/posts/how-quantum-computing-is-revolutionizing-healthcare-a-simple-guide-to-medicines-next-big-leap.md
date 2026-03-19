@@ -1,20 +1,22 @@
 ---
-title: "How Quantum Computing Is Revolutionizing Healthcare: A Simple Guide to Medicine's Next Big Leap"
-pubDate: 2024-12-14
-category: "Healthcare Technology"
-tags: 
-- "ai-applications"
-- "healthcare-automation"
-- "healthcare-innovation"
-- "maternal-health"
-- "medical-informatics"
-- "medical-software"
-- "medical-technology"
-- "prenatal-care"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/how-quantum-computing-is-revolutionizing-healthcare-a-simple-guide-to-medicines-next-big-leap.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Healthcare Technology
+description: Imagine a world where new life-saving drugs are discovered in days instead
+  of decades. Where doctors can predict exactly how your body will react to a t...
 draft: false
-
-description: "Imagine a world where new life-saving drugs are discovered in days instead of decades. Where doctors can predict exactly how your body will react to a t..."
+pubDate: 2024-12-14
+tags:
+- ai-applications
+- healthcare-automation
+- healthcare-innovation
+- maternal-health
+- medical-informatics
+- medical-software
+- medical-technology
+- prenatal-care
+title: 'How Quantum Computing Is Revolutionizing Healthcare: A Simple Guide to Medicine''s
+  Next Big Leap'
 ---
 
 # Demystifying Quantum Computing: Unlocking New Frontiers in Healthcare and Medicine

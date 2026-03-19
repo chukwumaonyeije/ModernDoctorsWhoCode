@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/why-every-doctor-should-embrace-coding-skills.mp3
 title: "Why Every Doctor Should Embrace Coding Skills"
 pubDate: 2024-12-04
 category: "Healthcare Technology"

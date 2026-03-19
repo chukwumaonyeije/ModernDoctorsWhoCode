@@ -1,13 +1,13 @@
 ---
-title: "Blog Post Part 2 of 2: \"Harnessing AI to Manage Hypertension in Pregnancy\""
-pubDate: 2025-01-03
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/blog-post-part-2-of-2-harnessing-ai-to-manage-hypertension-in-pregnancy.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: Explore how AI revolutionizes hypertension care in pregnancy. From risk
+  prediction to personalized treatment, learn how doctors can leverage technology.
 draft: false
-
-description: "Explore how AI revolutionizes hypertension care in pregnancy. From risk prediction to personalized treatment, learn how doctors can leverage technology."
+pubDate: 2025-01-03
+title: 'Blog Post Part 2 of 2: "Harnessing AI to Manage Hypertension in Pregnancy"'
 ---
-
 
 Explore how AI revolutionizes hypertension care in pregnancy. From risk prediction to personalized treatment, learn how doctors can leverage technology.
 

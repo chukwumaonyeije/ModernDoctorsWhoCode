@@ -1,13 +1,14 @@
 ---
-title: "Data-Driven Pregnancies: Continuous Glucose Monitoring and the Revolution in Diabetes Care"
-pubDate: 2025-10-01
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/data-driven-pregnancies-continuous-glucose-monitoring-and-the-revolution-in-diabetes-care.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: For medical professionals exploring how technology can transform patient
+  outcomes, the management of diabetes in pregnancy (DIP)whether Type 1 Diabetes...
 draft: false
-
-description: "For medical professionals exploring how technology can transform patient outcomes, the management of diabetes in pregnancy (DIP)whether Type 1 Diabetes..."
+pubDate: 2025-10-01
+title: 'Data-Driven Pregnancies: Continuous Glucose Monitoring and the Revolution
+  in Diabetes Care'
 ---
-
 
 # Data-Driven Pregnancies: Continuous Glucose Monitoring and the Revolution in Diabetes Care
 

@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/transforming-prenatal-care-the-role-of-ai-in-obstetric-ultrasound.mp3
 title: "Transforming Prenatal Care: The Role of AI in Obstetric Ultrasound"
 pubDate: 2024-12-13
 category: "Technology"

@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/the-algorithm-and-the-bedside-a-narrative-exploration-of-artificial-intelligence-in-maternal-fetal-medicine.mp3
 title: "The Algorithm and the Bedside: A Narrative Exploration of Artificial Intelligence in Maternal-Fetal Medicine"
 pubDate: 2025-09-09
 category: "Technology"

@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/transforming-patient-care-with-ai-how-to-use-ambient-scribe-technology-and-chatgpt-in-your-medical-practice.mp3
 title: "Transforming Patient Care with AI: How to Use Ambient Scribe Technology and ChatGPT in Your Medical Practice"
 pubDate: 2025-04-25
 tags: 

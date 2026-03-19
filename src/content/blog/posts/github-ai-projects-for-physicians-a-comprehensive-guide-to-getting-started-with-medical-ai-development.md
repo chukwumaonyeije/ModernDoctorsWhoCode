@@ -1,19 +1,22 @@
 ---
-title: "GitHub AI Projects for Physicians: A Comprehensive Guide to Getting Started with Medical AI Development"
-pubDate: 2024-12-30
-category: "Healthcare Technology"
-tags: 
-- "clinical-decision-support"
-- "github-ai-projects"
-- "healthcare-data-analysis"
-- "healthcare-machine-learning"
-- "medical-ai-development"
-- "medical-image-classification"
-- "physician-coding"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/github-ai-projects-for-physicians-a-comprehensive-guide-to-getting-started-with-medical-ai-development.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Healthcare Technology
+description: The intersection of artificial intelligence and healthcare represents
+  one of the most promising frontiers in modern medicine. For physicians interested
+  ...
 draft: false
-
-description: "The intersection of artificial intelligence and healthcare represents one of the most promising frontiers in modern medicine. For physicians interested ..."
+pubDate: 2024-12-30
+tags:
+- clinical-decision-support
+- github-ai-projects
+- healthcare-data-analysis
+- healthcare-machine-learning
+- medical-ai-development
+- medical-image-classification
+- physician-coding
+title: 'GitHub AI Projects for Physicians: A Comprehensive Guide to Getting Started
+  with Medical AI Development'
 ---
 
 # Here is a Deep Dive on This Topic

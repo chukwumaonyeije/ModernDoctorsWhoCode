@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/transform-your-medical-practice-in-2025-the-ai-revolution-for-coding-doctors.mp3
 title: "Transform Your Medical Practice in 2025: The AI Revolution for Coding Doctors"
 pubDate: 2025-02-15
 category: "Technology"
