@@ -1,16 +1,17 @@
 ---
-title: "A Look into the Future: How AI and Eye Scans Could Save Mothers' Lives"
-pubDate: 2025-04-08
-tags: 
-- "ai-applications"
-- "healthcare-automation"
-- "healthcare-innovation"
-- "medical-informatics"
-category: "Technology"
-author: "Chukwuma Onyeije, MD, FACOG"
+audioUrl: /audio/a-look-into-the-future-how-ai-and-eye-scans-could-save-mothers-lives.mp3
+author: Chukwuma Onyeije, MD, FACOG
+category: Technology
+description: Imagine walking into a clinic for a routine prenatal check-up. Instead
+  of just the usual measurements, you have a simple photograph taken of the back of...
 draft: false
-
-description: "Imagine walking into a clinic for a routine prenatal check-up. Instead of just the usual measurements, you have a simple photograph taken of the back of..."
+pubDate: 2025-04-08
+tags:
+- ai-applications
+- healthcare-automation
+- healthcare-innovation
+- medical-informatics
+title: 'A Look into the Future: How AI and Eye Scans Could Save Mothers'' Lives'
 ---
 
 ## DEEP DIVE PODCAST:
