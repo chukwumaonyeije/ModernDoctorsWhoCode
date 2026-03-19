@@ -1,11 +1,44 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import NewsletterForm from '../components/NewsletterForm.astro';
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Chukwuma Onyeije",
+  "honorificPrefix": "Dr.",
+  "honorificSuffix": "MD, FACOG",
+  "jobTitle": "Maternal-Fetal Medicine Specialist",
+  "affiliation": {
+    "@type": "MedicalOrganization",
+    "name": "Atlanta Perinatal Associates",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Atlanta",
+      "addressRegion": "GA",
+      "addressCountry": "US"
+    }
+  },
+  "medicalSpecialty": "Maternal-Fetal Medicine",
+  "url": "https://www.doctorswhocode.blog/about",
+  "image": "https://www.doctorswhocode.blog/images/author-headshot.jpg",
+  "sameAs": [
+    "https://linkedin.com/in/chukwumaonyeije",
+    "https://x.com/chukwumaonyeije",
+    "https://bsky.app/profile/chukwumaonyeije.bsky.social",
+    "https://x.com/CodeCraftMD",
+    "https://codecraftmd.com",
+    "https://openmfm.org"
+  ]
+};
 ---
 
 <BaseLayout
-  title="About"
-  description="Chukwuma Onyeije, MD, FACOG is a Maternal-Fetal Medicine specialist, physician-developer, and founder of CodeCraftMD and OpenMFM.org."
+  title="Chukwuma Onyeije, MD, FACOG | Physician-Developer"
+  description="About Dr. Chukwuma Onyeije, MD, FACOG — Maternal-Fetal Medicine specialist at Atlanta Perinatal Associates, physician-developer, and founder of CodeCraftMD and OpenMFM.org."
+  canonical="https://www.doctorswhocode.blog/about"
+  ogImage="/images/author-headshot.jpg"
+  articleSchema={personSchema}
 >
   <div style="max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem 5rem;">
 
@@ -19,33 +52,12 @@ import NewsletterForm from '../components/NewsletterForm.astro';
         />
         <div>
           <p class="label" style="margin-bottom: 0.75rem;">About the Author</p>
-          <h1 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 0.5rem;">Who Am I?</h1>
-          <p style="font-size: 1.125rem; font-weight: 600; color: var(--dwc-white); margin-bottom: 0.25rem;">Chukwuma Onyeije, MD, FACOG</p>
+          <h1 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 0.5rem;">Chukwuma Onyeije, MD, FACOG</h1>
           <p style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-cyan);">
             Maternal-Fetal Medicine Specialist &middot; Physician-Developer &middot; Atlanta, GA
           </p>
         </div>
       </div>
-    </div>
-
-    <!-- Bio -->
-    <div style="margin-bottom: 3rem;">
-      <p style="font-size: 1.0625rem; line-height: 1.8; margin-bottom: 1.25rem;">
-        I am a Maternal-Fetal Medicine (MFM) specialist at Atlanta Perinatal Associates in Atlanta, Georgia.
-        I manage high-risk pregnancies: fetal anomalies, preterm birth, preeclampsia, diabetes in pregnancy,
-        and complex maternal conditions. That is my clinical life.
-      </p>
-      <p style="font-size: 1.0625rem; line-height: 1.8; margin-bottom: 1.25rem;">
-        My other life is building software. I write Python, TypeScript, and whatever else the problem
-        requires. I build AI tools for physicians because I believe doctors with domain expertise can
-        build better healthcare technology than any external vendor. That belief is the foundation of
-        everything on this blog.
-      </p>
-      <p style="font-size: 1.0625rem; line-height: 1.8;">
-        I am also a Seventh-day Adventist elder, a theologian, and an endurance athlete managing
-        type 2 diabetes through the Mastering Diabetes protocol. The same systems thinking I apply
-        in the clinic, I apply to training and to software.
-      </p>
     </div>
 
     <!-- Credentials -->
@@ -68,28 +80,75 @@ import NewsletterForm from '../components/NewsletterForm.astro';
       </div>
     </div>
 
-    <!-- Projects -->
+    <!-- Clinical Practice -->
     <div style="margin-bottom: 3rem;">
-      <p class="label" style="margin-bottom: 1rem;">Projects</p>
+      <p class="label" style="margin-bottom: 1rem;">Clinical Practice</p>
+      <p style="font-size: 1.0625rem; line-height: 1.8; margin-bottom: 1.25rem;">
+        I am a Maternal-Fetal Medicine specialist at Atlanta Perinatal Associates in Atlanta, Georgia,
+        where I manage high-risk pregnancies: fetal growth restriction, preterm birth, preeclampsia,
+        diabetes in pregnancy, fetal anomalies, and complex maternal conditions. My clinical practice
+        is grounded in ACOG and SMFM guidelines, the same evidence base I operationalize directly
+        into the tools I build.
+      </p>
+      <p style="font-size: 1.0625rem; line-height: 1.8;">
+        I am also a physician-developer. I write Python and TypeScript, build AI tools for clinical
+        documentation and decision support, and maintain open-source platforms for MFM education.
+        The clinical work and the technical work are not separate pursuits. One informs the other.
+      </p>
+    </div>
+
+    <!-- Why This Site Exists -->
+    <div style="margin-bottom: 3rem;">
+      <p class="label" style="margin-bottom: 1rem;">Why This Site Exists</p>
+      <p style="font-size: 1.0625rem; line-height: 1.8; margin-bottom: 1.25rem;">
+        Physicians carry something no outside builder can easily replicate: lived clinical context.
+        We understand the ambiguity of real patients, the cost of bad workflow, the difference between
+        something that looks useful in a demo and something that actually helps at the bedside. As
+        artificial intelligence reshapes documentation, decision support, billing, and patient education,
+        most physicians are being positioned as end users of tools they had no hand in designing.
+      </p>
+      <p style="font-size: 1.0625rem; line-height: 1.8; margin-bottom: 1.5rem;">
+        I think that is a mistake.
+      </p>
+      <blockquote style="border-left: 2px solid var(--dwc-cyan); padding-left: 1.5rem; margin: 0 0 1.5rem 0;">
+        <p style="font-size: 1.25rem; font-style: italic; color: var(--dwc-white); line-height: 1.6; margin: 0;">
+          Doctors should not be passive consumers of medical technology.<br />
+          They should be builders of it.
+        </p>
+      </blockquote>
+      <p style="font-size: 1.0625rem; line-height: 1.8;">
+        Doctors Who Code exists to document that frontier. It is part journal, part workshop, and
+        part argument: for physicians, developers, and curious clinicians who want to think seriously
+        about how medicine and software should meet.
+      </p>
+    </div>
+
+    <!-- What I Build -->
+    <div style="margin-bottom: 3rem;">
+      <p class="label" style="margin-bottom: 1rem;">What I Build</p>
       <div style="display: flex; flex-direction: column; gap: 1rem;">
         {[
           {
+            tag: 'AI · Documentation · Billing',
             name: 'CodeCraftMD',
             url: 'https://codecraftmd.com',
-            description: 'AI-powered medical documentation and billing platform. Python backend with ICD-10/CPT extraction. HIPAA-compliant architecture.',
+            description: 'AI-powered medical documentation and billing platform. Python backend with ICD-10/CPT extraction. HIPAA-compliant architecture. Physician-owned infrastructure for clinical documentation.',
           },
           {
+            tag: 'Open-Source · MFM Education',
             name: 'OpenMFM.org',
             url: 'https://openmfm.org',
-            description: 'Open-source clinical knowledge platform for MFM education. Built for MFM fellows, OB residents, and practicing MFMs.',
+            description: 'Open-source clinical knowledge platform for MFM education. Free, peer-reviewed patient education microsites and clinical decision support tools, built for MFM fellows, OB residents, and practicing specialists.',
           },
           {
+            tag: 'Writing · Strategy',
             name: 'Doctors Who Code',
             url: '/blog',
-            description: 'This blog. A record of building physician-owned AI tools and an argument for why physicians should write the software they use.',
+            description: 'This blog. A record of building physician-owned AI tools and a sustained argument for why physicians should write the software they use. Clinical reasoning applied to software architecture.',
           },
         ].map(project => (
           <div style="background-color: var(--dwc-card); border: 1px solid var(--dwc-border); border-radius: 12px; padding: 1.5rem;">
+            <p class="label" style="font-size: 0.65rem; margin-bottom: 0.5rem;">{project.tag}</p>
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
               <h3 style="font-size: 1.125rem; margin: 0;">{project.name}</h3>
               <a href={project.url} target={project.url.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dwc-cyan);">Visit &rarr;</a>
@@ -98,6 +157,43 @@ import NewsletterForm from '../components/NewsletterForm.astro';
           </div>
         ))}
       </div>
+    </div>
+
+    <!-- Who This Is For -->
+    <div style="margin-bottom: 3rem;">
+      <p class="label" style="margin-bottom: 1rem;">Who This Is For</p>
+      <p style="font-size: 1.0625rem; line-height: 1.8; margin-bottom: 1.25rem;">
+        This site is for physicians curious about AI and coding, developers who want to build in
+        healthcare with deeper clinical insight, and clinicians who believe healthcare technology
+        should be shaped by the people closest to patient care. You do not need to be an engineer.
+        You need curiosity and a willingness to think beyond the default settings of medicine.
+      </p>
+      <p style="font-size: 1.0625rem; line-height: 1.8;">
+        Topics I write about include physician-led innovation, large language models in clinical
+        practice, medical documentation automation, maternal-fetal medicine education, and workflow
+        design for practicing clinicians.
+      </p>
+    </div>
+
+    <!-- Beyond the Clinic -->
+    <div style="margin-bottom: 3rem;">
+      <p class="label" style="margin-bottom: 1rem;">Beyond the Clinic</p>
+      <p style="font-size: 1.0625rem; line-height: 1.8; margin-bottom: 1.25rem;">
+        I am a Seventh-day Adventist elder at Atlanta North Seventh-day Adventist Church, a
+        theologian writing at
+        <a href="https://substack.com/@chukwumatheology" target="_blank" rel="noopener noreferrer" style="color: var(--dwc-cyan);">Chukwuma Theology</a>
+        on Substack, and an endurance athlete managing metabolic performance through the Mastering
+        Diabetes whole-food plant-based protocol. I track glycemic response and training load using
+        CGM and Garmin wearables, a framework I call PGIS (Performance Glycemic Intelligence
+        System). The same systems thinking I apply to an SMFM consultation, I apply to a long
+        training run.
+      </p>
+      <p style="font-size: 1.0625rem; line-height: 1.8;">
+        I have deep roots in Igbo cultural heritage (Ngwa/Onyeije lineage, Agbaragwu South) and
+        am writing a devotional manuscript titled <em>Equanimity Under Duress</em>. These are not
+        separate from the clinical and technical work. They are the same habits of mind applied to
+        different problems.
+      </p>
     </div>
 
     <!-- Connect -->

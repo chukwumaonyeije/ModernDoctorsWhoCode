@@ -3,7 +3,8 @@
 
 - Website: https://www.doctorswhocode.blog
 
-## Contact
+## Key Pages
+- About: https://www.doctorswhocode.blog/about — Person schema (Dr. Chukwuma Onyeije, MD, FACOG), credentials, projects, biography
 - Contact Page: https://www.doctorswhocode.blog/contact
 - LinkedIn: https://linkedin.com/in/chukwumaonyeije
 
