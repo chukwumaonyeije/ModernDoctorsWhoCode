@@ -1,0 +1,125 @@
+---
+audioUrl: /audio/when-algorithm-fails.mp3
+title: "When the Algorithm Fails, Who Answers for It?"
+description: "Every physician using an AI tool has heard the liability question. Most of us answer it wrong. The real answer is not about insurance. It is about who was in the room when the tool was designed."
+pubDate: "2026-03-20"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - accountability
+  - physician-developer
+  - AI liability
+  - clinical AI
+  - augmented intelligence
+  - DoctorsWhoCode
+image:
+  url: /images/posts/when-algorithm-fails-hero.jpeg
+  alt: "Empty hospital conference room with whiteboard showing Users and Builders columns"
+readingTime: 6
+series: "The Builder's Seat"
+seriesPart: 1
+seriesTotal: 3
+featured: false
+draft: false
+---
+
+{/* heroImagePrompt: An empty conference room in a modern hospital administrative wing. A whiteboard at the front has two columns: 'Users' on the left, 'Builders' on the right. The Users column is full of names. The Builders column has one name. The room is lit from overhead, cool fluorescent white. No people. Shot from the doorway, slightly wide, conveying institutional scale. Photorealistic. No text overlay. */}
+
+> **Series Note:** This is Part 1 of "The Builder's Seat," a three-part series on accountability, access, and power in physician-built AI. [Part 2](/blog/first-build-does-not-have-to-save-lives) argues that your first build does not have to be clinical. [Part 3](/blog/ehr-vendor-wants-you-to-stay-a-consultant) names the structural forces keeping physicians passive.
+
+---
+
+Three months ago, a hospital system in the Southeast deployed an AI triage tool in its emergency department. The tool was built by a digital health company, validated on a dataset from a Northeastern academic medical center, and approved through the institution's AI governance committee — which included three physicians in an advisory role.
+
+Six weeks in, the tool started deprioritizing chest pain presentations in women over 65.
+
+Nobody caught it until a nurse escalated a case that the tool had scored as low acuity.
+
+The patient survived. The postmortem raised one question that nobody in the room could answer cleanly: who is accountable?
+
+---
+
+## The Question Every Physician Gets Wrong
+
+When physicians talk about AI liability, we reach for malpractice frameworks. We ask whether our insurance covers AI-assisted decisions. We ask whether the vendor indemnifies us contractually. These are reasonable questions. They are also the wrong questions.
+
+The malpractice framework assumes the physician is the decision-maker and the AI is a tool. That is the right way to think about a stethoscope. It is not the right way to think about a probabilistic model trained on data you did not curate, running logic you cannot inspect, producing outputs you cannot fully explain to a patient or a jury.
+
+The question is not "am I covered if this fails?"
+
+The question is "was I in the room when the choices that caused this failure were made?"
+
+---
+
+## Two Kinds of Accountability
+
+There is legal accountability and there is moral accountability. Physicians are deeply familiar with the first kind. The second kind is what gets lost in the conversation about AI governance.
+
+Legal accountability is assigned after the fact. It is determined by contracts, by statutes, by expert testimony. It can be shifted. It can be insured against. It can, with enough documentation, be deflected toward a vendor.
+
+Moral accountability does not work that way. When a tool built on training data that underrepresents your patient population produces a biased output, the physician who deployed it carries something that no indemnification clause removes. Not legal culpability. Something harder to name. The sense that you used a system you did not understand on a patient who trusted you to understand everything you used.
+
+I am not making an argument for paralysis. I am making an argument for a different kind of ownership.
+
+---
+
+## What Being a Builder Changes
+
+I built FGRManager because I ran into the same clinical decision problem repeatedly and nothing commercial was built the way I think about it. The tool reflects how an MFM specialist actually weighs growth parameters, Doppler findings, and gestational age in a specific clinical window. It does not reflect how a product manager at a digital health company imagined an MFM specialist might weigh those things.
+
+That distinction matters enormously for accountability.
+
+When FGRManager produces a recommendation I disagree with, I know exactly why it disagrees with my clinical instinct. I wrote the logic. I know what data it saw and what data it did not. I know the edge cases it handles well and the ones it does not handle at all. I can explain every step of its reasoning to a colleague or to a patient.
+
+That is not something I can say about any commercially deployed AI tool I use. I use several. They are useful. But my relationship to their failures is fundamentally different.
+
+With a tool I did not build, I am a user managing an output.
+
+With a tool I built, I am accountable for the design.
+
+Those are not the same thing. The second one is harder. It is also the only one that fully satisfies the moral dimension of clinical responsibility.
+
+---
+
+## The Governance Committee Is Not Enough
+
+The hospital in my opening story had a physician governance committee. Three doctors reviewed the tool before deployment. They were consultants. They were not builders. They had read the validation study, reviewed the intended use case, and raised questions about edge cases. The vendor answered those questions. The committee approved the deployment.
+
+None of that constitutes understanding the tool. It constitutes reviewing a representation of the tool prepared by the people who built it.
+
+The AMA is right that physicians need to be involved in AI governance. The limitation of that position is that governance committee participation is still a user relationship. You are reviewing someone else's decisions. You are not making design decisions yourself.
+
+The physician who built the tool, or who has enough technical fluency to interrogate it at the architecture level, is having a completely different conversation in that committee room. That physician asks questions that cannot be answered with a slide deck.
+
+---
+
+## What This Means for You
+
+I am not suggesting every physician must build every clinical AI tool they use. That is not realistic and it is not necessary.
+
+What I am suggesting is this: the physician who has built something understands AI tools differently than the physician who has only used them. The experience of writing logic, debugging outputs, handling edge cases, and deciding what the model will and will not do changes how you read every tool you encounter afterward.
+
+It also changes what you say when someone asks who answers when the algorithm fails.
+
+The builder does not wait for the legal framework to catch up. The builder was in the room. The builder made the choices. The builder can answer the question.
+
+That accountability is not a burden. It is the thing that makes physician-built AI different from everything else being sold to health systems right now.
+
+---
+
+## The Real Ask
+
+If you are a physician using AI tools you did not build and cannot interrogate, you are carrying moral accountability for outcomes you cannot fully explain. That is the current default. Most physicians are in this position. Most will remain in it.
+
+The physician-developer opportunity is not primarily financial. It is not primarily about efficiency. It is about reclaiming the kind of accountability that medicine has always demanded of its practitioners — the kind where you can explain every decision to the patient in front of you.
+
+Building is how you earn that back.
+
+---
+
+*Next in "The Builder's Seat": [Your First Build Does Not Have to Save Lives](/blog/first-build-does-not-have-to-save-lives) — on disposable software as the actual on-ramp into physician-developer identity.*
+
+---
+
+[^1]: The accountability framework described here draws on work from Char DS, Shah NH, Magnus D. "Implementing Machine Learning in Health Care — Addressing Ethical Challenges." N Engl J Med. 2018;378:981-983, and the evolving AMA policy on physician liability for AI-enabled technologies. Neither source has resolved the moral accountability question. That gap is the argument.
