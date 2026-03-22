@@ -1,0 +1,183 @@
+---
+audioUrl: /audio/limits-of-viability.mp3
+title: "The Limits of Viability: What Patients Find Before They Find You"
+description: "When families face periviability, they search before they call. What they find shapes everything. Here is why physician-developers have a responsibility to build better."
+pubDate: "2026-03-22"
+author: "Chukwuma I. Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags: ["periviability", "patient education", "OpenMFM", "physician-developer", "clinical AI", "MFM"]
+category: "Clinical + Code"
+image:
+  url: "/images/posts/limits-of-viability-hero.jpeg"
+  alt: "Patient alone in a hospital labor and delivery room, looking at a smartphone with a worried expression"
+draft: false
+featured: false
+readingTime: 7
+---
+
+{/* heroImagePrompt: A patient alone in a hospital labor and delivery room, lying in a hospital bed, looking at a smartphone with an anxious, focused expression. The room is modern with warm overhead lighting, an IV pole and fetal monitors visible in the background. Shot from the doorway, wide framing. No medical staff present. Photorealistic. No text overlay. */}
+
+The phone call happens on a Tuesday afternoon.
+
+A patient is 22 weeks and 3 days. She is having contractions. She goes to labor and delivery. A nurse mentions the words "limits of viability." The patient is admitted. Her husband is still at work. She has 45 minutes before her attending walks into the room.
+
+She opens her phone.
+
+---
+
+## What She Finds
+
+She does not find a peer-reviewed guideline. She does not find a compassionate, structured explanation from a maternal-fetal medicine specialist. She does not find your voice.
+
+She finds a YouTube video titled *"MY BABY WAS BORN AT 22 WEEKS AND SURVIVED."* The thumbnail is a NICU incubator, bright lights, a tiny hand. The video has 2.4 million views.
+
+She finds a Facebook post in a preemie parent group. It is full of love. It is also full of anecdote. Babies who beat every odd. Babies who did not. No gestational ages. No context. No nuance.
+
+She finds a local news segment. The chyron reads: *"MIRACLE BABY: Born at the edge of life, doctors said she wouldn't survive."* The reporter speaks in breathless present tense. There is no mention of the hospital's NICU level, the number of complications, or the years of developmental follow-up.
+
+She finds a Reddit thread. Someone writes that their cousin's daughter was born at 23 weeks and is "totally fine." Someone else writes that they were told the same thing and their son has cerebral palsy. Both are true. Neither is useful.
+
+By the time you walk into that room, she has been shaped.
+
+---
+
+## The Information Problem Is Not Her Fault
+
+She did exactly what humans do. She searched for survival. She searched for hope. The internet handed her the most emotionally resonant content it had.
+
+Sensationalistic news programs are not lying. The miracle babies are real. But survivorship bias is invisible to a terrified parent at 22 weeks. What she cannot see is the population behind the headline. The babies who did not make it. The long NICU stays. The complex neurodevelopmental trajectories. The full picture.
+
+Social media does what it is designed to do. It surfaces engagement. Miracle stories drive engagement. Nuanced probability curves do not.
+
+YouTube's algorithm is optimizing for watch time. It is not optimizing for informed consent.
+
+And the anecdotes. The anecdotes are everywhere, and they are delivered with certainty. A neighbor's story. A church member's experience. A cousin twice removed. Every story carries the weight of personal testimony. None of them generalizes to your patient.
+
+This is not a criticism of patients. It is a description of the information environment they live in.
+
+---
+
+## The 20-Minute Consultation Cannot Do All the Work
+
+I have sat across from families facing periviability hundreds of times. I know what that conversation feels like. There is never enough time. There is always too much to say. The emotional weight in the room is real.
+
+And somewhere underneath all of that, the patient is comparing what I am telling her to the YouTube video she watched 40 minutes ago.
+
+The question is not whether patients will search before consultations. They will. The question is what they find when they do.
+
+That is where physician-developers come in.
+
+---
+
+## What OpenMFM.org Is Trying to Be
+
+[OpenMFM.org](https://openmfm.org) started as a personal project to put evidence-based MFM patient education on the open web. The periviability microsite is one of the most direct expressions of that goal.
+
+It is built on a simple premise: patients deserve to find accurate, compassionate, structured information at the moment they need it most. Not after. Not in a consent form handed to them in a hospital room. Before. When they still have time to process it.
+
+Beyond the survival data, the microsite includes a NICU glossary built for families encountering terms like IVH, BPD, and PDA for the first time, and a structured list of questions to bring into the shared decision-making consultation. These are not afterthoughts. They are the tools that turn a frightened patient into a prepared one.
+
+---
+
+### The Periviability Counseling Resource
+
+This is the kind of resource families should be finding when they search.
+
+The interactive resource below covers what periviability actually means, how survival rates shift week by week and day by day, which clinical factors move those numbers, how shared decision-making works in practice, and what the evolving science looks like over the last 80 years of neonatal medicine. It was built for the patient with 45 minutes and an open phone. Use the arrow keys, swipe, or the nav buttons to move through the presentation.
+
+<div className="not-prose my-8 rounded-xl overflow-hidden border border-slate-700 shadow-xl">
+  <div className="bg-slate-800 px-4 py-2 text-xs text-slate-400 font-mono flex items-center gap-2">
+    <span className="text-blue-400">openmfm.org</span>
+    <span>/</span>
+    <span>microsites/periviability</span>
+  </div>
+  <iframe
+    src="/slides/limits-of-viability.html"
+    width="100%"
+    height="580"
+    style={{ border: 'none', display: 'block' }}
+    title="Periviable Birth: Patient Counseling Resource -- OpenMFM.org / Atlanta Perinatal Associates"
+    loading="lazy"
+    allowFullScreen
+  />
+</div>
+
+This is not a 45-second reel. The resource is structured, evidence-grounded, and built to inform rather than to reassure. It covers the gestational age spectrum, survival rates, what NICU care at the edge of viability actually looks like, the factors that shift outcomes in either direction, and the importance of individualized decision-making.
+
+Among those factors, one is consistently underemphasized in patient conversations: fetal sex. Female fetuses carry a documented 5 to 10 percentage point survival advantage across the periviable window.[^1] That is not a small number. It belongs in every periviability counseling conversation.
+
+It is also designed to be found.
+
+Notice the historical timeline in the presentation. In the 1940s, a birthweight under 1500 grams was considered a death sentence. By 1971, the limit of viability was defined as 28 weeks. By the 1990s, 50% survival at 24 weeks had been demonstrated. By the 2020s, survival above 60% at 22 weeks was being reported. In 2025, Nash Keen became the world's most premature survivor. That timeline is not a miracle reel. It is a data story. And it belongs in front of every patient facing this diagnosis, not buried in a JAMA supplemental appendix.[^2]
+
+---
+
+## The Living Document Advantage
+
+Here is something that sensationalistic news segments and viral YouTube videos cannot do: update.
+
+The viability threshold has shifted over the last two decades. NICU technology has improved. Antenatal corticosteroids at 22 weeks are now ACOG-recommended in appropriate clinical contexts. The data on outcomes at 22 weeks in 2026 is meaningfully different from the data at 22 weeks in 2015.
+
+A YouTube video published in 2018 does not know that. It cannot be updated by SMFM consensus. It cannot reflect the latest neonatal outcomes data. It sits there, accumulating views, frozen at its original publication date.
+
+A well-maintained open-source framework like OpenMFM.org can be updated when the evidence changes. When new consensus statements drop, the site can reflect them within days, not years. When outcome data shifts, the counseling content shifts with it.
+
+This is not a minor feature. For a patient counseling resource in a field where evidence evolves, it is the whole point.
+
+A static brochure from 2019 is not compassionate care in 2026. An open-source, version-controlled, evidence-traceable web resource is.
+
+---
+
+## What Physician-Developers Can Build
+
+If you are a physician who codes, I want to name something directly.
+
+You are not just a person with two skill sets. You are one of a small number of people who can look at a problem like periviability counseling and see both dimensions at once: the clinical reality and the information architecture failure.
+
+Most people cannot see both. Nontechnical clinicians see the clinical need but are dependent on vendors or IT departments to build anything. Nonclinical developers can build beautiful, functional tools but have no framework for knowing what the content should actually say.
+
+You sit at the intersection. That is not incidental. That is where the work happens.
+
+Here is what the work looks like in practice. It looks like building periviability counseling microsites that surface above sensationalistic content in search results. It looks like writing structured, compassionate, evidence-based content and putting it on the open web under a permissive license. It looks like building update pipelines so that when SMFM publishes new guidance, a PR can go up the same week.
+
+It looks like making OpenMFM.org the thing patients find at 22 weeks and 3 days, before the YouTube video loads.
+
+---
+
+## A Note to Patients
+
+If you are reading this because you or someone you love is facing a diagnosis at the edge of viability, I want to say something plainly.
+
+The miracle stories you are finding are real. The grief in those threads is real. But your situation is specific. Your gestational age, your hospital, your neonatal team, your baby, your values: all of it is specific.
+
+The numbers matter. The context matters. The conversation with your MFM specialist matters.
+
+What I want you to have access to is structured, honest, compassionate information that helps you walk into that consultation prepared. Not terrified by a headline. Not falsely reassured by a viral video. Prepared.
+
+That is what [OpenMFM.org/microsites/periviability](https://openmfm.org/microsites/periviability/index.html) is trying to give you.
+
+---
+
+## The Call to Action
+
+**For physician-developers:**
+
+Pick a clinical domain where patients are being poorly served by what they find on the internet. You know one. You have probably thought about it. Build something. Put it on the open web. Make it findable. Make it updatable. Open-source the content so other clinicians can improve it.
+
+If you want to contribute to OpenMFM.org directly, the project is open. Clinical content, code, design, feedback: all of it is welcome.
+
+You cannot control what Google surfaces first. But you can build something worth surfacing.
+
+**For patients:**
+
+Before your next consultation, look for resources built by clinical specialists, not content farms. Ask your provider if there are evidence-based patient education materials they recommend. And when you find something on social media or YouTube, ask one question: when was this published, and has the evidence changed since then?
+
+You deserve better than a viral video. Demand it.
+
+---
+
+[^1]: Female fetal sex advantage at periviable gestational ages: Rysavy MA et al. *Between-Hospital Variation in Treatment and Outcomes in Extremely Preterm Infants.* N Engl J Med. 2015;372:1801-1811. See also: Rysavy MA et al. *Active Treatment and Infant Outcomes Among Infants Born at 22 and 23 Weeks of Gestation.* Pediatrics. 2024;154(4):e2024065963. Female sex is associated with a consistent 5 to 10 percentage point improvement in survival across the periviable window in NICHD Neonatal Research Network cohort data.
+
+[^2]: Survival data in the embedded presentation draws from Hyland RM et al. *Outcomes of Infants Born at 21 Weeks' Gestational Age.* JAMA Netw Open. 2025;8(12):e2548211, and published NICHD NRN and Vermont Oxford Network cohort data. The OpenMFM periviability microsite baseline figures draw from the Rysavy 2015 and 2023 series; the survival ranges between the two reflect different underlying datasets and time periods rather than conflicting evidence. Reconciliation of the microsite data to the Hyland 2025 figures is in progress. Historical timeline source: McElroy SJ. *What Do We Do When Limits of Viability Shift?* JAMA Netw Open. 2025;8(12):e2548220.
+
+[^3]: ACOG/SMFM Obstetric Care Consensus #6: Periviable Birth. Obstet Gynecol. 2017;130(4):e187-e199. Reaffirmed 2020. Defines the periviable period as 20 0/7 to 25 6/7 weeks of gestation and provides the framework for shared decision-making at the limits of viability.
