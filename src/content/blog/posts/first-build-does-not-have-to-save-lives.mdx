@@ -1,0 +1,126 @@
+---
+audioUrl: /audio/first-build-does-not-have-to-save-lives.mp3
+title: "Your First Build Does Not Have to Save Lives"
+description: "Every physician who codes started somewhere that had nothing to do with clinical AI. The first build is about identity formation, not impact. Here is why that distinction matters, and where to actually start."
+pubDate: "2026-03-22"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Development"
+tags:
+  - disposable software
+  - physician-developer
+  - learning to code
+  - first project
+  - DoctorsWhoCode
+  - physician burnout
+  - side projects
+image:
+  url: /images/posts/first-build-does-not-save-lives-hero.jpeg
+  alt: "Physician's home office desk at night with laptop showing a simple Python script, warm lamp light against cool screen glow"
+readingTime: 6
+series: "The Builder's Seat"
+seriesPart: 2
+seriesTotal: 3
+featured: false
+draft: false
+---
+
+{/* heroImagePrompt: A physician's home office desk at night. A laptop is open showing a simple Python script — not clinical, something like a personal expense tracker or a run logging tool. The desk has a coffee mug, a stethoscope folded to the side, a charging phone. The room is dark except for the laptop glow and a desk lamp. The scene conveys solitude and momentum — someone building something for themselves, not for a pitch deck. Photorealistic. No text overlay. Warm amber lamp light against cool blue screen glow. */}
+
+> **Series Note:** This is Part 2 of "The Builder's Seat," a series on accountability, access, and power in physician-built AI. [Part 1](/blog/when-algorithm-fails) examined the accountability gap between physician-users and physician-builders. [Part 3](/blog/ehr-vendor-wants-you-to-stay-a-consultant) names the structural forces keeping physicians passive.
+
+---
+
+I built something disposable before FGRManager. Something that solved a problem only I had, that nobody else ever saw.
+
+Not useless in a clinical sense. Useless in the sense that nobody was waiting for it, no patient's outcome depended on it, and it solved a problem that could have been solved with a spreadsheet. A personal finance tracker. A running log. A script that auto-sorted email. A tool that calculated call schedule fairness scores for a department that nobody else cared about.
+
+The first build is almost never the build. It is the permission structure for everything that comes after.
+
+I want to talk about that permission structure, because the way we talk about physician-developers in medicine right now skips it entirely.
+
+---
+
+## The Myth of the Urgent First Project
+
+The narrative about physicians who code usually starts with a clinical problem that no vendor had solved, a eureka moment in the middle of a long shift, and a prototype built in three weeks that changed everything.
+
+That narrative is real for some people. It is not the entry point for most.
+
+The honest version is more mundane. You get curious about how something works. You follow the curiosity somewhere small and low-stakes. You build a thing that works but is not impressive. You show it to nobody. You build something slightly less small. Repeat.
+
+The clinical insight that eventually produces something like FGRManager or CodeCraftMD or a periviability counseling decision support tool does not arrive fully formed. It arrives after you have already learned to think like a builder. And you learn to think like a builder by building things that do not matter very much.
+
+This is what I call disposable software. The name is intentional.
+
+---
+
+## What Disposable Software Is
+
+Disposable software is any build where the goal is learning, not deployment.
+
+You are not trying to solve a clinical problem. You are not trying to impress anyone. You are not building toward a startup or a patent or a publication. You are building to acquire the mental model of someone who builds.
+
+That mental model is specific and transferable. Once you have debugged your first function, you understand what debugging means. Once you have pushed your first commit, you understand version control as practice rather than concept. Once you have built a form that does exactly what you intended, you start seeing every form in every clinical tool as a set of choices someone made — choices you could have made differently.
+
+That perceptual shift is the output of disposable software. The software itself is secondary.
+
+---
+
+## Why Physicians Stall Before the First Build
+
+The physician who wants to learn to code and has not started usually cites time. That is a real constraint. But time is not the primary barrier. The primary barrier is stakes.
+
+Physicians are trained in high-stakes environments. We do not practice on real patients. We build fluency in simulation before we apply it in critical situations. We do not consider ourselves competent until we are. The identity of a physician is deeply tied to not being a beginner.
+
+Coding asks you to be a beginner again. Loudly. Repeatedly. In ways that produce error messages that are hard to interpret and solutions that feel fragile and code that a real developer would rewrite entirely.
+
+That experience of beginner-ness is not comfortable for someone who has spent twenty years building clinical authority. It is the reason physicians who start coding tutorials often stop within the first two weeks. Not because the material is too hard. Because the identity of not-yet-knowing is too uncomfortable.
+
+Disposable software is the workaround. When the stakes are zero, the discomfort of not knowing is just the cost of learning. You can be a beginner on your own time, in your own space, with nobody evaluating your competence.
+
+---
+
+## What to Build First
+
+The only rule is that it should be something you actually want to exist.
+
+Not something a hospital would pay for. Not something that fills a clinical gap. Not something impressive. Something you would use. Something that solves a problem in your actual daily life.
+
+Three starting points I give to physicians who ask me this question:
+
+Build a personal log. A training log, a reading log, a prayer journal, a research pipeline. Something with input fields, a storage mechanism, and some kind of output. You will learn forms, databases, and retrieval in the process of building something you care about.
+
+Automate something annoying. Email filtering, PDF renaming, calendar parsing, meal planning. If you have a task you do manually more than once a week, it can probably be automated. Automating it teaches you about file systems, APIs, and logic flow without any clinical stakes whatsoever.
+
+Build a calculator for something you already calculate manually. Not a clinical calculator. A home calculator, a financial calculator, a race pace calculator. Any domain where you have a repeated mental operation. Translating that operation into code teaches you how computers represent decisions. That is the fundamental skill that transfers to everything clinical you build later.
+
+---
+
+## The Identity Shift Happens Quietly
+
+I did not decide to become a physician-developer. I built something small, then something slightly larger, and at some point I noticed that I was reading clinical AI papers differently. I was asking different questions in vendor demos. I was having different conversations about what FGRManager could and could not do.
+
+The identity followed the practice. It did not precede it.
+
+This is the thing that the physician-developer narrative gets wrong when it leads with the clinical breakthrough. Most people cannot access that story from where they are sitting. They can access: "build something small that does not matter, and see what happens."
+
+The something that does not matter is where the identity begins. The clinical tools come later, when the mental model is already there and the beginner-ness has been metabolized.
+
+---
+
+## The Platform Is Proof of This
+
+DoctorsWhoCode.blog exists because I built things in order and kept going. OpenMFM.org exists because I had already been building and knew how to ship. CodeCraftMD exists because I had years of smaller builds behind it that taught me what clinical software actually needs.
+
+None of it started with a vision of the full platform. It started with a function that worked, then a page that loaded, then a tool that did something I needed.
+
+Your first build does not have to save lives. It has to exist.
+
+That is the entire requirement. Build something. Let it be small. Let it be imperfect. Let it be disposable.
+
+The clinical urgency will find you once you are already moving.
+
+---
+
+*Next in "The Builder's Seat": [The EHR Vendor Wants You to Stay a Consultant](/blog/ehr-vendor-wants-you-to-stay-a-consultant) — on the structural incentives that keep physicians passive, and what building changes about that.*
