@@ -1,0 +1,139 @@
+---
+audioUrl: /audio/ehr-vendor-wants-you-to-stay-a-consultant.mp3
+title: "The EHR Vendor Wants You to Stay a Consultant"
+description: "Physician passivity in health tech is not an accident. It is a business model. Understanding the structural incentives is the first step to building outside of them."
+pubDate: "2026-03-23"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - EHR
+  - health tech
+  - physician-developer
+  - power dynamics
+  - clinical AI
+  - Epic
+  - health systems
+  - DoctorsWhoCode
+image:
+  url: /images/posts/ehr-vendor-wants-you-consultant-hero.jpeg
+  alt: "Hospital IT conference room with vendor AI presentation on screen, physicians at the table, one with a code editor open"
+readingTime: 6
+series: "The Builder's Seat"
+seriesPart: 3
+seriesTotal: 3
+featured: false
+draft: false
+---
+
+{/* heroImagePrompt: A wide-angle view inside a hospital IT conference room. A vendor presentation is on the screen — stock slides, blue gradients, 'AI-Powered' in white sans-serif. Around the table, several physicians sit with their arms crossed or taking notes on paper. At the head of the table, the vendor presenter gestures toward the screen. One physician at the far end of the table has a laptop open — not showing slides, showing a code editor. He is the only one not looking at the screen. Photorealistic. Clinical overhead fluorescent light. No text overlay. */}
+
+> **Series Note:** This is Part 3 of "The Builder's Seat," a series on accountability, access, and power in physician-built AI. [Part 1](/blog/when-algorithm-fails) examined the accountability gap between users and builders. [Part 2](/blog/first-build-does-not-have-to-save-lives) made the case for starting with disposable software.
+
+---
+
+In 2023, a major EHR vendor held a physician advisory summit. Forty physicians flown in from across the country. Two days of structured sessions. Presentations on upcoming AI features, workflow redesigns, documentation tools. Breakout groups organized around specialty. A dedicated session on "physician voice in product development."
+
+A physician in one of those breakout groups asked to see the data schema for how the new ambient documentation tool parsed clinical reasoning.
+
+The vendor representative said that was proprietary.
+
+The physician asked how they were supposed to evaluate a tool they could not inspect.
+
+The representative said that was what the trust framework was for.
+
+---
+
+## This Is Not a Conspiracy
+
+I want to be precise about what I am claiming here. I am not suggesting that EHR vendors and health AI companies are deliberately working against physicians. I am saying something more structural and in some ways more difficult to address: the business model of health technology does not require physician builders. It requires physician adopters.
+
+That distinction has consequences for every product decision, every governance structure, every "physician advisory board" that every major health tech company has formed in the last five years.
+
+An advisory board is a user research mechanism. It tells the company what physicians want. It does not give physicians the ability to build what physicians need. The difference between those two things is the difference between being a customer and being a builder. Health tech companies need the first kind of physician. They have no structural incentive to produce the second.
+
+---
+
+## What the Adoption Funnel Looks Like from the Inside
+
+Here is how most AI tools reach a clinical setting.
+
+A company builds a product. It validates it on a dataset. It secures a few academic partnerships. It presents at HIMSS or an AMJ symposium. A hospital system evaluates it through a procurement process that includes clinical input at the review stage — not the design stage. Physicians on the evaluation committee read the validation literature, see a demo, ask questions. The questions are answered by someone who was not in the room when the architecture decisions were made.
+
+The physicians vote to approve or reject. If approved, the tool is deployed. Physicians use it. They submit feedback through a ticketing system. Some feedback is addressed in future releases. Most is not, because most feedback requires architectural changes that are expensive and that affect other customers differently.
+
+The physician has had input at exactly two points: the evaluation meeting and the feedback ticket. Both are user relationships. Neither is a design relationship.
+
+This is not a dysfunction. This is the intended operation of the system. The physician is the end user. The EHR vendor and the AI company are the builders. The entire architecture of health tech procurement assumes and enforces that division.
+
+---
+
+## Why Physician Passivity Is Profitable
+
+A physician who understands how a system works is a more expensive customer. They ask harder questions. They identify limitations that require expensive engineering work to address. They push back on validation studies that do not match their patient population. They demand explainability that the model was not designed to provide.
+
+A physician who trusts the system is easier. They adopt faster. They generate positive case studies. They speak at the company's medical advisory events. They train their colleagues. Their satisfaction surveys show up in the next investor deck.
+
+Health systems benefit from this dynamic too. A hospital that deploys a commercial AI tool is buying a liability buffer along with a product. If something goes wrong, the vendor's indemnification clause is part of the procurement package. The hospital has paper documentation that it followed best practices. It consulted physicians. It ran a pilot. It reviewed the literature.
+
+That is a very different accountability structure than a hospital system that built its own tools, made its own design decisions, and owns the outcomes of those decisions entirely.
+
+Physician passivity is, from a certain angle, a risk management strategy for institutions.
+
+---
+
+## What Building Changes About This
+
+A physician who builds does not enter the vendor relationship from the same position as a physician who only uses.
+
+When I sit in a demo of a clinical AI tool, I am asking different questions than I would have before I built anything. I want to know what the training data looked like. I want to know how the model handles distributional shift. I want to know what happens at the edge cases — the clinical situations that are uncommon enough to be underrepresented in any training set but common enough in a subspecialty practice to matter.
+
+I know how to ask these questions because I have had to answer them myself. When I built FGRManager, I had to decide what data it would use, what it would not use, what populations it was built for, and what clinical situations were outside its scope. Making those decisions taught me exactly where every clinical AI tool is most fragile.
+
+That knowledge is not available through a user relationship. It only comes from building.
+
+---
+
+## The Platform as Counter-Architecture
+
+OpenMFM.org is a counter-architectural statement. Not a loud one. Not a political one. A quiet, technical one.
+
+It is a set of clinical decision support tools, patient education resources, and microsites built by a physician for physicians and patients — outside the procurement cycle, outside the EHR vendor relationship, outside the trust framework that asks you to evaluate what you cannot inspect.
+
+Every tool on OpenMFM.org reflects how I actually think about a clinical problem. The periviability counseling tool reflects how I have that conversation at the bedside. The cervical length screening tool reflects how I integrate that data into management. The FGR tool reflects how I think at 2am when a growth-restricted fetus is doing something that does not fit cleanly into any guideline.
+
+No vendor would have built these tools this way. They would have built something more generalizable, more defensible, more legible to a procurement committee. Those are legitimate engineering priorities. They are not the same as clinical fidelity.
+
+Building outside the system is the only way to build for the system's actual users.
+
+---
+
+## What I Am Not Saying
+
+I am not saying reject commercial AI tools. I use several. They do things I cannot build myself at the scale at which they operate. Ambient documentation, large language model reasoning, population-level risk stratification — these require infrastructure and compute that a physician-developer cannot replicate in a side project.
+
+I am saying understand the structural relationship you are in when you use them. You are a user in a system designed to produce users. You can push back, give feedback, and participate in advisory boards. Those are useful activities. They do not change your position in the architecture.
+
+Building changes your position. Building gives you a different kind of standing in every conversation about clinical AI — in governance committees, in vendor demos, in peer discussions about which tools to trust and which to interrogate.
+
+You do not have to build everything. You have to build something.
+
+---
+
+## The Longer Game
+
+The physician-developer community is small right now. The platforms we are building are modest. OpenMFM.org is not Epic. DoctorsWhoCode.blog is not a medical school curriculum. CodeCraftMD is not Athelas or Suki or Abridge.
+
+But the trajectory matters. Every physician who builds something adds one more person to the set of clinicians who can interrogate clinical AI from the inside. Every tool built by a physician and deployed in a clinical setting creates a proof point that the builder's seat is available. Every conversation between a physician-developer and a procurement committee changes the questions that get asked.
+
+The EHR vendor wants you to stay a consultant. That is not malice. It is business.
+
+The question is whether that arrangement is acceptable to you.
+
+Build something. Find out.
+
+---
+
+*"The Builder's Seat" is a three-part series on DoctorsWhoCode.blog. [Part 1: When the Algorithm Fails, Who Answers for It?](/blog/when-algorithm-fails) [Part 2: Your First Build Does Not Have to Save Lives](/blog/first-build-does-not-have-to-save-lives)*
+
+*Explore the tools discussed in this series: [OpenMFM.org](https://openmfm.org) | [CodeCraftMD](https://codecraftmd.com)*
