@@ -1,0 +1,176 @@
+---
+audioUrl: /audio/patients-already-using-chatgpt.mp3
+title: "Your Patients Are Already Using ChatGPT to Decide Whether to Call You"
+description: "They are not asking it for fun. They are asking it because the triage line puts them on hold for 45 minutes. The threat is not the technology. The threat is the system that made the technology necessary."
+pubDate: 2026-03-24
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+image:
+  url: /images/posts/patients-using-chatgpt-hero.jpeg
+  alt: "Pregnant woman sitting alone on a dark couch late at night, her face lit by the glow of her phone as she types a medical question into a chatbot"
+category: "AI in Medicine"
+tags:
+  - patient safety
+  - clinical AI
+  - physician-developer
+  - triage
+  - ChatGPT
+  - DoctorsWhoCode
+draft: false
+featured: true
+readingTime: 10
+---
+
+Last Tuesday a patient told me she asked ChatGPT whether her headache at 34 weeks was preeclampsia.
+
+She did not tell me this sheepishly. She told me this matter-of-factly. The way you tell someone you checked Google Maps before driving to their office. She was not embarrassed. She was not confused about the difference between a chatbot and a physician. She had a symptom at 10:47 PM, she called the on-call line, and nobody picked up for 38 minutes.
+
+So she opened ChatGPT.
+
+I hear some version of this story every week now. Not from a specific demographic. Not from patients with low health literacy. From lawyers. From nurses. From engineers. From other physicians' spouses. The common thread is not ignorance. The common thread is access failure.
+
+We need to stop treating this as a patient education problem and start treating it as what it actually is: a systems problem that physicians who build things are uniquely positioned to fix.
+
+---
+
+## The Framing Is Wrong
+
+The dominant narrative in medical media goes something like this: patients are using AI chatbots for medical advice, the chatbots hallucinate, patients get hurt, therefore we need to educate patients about the dangers of trusting AI.
+
+That narrative is not wrong on its facts. LLMs do hallucinate. Patients can be harmed by acting on incorrect medical information. Education is always valuable.
+
+But the narrative is wrong on its diagnosis.
+
+It locates the problem in the patient's decision to use the chatbot. It does not interrogate the system that made the chatbot the most accessible option. It treats the patient's behavior as the pathology instead of treating it as a symptom.
+
+I am an MFM specialist. I think in terms of upstream and downstream. The patient typing symptoms into ChatGPT at 11 PM is a downstream event. The upstream cause is a triage system that was not there when she needed it.
+
+---
+
+## What Patients Actually Do at 11 PM
+
+Let me describe the experience from the patient's side, because most of us have not sat in it recently.
+
+Your patient is 32 weeks pregnant. She has a headache that started two hours ago. She took Tylenol. It did not help. She remembers you told her that persistent headaches could be a sign of preeclampsia. She is not sure if this qualifies. She does not want to overreact. She also does not want to underreact.
+
+She picks up her phone. She has three options.
+
+Option one: call the on-call line. She knows from experience this involves a phone tree, a hold time, and a callback from a nurse she has never met who will ask her the same screening questions regardless of what she reports. If it is a busy night, the callback might take 45 minutes. If the nurse cannot reach the on-call physician, it might take longer. The nurse will almost certainly tell her to go to labor and delivery to be evaluated, because that is the safe default and the nurse has no imaging, no labs, and no relationship with the patient.
+
+Option two: go directly to labor and delivery triage. This means waking up her other children, finding childcare or bringing them along, driving 25 minutes, sitting in a triage bay, waiting for labs and a provider, and being there for two to four hours. If the headache turns out to be tension-related, she has spent half the night in a hospital for reassurance she could have gotten in five minutes from someone who knows her history.
+
+Option three: open ChatGPT and type "I am 32 weeks pregnant and have had a headache for two hours that Tylenol did not help. Should I go to the hospital?"
+
+She picks option three. Not because she trusts the chatbot more than her doctor. Because the chatbot is the only one that answers immediately.
+
+---
+
+## The Chatbot Is Filling a Void We Created
+
+I want to be precise about this. Patients are not replacing physician judgment with AI judgment. They are replacing physician unavailability with AI availability.
+
+Those are different problems with different solutions.
+
+If the problem were that patients preferred chatbot advice to physician advice, the solution would be education. Explain why the chatbot is unreliable. Explain why physicians are better. Trust the patient to make rational decisions with better information.
+
+But the problem is not preference. The problem is that at 10:47 PM on a Tuesday, the patient cannot access physician judgment at all. She can access a phone tree, a hold queue, and a chatbot. The chatbot wins on availability. It does not win on accuracy. It does not win on trust. It wins because it is the only thing that responds.
+
+This means the solution is not to educate patients away from chatbots. The solution is to build systems that are as available as chatbots and as reliable as physicians.
+
+That is a build problem. Not an education problem.
+
+---
+
+## Why the Triage Line Fails
+
+The after-hours triage system in most obstetric practices was designed in the 1990s. It assumed a world where patients had one phone line, called during a genuine emergency, and were willing to wait because there was no alternative.
+
+None of those assumptions hold anymore.
+
+Patients text. They message through portals. They search the internet. They ask chatbots. They have been trained by every other service in their lives to expect immediate responses. When they call the triage line, they are comparing the experience not to what triage was like in 2004, but to what ordering groceries was like yesterday.
+
+The triage nurse is a bottleneck not because nurses are slow, but because the system routes every call through a single human regardless of acuity. A patient calling about round ligament pain at 20 weeks goes through the same pipeline as a patient calling about decreased fetal movement at 36 weeks. The system has no stratification. It has no asynchronous pathway. It has no mechanism for the low-acuity call to resolve without consuming the same resources as the high-acuity call.
+
+This is not a staffing problem. It is an architecture problem. The system was designed for a different volume of calls, a different set of patient expectations, and a different technological landscape. It has not been redesigned since.
+
+---
+
+## What ChatGPT Actually Tells Them
+
+I have tested this. I have entered common obstetric symptom presentations into ChatGPT, Claude, Gemini, and Copilot. The results are instructive.
+
+For straightforward presentations, the chatbots are reasonably conservative. "Headache at 34 weeks" reliably generates a response that mentions preeclampsia, recommends checking blood pressure if a home cuff is available, and advises contacting the provider or going to the hospital. The advice is not wrong. It is generic. It does not account for the patient's specific history, her baseline blood pressure, her lab trends, or the clinical context that would let an MFM specialist distinguish between a tension headache and an early warning sign.
+
+For ambiguous presentations, the chatbots are more dangerous. "Mild cramping at 28 weeks" generates a range of responses from reassurance to alarm depending on how the patient phrases the question. The chatbot does not ask follow-up questions the way a trained triage nurse would. It does not probe for bleeding, fluid leakage, contraction frequency, or prior preterm birth history. It takes whatever the patient gives it and produces an answer calibrated to sound helpful.
+
+For rare but serious presentations, the chatbots are unreliable. Symptoms that map to placental abruption, HELLP syndrome, or acute fatty liver of pregnancy are not consistently flagged with appropriate urgency. The chatbot does not know what it does not know. It generates confident text regardless of whether the underlying clinical situation is routine or catastrophic.
+
+The patient cannot tell the difference. That is the core danger. Not that the chatbot is always wrong. But that it is wrong in ways the patient has no mechanism to detect.
+
+---
+
+## The Physician-Developer Response
+
+Here is where this becomes a DoctorsWhoCode problem.
+
+The gap between the triage line and the chatbot is not a mystery. It is a design problem with a known shape. The triage line is slow, synchronous, and undifferentiated. The chatbot is fast, asynchronous, and context-free. Neither is adequate. The thing that would be adequate sits between them.
+
+What patients need at 11 PM is a system that combines the availability of the chatbot with the clinical specificity of a provider who knows their chart. That system does not exist at scale in obstetrics. But the components to build it do.
+
+Structured symptom intake can be built. I am not talking about a generic chatbot. I am talking about a decision tree authored by a clinician, encoded in software, that asks the right follow-up questions for the specific gestational age and clinical history. A patient at 34 weeks with a headache and a history of chronic hypertension should get a different pathway than a patient at 20 weeks with a headache and no risk factors. The chatbot treats them identically. A physician-built triage tool does not.
+
+Asynchronous provider review can be built. The patient completes a structured intake. The system risk-stratifies the presentation using clinician-authored logic. Low-acuity presentations get an automated response with appropriate guidance and a flag for morning review. High-acuity presentations get escalated to the on-call provider immediately with the structured data already collected. The provider spends two minutes reviewing a summary instead of ten minutes on the phone gathering history.
+
+EHR-aware context can be built. The triage tool pulls the patient's problem list, medication list, gestational age, and recent lab values. When the patient reports a headache, the system already knows whether she has a history of preeclampsia, whether her last blood pressure was elevated, whether she is on labetalol. The chatbot knows none of this. The triage nurse might know some of it if she has time to look it up. The physician-built system knows all of it before the patient finishes typing.
+
+None of this is speculative technology. FHIR APIs exist. Structured clinical decision support exists. Asynchronous messaging infrastructure exists. The reason this has not been built at scale is not a technology gap. It is a builder gap. The people who understand the clinical workflow are not the people building the tools. The people building the tools are optimizing for engagement metrics, not for clinical appropriateness at 34 weeks with a headache.
+
+---
+
+## The Liability Inversion
+
+Here is the part that should concern every practicing obstetrician.
+
+Right now, when a patient uses ChatGPT for triage and something goes wrong, the liability landscape is murky. The patient made a choice. The chatbot is not a medical device. The physician was not involved.
+
+But that framing will not hold. As patient use of chatbots for medical triage becomes normalized, and it is being normalized right now, the question will shift. It will shift from "why did the patient use a chatbot?" to "why was the chatbot the only thing available?"
+
+When a plaintiff's attorney asks why the practice's after-hours triage system had an average response time of 42 minutes, and the patient turned to ChatGPT because no one answered, the practice will not be able to deflect responsibility onto the patient's technology choices. The question will be about the system. Why was it so slow? Why was there no asynchronous option? Why was the patient left with no alternative except a consumer AI product?
+
+Practices that have built modern triage systems will have an answer. Practices that are still running the 1990s phone tree will not.
+
+This is not a hypothetical timeline. This is happening now. I see the patient behavior changing in real time. The legal and regulatory frameworks lag behind patient behavior, but they always catch up. Physicians who build triage systems today are not just improving patient care. They are building the standard of care that everyone else will be measured against tomorrow.
+
+---
+
+## What You Can Build This Month
+
+I am not proposing a five-year R&D initiative. I am proposing that a physician-developer with clinical triage experience and basic technical fluency can build a better system than what most practices currently deploy.
+
+Start with structured intake. Build a web form that asks the right questions for the five most common after-hours calls in your specialty. For obstetrics, that is decreased fetal movement, contractions, headache, bleeding, and leaking fluid. Each one gets a branching set of follow-up questions authored by a clinician. The patient completes the form on their phone. The result is a structured summary that goes to the on-call provider.
+
+That alone eliminates the phone tree. It eliminates the hold time. It eliminates the triage nurse spending ten minutes gathering history that the patient could have entered in two minutes. It gives the provider a clean summary instead of a fragmented phone conversation.
+
+Is it a complete solution? No. But it is a better solution than what exists. And it is a solution that a physician-developer can build in a weekend, test with ten patients, and iterate from there.
+
+That is the disposable software approach applied to a problem that affects every practice in the country. You do not need a vendor. You do not need a committee. You need a physician who understands the clinical workflow and can write the code.
+
+---
+
+## The Real Threat
+
+The real threat is not that ChatGPT gives bad medical advice. The real threat is that ChatGPT gives any medical advice at all and we have built nothing better.
+
+Every night, patients in every specialty are making clinical decisions with the help of a general-purpose language model that has no access to their chart, no understanding of their risk profile, and no accountability for its outputs. They are doing this not because they are foolish. They are doing this because we left a gap and someone else filled it.
+
+The someone else is not a physician. The someone else is not a medical device company subject to FDA oversight. The someone else is a consumer technology product built to maximize engagement, not to stratify clinical risk.
+
+We can complain about that. We can write editorials about it. We can give conference talks about the dangers of Dr. Google's successor.
+
+Or we can build the thing that should have been there instead.
+
+I know which one changes outcomes.
+
+---
+
+*If you are a physician-developer thinking about clinical triage tools, I want to hear from you. The after-hours problem is not unique to MFM. Every specialty has a version of this. The solutions will be specialty-specific but the architecture is transferable. Reach out at [DoctorsWhoCode.blog](https://doctorswhocode.blog) or find me on [X](https://x.com/chukwumaonyeije).*
