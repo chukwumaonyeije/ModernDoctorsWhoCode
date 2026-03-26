@@ -1,0 +1,146 @@
+---
+audioUrl: /audio/inbox-detox-two-evenings-disposable-software.mp3
+title: "I Built InboxDetox in Two Evenings — This Is What Disposable Software Looks Like"
+description: "InboxDetox is an AI-powered email unsubscribe manager built in two evenings and deployed to Railway. It is on GitHub. Take it."
+pubDate: "2026-03-26"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Technology"
+tags:
+  - disposable software
+  - physician-developer
+  - Next.js
+  - AI
+  - email
+  - open source
+  - Railway
+  - DoctorsWhoCode
+image:
+  url: /images/posts/inboxdetox.jpeg
+  alt: "InboxDetox dashboard showing AI-categorized email subscriptions on a dark interface displayed on a monitor"
+readingTime: 5
+featured: true
+draft: false
+---
+
+import ScreenshotCarousel from '../../../components/ScreenshotCarousel';
+
+On the evening of March 24, I opened my Gmail inbox, saw 1,137 subscription emails
+sitting in the scan queue, and decided I was done managing them by hand.
+
+By the end of the next evening, InboxDetox was running on Railway.
+
+## What InboxDetox Does
+
+It is a self-hosted web app that connects to your Gmail or Outlook account,
+scans your inbox, and uses Claude to categorize every subscription sender it finds.
+From a dashboard, you decide: keep it, or unsubscribe. Bulk actions are available.
+Every decision is logged.
+
+That is the whole product. There is no SaaS tier. There is no waitlist. There is
+no growth roadmap. You clone the repo, configure your environment variables, and
+run it.
+
+## What I Built It With
+
+The stack is straightforward.
+
+- **Framework:** Next.js 16 (App Router)
+- **Auth:** NextAuth v5 with Google OAuth and Microsoft Entra ID
+- **Database:** PostgreSQL on Railway via Prisma v7
+- **AI:** Anthropic Claude (`claude-sonnet-4-5`)
+- **Email APIs:** Gmail API, Microsoft Graph API
+- **Deployment:** Railway with a Dockerfile builder
+
+The AI categorization layer is the only part that required judgment calls.
+Claude receives a batch of sender names and subject line samples and returns
+structured labels: newsletters, promotional, SaaS trial, financial, medical,
+and so on. The categorization feeds the filter UI so you can bulk-decide by
+category rather than row by row.
+
+The rest of the app is standard Next.js plumbing. Nothing exotic.
+
+## Two Evenings Is a Real Number
+
+I want to be clear about what two evenings means in practice.
+
+It means no tests. It means the UI is functional, not polished. It means I
+hit a `prisma generate` failure during the Railway deploy and fixed it with
+a Dockerfile change rather than investigating why the postinstall hook was not
+running. It means I moved on.
+
+Two evenings is enough time to build something that solves a real problem for
+one user: me. It is not enough time to build something you hand to a thousand
+users and support indefinitely.
+
+That is the point.
+
+## This Is Disposable Software
+
+In a [recent post](/blog/first-build-does-not-have-to-save-lives), I argued
+that disposable software is the learning foundation for physician-developers.
+Builds where the goal is learning, not deployment. Projects with zero clinical
+stakes designed to develop the muscle memory that eventually produces tools that matter.
+
+InboxDetox is disposable software with one working deployment.
+
+It solves a problem I actually have. It uses a stack I wanted to practice.
+It gave me a Railway deployment under my belt, a Prisma v7 adapter pattern
+I can now reproduce, and a NextAuth v5 configuration I will reuse. Every one
+of those things transfers directly to the next build.
+
+The app itself? It may run for six months and then I may delete the Railway
+service without ceremony. That outcome is not failure. That outcome was always
+the plan.
+
+<ScreenshotCarousel client:load slides={[
+  { src: "/images/posts/inboxdetox-screenshot1.png", alt: "InboxDetox login screen", caption: "01 / Login -- connect Gmail or Outlook with OAuth" },
+  { src: "/images/posts/inboxdetox-screenshot2.png", alt: "InboxDetox dashboard", caption: "02 / Dashboard -- 484 subscriptions found, 250 already cleared" },
+  { src: "/images/posts/inboxdetox-screenshot4.png", alt: "InboxDetox subscriptions list", caption: "03 / Subscriptions -- AI-categorized senders with bulk keep or unsubscribe" },
+  { src: "/images/posts/inboxdetox-screenshot3.png", alt: "InboxDetox settings", caption: "04 / Settings -- block domains, filter keywords, set scan preferences" },
+]} />
+
+## The Honest Assessment
+
+InboxDetox will not unsubscribe from every sender. Some subscription emails
+do not include a proper `List-Unsubscribe` header, which means the unsubscribe
+action falls back to a best-effort redirect rather than a clean API call.
+That is a Gmail API constraint, not a fixable bug.
+
+The AI categorization is also imperfect. Claude is accurate on obvious
+categories. It is less reliable on senders that blend promotional and
+transactional content. I did not build a feedback loop into the model.
+That would have been a third evening.
+
+What works well: the scan itself, the dashboard, the bulk keep/unsubscribe
+flow, and the Railway deployment. That is enough for what this is.
+
+## It Is on GitHub
+
+If InboxDetox solves a problem you have, you can use it.
+
+The source code is at [github.com/chukwumaonyeije/InboxDetox2026](https://github.com/chukwumaonyeije/InboxDetox2026).
+The README covers environment variable setup, OAuth configuration for both
+Google and Microsoft, and Railway deployment. You will need your own
+Anthropic API key and your own database.
+
+Fork it. Improve it. Add the feedback loop I skipped. Add proper unsubscribe
+handling for the edge cases I left as a known limitation. Make it yours.
+
+That is the other thing disposable software is good for: it ships something
+someone else can pick up.
+
+## What This Actually Proves
+
+Physician-developers often wait for the right problem before they start building.
+The right problem, the right scope, the right tool, the right weekend.
+
+Two evenings with a clear constraint produces a working application faster than
+six months of planning for the perfect one.
+
+The honest question is not whether InboxDetox is production-ready. It is whether
+building it produced something transferable. Every pattern I practiced here
+goes directly into the next build. So does the Railway deployment workflow. So does
+the NextAuth v5 configuration I now have memorized.
+
+That is what disposable software actually delivers. Not the app. The fluency.
