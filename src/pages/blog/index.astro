@@ -2,19 +2,16 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/PostCard.astro';
+import { buildTagIndex, slugifyTag } from '../../utils/tags';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-// Collect tags used by 3+ posts only
-const tagCounts = sortedPosts.flatMap(p => p.data.tags).reduce((acc, tag) => {
-  acc[tag] = (acc[tag] ?? 0) + 1;
-  return acc;
-}, {} as Record<string, number>);
-const allTags = Object.entries(tagCounts)
-  .filter(([, count]) => count >= 3)
-  .sort((a, b) => b[1] - a[1])
-  .map(([tag]) => tag);
+const tagIndex = buildTagIndex(sortedPosts.flatMap((post) => post.data.tags));
+const allTags = [...tagIndex.entries()]
+  .filter(([, value]) => value.count >= 3)
+  .sort((a, b) => b[1].count - a[1].count)
+  .map(([slug, value]) => ({ slug, label: value.label }));
 ---
 
 <BaseLayout
@@ -44,9 +41,9 @@ const allTags = Object.entries(tagCounts)
           style="font-family: var(--font-mono); font-size: 0.7rem; padding: 0.3rem 0.75rem; border-radius: 4px; border: 1px solid var(--dwc-cyan); color: var(--dwc-navy); background-color: var(--dwc-cyan); cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;"
         >All</button>
         {allTags.map(tag => (
-          <button class="tag-btn" data-tag={tag}
+          <button class="tag-btn" data-tag={tag.slug}
             style="font-family: var(--font-mono); font-size: 0.7rem; padding: 0.3rem 0.75rem; border-radius: 4px; border: 1px solid var(--dwc-border); color: var(--dwc-muted); background-color: transparent; cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;"
-          >{tag}</button>
+          >{tag.label}</button>
         ))}
       </div>
     </div>
@@ -54,7 +51,7 @@ const allTags = Object.entries(tagCounts)
     <!-- Posts grid -->
     <div id="posts-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
       {sortedPosts.map(post => (
-        <div class="post-item" data-tags={post.data.tags.join(',')} data-title={post.data.title.toLowerCase()} data-description={post.data.description.toLowerCase()}>
+        <div class="post-item" data-tags={post.data.tags.map(tag => slugifyTag(tag)).join(',')} data-title={post.data.title.toLowerCase()} data-description={post.data.description.toLowerCase()}>
           <PostCard
             title={post.data.title}
             description={post.data.description}

@@ -7,8 +7,8 @@ description: Medical Director, Atlanta Perinatal Associates | Creator of CodeCra
 draft: false
 pubDate: 2025-12-09
 tags:
-- doctors-who-code
-- healthcare-automation
+- "doctors-who-code"
+- "healthcare-automation"
 title: 'Stop Searching "How to Code Like a Software Engineer": A New Path for Physician-Developers'
 ---
 

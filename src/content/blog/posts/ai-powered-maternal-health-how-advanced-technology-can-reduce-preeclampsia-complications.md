@@ -7,11 +7,11 @@ description: Every 7 minutes, a woman dies from complications of pregnancy and c
 draft: false
 pubDate: 2025-03-30
 tags:
-- ai-applications
-- healthcare-automation
-- maternal-health
-- medical-informatics
-- prenatal-care
+- "ai-applications"
+- "healthcare-automation"
+- "maternal-health"
+- "medical-informatics"
+- "prenatal-care"
 title: 'AI-Powered Maternal Health: How Advanced Technology Can Reduce Preeclampsia
   Complications'
 ---

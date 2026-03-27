@@ -7,19 +7,19 @@ description: Discover how Placentavision AI transforms maternal healthcare using
 draft: false
 pubDate: 2024-12-17
 tags:
-- ai-applications
-- ai-in-healthcare
-- global-healthcare-equity
-- healthcare-automation
-- maternal-health
-- medical-informatics
-- medical-software
-- medical-technology
-- neonatal-outcomes
-- placental-imaging
-- placentavision-ai
-- prenatal-care
-- smart-medical-diagnostics
+- "ai-applications"
+- "ai-in-healthcare"
+- "global-healthcare-equity"
+- "healthcare-automation"
+- "maternal-health"
+- "medical-informatics"
+- "medical-software"
+- "medical-technology"
+- "neonatal-outcomes"
+- "placental-imaging"
+- "placentavision-ai"
+- "prenatal-care"
+- "smart-medical-diagnostics"
 title: 'PlacentaVision AI: Revolutionizing Maternal Health with Smart Imaging'
 ---
 

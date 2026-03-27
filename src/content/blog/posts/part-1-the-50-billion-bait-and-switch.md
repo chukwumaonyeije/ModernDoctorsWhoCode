@@ -6,22 +6,22 @@ description: Maternal-Fetal Medicine Specialist & Founder, CodeCraftMD
 draft: false
 pubDate: 2026-02-08
 tags:
-- aiinmedicine
-- clinicalai
-- digitalhealth-2
-- fetal-monitoring
-- healthcareaccess
-- healthcareinnovation
-- healthequity
-- healthit-2
-- healthpolicy
-- highriskob
-- maternalfetalmedicine-2
-- medicaidcuts
-- medicalai
-- physiciandevelopers-2
-- ruralhealthcare
-- ruralmedicine
+- "ai-in-medicine"
+- "clinical-ai"
+- "digital-health"
+- "fetal-monitoring"
+- "healthcare-access"
+- "healthcare-innovation"
+- "health-equity"
+- "health-it"
+- "healthcare-policy"
+- "high-risk-pregnancy"
+- "maternal-fetal-medicine"
+- "medicaid-cuts"
+- "medical-ai"
+- "physician-developer"
+- "rural-healthcare"
+- "rural-medicine"
 title: 'Part 1: The $50 Billion Bait-and-Switch'
 ---
 

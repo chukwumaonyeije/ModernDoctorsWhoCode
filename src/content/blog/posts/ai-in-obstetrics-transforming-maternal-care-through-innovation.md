@@ -7,22 +7,22 @@ description: Artificial intelligence (AI) is revolutionizing obstetric care, emp
 draft: false
 pubDate: 2024-12-10
 tags:
-- ai-in-obstetrics
-- digital-health
-- ethical-ai
-- fetal-monitoring
-- genetic-testing
-- healthcare-innovation
-- healthcare-transformation
-- maternal-health
-- maternal-fetal-medicine
-- medical-software
-- medical-technology
-- obstetric-imaging
-- predictive-analytics
-- prenatal-care
-- smart-labor-management
-- wearable-technology
+- "ai-in-obstetrics"
+- "digital-health"
+- "ethical-ai"
+- "fetal-monitoring"
+- "genetic-testing"
+- "healthcare-innovation"
+- "healthcare-transformation"
+- "maternal-health"
+- "maternal-fetal-medicine"
+- "medical-software"
+- "medical-technology"
+- "obstetric-imaging"
+- "predictive-analytics"
+- "prenatal-care"
+- "smart-labor-management"
+- "wearable-technology"
 title: 'AI in Obstetrics: Transforming Maternal Care Through Innovation'
 ---
 

@@ -7,12 +7,12 @@ description: 'Imagine this: a cyberattack exposes the personal and medical infor
 draft: false
 pubDate: 2024-12-20
 tags:
-- ai-applications
-- healthcare-automation
-- maternal-health
-- medical-informatics
-- medical-software
-- prenatal-care
+- "ai-applications"
+- "healthcare-automation"
+- "maternal-health"
+- "medical-informatics"
+- "medical-software"
+- "prenatal-care"
 title: 'Ensuring Data Privacy in AI-Powered Healthcare: A Comprehensive Guide'
 ---
 

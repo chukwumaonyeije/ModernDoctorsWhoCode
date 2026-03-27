@@ -7,17 +7,17 @@ description: Maternal-Fetal Medicine Specialist, Medical Director at Atlanta Per
 draft: false
 pubDate: 2026-02-13
 tags:
-- acog
-- clinical-decision-support
-- clinical-guidelines
-- digital-health-tools
-- evidence-based-medicine
-- healthcare-technology
-- interactive-patient-education
-- maternal-fetal-medicine
-- medical-misinformation
-- physician-developer-2
-- smfm
+- "acog"
+- "clinical-decision-support"
+- "clinical-guidelines"
+- "digital-health-tools"
+- "evidence-based-medicine"
+- "healthcare-technology"
+- "interactive-patient-education"
+- "maternal-fetal-medicine"
+- "medical-misinformation"
+- "physician-developer"
+- "smfm"
 title: 'From Misinformation to Implementation: Why Modern Medicine Needs a Guideline-to-App
   Industrial Complex'
 ---

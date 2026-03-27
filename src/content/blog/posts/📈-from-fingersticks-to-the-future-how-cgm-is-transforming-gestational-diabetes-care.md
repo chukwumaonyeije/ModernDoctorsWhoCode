@@ -1,4 +1,5 @@
 ---
+slug: from-fingersticks-to-the-future-how-cgm-is-transforming-gestational-diabetes-care
 audioUrl: /audio/📈-from-fingersticks-to-the-future-how-cgm-is-transforming-gestational-diabetes-care.mp3
 title: "📈 From Fingersticks to the Future: How CGM is Transforming Gestational Diabetes Care"
 pubDate: 2025-07-02

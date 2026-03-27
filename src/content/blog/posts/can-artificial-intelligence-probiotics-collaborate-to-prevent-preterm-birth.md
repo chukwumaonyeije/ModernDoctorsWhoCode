@@ -8,13 +8,13 @@ description: Every year, countless families face the heartbreak of preterm birth
 draft: false
 pubDate: 2024-12-23
 tags:
-- ai-applications
-- fetal-monitoring
-- healthcare-automation
-- healthcare-innovation
-- medical-informatics
-- medical-software
-- prenatal-care
+- "ai-applications"
+- "fetal-monitoring"
+- "healthcare-automation"
+- "healthcare-innovation"
+- "medical-informatics"
+- "medical-software"
+- "prenatal-care"
 title: Can Artificial Intelligence &amp; Probiotics Collaborate to Prevent Preterm
   Birth?
 ---

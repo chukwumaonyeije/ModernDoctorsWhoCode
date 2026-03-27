@@ -1,7 +1,8 @@
 {
-  "name": "astro-scaffold",
+  "name": "modern-doctors-who-code",
   "type": "module",
   "version": "0.0.1",
+  "description": "Static Astro blog for doctorswhocode.blog",
   "engines": {
     "node": ">=22.12.0"
   },

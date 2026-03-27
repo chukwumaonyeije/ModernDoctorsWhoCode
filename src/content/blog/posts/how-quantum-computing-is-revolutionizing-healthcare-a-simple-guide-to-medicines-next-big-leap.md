@@ -7,14 +7,14 @@ description: Imagine a world where new life-saving drugs are discovered in days 
 draft: false
 pubDate: 2024-12-14
 tags:
-- ai-applications
-- healthcare-automation
-- healthcare-innovation
-- maternal-health
-- medical-informatics
-- medical-software
-- medical-technology
-- prenatal-care
+- "ai-applications"
+- "healthcare-automation"
+- "healthcare-innovation"
+- "maternal-health"
+- "medical-informatics"
+- "medical-software"
+- "medical-technology"
+- "prenatal-care"
 title: 'How Quantum Computing Is Revolutionizing Healthcare: A Simple Guide to Medicine''s
   Next Big Leap'
 ---

@@ -8,16 +8,16 @@ description: 'In a groundbreaking development that signals a new era in healthca
 draft: false
 pubDate: 2025-02-07
 tags:
-- ai-assisted-diagnosis
-- artificial-intelligence-in-medicine
-- clinical-decision-support
-- future-of-medicine
-- gpt-4-in-healthcare
-- healthcare-automation
-- healthcare-innovation
-- medical-ai
-- medical-board-exams
-- medical-education-technology
+- "ai-assisted-diagnosis"
+- "artificial-intelligence-in-medicine"
+- "clinical-decision-support"
+- "future-of-medicine"
+- "gpt-4-in-healthcare"
+- "healthcare-automation"
+- "healthcare-innovation"
+- "medical-ai"
+- "medical-board-exams"
+- "medical-education-technology"
 title: 'Breaking Barriers: GPT-4 Matches Physician Performance on Medical Board Exams'
 ---
 

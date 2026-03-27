@@ -7,6 +7,7 @@ import NewsletterForm from '../components/NewsletterForm.astro';
 import PostCard from '../components/PostCard.astro';
 import AudioPlayer from '../components/AudioPlayer.astro';
 import { SITE_URL, AUTHOR_NAME, AUTHOR_URL, SITE_TITLE } from '../consts';
+import { slugifyTag } from '../utils/tags';
 
 interface Props {
   title: string;
@@ -155,7 +156,7 @@ const relatedPosts = allPosts
         <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--dwc-border);">
           {tags.map(tag => (
             <a
-              href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+              href={`/tags/${slugifyTag(tag)}`}
               class="tag-pill"
             >
               {tag}

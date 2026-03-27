@@ -7,12 +7,12 @@ description: Discover how physicians can harness web frameworks and APIs to impr
 draft: false
 pubDate: 2024-12-09
 tags:
-- healthcare-automation
-- healthcare-technology-tools
-- medical-informatics
-- patient-monitoring
-- telemedicine-apis
-- web-frameworks-for-physicians
+- "healthcare-automation"
+- "healthcare-technology-tools"
+- "medical-informatics"
+- "patient-monitoring"
+- "telemedicine-apis"
+- "web-frameworks-for-physicians"
 title: 'Build Better Healthcare Tools: A Physician''s Guide to Web Frameworks &amp;
   APIs'
 ---

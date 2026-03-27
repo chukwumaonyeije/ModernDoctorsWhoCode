@@ -7,10 +7,10 @@ description: Imagine walking into a clinic for a routine prenatal check-up. Inst
 draft: false
 pubDate: 2025-04-08
 tags:
-- ai-applications
-- healthcare-automation
-- healthcare-innovation
-- medical-informatics
+- "ai-applications"
+- "healthcare-automation"
+- "healthcare-innovation"
+- "medical-informatics"
 title: 'A Look into the Future: How AI and Eye Scans Could Save Mothers'' Lives'
 ---
 

@@ -7,15 +7,15 @@ description: Maternal-Fetal Medicine Specialist | Founder, CodeCraftMD | Atlanta
 draft: false
 pubDate: 2026-02-10
 tags:
-- aiagents
-- clinicalinformatics
-- doctorswhocode
-- halfmarathontraining
-- learningbydoing
-- openclaw
-- pgis
-- physiciandeveloper
-- type2diabetes
+- "ai-agents"
+- "clinical-informatics"
+- "doctors-who-code"
+- "half-marathon-training"
+- "learning-by-doing"
+- "openclaw"
+- "pgis"
+- "physician-developer"
+- "type-2-diabetes"
 title: I Built an OpenClaw Agent to Understand What Developers Are Actually Doing
   (Not Because I Needed One)
 ---

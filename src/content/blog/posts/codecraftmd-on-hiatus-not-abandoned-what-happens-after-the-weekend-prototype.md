@@ -8,9 +8,9 @@ description: It was 11:47 PM on a Saturday night, and I was staring at my EMR sc
 draft: false
 pubDate: 2026-01-18
 tags:
-- doctors-who-code
-- healthcare-automation
-- medical-technology
+- "doctors-who-code"
+- "healthcare-automation"
+- "medical-technology"
 title: 'CodeCraftMD on Hiatus, Not Abandoned: What Happens After the Weekend Prototype'
 ---
 

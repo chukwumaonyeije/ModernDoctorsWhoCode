@@ -1,4 +1,5 @@
 ---
+slug: progress-by-abstraction-how-doctors-build-the-future-of-thought
 audioUrl: /audio/🧩-progress-by-abstraction-how-doctors-build-the-future-of-thought.mp3
 title: "🧩 Progress by Abstraction: How Doctors Build the Future of Thought"
 pubDate: 2025-10-14

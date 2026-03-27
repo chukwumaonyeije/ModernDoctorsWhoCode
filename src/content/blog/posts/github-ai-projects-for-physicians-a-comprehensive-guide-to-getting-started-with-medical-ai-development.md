@@ -8,13 +8,13 @@ description: The intersection of artificial intelligence and healthcare represen
 draft: false
 pubDate: 2024-12-30
 tags:
-- clinical-decision-support
-- github-ai-projects
-- healthcare-data-analysis
-- healthcare-machine-learning
-- medical-ai-development
-- medical-image-classification
-- physician-coding
+- "clinical-decision-support"
+- "github-ai-projects"
+- "healthcare-data-analysis"
+- "healthcare-machine-learning"
+- "medical-ai-development"
+- "medical-image-classification"
+- "physician-coding"
 title: 'GitHub AI Projects for Physicians: A Comprehensive Guide to Getting Started
   with Medical AI Development'
 ---

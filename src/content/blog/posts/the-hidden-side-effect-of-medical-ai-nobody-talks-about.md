@@ -3,15 +3,14 @@ audioUrl: /audio/the-hidden-side-effect-of-medical-ai-nobody-talks-about.mp3
 title: "The Hidden Side Effect of Medical AI Nobody Talks About"
 pubDate: 2025-01-28
 tags: 
-- "doctorswhocode"
+- "doctors-who-code"
 - "healthcare-automation"
 - "healthcare-innovation"
-- "healthcareinnovation"
-- "healthtech"
-- "jevonsparadox"
+- "health-tech"
+- "jevons-paradox"
 - "medical-informatics"
 - "medical-software"
-- "medicalai"
+- "medical-ai"
 category: "Technology"
 author: "Chukwuma Onyeije, MD, FACOG"
 draft: false

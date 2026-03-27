@@ -1,62 +1,44 @@
-# Astro Starter Kit: Blog
+# Doctors Who Code
 
-```sh
-npm create astro@latest -- --template blog
+Static Astro site for [doctorswhocode.blog](https://www.doctorswhocode.blog).
+
+## Stack
+
+- Astro 6
+- MDX content collections
+- Tailwind CSS 4
+- React 19 for interactive components where needed
+- Vercel deployment
+
+## Content Structure
+
+Blog posts live in `src/content/blog/posts`.
+
+- Published posts stay in `src/content/blog/posts`
+- Draft posts stay in `src/content/blog/posts/_drafts`
+- Shared content template lives at `src/content/blog/_template.mdx`
+
+Supporting page content lives in `src/content/blog/pages`.
+
+## Commands
+
+```bash
+npm install
+npm run dev
+npm run build
+npm run preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Publishing Workflow
 
-Features:
+1. Add or edit an MDX post in `src/content/blog/posts`.
+2. Keep `draft: true` while the post is in progress.
+3. Set `pubDate` when the post is ready to publish.
+4. Generate audio after publishing with `python -X utf8 scripts/generate_audio.py`.
+5. Deploy through GitHub to Vercel.
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+## Notes
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+- The site uses static generation.
+- Tag routes are normalized from frontmatter tags.
+- Production metadata is configured for `https://www.doctorswhocode.blog`.

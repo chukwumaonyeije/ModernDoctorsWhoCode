@@ -8,15 +8,15 @@ description: In recent years, artificial intelligence (AI) has leaped from scien
 draft: false
 pubDate: 2024-12-12
 tags:
-- ai-applications
-- fetal-monitoring
-- genetic-testing
-- healthcare-automation
-- maternal-health
-- medical-informatics
-- medical-software
-- medical-technology
-- prenatal-care
+- "ai-applications"
+- "fetal-monitoring"
+- "genetic-testing"
+- "healthcare-automation"
+- "maternal-health"
+- "medical-informatics"
+- "medical-software"
+- "medical-technology"
+- "prenatal-care"
 title: 'AI-Powered Ultrasound: Transforming Prenatal Care with Cutting-Edge Technology'
 ---
 

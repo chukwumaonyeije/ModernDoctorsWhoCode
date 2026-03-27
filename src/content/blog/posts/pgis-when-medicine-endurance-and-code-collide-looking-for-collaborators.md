@@ -7,12 +7,12 @@ description: I'm a maternalfetal medicine physician managing complex, high-risk 
 draft: false
 pubDate: 2026-01-22
 tags:
-- continuous-glucose-monitoring
-- diabetes-management-technology
-- endurance-training-with-diabetes
-- healthcare-technology-development
-- medical-ai-systems
-- physician-developer
+- "continuous-glucose-monitoring"
+- "diabetes-management-technology"
+- "endurance-training-with-diabetes"
+- "healthcare-technology-development"
+- "medical-ai-systems"
+- "physician-developer"
 title: 'PGIS: When Medicine, Endurance, and Code Collide — Looking for Collaborators'
 ---
 

@@ -6,25 +6,25 @@ description: Maternal-Fetal Medicine Specialist & Founder, CodeCraftMD
 draft: false
 pubDate: 2026-02-08
 tags:
-- aiinmedicine
-- clinicalai
-- clinicaldecisionsupport-2
-- codecraftmd-2
-- digitalhealth-2
-- healthcareai-2
-- healthcareautomation-2
-- healthcarepolicy
-- healthequity
-- healthit-2
-- maternalfetalmedicine-2
-- medicalinnovation
-- opensourcehealthcare
-- physiciandevelopers-2
-- pointofcareultrasound
-- priorauthorization
-- remotepatientmonitoring
-- ruralhealthcare
-- ruralmedicine
+- "ai-in-medicine"
+- "clinical-ai"
+- "clinical-decision-support"
+- "codecraftmd"
+- "digital-health"
+- "ai-in-healthcare"
+- "healthcare-automation"
+- "healthcare-policy"
+- "health-equity"
+- "health-it"
+- "maternal-fetal-medicine"
+- "medical-innovation"
+- "open-source-healthcare"
+- "physician-developer"
+- "point-of-care-ultrasound"
+- "prior-authorization"
+- "remote-patient-monitoring"
+- "rural-healthcare"
+- "rural-medicine"
 title: 'Part 2: What We Should Actually Build'
 ---
 
