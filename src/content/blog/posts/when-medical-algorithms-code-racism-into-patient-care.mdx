@@ -1,0 +1,147 @@
+---
+audioUrl: /audio/when-medical-algorithms-code-racism-into-patient-care.mp3
+title: "When Medical Algorithms Code Racism Into Patient Care"
+description: "Race-based clinical algorithms in kidney care and obstetrics did not just reflect bias. They operationalized it. Physicians now have a responsibility to challenge the software, logic, and architecture that turn racial fiction into patient harm."
+pubDate: "2026-03-29"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+image:
+  url: /images/posts/when-medical-algorithms-code-racism-into-patient-care-hero.jpeg
+  alt: "Hospital workstation with clinical dashboards and code monitors outside a patient room at night"
+category: "AI in Medicine"
+tags:
+  - "algorithmic bias"
+  - "health equity"
+  - "physician-developer"
+  - "clinical ai"
+  - "obstetrics"
+  - "nephrology"
+  - "doctors-who-code"
+draft: false
+featured: true
+readingTime: 8
+---
+
+{/* heroImagePrompt: A cinematic hospital workstation at night. On one monitor, an abstract clinical decision interface with kidney and maternal health graphs. On another, faint code and algorithmic flow lines. In the reflective glass, the subtle silhouette of a Black patient, suggesting the human stakes behind invisible medical software. Cool hospital lighting, cyan and amber accents, realistic but editorial, high contrast, no text overlay, no floating holograms, no futuristic fantasy UI. */}
+
+{/* audioProductionPrompt: Narrate this article in a calm, authoritative, reflective physician voice. Male voice, mature, measured pace, emotionally controlled but morally clear. Avoid hype, avoid sounding like a commercial, and do not overdramatize. Treat it like a serious editorial essay for physicians and builders. Clean studio sound, no background music, no sound effects, no intro branding, no outro branding. Preserve paragraph pauses and section breaks so the argument lands clearly. */}
+
+*Race-based medicine did not disappear when we digitized it. It became software, and that means the physician's duty to do no harm now extends upstream into code, data, and clinical architecture.*
+
+A woman got a kidney because her family watched a video online.
+
+That should stop every physician in their tracks.
+
+Joel Bervell was describing his appearance on a daytime talk show after speaking publicly about a race-based kidney function equation. Sitting beside him was a woman whose sister finally received a transplant after their family learned that the system had been underestimating her disease burden. They asked questions. They challenged the numbers. They forced the system to look again.
+
+Then I read the comments under the clip. A dialysis technician wrote that seven Black patients at one clinic received transplants in a single year after the flaw was called out. Another person wrote that their mother spent ten years on dialysis and only received a transplant after her clinic stopped using the biased calculation. Ten years. Not because the kidneys changed, but because the equation did.
+
+The framing is wrong if we call this an unfortunate oversight. This was not a glitch. It was not a rounding error. It was a clinical architecture decision that embedded a racial fiction into routine care and then hid behind the authority of mathematics.
+
+For more than three decades in Maternal-Fetal Medicine, I have watched medicine assign a kind of moral innocence to algorithms. If a formula is published, validated, and embedded into the electronic record, we start treating it as objective. We tell ourselves the machine is only calculating what the science already proved.
+
+That is not how this works.
+
+Algorithms are built by human beings. They inherit the assumptions of the datasets they are trained on, the categories they are given, and the institutions that deploy them. If those assumptions are distorted, the output is distorted. When that distortion reaches the bedside, it is no longer a technical issue. It becomes clinical harm.
+
+## The eGFR Lesson Medicine Should Never Forget
+
+The estimated glomerular filtration rate, or eGFR, became one of the clearest examples of race-coded medicine hiding in plain sight. For years, common versions of the equation included a race coefficient for Black patients. If the patient was coded as Black, the equation increased the estimate of kidney function.
+
+The justification was a biological story that should never have survived serious scrutiny. The assumption was that Black patients, as a category, had greater muscle mass and therefore higher creatinine levels at baseline. That logic took a social label and treated it as a biological constant. It converted a stereotype into software.
+
+The clinical consequence was straightforward. A Black patient and a white patient could present with the same laboratory values and receive different interpretations of disease severity. The Black patient could appear healthier on paper, even when the physiology in front of us said otherwise. That delay could affect nephrology referral, chronic kidney disease staging, transplant eligibility, and the timing of intervention.[1][2]
+
+This is why the phrase "race correction" is too gentle. The equation did not merely adjust a number. It redistributed time. It redistributed access. It redistributed who got believed early enough to receive care.
+
+One analysis estimated that removing the race coefficient would newly classify more than three million Black Americans as meeting criteria for Stage 3 chronic kidney disease.[3] That is not a marginal effect. That is a structural denial of earlier recognition.
+
+## Naomi Nkinsi Asked the Question the System Could Not Answer
+
+One reason this story matters so much to me is that medicine did not fix it by itself. It had to be forced into clarity.
+
+In 2019, Naomi Nkinsi, then a medical student at the University of Washington, heard the race-based eGFR equation taught as standard practice. She asked the obvious question. If a Black patient receives a kidney from a white donor, which equation do we use? Does the kidney become Black because it now lives in a Black body? How exactly are we defining race at the point of care? Who counts? Who decides?
+
+Those questions were not disruptive. They were clinically honest.
+
+What is revealing is that the system was not prepared to answer them. The formula had been normalized long enough that challenging it felt like insubordination rather than scholarship. That is how bad clinical architecture protects itself. It does not only live in code. It lives in hierarchy, custom, and the intimidation of anyone who asks the wrong question in public.
+
+Nkinsi did not let it go. Joel Bervell did not let it go. Other students, trainees, physicians, and advocates did not let it go. Public pressure and professional scrutiny finally forced institutions to revisit what should have been challenged years earlier. The National Kidney Foundation and the American Society of Nephrology ultimately recommended a new race-free approach to estimating kidney function.[2][4]
+
+That sequence matters. The reform did not begin with institutional courage. It began with moral clarity from people lower in the hierarchy who refused to memorize a lie.
+
+## Obstetrics Had Its Own Version of the Same Mistake
+
+Anyone who thinks this problem belonged only to nephrology has not looked carefully enough at obstetrics.
+
+For years, the widely used VBAC calculator included race and ethnicity in a way that systematically lowered the predicted probability of successful vaginal birth after cesarean for Black and Hispanic women. Two patients could present with the same age, body mass index, obstetric history, and prior cesarean indication, and the calculator would assign a lower success probability to the patient marked as Black or Hispanic.[5][6]
+
+That matters because calculators are never just calculators. They shape counseling. They shape how risks are framed. They shape which patients are encouraged, which patients are discouraged, and which patients are quietly denied options while everyone pretends the conversation was neutral.
+
+When race lowers the score, the downstream effect is obvious. A patient is less likely to be offered a trial of labor after cesarean. She is more likely to be steered toward repeat surgery. She is more likely to encounter an institution that treats a biased probability as if it were a biological destiny.[5][6]
+
+This is one of the most dangerous features of a biased algorithm. It creates a self-fulfilling loop. Lower predicted success leads to fewer TOLAC attempts. Fewer attempts produce outcome data shaped by the original bias. Then the biased output returns dressed as observational evidence. The model appears to confirm itself because the system has already constrained the choices that would have challenged it.
+
+The 2021 update to the MFMU VBAC calculator removed race and ethnicity.[5] That was the right move. But the deeper lesson is not just "remove race from the variable list." The deeper lesson is that race was standing in for unmeasured structural conditions all along. Once again, medicine took the downstream effect of inequity and mislabeled it as an intrinsic patient characteristic.[6]
+
+## Removing the Variable Is Not the Same as Removing the Architecture
+
+This is where I think medicine still underestimates the problem.
+
+Removing explicit race coefficients is necessary, but it is not sufficient. The architecture that produced them can persist even after the variable disappears. Proxy variables can carry the same bias forward. Spending can stand in for access. ZIP code can stand in for segregation. Prior utilization can stand in for historical neglect.
+
+That is exactly what Obermeyer and colleagues exposed in their 2019 *Science* paper on a widely used commercial risk algorithm. The system did not need an explicit race field to produce biased results. It used health care spending as a proxy for need, and because the system historically spends less on Black patients, the algorithm systematically underestimated which Black patients were sick enough to need extra support.[7]
+
+That is the future-facing warning in this story.
+
+The problem is not limited to old equations with obvious race coefficients. The problem is the broader habit of building software on top of unequal systems and then acting surprised when the output reproduces the inequality already baked into the inputs.
+
+If we do not confront that now, we will simply replace visible bias with opaque bias. We will move from equations we can inspect to models no one in the hospital can meaningfully interrogate. We will call that progress because the math is more sophisticated and the interface looks cleaner.
+
+It will not be progress.
+
+It will be automation with better branding.
+
+## This Is Why Physicians Need to Build, Not Just Consume
+
+This is the core DoctorsWhoCode argument.
+
+We cannot keep outsourcing the architecture of clinical judgment to vendors whose incentives are not aligned with bedside accountability. We cannot rely on committees alone to catch what should have been questioned in the original design. We cannot pretend that physician input late in the procurement cycle is the same thing as physician authorship of the tool itself.
+
+The physicians best positioned to catch these failures are the ones who understand both the clinical stakes and the technical structure. The physician who has written code, audited a decision pathway, inspected a dataset, or challenged a hidden assumption at the modeling stage is not merely using technology. That physician is defending the patient at the layer where the harm is now being manufactured.
+
+This is why I keep arguing that physicians must build, not just consume.
+
+Not because every doctor needs to become a full-time software engineer. Not because coding is fashionable. Not because AI is the new prestige object in medicine. But because clinical responsibility now extends upstream into software, data structures, and model design. If we are the final safety check between a recommendation and a human life, then we need more influence over how that recommendation was produced.
+
+The older form of physician advocacy focused on insurance denials, policy failures, and staffing constraints. That work still matters. But advocacy now has to include algorithmic accountability. It has to include refusing systems we cannot interrogate, demanding transparency about training data and outcome definitions, and pushing back when a polished interface tries to convert inequity into a clinical recommendation.
+
+## The Physician's Responsibility
+
+We took an oath to do no harm. In this era, that oath reaches into the software.
+
+When a medical algorithm encodes racism into patient care, the responsible response is not passive discomfort. It is investigation. It is refusal. It is redesign.
+
+We need physicians who can ask the Naomi Nkinsi question before the tool becomes standard of care. We need physicians who can recognize when prediction is just institutional history dressed up as neutrality. We need physicians who are willing to challenge a model not only when it is obviously offensive, but when it is subtle, well-cited, and embedded deeply enough that everyone else has stopped seeing it.
+
+The future of equitable care will not be secured by press releases alone. It will be secured by clinicians who understand that architecture is now part of ethics.
+
+Stop calling these failures unfortunate. Diagnose them correctly.
+
+Then build something better.
+
+## References
+
+[1] [Yale School of Medicine. *Abandoning a Race-biased Tool for Kidney Diagnosis.*](https://medicine.yale.edu/news-article/abandoning-a-race-biased-tool-for-kidney-diagnosis/)
+
+[2] [The Commonwealth Fund. *Diagnosing Racism: How One Med Student Sparked a Big Change.* April 2023.](https://www.commonwealthfund.org/publications/podcast/2023/apr/diagnosing-racism-how-one-med-student-sparked-big-change)
+
+[3] [Tsai JW, Cerdeña JP, Goedel WC, et al. *Evaluating the Impact and Rationale of Race-Specific Estimations of Kidney Function: Estimations from U.S. NHANES, 2015-2018.* EClinicalMedicine. 2021.](https://pubmed.ncbi.nlm.nih.gov/34849475/)
+
+[4] [Delgado C, Baweja M, Ríos Burrows N, et al. *Reassessing the Inclusion of Race in Diagnosing Kidney Diseases: An Interim Report from the NKF-ASN Task Force.* J Am Soc Nephrol. 2021.](https://pmc.ncbi.nlm.nih.gov/articles/PMC8259639/)
+
+[5] [Hawkins SS. *Removal of the Race-Based Correction in the Vaginal Birth After Cesarean Calculator.* Journal of Obstetric, Gynecologic & Neonatal Nursing. 2025;54:268-281.](https://doi.org/10.1016/j.jogn.2025.03.006)
+
+[6] [Kimani RW. *Reexamining the Use of Race in Medical Algorithms: The Maternal Health Calculator Debate.* Frontiers in Public Health. 2024;12:1417429.](https://doi.org/10.3389/fpubh.2024.1417429)
+
+[7] [Obermeyer Z, Powers B, Vogeli C, Mullainathan S. *Dissecting Racial Bias in an Algorithm Used to Manage the Health of Populations.* Science. 2019.](https://www.science.org/doi/10.1126/science.aax2342)
