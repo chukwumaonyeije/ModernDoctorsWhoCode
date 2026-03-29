@@ -7,8 +7,9 @@ import { SITE_DESCRIPTION } from '../consts';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const featuredPost = sortedPosts[0];
-const recentPosts = sortedPosts.slice(1, 6);
+const featuredPosts = sortedPosts.filter((post) => post.data.featured);
+const featuredPost = featuredPosts[0] ?? sortedPosts[0];
+const recentPosts = sortedPosts.filter((post) => post.id !== featuredPost?.id).slice(0, 5);
 
 const hexTerms = ['AI', 'MFM', 'LLM', 'API', 'CGM', 'NLP', 'EMR', 'ML', 'ICD', 'CPT', 'FHIR', 'RAG'];
 const stats = [
