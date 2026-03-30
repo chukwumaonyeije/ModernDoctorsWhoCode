@@ -45,6 +45,17 @@ def strip_markdown(text: str) -> str:
     """Remove MDX/markdown syntax to get clean prose for TTS."""
     text = re.sub(r'^---[\s\S]*?---\n', '', text, count=1)
     text = re.sub(r'^import\s+.*$', '', text, flags=re.MULTILINE)
+    # Remove image-prompt sections so production audio never reads them aloud.
+    text = re.sub(
+        r'(?ims)^#{1,6}\s*(hero image prompt|image prompt|hero prompt)\s*$.*?(?=^#{1,6}\s+|\Z)',
+        '',
+        text,
+    )
+    text = re.sub(
+        r'(?im)^(\*\*)?(hero image prompt|image prompt|hero prompt)(\*\*)?:\s*.*$',
+        '',
+        text,
+    )
     text = re.sub(r'\{/\*[\s\S]*?\*/\}', '', text)
     text = re.sub(r'<[^>]+>', '', text)
     text = re.sub(r'```[\s\S]*?```', '', text)
