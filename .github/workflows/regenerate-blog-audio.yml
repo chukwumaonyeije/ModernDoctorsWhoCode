@@ -1,0 +1,54 @@
+name: Regenerate Blog Audio
+
+on:
+  workflow_dispatch:
+    inputs:
+      slugs:
+        description: "Newline-separated blog post slugs to regenerate"
+        required: true
+        default: |
+          when-medical-algorithms-code-racism-into-patient-care
+          why-doctors-should-learn-to-code
+          inbox-detox-two-evenings-disposable-software
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate-audio:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install audio generation dependencies
+        run: pip install openai python-frontmatter python-dotenv
+
+      - name: Regenerate selected audio files
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          AUDIO_SLUGS: ${{ inputs.slugs }}
+        run: |
+          while IFS= read -r slug; do
+            if [ -n "$slug" ]; then
+              python scripts/generate_audio.py --force --slug "$slug"
+            fi
+          done <<< "$AUDIO_SLUGS"
+
+      - name: Commit regenerated audio
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/audio src/content/blog/posts
+          if git diff --cached --quiet; then
+            echo "No audio changes to commit."
+            exit 0
+          fi
+          git commit -m "Regenerate selected blog audio"
+          git push

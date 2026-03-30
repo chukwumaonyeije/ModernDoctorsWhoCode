@@ -19,6 +19,7 @@ Environment variables (.env in project root):
 import os
 import re
 import time
+import argparse
 import frontmatter
 from pathlib import Path
 
@@ -44,6 +45,7 @@ def strip_markdown(text: str) -> str:
     """Remove MDX/markdown syntax to get clean prose for TTS."""
     text = re.sub(r'^---[\s\S]*?---\n', '', text, count=1)
     text = re.sub(r'^import\s+.*$', '', text, flags=re.MULTILINE)
+    text = re.sub(r'\{/\*[\s\S]*?\*/\}', '', text)
     text = re.sub(r'<[^>]+>', '', text)
     text = re.sub(r'```[\s\S]*?```', '', text)
     text = re.sub(r'`[^`]*`', '', text)
@@ -102,14 +104,14 @@ def write_audio_url(post_path: Path, slug: str) -> None:
         post_path.write_text(text, encoding='utf-8')
 
 
-def process_post(post_path: Path) -> bool:
+def process_post(post_path: Path, force: bool = False) -> bool:
     """Generate audio for a single post. Returns True if processed."""
     with open(post_path, encoding='utf-8') as f:
         post = frontmatter.load(f)
     slug = post_path.stem
     audio_path = AUDIO_DIR / f'{slug}.mp3'
 
-    if post.metadata.get('audioUrl'):
+    if post.metadata.get('audioUrl') and not force:
         print(f'  [skip] {slug} — already has audio')
         return False
 
@@ -118,11 +120,15 @@ def process_post(post_path: Path) -> bool:
         return False
 
     # MP3 already on disk (e.g. from a previous interrupted run) — just update frontmatter
-    if audio_path.exists():
+    if audio_path.exists() and not force:
         print(f'  [fix]  {slug} — MP3 exists, updating frontmatter only')
         write_audio_url(post_path, slug)
         print(f'         frontmatter updated')
         return True
+
+    if force and audio_path.exists():
+        audio_path.unlink()
+        print(f'  [redo] {slug} — removed existing MP3 for regeneration')
 
     clean = strip_markdown(post.content)
     if not clean:
@@ -152,15 +158,39 @@ def process_post(post_path: Path) -> bool:
     return True
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description='Generate blog post audio.')
+    parser.add_argument('--test', action='store_true', help='Generate audio for the first eligible post only')
+    parser.add_argument('--force', action='store_true', help='Regenerate audio even if audioUrl or MP3 already exists')
+    parser.add_argument('--slug', action='append', dest='slugs', help='Generate only the specified post slug (repeatable)')
+    return parser.parse_args()
+
+
+def select_posts(slugs: list[str] | None = None) -> list[Path]:
+    posts = sorted(list(POSTS_DIR.glob('*.md')) + list(POSTS_DIR.glob('*.mdx')))
+    posts = [p for p in posts if not p.name.startswith('_')]
+    if not slugs:
+        return posts
+
+    slug_set = set(slugs)
+    selected = [p for p in posts if p.stem in slug_set]
+    missing = slug_set - {p.stem for p in selected}
+    if missing:
+        print('WARNING: Missing slugs:')
+        for slug in sorted(missing):
+            print(f'  - {slug}')
+    return selected
+
+
 def main():
+    args = parse_args()
     if not API_KEY:
         print('ERROR: Set OPENAI_API_KEY in your .env file')
         return
 
     AUDIO_DIR.mkdir(parents=True, exist_ok=True)
 
-    posts = sorted(list(POSTS_DIR.glob('*.md')) + list(POSTS_DIR.glob('*.mdx')))
-    posts = [p for p in posts if not p.name.startswith('_')]
+    posts = select_posts(args.slugs)
 
     print(f'Found {len(posts)} posts\n')
 
@@ -168,7 +198,7 @@ def main():
 
     for post_path in posts:
         try:
-            result = process_post(post_path)
+            result = process_post(post_path, force=args.force)
             if result:
                 generated += 1
                 time.sleep(DELAY_SEC)
@@ -188,20 +218,19 @@ def main():
 
 
 if __name__ == '__main__':
-    import sys
+    args = parse_args()
 
-    if '--test' in sys.argv:
+    if args.test:
         if not API_KEY:
             print('ERROR: Set OPENAI_API_KEY in .env')
         else:
             AUDIO_DIR.mkdir(parents=True, exist_ok=True)
-            posts = sorted(list(POSTS_DIR.glob('*.md')) + list(POSTS_DIR.glob('*.mdx')))
-            posts = [p for p in posts if not p.name.startswith('_')]
+            posts = select_posts(args.slugs)
             for post_path in posts:
                 post = frontmatter.load(str(post_path))
-                if not post.metadata.get('audioUrl') and not post.metadata.get('draft', False):
+                if not post.metadata.get('draft', False):
                     print(f'Test run on: {post_path.name}')
-                    process_post(post_path)
+                    process_post(post_path, force=args.force)
                     print('\nTest complete. Check public/audio/ for the MP3.')
                     break
     else:
