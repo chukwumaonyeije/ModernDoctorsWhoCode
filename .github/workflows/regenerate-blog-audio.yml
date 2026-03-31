@@ -4,12 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       slugs:
-        description: "Newline-separated blog post slugs to regenerate"
-        required: true
-        default: |
-          when-medical-algorithms-code-racism-into-patient-care
-          why-doctors-should-learn-to-code
-          inbox-detox-two-evenings-disposable-software
+        description: "Optional newline-separated blog post slugs to regenerate. Leave blank to generate audio for all published posts missing audio."
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -35,11 +32,15 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           AUDIO_SLUGS: ${{ inputs.slugs }}
         run: |
-          while IFS= read -r slug; do
-            if [ -n "$slug" ]; then
-              python scripts/generate_audio.py --force --slug "$slug"
-            fi
-          done <<< "$AUDIO_SLUGS"
+          if [ -z "$(printf "%s" "$AUDIO_SLUGS" | tr -d '[:space:]')" ]; then
+            python scripts/generate_audio.py --missing
+          else
+            while IFS= read -r slug; do
+              if [ -n "$slug" ]; then
+                python scripts/generate_audio.py --force --slug "$slug"
+              fi
+            done <<< "$AUDIO_SLUGS"
+          fi
 
       - name: Commit regenerated audio
         run: |

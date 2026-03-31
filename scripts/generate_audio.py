@@ -122,12 +122,14 @@ def process_post(post_path: Path, force: bool = False) -> bool:
     slug = post_path.stem
     audio_path = AUDIO_DIR / f'{slug}.mp3'
 
-    if post.metadata.get('audioUrl') and not force:
-        print(f'  [skip] {slug} — already has audio')
-        return False
-
     if post.metadata.get('draft', False):
         print(f'  [skip] {slug} — draft')
+        return False
+
+    has_audio_url = bool(post.metadata.get('audioUrl'))
+
+    if audio_path.exists() and has_audio_url and not force:
+        print(f'  [skip] {slug} — already has audio')
         return False
 
     # MP3 already on disk (e.g. from a previous interrupted run) — just update frontmatter
@@ -136,6 +138,9 @@ def process_post(post_path: Path, force: bool = False) -> bool:
         write_audio_url(post_path, slug)
         print(f'         frontmatter updated')
         return True
+
+    if has_audio_url and not audio_path.exists() and not force:
+        print(f'  [redo] {slug} — frontmatter points to missing MP3, regenerating')
 
     if force and audio_path.exists():
         audio_path.unlink()
@@ -173,24 +178,39 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Generate blog post audio.')
     parser.add_argument('--test', action='store_true', help='Generate audio for the first eligible post only')
     parser.add_argument('--force', action='store_true', help='Regenerate audio even if audioUrl or MP3 already exists')
+    parser.add_argument('--missing', action='store_true', help='Generate audio only for published posts missing audioUrl or MP3')
     parser.add_argument('--slug', action='append', dest='slugs', help='Generate only the specified post slug (repeatable)')
     return parser.parse_args()
 
 
-def select_posts(slugs: list[str] | None = None) -> list[Path]:
+def post_needs_audio(post_path: Path) -> bool:
+    with open(post_path, encoding='utf-8') as f:
+        post = frontmatter.load(f)
+
+    if post.metadata.get('draft', False):
+        return False
+
+    audio_path = AUDIO_DIR / f'{post_path.stem}.mp3'
+    return not (post.metadata.get('audioUrl') and audio_path.exists())
+
+
+def select_posts(slugs: list[str] | None = None, missing_only: bool = False) -> list[Path]:
     posts = sorted(list(POSTS_DIR.glob('*.md')) + list(POSTS_DIR.glob('*.mdx')))
     posts = [p for p in posts if not p.name.startswith('_')]
-    if not slugs:
-        return posts
+    if slugs:
+        slug_set = set(slugs)
+        selected = [p for p in posts if p.stem in slug_set]
+        missing = slug_set - {p.stem for p in selected}
+        if missing:
+            print('WARNING: Missing slugs:')
+            for slug in sorted(missing):
+                print(f'  - {slug}')
+        posts = selected
 
-    slug_set = set(slugs)
-    selected = [p for p in posts if p.stem in slug_set]
-    missing = slug_set - {p.stem for p in selected}
-    if missing:
-        print('WARNING: Missing slugs:')
-        for slug in sorted(missing):
-            print(f'  - {slug}')
-    return selected
+    if missing_only:
+        posts = [p for p in posts if post_needs_audio(p)]
+
+    return posts
 
 
 def main():
@@ -201,7 +221,7 @@ def main():
 
     AUDIO_DIR.mkdir(parents=True, exist_ok=True)
 
-    posts = select_posts(args.slugs)
+    posts = select_posts(args.slugs, missing_only=args.missing)
 
     print(f'Found {len(posts)} posts\n')
 
@@ -236,7 +256,7 @@ if __name__ == '__main__':
             print('ERROR: Set OPENAI_API_KEY in .env')
         else:
             AUDIO_DIR.mkdir(parents=True, exist_ok=True)
-            posts = select_posts(args.slugs)
+            posts = select_posts(args.slugs, missing_only=args.missing)
             for post_path in posts:
                 post = frontmatter.load(str(post_path))
                 if not post.metadata.get('draft', False):

@@ -1,0 +1,195 @@
+---
+title: "Three GitHub Projects Physicians Can Actually Finish"
+description: "Most physician-developer projects fail not because the ideas are bad but because the first build is too large. Here are three that are sized to finish."
+pubDate: "2026-03-31T09:30:00-04:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Development"
+tags: ["github", "physician-developer", "clinical-tools", "getting-started", "coding"]
+image:
+  url: /images/posts/three-github-projects-physicians.svg
+  alt: "Three browser windows showing simple clinical utility pages: a blood pressure algorithm, a patient counseling checklist, and a kick count explainer"
+readingTime: 7
+featured: false
+draft: false
+---
+
+I have started and abandoned more projects than I have shipped.
+
+The ones that died did not die because I lost interest in the problem. They
+died because I scoped them wrong from the start. A fetal echo DICOM classifier
+sounds like a logical first project for an MFM specialist interested in
+imaging AI. It is not. It is a six-month project disguised as a weekend idea.
+
+The projects I actually finished were embarrassingly smaller than what I
+originally imagined. And they were worth more than the unfinished ones.
+
+The lesson took me longer to learn than it should have.
+
+## Why Scope Kills Physician-Developer Projects
+
+You have a finite window for a side project. A weekend here, a few evenings
+during a lighter week, maybe a dedicated stretch over vacation. That is real
+time. It is enough time. But only if the project fits inside it.
+
+The failure mode is choosing a first build based on what would be most impactful
+at full scale. Full-scale clinical tools are worth building. They are not worth
+starting with. A first project that has no natural stopping point at the
+one-weekend mark will stall, accumulate guilt, and eventually get quietly
+abandoned.
+
+Choose a project where version one ships. Everything else is version two.
+
+Here are three project types that reliably fit that constraint.
+
+## Project Type 1: A Guideline-to-Tool Microsite
+
+Take a clinical protocol, decision pathway, or screening guideline you already
+use and turn it into a simple interactive page.
+
+Specific examples:
+
+- Aspirin screening eligibility in pregnancy (USPSTF / ACOG criteria)
+- Postpartum blood pressure treatment thresholds and medication options
+- Gestational diabetes follow-up visit schedule by treatment type
+- Antenatal testing frequency by indication
+- Cervical length screening criteria by obstetric history
+
+Why this works as a first project:
+
+You already understand the clinical logic. The domain knowledge problem is
+solved before you write a line of code. The scope is bounded by the guideline
+itself. And the clinical value is obvious, because the guideline already exists
+in some form that is harder to use than it should be.
+
+The technical implementation is minimal. A single HTML page with some
+conditional logic, or a small React app if you want to practice components. The
+point is to make something static and authoritative become something interactive
+and fast to use in the moment of care.
+
+That gap between "the guideline exists" and "the guideline is usable" is exactly
+where physician-builders can contribute something no vendor will prioritize.
+
+## Project Type 2: A Counseling Helper for One Repetitive Conversation
+
+Not an AI scribe. Not an ambient documentation tool. A helper.
+
+Pick one clinical conversation you have on repeat and build a small tool that
+standardizes and structures it.
+
+Examples:
+
+- Preeclampsia warning signs: when to call, when to go to triage
+- VBAC decision-making: risks, benefits, candidate criteria
+- Fetal growth restriction: what monitoring means, what parents should expect
+- Insulin initiation: dose instructions, hypoglycemia recognition, adjustment rules
+- IVF preconception checklist: labs, medications, timing
+
+The tool does not need to generate text automatically. It can be a structured
+form that outputs a clean summary. Checkboxes the clinician completes before
+finishing the visit. A page with expandable sections covering each topic in
+patient-appropriate language.
+
+This is not technically complex. It is clinically complex. That is your
+advantage. You know which questions patients always ask. You know which
+explanations cause confusion. You know what the counseling actually covers
+versus what the handout covers.
+
+Build the tool you wish you had three years ago.
+
+## Project Type 3: A Patient-Facing Explainer with Decision Logic
+
+This is the most underrated category.
+
+Most physician-developers default to building clinician-facing tools. That makes
+sense. They know the clinical workflow.
+
+But patient-facing tools with basic logic can be genuinely high-value, and they
+force a discipline that makes you a better builder: you cannot hide behind
+jargon, and you cannot assume the user knows what the output means.
+
+Examples:
+
+- Kick count tracker with threshold display and a clear call to action
+- Postpartum blood pressure symptom checker (symptom inputs, when to call)
+- Fetal movement FAQ by gestational age
+- Preconception readiness checklist with explanations for each item
+- Blood sugar log with gestational diabetes target range reminder
+
+The scope constraint is built into the format. A patient-facing page has to
+be short, plain, and unambiguous. That forces every decision about what
+matters and what does not.
+
+Building one of these will teach you more about user-centered design than most
+tutorials will.
+
+## What These Three Have in Common
+
+Each of these project types shares the same properties:
+
+The problem is one you understand from clinical experience. The first version
+can ship in a weekend. The clinical value is obvious without requiring external
+validation. The scope can be expanded in version two without needing a complete
+rebuild.
+
+They also each teach the same foundational skills: scoping, documenting, version
+control, iterating from real feedback.
+
+## What to Avoid for a First Build
+
+Building your own machine learning model. Integrating with an EHR. Creating a
+multi-role platform. Attempting diagnostic performance claims you cannot
+validate.
+
+Those are real goals. They are not first-project goals.
+
+The same applies to advanced topics like federated learning, privacy-preserving
+AI, and regulatory compliance pathways. Important to understand. Not the
+bottleneck in week one.
+
+Your first project should have one job: demonstrate that you can take a clinical
+insight and ship it as working software.
+
+A guideline-to-tool microsite does that. A counseling helper does that. A
+patient-facing explainer does that.
+
+None of them require a neural network.
+
+## The Real Measure of a First Project
+
+The measure is not accuracy or sophistication.
+
+It is completion.
+
+A simple blood pressure reference page that runs, that you documented, that
+you understand, and that you can improve in version two is worth more than an
+ambitious clinical AI tool that lives in a half-finished Jupyter notebook.
+
+You build the ability to ship by shipping. The first project is practice for
+every project after it.
+
+Start with the one that fits the week you actually have.
+
+---
+
+For the technical side of getting your project onto GitHub, start with
+[why version control changes how you build](/blog/github-for-physicians-why-version-control-changes-how-you-build/).
+For project ideas that involve actual machine learning and Python code, read
+[your first medical AI project on GitHub](/blog/your-first-medical-ai-project-on-github/).
+
+---
+
+## Keep Going
+
+A finished small project teaches more than an unfinished ambitious one. But if
+you want to build clinical software that interacts with modern systems, you
+also need to understand the data layer underneath it.
+
+Next, read
+[JSON for Physicians: The Structured Data Your Clinical AI Actually Needs](/blog/json-for-physicians-structured-data-for-clinical-ai/).
+
+## Doctors Who Code Series
+
+This post is part of the **Doctors Who Code** series, a practical roadmap for
+physicians who want to build software, understand clinical data, and move into
+medical AI without hype.

@@ -1,0 +1,243 @@
+---
+title: "Your First Medical AI Project on GitHub: How to Choose One You Will Actually Finish"
+description: "Most physician-developers never ship their first AI project. The problem is not skill. It is scope. Here is a framework for choosing a project that lands."
+pubDate: "2026-03-31T10:00:00-04:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags: ["github", "medical-ai", "physician-developer", "machine-learning", "clinical-decision-support"]
+image:
+  url: /images/posts/your-first-medical-ai-project.svg
+  alt: "A Jupyter notebook showing a clinical risk calculator being built with Python and scikit-learn"
+readingTime: 8
+featured: false
+draft: false
+---
+
+I have watched at least a dozen physicians start AI side projects and abandon
+them before anything ran. The pattern is almost always the same. They start with
+an ambitious goal, spend two weeks on infrastructure, and then stop.
+
+The project I finished was a gestational hypertension risk calculator. It took
+about a weekend. It ran. I used it.
+
+The one before it was going to analyze DICOM files from our unit's fetal echo
+studies. It never ran at all.
+
+The difference was not skill. It was scope.
+
+## Why Scope Kills Physician-Developer Projects
+
+You have a specific window of time for a project like this. A weekend here, an
+evening there, maybe a focused week during a lighter clinical rotation. That is
+real, and it is enough, but only if the project fits inside it.
+
+The mistake is choosing a project based on what would be most impressive or most
+impactful at full scale. A de-identification pipeline for clinical notes would
+be genuinely useful. So would a fetal echo DICOM classifier. But neither of
+those projects has a natural stopping point after a weekend of work. You will
+hit the hard parts and have nothing to show for the time you spent.
+
+Choose a project where version one ships. Everything else is version two.
+
+## The Right Criteria for a First Project
+
+A first medical AI project should meet three conditions:
+
+**You can describe what it does in one sentence.** If the description requires
+and-then-and-then, it is too large. "It takes a patient's age, BMI, blood
+pressure, and gestational age and outputs a preeclampsia risk score" is a
+project. "It analyzes the EHR and surfaces relevant risk factors and suggests
+interventions" is not.
+
+**The data is already available to you.** Do not build a project that requires
+you to first solve a data acquisition problem. Use a public dataset, your own
+clinical observations quantified in a spreadsheet, or synthetic data. MIMIC-IV
+is a publicly available critical care dataset from MIT that many first projects
+use. The CDC's PRAMS data covers pregnancy risk factors. Start with what you
+can access in a day.
+
+**You already know what correct output looks like.** This is the clinical
+knowledge advantage physicians have and almost never use. If you are building a
+risk calculator, you already know what a high-risk result should look like from
+clinical practice. That means you can validate whether your model is producing
+sensible output without a formal holdout study.
+
+## Three Projects Worth Building First
+
+These are not the most impressive AI projects a physician can build. They are
+the ones that teach you the most while being completable in a realistic
+timeframe.
+
+### A Clinical Risk Calculator with scikit-learn
+
+Take any validated clinical scoring tool, the qSOFA score, the BISHOP score,
+the sFlt-1/PlGF ratio for preeclampsia, and rebuild it as a machine learning
+model trained on a public dataset rather than hardcoded weights.
+
+This teaches you the full pipeline: data loading, preprocessing, train/test
+split, model fitting, evaluation. It produces something clinically interpretable
+because you already know what the score means.
+
+```python
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_auc_score
+import pandas as pd
+
+# Load your dataset
+df = pd.read_csv('maternal_risk_data.csv')
+
+X = df[['age', 'systolic_bp', 'diastolic_bp', 'blood_glucose', 'body_temp', 'heart_rate']]
+y = df['risk_level']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train, y_train)
+
+auc = roc_auc_score(y_test, model.predict_proba(X_test)[:, 1])
+print(f"AUC: {auc:.3f}")
+```
+
+This is ten minutes of code. The work is in the data and the interpretation.
+
+### A Clinical Note Keyword Extractor
+
+Natural language processing for clinical text does not require a large language
+model to be useful. A simple pipeline that identifies symptom terms, negations,
+and relevant history in a note teaches you how NLP works and produces something
+genuinely applicable to documentation workflows.
+
+The `spaCy` library with `en_core_sci_md` from scispaCy handles medical
+terminology out of the box.
+
+```python
+import spacy
+
+# pip install scispacy
+# pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.3/en_core_sci_md-0.5.3.tar.gz
+
+nlp = spacy.load("en_core_sci_md")
+
+note = """
+Patient presents at 34 weeks with headache and visual changes.
+Blood pressure 158/104. No history of chronic hypertension.
+Urine protein 2+. No fever.
+"""
+
+doc = nlp(note)
+entities = [(ent.text, ent.label_) for ent in doc.ents]
+print(entities)
+```
+
+The output will be imperfect. That is part of the learning. You will immediately
+see where the model fails clinically, which tells you something real about the
+state of medical NLP.
+
+### A Literature Search Summarizer with the Claude API
+
+This is higher-level than the previous two and requires an API key, but it
+produces something you will actually use in clinical practice.
+
+The project: take a clinical question, run a PubMed search using the Entrez API,
+pull the abstracts of the top ten results, and summarize them with Claude.
+
+```python
+import anthropic
+from Bio import Entrez
+
+Entrez.email = "your@email.com"
+
+def search_pubmed(query, max_results=10):
+    handle = Entrez.esearch(db="pubmed", term=query, retmax=max_results)
+    record = Entrez.read(handle)
+    return record["IdList"]
+
+def fetch_abstracts(pmid_list):
+    ids = ",".join(pmid_list)
+    handle = Entrez.efetch(db="pubmed", id=ids, rettype="abstract", retmode="text")
+    return handle.read()
+
+def summarize_with_claude(abstracts, question):
+    client = anthropic.Anthropic()
+    message = client.messages.create(
+        model="claude-opus-4-6",
+        max_tokens=1024,
+        messages=[
+            {
+                "role": "user",
+                "content": f"Clinical question: {question}\n\nAbstracts:\n{abstracts}\n\nSummarize the key findings relevant to this question."
+            }
+        ]
+    )
+    return message.content[0].text
+
+# Example usage
+question = "What is the sensitivity of sFlt-1/PlGF ratio for preeclampsia before 34 weeks?"
+pmids = search_pubmed(question)
+abstracts = fetch_abstracts(pmids)
+summary = summarize_with_claude(abstracts, question)
+print(summary)
+```
+
+This is a working clinical tool. It is not a toy. Every piece of it is
+replaceable as your skills grow.
+
+## How to Structure the Repository
+
+Once you have something running, put it on GitHub. The structure does not need
+to be complex:
+
+```
+my-risk-calculator/
+├── README.md          ← What it does, how to run it, what data it needs
+├── requirements.txt   ← pip install -r requirements.txt
+├── data/
+│   └── sample_data.csv
+├── notebooks/
+│   └── exploration.ipynb
+└── src/
+    └── model.py
+```
+
+A README that lets another physician run your code in thirty minutes is more
+useful than a complex architecture.
+
+## The Real Measure of Success
+
+The measure of a successful first project is not accuracy. It is completion.
+
+A model with 0.75 AUC that you shipped, documented, and understand is worth
+more than a model with 0.92 AUC that you abandoned in a Jupyter notebook.
+
+The skill that matters most in physician-developer work is the ability to take
+a project from idea to running code, repeatedly. You build that skill by
+shipping things, including things that are imperfect.
+
+Version two is better than version one. But only if version one exists.
+
+---
+
+This is the last post in a series on GitHub and medical AI for
+physician-developers. Start with
+[why you need version control before anything else](/blog/github-for-physicians-why-version-control-changes-how-you-build/),
+or go back to
+[how to find medical AI repositories worth building on](/blog/navigating-medical-ai-on-github/).
+
+---
+
+## Keep Going
+
+The goal is not to admire medical AI from a distance. It is to build something
+small, clinical, and real.
+
+If you want the full path from first GitHub account to first medical AI build,
+start at the beginning with
+[Stop Lurking: Why Physicians Should Start GitHub Before They Feel Ready](/blog/stop-lurking-why-physicians-should-start-github-before-they-feel-ready/).
+
+## Doctors Who Code Series
+
+This post is part of the **Doctors Who Code** series, a practical roadmap for
+physicians who want to build software, understand clinical data, and move into
+medical AI without hype.

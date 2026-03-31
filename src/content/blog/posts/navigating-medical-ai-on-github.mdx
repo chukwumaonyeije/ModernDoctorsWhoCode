@@ -1,0 +1,167 @@
+---
+title: "Navigating Medical AI on GitHub: What Is Worth Your Time"
+description: "There are thousands of medical AI repositories on GitHub. Most are abandoned, half-built, or unreproducible. Here is how to find the ones that actually work."
+pubDate: "2026-03-31T09:50:00-04:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags: ["github", "medical-ai", "open-source", "physician-developer", "machine-learning"]
+image:
+  url: /images/posts/navigating-medical-ai-github.svg
+  alt: "A GitHub search results page filtered to medical AI repositories, showing stars, forks, and last commit dates"
+readingTime: 7
+featured: false
+draft: false
+---
+
+I spent an afternoon in early 2024 searching GitHub for preeclampsia prediction
+models. I found thirty-seven repositories. Six had no README. Fourteen had not
+been updated in over two years. Four required datasets that no longer existed
+at the referenced URLs.
+
+Three were actually useful.
+
+That ratio is not unusual. It is the honest state of open-source medical AI.
+Understanding how to find the three that work, and not waste time on the other
+thirty-four, is a practical skill for any physician-developer.
+
+## Why Most Medical AI Repositories Are Not What They Appear
+
+A GitHub repository is a snapshot. It shows you what someone committed, but it
+does not tell you whether that code runs today, whether the model was ever
+validated on external data, or whether the author is still maintaining it.
+
+Repositories accumulate over time. A model trained in 2020 on a dataset from a
+single academic center may have hundreds of stars and look authoritative. The
+star count reflects when it was shared, not whether it is production-ready.
+
+This is a different problem than you face in clinical literature. A PubMed
+paper has a journal, peer review, and a DOI. A GitHub repo has a README that
+the author wrote themselves.
+
+Evaluate them accordingly.
+
+## What to Look for Before You Clone Anything
+
+Before you run `git clone` on a medical AI project, check four things:
+
+**Last commit date.** Any repository with no commits in twelve months is
+likely unmaintained. For AI projects specifically, this matters because
+dependencies change fast. A TensorFlow 1.x model from 2019 may require
+significant work to run in a modern environment.
+
+**Issue tracker activity.** Open the Issues tab. Are questions being answered?
+Are bugs being fixed? A dead issue tracker is a signal the project is orphaned.
+
+**Reproducibility documentation.** Does the README tell you exactly how to run
+it? Does it specify the dataset, the preprocessing steps, and the expected
+output? If you cannot reproduce the results from the documentation alone, it is
+not ready to build on.
+
+**License.** Medical AI projects often use data from institutional datasets.
+Some repositories have restrictive licenses that prohibit clinical use. Check
+this before investing time.
+
+## The Libraries That Actually Matter
+
+Most physician-developers starting out see a long list of AI frameworks and do
+not know which ones to learn. The honest answer is that two are worth your time,
+and the rest are secondary.
+
+**Python + scikit-learn** for classical machine learning. Risk calculators,
+clinical prediction rules, tabular data models. scikit-learn has been stable
+for over a decade and has the best documentation in the ecosystem.
+
+**PyTorch** for deep learning and anything involving medical imaging or NLP.
+Most serious medical AI research now publishes PyTorch implementations. If you
+see a paper with a GitHub link, it is usually PyTorch.
+
+TensorFlow is still widely used but PyTorch has become the dominant research
+framework. For a physician starting in 2026, learning PyTorch first is the
+right call.
+
+The JavaScript libraries that sometimes appear in "physician GitHub" listicles,
+TensorFlow.js and Brain.js, are mostly browser toys. They have legitimate uses
+in lightweight web-based clinical tools, but they are not where the serious
+medical AI work happens.
+
+## Where to Find Repositories Worth Cloning
+
+GitHub search with the right filters gets you most of the way there.
+
+```
+topic:medical-ai stars:>50 pushed:>2024-01-01
+```
+
+This filters for medical AI repositories with some community validation (50+
+stars) that have been updated recently. You will still need to evaluate each
+one against the criteria above, but it eliminates most of the abandoned work.
+
+A few reliable entry points:
+
+**Harvard Medical School and Stanford AI in Medicine** both maintain active
+GitHub organizations. Their repositories are generally well-documented and
+maintained.
+
+**fast.ai's medical imaging notebooks.** Not a repository in the traditional
+sense, but the course materials include real medical imaging pipelines using
+actual DICOM data.
+
+**MONAI (Medical Open Network for AI).** This is the most actively maintained
+medical imaging AI framework I have encountered. It is built on PyTorch, it is
+properly documented, and it has an active community. If you are interested in
+imaging AI, start here.
+
+```bash
+pip install monai
+```
+
+## The Honest Limitation
+
+Nothing on GitHub replaces clinical validation. An open-source model that
+classifies skin lesions has been trained on someone's dataset, validated on
+that same group's test set, and published. That tells you the model works
+under those specific conditions.
+
+Deploying it in your practice means validating it in your patient population,
+with your imaging equipment, in your clinical workflow. This is not a software
+problem. It is an epidemiology problem.
+
+The FDA's Software as a Medical Device framework applies to any AI tool used
+in clinical decision-making. Knowing that a model exists on GitHub and knowing
+that you can use it clinically are different things.
+
+Build on what you find on GitHub. But validate it before you treat a patient
+based on its output.
+
+## The Practical Starting Point
+
+The most useful thing you can do in your first week exploring medical AI on
+GitHub is not to build anything. It is to find one well-maintained repository
+in an area you care about clinically, read its code, run its examples, and
+understand what it is actually doing.
+
+That process teaches you more than any tutorial about what real medical AI
+code looks like, what its limitations are, and where you might contribute
+something new.
+
+Once you have done that, you are ready to start building your own.
+
+The next post in this series covers
+[choosing your first medical AI project and shipping something that works](/blog/your-first-medical-ai-project-on-github/).
+
+---
+
+## Keep Going
+
+Finding a promising repository is not the same as choosing a project you can
+actually finish. Discernment comes first. Scope comes next.
+
+Read
+[Your First Medical AI Project on GitHub: How to Choose One You Will Actually Finish](/blog/your-first-medical-ai-project-on-github/).
+
+## Doctors Who Code Series
+
+This post is part of the **Doctors Who Code** series, a practical roadmap for
+physicians who want to build software, understand clinical data, and move into
+medical AI without hype.
