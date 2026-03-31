@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/json-for-physicians-structured-data-for-clinical-ai.mp3
 title: "JSON for Physicians: The Structured Data Your Clinical AI Actually Needs"
 description: "A physician's guide to JSON, FHIR JSON, and structured clinical data for APIs, interoperability, and medical AI."
 pubDate: "2026-03-31T09:40:00-04:00"
