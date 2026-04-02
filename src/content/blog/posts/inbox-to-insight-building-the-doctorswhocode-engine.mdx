@@ -1,0 +1,240 @@
+---
+title: "Inbox to Insight: Building the DoctorsWhoCode Engine"
+description: "Physicians do not have an information problem. We have a conversion problem. Inside the Telegram-driven research engine I built to turn links, papers, transcripts, and videos into drafts, PDFs, and durable editorial records."
+pubDate: 2026-04-01
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags:
+- "doctors-who-code"
+- "physician-developer"
+- "research-automation"
+- "telegram-bot"
+- "postgres"
+- "railway"
+- "mdx"
+- "github"
+- "knowledge-operations"
+- "medical-informatics"
+category: "Technology"
+image:
+  url: "/images/posts/inbox-to-insight-hero.jpeg"
+  alt: "Cinematic physician-developer workflow showing research inputs flowing from Telegram and source materials into structured drafts, PDFs, and a publishable editorial pipeline"
+draft: false
+featured: true
+readingTime: 10
+---
+
+Physicians save everything.
+
+We save PubMed papers we mean to read on call. We save YouTube videos we swear we will revisit over the weekend. We save screenshots, podcast timestamps, interview clips, voice notes, browser tabs, newsletter links, and passing ideas that feel too important to lose.
+
+The problem is not capture.
+
+The problem is what happens after capture.
+
+**I did not need a better place to save information. I needed a system that could convert it into output.**
+
+## The Conversion Gap
+
+Most people describe this as a note-taking problem. I do not think that is right.
+
+The better analogy is a hospital storeroom.
+
+You can keep filling shelves with supplies, labels, boxes, and backups. That looks organized. But if nothing is routed to the bedside at the right moment, the system is still failing. Inventory is not care delivery.
+
+That is what most knowledge systems feel like to me. More shelves. Better labels. Cleaner storage. Still no reliable path from captured material to usable output.
+
+This is not a discipline problem. It is not a productivity-hack problem. It is not a matter of finding the perfect inbox app with nicer typography and a cleaner mobile interface.
+
+It is an infrastructure problem.
+
+Physicians capture constantly because our work is information-dense by default. We are always collecting signal from papers, cases, conversations, guidelines, lectures, and emerging tools. What most of us do not have is a pipeline that turns those inputs into durable, reusable artifacts.
+
+That is the real bottleneck.
+
+**Research should behave more like code than like storage.**
+
+Code gets parsed, structured, versioned, retrieved, reused, and shipped. Stored information, by contrast, often just sits there looking responsible.
+
+I did not want better shelves. I wanted throughput.
+
+## What the DoctorsWhoCode Engine Actually Is
+
+The result is the **[DoctorsWhoCode Engine](https://github.com/chukwumaonyeije/doctorswhocode-engine)**, a working Telegram-driven research operating system for physician-builders.
+
+The phrase "research engine" can sound more ambitious than useful, so let me be concrete. The system currently supports:
+
+- Telegram input
+- natural-language requests
+- direct URL ingestion
+- PubMed ingestion
+- YouTube analysis with transcript-backed workflows
+- canonical Postgres storage
+- retrieval by record ID
+- recent views and search
+- MDX generation from saved records
+- PDF export on demand
+- GitHub draft sync
+- editorial curation states and queue views
+
+This is not a chatbot wrapped around a few prompts. It is a source-aware ingestion and rendering pipeline that accepts messy real-world input and turns it into structured outputs I can actually use.
+
+## The Architecture
+
+The surface area is intentionally small:
+
+`Telegram -> ingestion -> normalization -> analysis -> storage -> retrieval -> MDX/PDF/GitHub`
+
+Each layer exists for a reason.
+
+**Telegram** is the input surface because friction kills capture. If saving something takes more effort than forwarding a message, the pipeline fails before it begins.
+
+**The TypeScript app** is the orchestration layer. It handles commands, routes workflows, tracks state, and keeps the system legible.
+
+I built this as a TypeScript app rather than another `n8n` agent for a simple reason: the workflow stopped behaving like automation glue and started behaving like software.
+
+`n8n` is useful when the job is mostly wiring services together. This engine needed more than wiring. It needed source-specific ingestion logic, explicit command handling, transcript fallbacks, retrieval by ID, editorial state transitions, draft rendering, and tighter control over how analysis moved from one step to the next.
+
+I wanted versioned application code, typed interfaces, testable logic, and architectural clarity. I wanted the core behavior to be inspectable in one codebase rather than distributed across a visual graph that becomes harder to reason about as the system grows.
+
+My earlier `n8n` work helped me discover the workflow. This TypeScript app is what I built once the workflow deserved a real runtime.
+
+**OpenAI** is the reasoning layer. It analyzes sources, drafts structured outputs, and adapts tone based on the requested artifact.
+
+**Railway** is the runtime. The engine had to live online, receive webhooks reliably, and remain available outside my laptop.
+
+**Postgres** is canonical memory. That decision became more important as the system grew. Every record, analysis, state transition, and retrieval flow needed a durable online source of truth.
+
+**GitHub** is the draft sync and publishing layer. It matters for traceability, downstream editing, and integration with the actual publishing stack.
+
+**Astro MDX** is the destination when the output is meant to become a blog post rather than remain an internal record.
+
+The repo matters. The code matters. But the source of truth now lives online and is queryable.
+
+That was a structural shift, not a cosmetic one.
+
+## What We Actually Shipped in One Day
+
+This is the part that made the project feel real.
+
+In one build-heavy day, the engine moved from promising idea to usable system.
+
+We got the Railway app live. We connected the Telegram webhook. We fixed Postgres persistence so saved work stopped behaving like a temporary demo. We added URL ingestion, PubMed ingestion, and YouTube handling. Then we improved YouTube from metadata-only summaries to transcript-backed analysis with hosted transcript fallbacks when the first path failed.
+
+We compressed long Telegram responses so the output was readable on a phone. We added retrieval by record ID, then `recent`, then `find` and `search`. We added on-demand MDX generation from saved analyses. We fixed GitHub draft sync so outputs could land where editorial work actually happens. We added PDF generation and pushed PDFs back into Telegram so the artifact could return to the same place where the input started.
+
+Then we added curation states and queue views. Then compound workflows like `draft` and `queue-for-blog`. Then we tuned the MDX drafts away from generic AI polish and toward the actual DoctorsWhoCode voice.
+
+That sequence matters.
+
+A lot of software demos look impressive because they stop at the first intelligent-looking response. I wanted the opposite. I wanted the unglamorous parts to work: persistence, retrieval, state, rendering, and transport.
+
+That is where systems either grow up or stay toys.
+
+## When YouTube Forced the System to Grow Up
+
+The turning point was YouTube.
+
+At first, metadata-only summaries felt acceptable. Title, channel, description, maybe a little contextual inference. Enough to look useful. Not enough to trust.
+
+That was the moment the engine had to become source-aware in a deeper way.
+
+A title is not a transcript. A transcript is not a paper. The engine had to learn that.
+
+Once transcript retrieval came online, the quality of analysis changed immediately. The system could move from broad paraphrase to actual content-aware synthesis. It could distinguish between verified and unverified handling. It could reason over what was said, not just what the platform said the video was about.
+
+That is not a minor improvement. It is an architectural principle.
+
+Different sources deserve different treatment. A PubMed abstract, a direct URL, and a YouTube transcript are not interchangeable inputs. If the engine flattened them into the same type of summary, it would become confidently shallow.
+
+I did not want shallow.
+
+I wanted provenance, completeness awareness, and explicit handling of source limitations.
+
+## Why Postgres Beat Local Files
+
+I started with a file-first instinct because that is often a healthy instinct.
+
+I like local artifacts. I like inspectable outputs. I like systems that can survive a bad deployment because the underlying files still exist. Those instincts are still good.
+
+But a Telegram-plus-Railway workflow changes the operating environment.
+
+Local-only storage was not enough for a system that needed to receive webhooks remotely, persist work across sessions, support retrieval by ID, track curation state, and remain queryable wherever the process happened to be running.
+
+So the architecture evolved.
+
+Postgres became canonical storage.
+
+GitHub became draft sync and publishing infrastructure.
+
+Local files remained useful, but they stopped being authoritative.
+
+That is a broader builder lesson worth stating plainly:
+
+**The right architecture is not ideological. It is operational.**
+
+If a local-first design stops matching the workflow, forcing it to remain canonical is not purity. It is friction dressed up as principle.
+
+## This Is Not a Chatbot
+
+I want to be explicit here, because the distinction matters.
+
+This is not conversational AI for its own sake.
+
+Most chatbots generate responses. I wanted a system that generates records, drafts, and artifacts.
+
+That means the bar is different.
+
+The system needs provenance. It needs durable storage. It needs deterministic commands. It needs retrieval pathways that do not depend on vague memory of what the model said three sessions ago. It needs outputs that can be versioned, queued, published, exported, or revisited.
+
+That is what makes the engine useful.
+
+Not that it can talk, but that it can file, structure, and ship.
+
+## The Builder Lesson
+
+The deeper lesson is not about Telegram or Railway or even this specific stack.
+
+It is about agency.
+
+Physicians do not just need AI answers. Physician-builders need infrastructure they can inspect, extend, and trust.
+
+That changes the posture completely.
+
+The point was never to automate thinking. It was to give thinking a system durable enough to survive the inbox.
+
+The inbox is where too many good ideas go to die. Not because they were weak ideas, but because they never entered a pipeline strong enough to convert them into something durable.
+
+When you build that pipeline yourself, your relationship to knowledge changes.
+
+You stop treating saved material like digital clutter and start treating it like raw input. You stop asking, "Where should I put this?" and start asking, "What should this become?"
+
+That is a much more powerful question.
+
+## Where the Engine Goes Next
+
+The next phase is not hype. It is refinement.
+
+The roadmap is straightforward:
+
+- better queue intelligence
+- stronger search and retrieval
+- tighter voice control for draft quality
+- more publish-ready editorial workflows
+- broader knowledge operations for physician-builders
+
+The important part is not that these features are coming.
+
+The important part is that the engine is already usable now.
+
+That is the milestone that matters most.
+
+## Closing
+
+Doctors are already producing insight all day long.
+
+The real question is whether that insight disappears into chat windows, browser tabs, and bookmark graveyards, or gets compiled into something durable.
+
+Builders do not just save knowledge.
+
+They route it, version it, and ship it.
