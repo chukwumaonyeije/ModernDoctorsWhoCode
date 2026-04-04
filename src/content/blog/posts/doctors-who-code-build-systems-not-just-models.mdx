@@ -1,0 +1,215 @@
+---
+title: "Doctors Who Code: Build Systems, Not Just Models"
+description: "A TEDx pitch says physicians should build AI. I agree. But the work that matters is governance, validation, and delivery, not one-afternoon demos."
+pubDate: "2026-04-02"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Clinical + Code"
+tags:
+- "ai"
+- "doctors-who-code"
+- "medical-ai"
+- "physician-developer"
+- "clinical-ai"
+- "youtube-analysis"
+image:
+  url: "/images/posts/doctors-who-code-build-systems-not-models-hero.jpeg"
+  alt: "Physician at a workstation reviewing medical images, code, and system monitoring dashboards side by side"
+featured: true
+readingTime: 8
+draft: false
+---
+
+A physician in a TEDx talk describes a subtle pediatric buckle fracture on wrist X-ray, then walks the audience through a larger claim: physicians who code can build AI that outperforms the status quo in imaging, pathology, and global care delivery.
+
+I agree with the instinct behind that argument.
+
+I do not agree with the framing that building the model is the hard part.
+
+That framing is wrong.
+
+The real work in clinical AI is not proving that a physician can assemble a model over an afternoon. The real work is building the system that makes a model safe, reproducible, governable, and clinically useful after the applause ends.
+
+Medicine does not need more stage-ready intelligence theater.
+
+It needs physician-built infrastructure that can survive contact with reality.
+
+This post is a response to [Doctors Who Code: Why Physicians Should Build Artificial Intelligence | Logan Nye | TEDxBoston](https://youtu.be/Et5HC8SR0BA?si=QHcchnjRerAQe7mT), based on transcript-only notes from translated subtitles. I have not reviewed the full video, the slides, the underlying datasets, or any linked papers. So I am evaluating the claims as presented in text, not as validated scientific artifacts.
+
+## The Part I Agree With
+
+Physicians should build AI.
+
+We should build it because physicians know where the real friction lives. We know which clinical decisions are high-stakes, which misses are costly, which workflows are broken, and which "innovations" are just prettier ways to avoid the real problem.
+
+When a physician builds, target selection improves.
+
+We stop chasing pretty ROC curves attached to irrelevant tasks. We start choosing problems tied to decisions, accountability, and patient outcomes. That shift matters.
+
+I have argued before that physicians should stop waiting to be consulted and start building the systems they want medicine to inherit. That remains true here. [Building is better than consulting](/blog/ama-augmented-intelligence-physician-developer).
+
+The talk appears to make exactly that kind of case. It moves from fracture detection to pathology classification to rare tumor synthesis to smartphone-enabled access in low-resource settings. The underlying message is clear: doctors should not sit on the sidelines while AI enters medicine.
+
+On that point, I am fully aligned.
+
+## Where the Conversation Usually Breaks
+
+The problem is that medical AI talks often collapse two very different activities into one category:
+
+1. building a model
+2. building a clinical system
+
+Those are not the same thing.
+
+A model is an artifact. A system is an accountable pipeline.
+
+A model can classify an image. A system has to answer much harder questions:
+
+- Where did the data come from?
+- Who labeled it?
+- What exactly counts as ground truth?
+- How does performance change across sites, scanners, stains, and populations?
+- How is calibration monitored?
+- Who reviews failures?
+- What happens when the model drifts?
+- Who owns the incident when the output is wrong?
+
+If those questions are unanswered, you do not have clinical AI. You have a demo.
+
+That distinction matters because demos are easy to love and hard to trust.
+
+And medicine is already full of software that looked convincing in the room where it was sold.
+
+## "We Built It Over an Afternoon" Is Not a Safety Story
+
+One of the strongest red flags in this kind of presentation is speed as a proxy for legitimacy.
+
+If a speaker says a computer vision model for a difficult pathology distinction was built "over an afternoon" and improved accuracy from roughly 50 percent to 75 to 90 percent, the audience hears velocity and ingenuity.
+
+What I hear is missing architecture.
+
+In medicine, the question is not whether a prototype can be assembled quickly. Of course it can. Modern tooling has made that easier than ever. A motivated physician with coding fluency, pretrained models, open libraries, and a clean dataset can build something impressive very fast.
+
+That is not the bottleneck.
+
+The bottleneck is whether the data were versioned, whether the labels were adjudicated, whether the task definition was clinically coherent, whether the model was externally validated, whether subgroup performance was measured, whether the failure modes were characterized, and whether the output can enter workflow without creating new harm.
+
+Clinical AI fails when we confuse prototyping speed with readiness.
+
+An afternoon is enough time to build a signal.
+
+It is not enough time to build trust.
+
+Trust has a build pipeline. It is slow on purpose.
+
+## The Real Bottleneck Is Governance
+
+This is where physician-developers need to be much more serious than the current hype cycle allows.
+
+If we want to build tools that survive contact with real care delivery, then our work begins long before model training and continues long after deployment.
+
+We need data architecture: IRB pathways, data use agreements, de-identification, lineage, versioning, and audit trails. If the dataset is not versioned, the result is not reproducible. If the lineage is unclear, the output is not trustworthy.
+
+We need ground truth discipline: adjudication standards, multi-reader labels, pathology-radiology correlation where appropriate, and gold-standard outcomes when they exist. There are no shortcuts here. Weak labels produce fragile systems, even when the metrics look good.
+
+We need real validation: external sites, robustness to domain shift, calibration analysis, subgroup performance, and pre-specified thresholds for use. A benchmark that performs beautifully in one institution and degrades silently in another is not a clinical asset. It is a liability with a confidence interval.
+
+We need delivery infrastructure: quality management, risk files, monitoring, rollback, incident reporting, human factors testing, and workflow design. Software as a Medical Device is not a vibe. It is an operational responsibility.
+
+That is the work.
+
+That is what doctors who code should be building.
+
+This is the same principle I keep returning to in other contexts: [logs before intelligence](/blog/logs-before-intelligence). If the inputs, lineage, and monitoring are weak, the intelligence layer is just a polished way to fail.
+
+## Rare Disease AI Does Not Get a Free Pass
+
+The transcript also points toward generative AI as a way to close data gaps in rare tumors by synthesizing histology images.
+
+This is plausible as a research direction. It is not self-validating.
+
+Synthetic data can help with augmentation. It can also entrench generator artifacts, amplify labeling errors, create leakage risks, and produce systems that generalize beautifully to the quirks of the synthetic pipeline rather than to reality.
+
+Rare disease work is exactly where discipline matters most, not least.
+
+When the dataset is small and the outcome is high-stakes, we should become more conservative about claims, not less. If synthetic histology is part of the solution, I want to see rigorous separation of real and synthetic cohorts, external testing, ablation studies, and evidence that the model is learning pathology rather than learning the generator.
+
+That is not cynicism.
+
+That is respect for the patient on the other side of the label.
+
+## "Global Access" Still Requires Accountability
+
+The global health vision in the talk is morally compelling: smartphones are widespread, internet access is growing, and software could move expertise into places where specialists are scarce.
+
+I take that aspiration seriously.
+
+But open-source medical AI on a phone is not automatically democratization. Sometimes it is just decentralization of risk.
+
+If an app offers diagnostic guidance in a rural clinic, we need to know who is accountable for false reassurance, who localizes the interface, how consent is handled, what the offline behavior is, what the escalation path looks like, and how the output relates to the actual standard of care in that setting.
+
+Global deployment is not ethically simpler because the resource setting is constrained. In many ways it is harder.
+
+The physician-developer response should not be, "We can ship it anywhere." It should be, "We can design it responsibly for the context in which it will be used."
+
+Open source does not remove the moral weight of a medical recommendation. It just changes where the weight lands.
+
+## What Physicians Bring That Vendors Usually Do Not
+
+This is the part I do not want us to lose.
+
+Physicians should build because we understand the decision surface.
+
+We know that the cost of a false negative in one use case is not the cost of a false negative in another. We know that calibration matters differently when the output is triage support versus biopsy guidance versus operative planning. We know that a model can be technically elegant and clinically useless if it arrives at the wrong point in workflow.
+
+That perspective is rare.
+
+But physician insight alone is not enough. If we want authority in this space, we also have to own the boring parts that everyone wants to skip: data governance, MLOps discipline, prospective evaluation, safety monitoring, and post-market surveillance.
+
+That is why I am less interested in whether a physician can produce a prototype than in whether a physician can build a service, a governance loop, and a monitoring layer around it.
+
+This is why I keep returning to the same point:
+
+Building the model is the easy part.
+
+Building the pipeline is the work.
+
+## What I Would Ask for Next
+
+If this were moving from stage to serious clinical conversation, I would want a narrow set of artifacts.
+
+First, I would want a paper or preprint for each flagship task. Not a portfolio slide. Not a sweeping capability claim. One task at a time, with dataset description, labeling protocol, validation design, calibration results, and decision analysis.
+
+Second, I would want a public model card. Intended use. Contraindications. Known failure modes. Performance by subgroup and site. Clear statement of what the model should not be used for.
+
+Third, I would want a clinician-led pilot on one narrow use case with pre-defined endpoints: agreement, turnaround time, downstream testing, missed diagnoses, and actual workflow impact. Not just AUC. Not just enthusiasm.
+
+Fourth, I would want the minimal safety system standing behind it: risk management, monitoring, audit logging, a rollback plan, and a named group accountable for updates and incidents.
+
+That is how a promising idea starts becoming medicine.
+
+Until then, it is still a claim.
+
+## The Work Doctors Who Code Should Claim
+
+We should build.
+
+But we should build with a wider definition of what counts as building.
+
+Doctors who code should not just learn to fine-tune models or call APIs. We should learn how to choose the right problem, define the reference standard, structure the data pipeline, validate across the real world, ship into workflow, measure clinical effect, and monitor the system after deployment.
+
+That is the job.
+
+No one is coming to do that part for us.
+
+If physicians do not own the pipeline, we will keep inheriting tools optimized for demos, procurement decks, and stage narratives. We will be handed outputs without provenance, automation without accountability, and software that flatters innovation while offloading risk onto clinicians and patients.
+
+I want something better than that.
+
+I want physician-built systems that can carry clinical, legal, and moral weight.
+
+That is the future worth building.
+
+If you are a physician reading this and wondering where to start, do not start with a grand platform story. Start with one narrow workflow, one accountable dataset, one clear decision point, and one validation plan. Then build from there.
+
+That is how physician-built AI stops being a TEDx idea and starts becoming a discipline.
