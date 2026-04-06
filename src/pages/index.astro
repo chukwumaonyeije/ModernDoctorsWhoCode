@@ -26,53 +26,53 @@ const stats = [
 >
 
   <!-- Hero -->
-  <section style="max-width: 1200px; margin: 0 auto; padding: 5rem 1.5rem 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+  <section class="home-hero page-shell">
     <div>
       <p class="label" style="margin-bottom: 1rem;">
         <span class="live-dot" style="margin-right: 0.5rem;"></span>
         Physician-Developer Blog
       </p>
-      <h1 class="gradient-text" style="font-size: 3.25rem; line-height: 1.1; margin-bottom: 1.25rem;">
+      <h1 class="gradient-text home-hero-title">
         Where Medicine<br />Meets Code
       </h1>
-      <p style="font-size: 1.125rem; color: var(--dwc-muted); margin-bottom: 1.75rem; line-height: 1.7;">
+      <p class="lede-copy home-hero-copy">
         I am Chukwuma Onyeije, MD, FACOG. I practice Maternal-Fetal Medicine and build AI tools
         for physicians. This is where I document the work and make the case for doctors who code.
       </p>
       <!-- Search bar -->
-      <form id="hero-search" style="display: flex; margin-bottom: 1.75rem;">
+      <form id="hero-search" class="home-search">
         <input type="text" id="hero-q" placeholder="Search articles..."
-          style="flex: 1; background: var(--dwc-card); border: 1px solid var(--dwc-border); border-right: none; border-radius: 8px 0 0 8px; padding: 0.625rem 1rem; font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-white); outline: none;" />
+          class="site-input home-search-input" />
         <button type="submit"
-          style="background: var(--dwc-blue); color: var(--dwc-white); border: none; border-radius: 0 8px 8px 0; padding: 0.625rem 1.25rem; font-family: var(--font-mono); font-size: 0.8125rem; cursor: pointer;">Search</button>
+          class="home-search-button">Search</button>
       </form>
-      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <div class="mobile-stack">
         <a
           href="/blog"
-          style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-white); background-color: var(--dwc-blue); padding: 0.625rem 1.5rem; border-radius: 6px;"
+          class="site-button site-button--primary home-action"
         >Read the Blog</a>
         <a
           href="/about"
-          style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-cyan); border: 1px solid var(--dwc-border); padding: 0.625rem 1.5rem; border-radius: 6px;"
+          class="site-button site-button--secondary home-action"
         >About Dr. Onyeije</a>
       </div>
     </div>
 
     <!-- Animated hex grid of tech terms -->
-    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; align-items: center;">
+    <div class="home-hex-grid">
       {hexTerms.map((term, i) => (
-        <div style={`font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 500; color: ${i % 3 === 0 ? 'var(--dwc-cyan)' : 'var(--dwc-muted)'}; background-color: var(--dwc-card); border: 1px solid var(--dwc-border); padding: 0.5rem 1rem; border-radius: 8px; opacity: ${0.5 + (i % 3) * 0.25};`}>{term}</div>
+        <div class="home-hex-chip" style={`color: ${i % 3 === 0 ? 'var(--dwc-cyan)' : 'var(--dwc-muted)'}; opacity: ${0.5 + (i % 3) * 0.25};`}>{term}</div>
       ))}
     </div>
   </section>
 
   <!-- Stats strip -->
-  <section style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 3rem;">
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+  <section class="site-shell home-stats-section">
+    <div class="home-stats-grid">
       {stats.map(stat => (
-        <div style="background: var(--dwc-card); border: 1px solid var(--dwc-border); border-radius: 12px; padding: 1.5rem; text-align: center;">
-          <p class="gradient-text" style="font-family: var(--font-display); font-size: 2rem; font-weight: 800; margin: 0 0 0.25rem 0; line-height: 1;">{stat.number}</p>
-          <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dwc-muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 0;">{stat.label}</p>
+        <div class="home-stat-card">
+          <p class="gradient-text home-stat-number">{stat.number}</p>
+          <p class="home-stat-label">{stat.label}</p>
         </div>
       ))}
     </div>
@@ -80,7 +80,7 @@ const stats = [
 
   <!-- Featured Post -->
   {featuredPost && (
-    <section style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 4rem;">
+    <section class="site-shell home-section">
       <p class="label" style="margin-bottom: 1.25rem;">Featured</p>
       <a href={`/blog/${featuredPost.id}`} style="display: block; text-decoration: none;">
         <div class="card" style="overflow: hidden; position: relative;">
@@ -90,17 +90,17 @@ const stats = [
                 style="width: 100%; height: 420px; object-fit: cover; display: block; border-radius: 0;" />
               <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(to top, rgba(10,13,26,0.97) 0%, rgba(10,13,26,0.7) 70%, transparent 100%);">
                 <span class="label" style="margin-bottom: 0.5rem; display: block;">{featuredPost.data.category}</span>
-                <h2 class="gradient-text" style="font-size: 1.75rem; margin-bottom: 0.5rem;">{featuredPost.data.title}</h2>
-                <p style="color: var(--dwc-muted); margin: 0; font-size: 0.9375rem; line-height: 1.5;">{featuredPost.data.description}</p>
-                <span style="display: inline-block; margin-top: 1rem; font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-cyan);">Read article &rarr;</span>
+                <h2 class="gradient-text home-feature-title">{featuredPost.data.title}</h2>
+                <p class="home-feature-copy">{featuredPost.data.description}</p>
+                <span class="home-feature-cta">Read article &rarr;</span>
               </div>
             </>
           ) : (
             <div style="padding: 2rem;">
               <span class="label" style="margin-bottom: 0.75rem; display: block;">{featuredPost.data.category}</span>
-              <h2 class="gradient-text" style="font-size: 1.75rem; margin-bottom: 0.75rem;">{featuredPost.data.title}</h2>
-              <p style="color: var(--dwc-muted); margin-bottom: 1.25rem; line-height: 1.6;">{featuredPost.data.description}</p>
-              <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-cyan);">Read article &rarr;</span>
+              <h2 class="gradient-text home-feature-title">{featuredPost.data.title}</h2>
+              <p class="home-feature-copy" style="margin-bottom: 1.25rem;">{featuredPost.data.description}</p>
+              <span class="home-feature-cta">Read article &rarr;</span>
             </div>
           )}
         </div>
@@ -110,12 +110,12 @@ const stats = [
 
   <!-- Recent Posts -->
   {recentPosts.length > 0 && (
-    <section style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 4rem;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+    <section class="site-shell home-section">
+      <div class="home-section-header">
         <p class="label">Recent Posts</p>
-        <a href="/blog" style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-cyan);">All posts &rarr;</a>
+        <a href="/blog" class="home-section-link">All posts &rarr;</a>
       </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+      <div class="home-post-grid">
         {recentPosts.map(post => (
           <PostCard
             title={post.data.title}
@@ -129,8 +129,8 @@ const stats = [
             featured={post.data.featured}
           />
         ))}
-        <div style="display: flex; align-items: center; justify-content: center; background: var(--dwc-card); border: 1px solid var(--dwc-border); border-radius: 12px; padding: 2rem; min-height: 180px;">
-          <a href="/blog" style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-white); background-color: var(--dwc-blue); padding: 0.75rem 2rem; border-radius: 6px; text-decoration: none;">Read the Blog &rarr;</a>
+        <div class="home-more-card">
+          <a href="/blog" class="site-button site-button--primary home-more-link">Read the Blog &rarr;</a>
         </div>
       </div>
     </section>
@@ -138,30 +138,30 @@ const stats = [
 
   <!-- About Strip -->
   <section style="background-color: var(--dwc-card); border-top: 1px solid var(--dwc-border); border-bottom: 1px solid var(--dwc-border); margin-bottom: 4rem;">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 4rem 1.5rem; display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; align-items: center;">
+    <div class="site-shell home-about-grid">
       <div>
         <p class="label" style="margin-bottom: 1rem;">The Author</p>
-        <h2 class="gradient-text" style="font-size: 1.75rem; margin-bottom: 1rem;">Chukwuma Onyeije, MD, FACOG</h2>
-        <p style="color: var(--dwc-muted); margin-bottom: 1rem; line-height: 1.7;">
+        <h2 class="gradient-text home-about-title">Chukwuma Onyeije, MD, FACOG</h2>
+        <p class="home-about-copy" style="margin-bottom: 1rem;">
           Maternal-Fetal Medicine specialist at Atlanta Perinatal Associates. I build AI-powered
           clinical tools because physicians with domain expertise build better healthcare technology
           than external vendors ever will.
         </p>
-        <p style="color: var(--dwc-muted); line-height: 1.7;">
+        <p class="home-about-copy">
           Founder of CodeCraftMD (AI medical documentation) and OpenMFM.org (open-source MFM education).
         </p>
-        <a href="/about" style="display: inline-block; margin-top: 1.25rem; font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-cyan);">Full biography &rarr;</a>
+        <a href="/about" class="home-section-link" style="display: inline-block; margin-top: 1.25rem;">Full biography &rarr;</a>
       </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+      <div class="home-about-cards">
         {[
           { label: 'Specialty', value: 'MFM / High-Risk OB' },
           { label: 'Credential', value: 'MD, FACOG' },
           { label: 'Project', value: 'CodeCraftMD' },
           { label: 'Project', value: 'OpenMFM.org' },
         ].map(item => (
-          <div style="background-color: var(--dwc-navy); border: 1px solid var(--dwc-border); border-radius: 8px; padding: 0.875rem;">
+          <div class="home-about-card">
             <p class="label" style="margin-bottom: 0.25rem; font-size: 0.65rem;">{item.label}</p>
-            <p style="font-size: 0.875rem; font-weight: 600; margin: 0; color: var(--dwc-white);">{item.value}</p>
+            <p class="home-about-card-copy">{item.value}</p>
           </div>
         ))}
       </div>
@@ -169,7 +169,7 @@ const stats = [
   </section>
 
   <!-- Newsletter -->
-  <section id="newsletter" style="max-width: 700px; margin: 0 auto; padding: 0 1.5rem 5rem;">
+  <section id="newsletter" class="page-shell page-shell--compact" style="padding-top: 0;">
     <NewsletterForm />
   </section>
 
@@ -182,3 +182,222 @@ const stats = [
     if (q) window.location.href = '/blog?q=' + encodeURIComponent(q);
   });
 </script>
+
+<style>
+  .home-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 1.25rem + 3vw, 4rem);
+    align-items: center;
+    padding-top: clamp(3.5rem, 2.6rem + 3vw, 5rem);
+    padding-bottom: 4rem;
+  }
+
+  .home-hero-title {
+    font-size: clamp(2.4rem, 1.55rem + 3vw, 3.25rem);
+    line-height: 1.05;
+    margin-bottom: 1.25rem;
+  }
+
+  .home-hero-copy {
+    margin-bottom: 1.75rem;
+    max-width: 32rem;
+  }
+
+  .home-search {
+    display: flex;
+    margin-bottom: 1.75rem;
+  }
+
+  .home-search-input {
+    flex: 1;
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+  }
+
+  .home-search-button {
+    border: none;
+    border-radius: 0 8px 8px 0;
+    padding: 0.7rem 1.25rem;
+    background: var(--dwc-blue);
+    color: var(--dwc-white);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-button);
+    cursor: pointer;
+  }
+
+  .home-action {
+    width: auto;
+  }
+
+  .home-hex-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .home-hex-chip {
+    font-family: var(--font-mono);
+    font-size: clamp(0.82rem, 0.79rem + 0.15vw, 0.88rem);
+    font-weight: 500;
+    background-color: var(--dwc-card);
+    border: 1px solid var(--dwc-border);
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+  }
+
+  .home-stats-section,
+  .home-section {
+    padding-bottom: 3rem;
+  }
+
+  .home-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .home-stat-card {
+    background: var(--dwc-card);
+    border: 1px solid var(--dwc-border);
+    border-radius: 12px;
+    padding: clamp(1rem, 0.8rem + 0.8vw, 1.5rem);
+    text-align: center;
+  }
+
+  .home-stat-number {
+    margin: 0 0 0.25rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 1.3rem + 1vw, 2rem);
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .home-stat-label,
+  .home-section-link,
+  .home-feature-cta {
+    font-family: var(--font-mono);
+    font-size: clamp(0.8rem, 0.77rem + 0.16vw, 0.85rem);
+    color: var(--dwc-cyan);
+  }
+
+  .home-feature-title {
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 1.75rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .home-feature-copy {
+    margin: 0;
+    font-size: clamp(0.98rem, 0.95rem + 0.16vw, 1rem);
+    line-height: 1.6;
+    color: var(--dwc-muted);
+    max-width: 52ch;
+  }
+
+  .home-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .home-post-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .home-more-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dwc-card);
+    border: 1px solid var(--dwc-border);
+    border-radius: 12px;
+    padding: 2rem;
+    min-height: 180px;
+  }
+
+  .home-more-link {
+    width: auto;
+    padding-inline: 1.5rem;
+  }
+
+  .home-about-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: clamp(2rem, 1.25rem + 3vw, 4rem);
+    align-items: center;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .home-about-title {
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 1.75rem);
+    margin-bottom: 1rem;
+  }
+
+  .home-about-copy {
+    color: var(--dwc-muted);
+    line-height: 1.72;
+  }
+
+  .home-about-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .home-about-card {
+    background-color: var(--dwc-navy);
+    border: 1px solid var(--dwc-border);
+    border-radius: 8px;
+    padding: 0.9rem;
+  }
+
+  .home-about-card-copy {
+    margin: 0;
+    font-size: clamp(0.92rem, 0.89rem + 0.14vw, 0.96rem);
+    font-weight: 600;
+    color: var(--dwc-white);
+  }
+
+  @media (max-width: 900px) {
+    .home-hero,
+    .home-about-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .home-stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .home-search {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .home-search-input {
+      border-right: 1px solid var(--dwc-border);
+      border-radius: 8px;
+    }
+
+    .home-search-button,
+    .home-action,
+    .home-more-link {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .home-about-cards,
+    .home-stats-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

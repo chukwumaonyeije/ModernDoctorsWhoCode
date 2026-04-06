@@ -2,8 +2,8 @@
 // No props — always renders Dr. Onyeije's bio
 ---
 
-<div style="background-color: var(--dwc-card); border: 1px solid var(--dwc-border); border-radius: 12px; padding: 1.75rem; display: flex; gap: 1.5rem; align-items: flex-start;">
-  <div style="flex-shrink: 0; width: 72px; height: 72px; border-radius: 50%; background-color: var(--dwc-border); border: 2px solid var(--dwc-cyan); overflow: hidden;">
+<div class="author-bio-card">
+  <div class="author-bio-avatar">
     <img
       src="/images/author-headshot.jpg"
       alt="Chukwuma Onyeije, MD, FACOG"
@@ -12,31 +12,86 @@
     />
   </div>
   <div>
-    <p style="font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--dwc-white); margin-bottom: 0.25rem;">
+    <p class="author-bio-name">
       Chukwuma Onyeije, MD, FACOG
     </p>
     <p class="label" style="margin-bottom: 0.75rem;">Maternal-Fetal Medicine Specialist</p>
-    <p style="font-size: 0.9rem; color: var(--dwc-muted); margin-bottom: 0.75rem; line-height: 1.6;">
+    <p class="author-bio-copy">
       MFM specialist at Atlanta Perinatal Associates. Founder of CodeCraftMD and OpenMFM.org.
       I write about building physician-owned AI tools, clinical software, and the case for doctors who code.
     </p>
-    <div style="display: flex; gap: 1rem;">
+    <div class="author-bio-links">
       <a
         href="https://www.linkedin.com/in/chukwumaonyeije"
         target="_blank"
         rel="noopener noreferrer"
-        style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dwc-cyan);"
+        class="author-bio-link"
       >LinkedIn</a>
       <a
         href="https://x.com/chukwumaonyeije"
         target="_blank"
         rel="noopener noreferrer"
-        style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dwc-cyan);"
+        class="author-bio-link"
       >X / Twitter</a>
       <a
         href="/about"
-        style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dwc-cyan);"
+        class="author-bio-link"
       >Full Bio</a>
     </div>
   </div>
 </div>
+
+<style>
+  .author-bio-card {
+    background-color: var(--dwc-card);
+    border: 1px solid var(--dwc-border);
+    border-radius: 12px;
+    padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .author-bio-avatar {
+    flex-shrink: 0;
+    width: clamp(64px, 14vw, 72px);
+    height: clamp(64px, 14vw, 72px);
+    border-radius: 50%;
+    background-color: var(--dwc-border);
+    border: 2px solid var(--dwc-cyan);
+    overflow: hidden;
+  }
+
+  .author-bio-name {
+    margin-bottom: 0.25rem;
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 0.96rem + 0.22vw, 1.05rem);
+    font-weight: 700;
+    color: var(--dwc-white);
+  }
+
+  .author-bio-copy {
+    margin-bottom: 0.85rem;
+    font-size: clamp(0.97rem, 0.94rem + 0.16vw, 1rem);
+    line-height: 1.65;
+    color: var(--dwc-muted);
+  }
+
+  .author-bio-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 1rem;
+  }
+
+  .author-bio-link {
+    font-family: var(--font-mono);
+    font-size: clamp(0.78rem, 0.75rem + 0.12vw, 0.82rem);
+    color: var(--dwc-cyan);
+  }
+
+  @media (max-width: 520px) {
+    .author-bio-card {
+      flex-direction: column;
+    }
+  }
+</style>

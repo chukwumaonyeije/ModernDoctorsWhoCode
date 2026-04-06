@@ -40,11 +40,11 @@ const personSchema = {
   ogImage="/images/author-headshot.jpg"
   articleSchema={personSchema}
 >
-  <div style="max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem 5rem;">
+  <div class="page-shell page-shell--narrow">
 
     <!-- Header -->
     <div style="margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--dwc-border);">
-      <div style="display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center;">
+      <div class="about-hero-grid">
         <img
           src="/images/author-headshot.jpg"
           alt="Dr. Chukwuma Onyeije, MD, FACOG"
@@ -52,8 +52,8 @@ const personSchema = {
         />
         <div>
           <p class="label" style="margin-bottom: 0.75rem;">About the Author</p>
-          <h1 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 0.5rem;">Chukwuma Onyeije, MD, FACOG</h1>
-          <p style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-cyan);">
+          <h1 class="gradient-text about-page-title">Chukwuma Onyeije, MD, FACOG</h1>
+          <p class="eyebrow-copy" style="color: var(--dwc-cyan);">
             Maternal-Fetal Medicine Specialist &middot; Physician-Developer &middot; Atlanta, GA
           </p>
         </div>
@@ -83,14 +83,14 @@ const personSchema = {
     <!-- Clinical Practice -->
     <div style="margin-bottom: 3rem;">
       <p class="label" style="margin-bottom: 1rem;">Clinical Practice</p>
-      <p style="font-size: 1.0625rem; line-height: 1.8; margin-bottom: 1.25rem;">
+      <p class="about-body-copy" style="margin-bottom: 1.25rem;">
         I am a Maternal-Fetal Medicine specialist at Atlanta Perinatal Associates in Atlanta, Georgia,
         where I manage high-risk pregnancies: fetal growth restriction, preterm birth, preeclampsia,
         diabetes in pregnancy, fetal anomalies, and complex maternal conditions. My clinical practice
         is grounded in ACOG and SMFM guidelines, the same evidence base I operationalize directly
         into the tools I build.
       </p>
-      <p style="font-size: 1.0625rem; line-height: 1.8;">
+      <p class="about-body-copy">
         I am also a physician-developer. I write Python and TypeScript, build AI tools for clinical
         documentation and decision support, and maintain open-source platforms for MFM education.
         The clinical work and the technical work are not separate pursuits. One informs the other.
@@ -100,23 +100,23 @@ const personSchema = {
     <!-- Why This Site Exists -->
     <div style="margin-bottom: 3rem;">
       <p class="label" style="margin-bottom: 1rem;">Why This Site Exists</p>
-      <p style="font-size: 1.0625rem; line-height: 1.8; margin-bottom: 1.25rem;">
+      <p class="about-body-copy" style="margin-bottom: 1.25rem;">
         Physicians carry something no outside builder can easily replicate: lived clinical context.
         We understand the ambiguity of real patients, the cost of bad workflow, the difference between
         something that looks useful in a demo and something that actually helps at the bedside. As
         artificial intelligence reshapes documentation, decision support, billing, and patient education,
         most physicians are being positioned as end users of tools they had no hand in designing.
       </p>
-      <p style="font-size: 1.0625rem; line-height: 1.8; margin-bottom: 1.5rem;">
+      <p class="about-body-copy" style="margin-bottom: 1.5rem;">
         I think that is a mistake.
       </p>
       <blockquote style="border-left: 2px solid var(--dwc-cyan); padding-left: 1.5rem; margin: 0 0 1.5rem 0;">
-        <p style="font-size: 1.25rem; font-style: italic; color: var(--dwc-white); line-height: 1.6; margin: 0;">
+        <p class="about-quote">
           Doctors should not be passive consumers of medical technology.<br />
           They should be builders of it.
         </p>
       </blockquote>
-      <p style="font-size: 1.0625rem; line-height: 1.8;">
+      <p class="about-body-copy">
         Doctors Who Code exists to document that frontier. It is part journal, part workshop, and
         part argument: for physicians, developers, and curious clinicians who want to think seriously
         about how medicine and software should meet.
@@ -149,11 +149,11 @@ const personSchema = {
         ].map(project => (
           <div style="background-color: var(--dwc-card); border: 1px solid var(--dwc-border); border-radius: 12px; padding: 1.5rem;">
             <p class="label" style="font-size: 0.65rem; margin-bottom: 0.5rem;">{project.tag}</p>
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+            <div class="about-project-header">
               <h3 style="font-size: 1.125rem; margin: 0;">{project.name}</h3>
-              <a href={project.url} target={project.url.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dwc-cyan);">Visit &rarr;</a>
+              <a href={project.url} target={project.url.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer" class="about-inline-link">Visit &rarr;</a>
             </div>
-            <p style="font-size: 0.9375rem; color: var(--dwc-muted); margin: 0; line-height: 1.6;">{project.description}</p>
+            <p class="about-card-copy">{project.description}</p>
           </div>
         ))}
       </div>
@@ -162,13 +162,13 @@ const personSchema = {
     <!-- Who This Is For -->
     <div style="margin-bottom: 3rem;">
       <p class="label" style="margin-bottom: 1rem;">Who This Is For</p>
-      <p style="font-size: 1.0625rem; line-height: 1.8; margin-bottom: 1.25rem;">
+      <p class="about-body-copy" style="margin-bottom: 1.25rem;">
         This site is for physicians curious about AI and coding, developers who want to build in
         healthcare with deeper clinical insight, and clinicians who believe healthcare technology
         should be shaped by the people closest to patient care. You do not need to be an engineer.
         You need curiosity and a willingness to think beyond the default settings of medicine.
       </p>
-      <p style="font-size: 1.0625rem; line-height: 1.8;">
+      <p class="about-body-copy">
         Topics I write about include physician-led innovation, large language models in clinical
         practice, medical documentation automation, maternal-fetal medicine education, and workflow
         design for practicing clinicians.
@@ -178,7 +178,7 @@ const personSchema = {
     <!-- Beyond the Clinic -->
     <div style="margin-bottom: 3rem;">
       <p class="label" style="margin-bottom: 1rem;">Beyond the Clinic</p>
-      <p style="font-size: 1.0625rem; line-height: 1.8; margin-bottom: 1.25rem;">
+      <p class="about-body-copy" style="margin-bottom: 1.25rem;">
         I am a Seventh-day Adventist elder at Atlanta North Seventh-day Adventist Church, a
         theologian writing at
         <a href="https://substack.com/@chukwumatheology" target="_blank" rel="noopener noreferrer" style="color: var(--dwc-cyan);">Chukwuma Theology</a>
@@ -188,7 +188,7 @@ const personSchema = {
         System). The same systems thinking I apply to an SMFM consultation, I apply to a long
         training run.
       </p>
-      <p style="font-size: 1.0625rem; line-height: 1.8;">
+      <p class="about-body-copy">
         I have deep roots in Igbo cultural heritage (Ngwa/Onyeije lineage, Agbaragwu South) and
         am writing a devotional manuscript titled <em>Equanimity Under Duress</em>. These are not
         separate from the clinical and technical work. They are the same habits of mind applied to
@@ -200,17 +200,81 @@ const personSchema = {
     <div>
       <p class="label" style="margin-bottom: 1rem;">Connect</p>
       <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
-        <a href="https://linkedin.com/in/chukwumaonyeije" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-cyan); background-color: var(--dwc-card); border: 1px solid var(--dwc-border); padding: 0.5rem 1rem; border-radius: 6px;">LinkedIn</a>
-        <a href="https://x.com/chukwumaonyeije" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-cyan); background-color: var(--dwc-card); border: 1px solid var(--dwc-border); padding: 0.5rem 1rem; border-radius: 6px;">X / Twitter</a>
-        <a href="https://bsky.app/profile/chukwumaonyeije.bsky.social" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-cyan); background-color: var(--dwc-card); border: 1px solid var(--dwc-border); padding: 0.5rem 1rem; border-radius: 6px;">Bluesky</a>
-        <a href="https://x.com/CodeCraftMD" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-cyan); background-color: var(--dwc-card); border: 1px solid var(--dwc-border); padding: 0.5rem 1rem; border-radius: 6px;">CodeCraftMD on X</a>
+        <a href="https://linkedin.com/in/chukwumaonyeije" target="_blank" rel="noopener noreferrer" class="site-button site-button--secondary about-connect-link">LinkedIn</a>
+        <a href="https://x.com/chukwumaonyeije" target="_blank" rel="noopener noreferrer" class="site-button site-button--secondary about-connect-link">X / Twitter</a>
+        <a href="https://bsky.app/profile/chukwumaonyeije.bsky.social" target="_blank" rel="noopener noreferrer" class="site-button site-button--secondary about-connect-link">Bluesky</a>
+        <a href="https://x.com/CodeCraftMD" target="_blank" rel="noopener noreferrer" class="site-button site-button--secondary about-connect-link">CodeCraftMD on X</a>
       </div>
     </div>
 
   </div>
 
-  <section style="max-width: 700px; margin: 0 auto; padding: 0 1.5rem 5rem;">
+  <section class="page-shell page-shell--compact" style="padding-top: 0;">
     <NewsletterForm />
   </section>
 
 </BaseLayout>
+
+<style>
+  .about-hero-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .about-page-title {
+    font-size: clamp(2rem, 1.45rem + 2vw, 2.5rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .about-body-copy {
+    font-size: var(--font-size-body);
+    line-height: 1.8;
+  }
+
+  .about-quote {
+    margin: 0;
+    font-size: clamp(1.12rem, 1rem + 0.5vw, 1.25rem);
+    font-style: italic;
+    color: var(--dwc-white);
+    line-height: 1.6;
+  }
+
+  .about-project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .about-inline-link {
+    font-family: var(--font-mono);
+    font-size: clamp(0.78rem, 0.75rem + 0.12vw, 0.82rem);
+    color: var(--dwc-cyan);
+    white-space: nowrap;
+  }
+
+  .about-card-copy {
+    margin: 0;
+    font-size: clamp(0.95rem, 0.92rem + 0.16vw, 0.98rem);
+    color: var(--dwc-muted);
+    line-height: 1.6;
+  }
+
+  .about-connect-link {
+    width: auto;
+  }
+
+  @media (max-width: 640px) {
+    .about-hero-grid {
+      grid-template-columns: 1fr;
+      justify-items: start;
+    }
+
+    .about-project-header {
+      flex-direction: column;
+    }
+  }
+</style>
