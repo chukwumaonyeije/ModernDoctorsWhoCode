@@ -26,6 +26,8 @@ interface Props {
   audioUrl?: string;
 }
 
+const postSlug = Astro.url.pathname.replace(/^\/blog\//, '').replace(/\/$/, '');
+
 const {
   title,
   description,
@@ -36,7 +38,7 @@ const {
   tags = [],
   category = 'Technology',
   image,
-  ogImage = image?.url ?? '/images/og-default.jpg',
+  ogImage = `/og/${postSlug}.png`,
   readingTime,
   canonical = Astro.url.href,
   headings = [],
