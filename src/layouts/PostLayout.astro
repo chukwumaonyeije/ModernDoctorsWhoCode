@@ -48,11 +48,20 @@ const articleSchema = {
   "@type": "Article",
   "headline": title,
   "description": description,
+  "inLanguage": "en-US",
+  "keywords": tags.join(', '),
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": canonical
+  },
   "author": {
     "@type": "Person",
     "name": author,
+    "honorificPrefix": "Dr.",
+    "honorificSuffix": "MD, FACOG",
     "url": authorUrl,
     "jobTitle": "Maternal-Fetal Medicine Specialist",
+    "sameAs": "https://linkedin.com/in/chukwumaonyeije",
     "worksFor": {
       "@type": "Organization",
       "name": "Atlanta Perinatal Associates"
