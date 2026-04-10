@@ -1,11 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 
-const SITE_ORIGIN = "https://www.doctorswhocode.blog";
-const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
+export const SITE_ORIGIN = "https://www.doctorswhocode.blog";
+export const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
 const PUBLIC_DIR = path.resolve("public");
 
-function findKeyFile() {
+export function findKeyFile() {
   const candidates = fs
     .readdirSync(PUBLIC_DIR, { withFileTypes: true })
     .filter((entry) => entry.isFile())
@@ -41,7 +42,7 @@ function usage() {
   );
 }
 
-function normalizeUrls(rawUrls) {
+export function normalizeUrls(rawUrls) {
   if (rawUrls.length === 0) {
     usage();
     process.exit(1);
@@ -58,9 +59,9 @@ function normalizeUrls(rawUrls) {
   return normalized;
 }
 
-async function submit() {
+export async function submitUrls(rawUrls) {
   const { key, keyFile } = findKeyFile();
-  const urlList = normalizeUrls(process.argv.slice(2));
+  const urlList = normalizeUrls(rawUrls);
 
   const response = await fetch(INDEXNOW_ENDPOINT, {
     method: "POST",
@@ -88,7 +89,9 @@ async function submit() {
   }
 }
 
-submit().catch((error) => {
-  console.error(error.message);
-  process.exit(1);
-});
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+  submitUrls(process.argv.slice(2)).catch((error) => {
+    console.error(error.message);
+    process.exit(1);
+  });
+}
