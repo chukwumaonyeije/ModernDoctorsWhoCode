@@ -1,6 +1,14 @@
 name: Regenerate Blog Audio
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/content/blog/posts/*.md'
+      - 'src/content/blog/posts/*.mdx'
+      - 'scripts/generate_audio.py'
+      - '.github/workflows/regenerate-blog-audio.yml'
   workflow_dispatch:
     inputs:
       slugs:
@@ -13,6 +21,7 @@ permissions:
 
 jobs:
   regenerate-audio:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     steps:

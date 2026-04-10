@@ -151,10 +151,34 @@ const homeSchema = {
       </div>
     </div>
 
-    <div class="home-hex-grid">
-      {hexTerms.map((term, i) => (
-        <div class="home-hex-chip" style={`color: ${i % 3 === 0 ? 'var(--dwc-cyan)' : 'var(--dwc-muted)'}; opacity: ${0.5 + (i % 3) * 0.25};`}>{term}</div>
-      ))}
+    <div style="display: grid; gap: 1rem; align-content: start;">
+      {featuredPost && (
+        <a
+          href={`/blog/${featuredPost.id}`}
+          class="home-path-card"
+          style="padding: 0; overflow: hidden; gap: 0; text-decoration: none;"
+        >
+          {featuredPost.data.image && (
+            <img
+              src={featuredPost.data.image.url}
+              alt={featuredPost.data.image.alt}
+              style="width: 100%; height: 240px; object-fit: cover; display: block;"
+            />
+          )}
+          <div style="padding: 1.25rem;">
+            <p class="label" style="margin-bottom: 0.6rem;">Featured Now</p>
+            <h2 class="home-path-title" style="margin-bottom: 0.75rem;">{featuredPost.data.title}</h2>
+            <p class="home-path-copy" style="margin-bottom: 0.9rem;">{featuredPost.data.description}</p>
+            <span class="home-feature-cta">Read featured article &rarr;</span>
+          </div>
+        </a>
+      )}
+
+      <div class="home-hex-grid" style="justify-content: flex-start;">
+        {hexTerms.map((term, i) => (
+          <div class="home-hex-chip" style={`color: ${i % 3 === 0 ? 'var(--dwc-cyan)' : 'var(--dwc-muted)'}; opacity: ${0.5 + (i % 3) * 0.25};`}>{term}</div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -191,36 +215,6 @@ const homeSchema = {
       ))}
     </div>
   </section>
-
-  <!-- Featured Post -->
-  {featuredPost && (
-    <section class="site-shell home-section">
-      <p class="label" style="margin-bottom: 1.25rem;">Featured</p>
-      <a href={`/blog/${featuredPost.id}`} style="display: block; text-decoration: none;">
-        <div class="card" style="overflow: hidden; position: relative;">
-          {featuredPost.data.image ? (
-            <>
-              <img src={featuredPost.data.image.url} alt={featuredPost.data.image.alt}
-                style="width: 100%; height: 420px; object-fit: cover; display: block; border-radius: 0;" />
-              <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(to top, rgba(10,13,26,0.97) 0%, rgba(10,13,26,0.7) 70%, transparent 100%);">
-                <span class="label" style="margin-bottom: 0.5rem; display: block;">{featuredPost.data.category}</span>
-                <h2 class="gradient-text home-feature-title">{featuredPost.data.title}</h2>
-                <p class="home-feature-copy">{featuredPost.data.description}</p>
-                <span class="home-feature-cta">Read article &rarr;</span>
-              </div>
-            </>
-          ) : (
-            <div style="padding: 2rem;">
-              <span class="label" style="margin-bottom: 0.75rem; display: block;">{featuredPost.data.category}</span>
-              <h2 class="gradient-text home-feature-title">{featuredPost.data.title}</h2>
-              <p class="home-feature-copy" style="margin-bottom: 1.25rem;">{featuredPost.data.description}</p>
-              <span class="home-feature-cta">Read article &rarr;</span>
-            </div>
-          )}
-        </div>
-      </a>
-    </section>
-  )}
 
   <!-- Recent Posts -->
   {recentPosts.length > 0 && (
