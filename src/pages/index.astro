@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import NewsletterForm from '../components/NewsletterForm.astro';
-import { SITE_DESCRIPTION } from '../consts';
+import { SITE_DESCRIPTION, SITE_URL } from '../consts';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -11,18 +11,92 @@ const featuredPosts = sortedPosts.filter((post) => post.data.featured);
 const featuredPost = featuredPosts[0] ?? sortedPosts[0];
 const recentPosts = sortedPosts.filter((post) => post.id !== featuredPost?.id).slice(0, 5);
 
-const hexTerms = ['AI', 'MFM', 'LLM', 'API', 'CGM', 'NLP', 'EMR', 'ML', 'ICD', 'CPT', 'FHIR', 'RAG'];
-const stats = [
-  { number: '30+', label: 'Years in Medicine' },
-  { number: '89',  label: 'Articles Published' },
-  { number: 'MFM', label: 'Specialty' },
-  { number: 'AI',  label: 'Powered Tools' },
+const hexTerms = [
+  'Physician-Developer',
+  'AI in Medicine',
+  'Maternal-Fetal Medicine',
+  'Clinical Workflow',
+  'FHIR',
+  'Python',
+  'TypeScript',
+  'Clinical Documentation',
+  'Interoperability',
+  'Medical Billing',
+  'OpenMFM',
+  'Bedside Tools',
 ];
+const uniqueTags = new Set(sortedPosts.flatMap((post) => post.data.tags.map((tag) => tag.toLowerCase())));
+const stats = [
+  { number: String(sortedPosts.length), label: 'Published Essays' },
+  { number: String(uniqueTags.size), label: 'Recurring Topics' },
+  { number: 'MFM', label: 'Clinical Specialty' },
+  { number: 'ATL', label: 'Clinical Base' },
+];
+const startHere = [
+  {
+    label: 'Official Profile',
+    title: 'Start with Dr. Chukwuma Onyeije',
+    copy: 'See the clinical background, public identity, current projects, and the case for physician-built software.',
+    href: '/about',
+    cta: 'Read the profile',
+  },
+  {
+    label: 'Core Argument',
+    title: 'Why physicians should build',
+    copy: 'Read the thesis behind Doctors Who Code: doctors should not only use medical technology. They should help author it.',
+    href: '/blog/ama-augmented-intelligence-physician-developer',
+    cta: 'Read the essay',
+  },
+  {
+    label: 'Builder Work',
+    title: 'See a real physician-built tool',
+    copy: 'Follow the path from clinical protocol to bedside software in a concrete build teardown.',
+    href: '/blog/how-i-built-fgrmanager-a-physician-developers-blueprint-for-turning-clinical-protocols-into-bedside-tools',
+    cta: 'See the build',
+  },
+];
+const topicLinks = [
+  { label: 'Physician-Developer', href: '/blog?q=physician-developer' },
+  { label: 'AI in Medicine', href: '/blog?q=AI' },
+  { label: 'FHIR and Interoperability', href: '/blog?q=FHIR' },
+  { label: 'Maternal-Fetal Medicine', href: '/blog?q=maternal-fetal%20medicine' },
+];
+const homeSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': `${SITE_URL}/#home`,
+      url: SITE_URL,
+      name: 'Doctors Who Code | Official Site of Chukwuma Onyeije, MD, FACOG',
+      description: SITE_DESCRIPTION,
+      mainEntity: {
+        '@id': `${SITE_URL}/about#person`,
+      },
+      isPartOf: {
+        '@id': `${SITE_URL}/#website`,
+      },
+    },
+    {
+      '@type': 'ItemList',
+      '@id': `${SITE_URL}/#start-here`,
+      name: 'Start Here on Doctors Who Code',
+      itemListElement: startHere.map((item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `${SITE_URL}${item.href}`,
+        name: item.title,
+      })),
+    },
+  ],
+};
 ---
 
 <BaseLayout
-  title="Where Medicine Meets Code"
+  title="Official Site of Chukwuma Onyeije, MD, FACOG"
   description={SITE_DESCRIPTION}
+  canonical={SITE_URL}
+  articleSchema={homeSchema}
 >
 
   <!-- Hero -->
@@ -30,16 +104,21 @@ const stats = [
     <div>
       <p class="label" style="margin-bottom: 1rem;">
         <span class="live-dot" style="margin-right: 0.5rem;"></span>
-        Physician-Developer Blog
+        Official Site · Physician-Developer Journal
       </p>
-      <h1 class="gradient-text home-hero-title">
-        Where Medicine<br />Meets Code
-      </h1>
+      <h1 class="gradient-text home-hero-title">Doctors Who Code</h1>
+      <p class="home-hero-kicker">
+        The official site of Chukwuma Onyeije, MD, FACOG.
+      </p>
       <p class="lede-copy home-hero-copy">
-        I am Chukwuma Onyeije, MD, FACOG. I practice Maternal-Fetal Medicine and build AI tools
-        for physicians. This is where I document the work and make the case for doctors who code.
+        Doctors Who Code is where I write as an Atlanta maternal-fetal medicine specialist and
+        physician-developer building AI tools, clinical documentation systems, and physician-led
+        software.
       </p>
-      <!-- Search bar -->
+      <p class="home-hero-copy home-hero-copy--secondary">
+        If you searched for Chukwuma Onyeije MD, Doctors Who Code, or physician-builder essays on
+        AI in medicine, you are in the right place.
+      </p>
       <form id="hero-search" class="home-search">
         <input type="text" id="hero-q" placeholder="Search articles..."
           class="site-input home-search-input" />
@@ -54,11 +133,24 @@ const stats = [
         <a
           href="/about"
           class="site-button site-button--secondary home-action"
-        >About Dr. Onyeije</a>
+        >Official Profile</a>
+        <a
+          href="/contact"
+          class="site-button site-button--secondary home-action"
+        >Subscribe</a>
+      </div>
+      <div class="home-trust-grid">
+        <div class="home-trust-card">
+          <p class="label home-trust-label">Clinical Work</p>
+          <p class="home-trust-copy">Maternal-Fetal Medicine at Atlanta Perinatal Associates</p>
+        </div>
+        <div class="home-trust-card">
+          <p class="label home-trust-label">Builder Focus</p>
+          <p class="home-trust-copy">AI, documentation, interoperability, and bedside tools</p>
+        </div>
       </div>
     </div>
 
-    <!-- Animated hex grid of tech terms -->
     <div class="home-hex-grid">
       {hexTerms.map((term, i) => (
         <div class="home-hex-chip" style={`color: ${i % 3 === 0 ? 'var(--dwc-cyan)' : 'var(--dwc-muted)'}; opacity: ${0.5 + (i % 3) * 0.25};`}>{term}</div>
@@ -74,6 +166,28 @@ const stats = [
           <p class="gradient-text home-stat-number">{stat.number}</p>
           <p class="home-stat-label">{stat.label}</p>
         </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="site-shell home-section">
+    <div class="home-section-header">
+      <div>
+        <p class="label">Start Here</p>
+        <h2 class="gradient-text home-subsection-title">Three ways into the site</h2>
+      </div>
+      <p class="home-section-intro">
+        Start with the official profile, the core argument, or a real physician-built project.
+      </p>
+    </div>
+    <div class="home-path-grid">
+      {startHere.map((item) => (
+        <a href={item.href} class="home-path-card">
+          <p class="label" style="margin-bottom: 0.75rem;">{item.label}</p>
+          <h3 class="home-path-title">{item.title}</h3>
+          <p class="home-path-copy">{item.copy}</p>
+          <span class="home-section-link">{item.cta} &rarr;</span>
+        </a>
       ))}
     </div>
   </section>
@@ -136,24 +250,41 @@ const stats = [
     </section>
   )}
 
+  <section class="site-shell home-section">
+    <div class="home-section-header">
+      <div>
+        <p class="label">Explore</p>
+        <h2 class="gradient-text home-subsection-title">Follow the topics that define the work</h2>
+      </div>
+      <a href="/blog" class="home-section-link">Browse all writing &rarr;</a>
+    </div>
+    <div class="home-topic-row">
+      {topicLinks.map((topic) => (
+        <a href={topic.href} class="tag-pill home-topic-pill">{topic.label}</a>
+      ))}
+    </div>
+  </section>
+
   <!-- About Strip -->
   <section style="background-color: var(--dwc-card); border-top: 1px solid var(--dwc-border); border-bottom: 1px solid var(--dwc-border); margin-bottom: 4rem;">
     <div class="site-shell home-about-grid">
       <div>
-        <p class="label" style="margin-bottom: 1rem;">The Author</p>
+        <p class="label" style="margin-bottom: 1rem;">About the Author</p>
         <h2 class="gradient-text home-about-title">Chukwuma Onyeije, MD, FACOG</h2>
         <p class="home-about-copy" style="margin-bottom: 1rem;">
-          Maternal-Fetal Medicine specialist at Atlanta Perinatal Associates. I build AI-powered
-          clinical tools because physicians with domain expertise build better healthcare technology
-          than external vendors ever will.
+          I am a maternal-fetal medicine specialist at Atlanta Perinatal Associates and a
+          physician-developer building AI-powered clinical tools because physicians with domain
+          expertise build better healthcare technology than distant vendors ever will.
         </p>
         <p class="home-about-copy">
-          Founder of CodeCraftMD (AI medical documentation) and OpenMFM.org (open-source MFM education).
+          I founded CodeCraftMD for physician-led AI documentation and billing systems, and
+          OpenMFM.org for open-source maternal-fetal medicine education.
         </p>
         <a href="/about" class="home-section-link" style="display: inline-block; margin-top: 1.25rem;">About Chukwuma Onyeije, MD, FACOG &rarr;</a>
       </div>
       <div class="home-about-cards">
         {[
+          { label: 'Official Site', value: 'DoctorsWhoCode.blog' },
           { label: 'Specialty', value: 'MFM / High-Risk OB' },
           { label: 'Credential', value: 'MD, FACOG' },
           { label: 'Project', value: 'CodeCraftMD' },
@@ -196,12 +327,25 @@ const stats = [
   .home-hero-title {
     font-size: clamp(2.4rem, 1.55rem + 3vw, 3.25rem);
     line-height: 1.05;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .home-hero-kicker {
+    margin: 0 0 1rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.08rem, 0.98rem + 0.45vw, 1.3rem);
+    line-height: 1.35;
+    color: var(--dwc-white);
   }
 
   .home-hero-copy {
-    margin-bottom: 1.75rem;
+    margin-bottom: 1rem;
     max-width: 32rem;
+  }
+
+  .home-hero-copy--secondary {
+    margin-bottom: 1.5rem;
+    color: var(--dwc-muted);
   }
 
   .home-search {
@@ -230,6 +374,34 @@ const stats = [
     width: auto;
   }
 
+  .home-trust-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+    max-width: 42rem;
+  }
+
+  .home-trust-card,
+  .home-path-card {
+    background-color: var(--dwc-card);
+    border: 1px solid var(--dwc-border);
+    border-radius: 12px;
+  }
+
+  .home-trust-card {
+    padding: 1rem;
+  }
+
+  .home-trust-label {
+    margin-bottom: 0.35rem;
+  }
+
+  .home-trust-copy {
+    margin: 0;
+    color: var(--dwc-muted);
+    line-height: 1.55;
+  }
+
   .home-hex-grid {
     display: flex;
     flex-wrap: wrap;
@@ -251,6 +423,18 @@ const stats = [
   .home-stats-section,
   .home-section {
     padding-bottom: 3rem;
+  }
+
+  .home-subsection-title {
+    margin: 0.4rem 0 0;
+    font-size: clamp(1.45rem, 1.22rem + 0.9vw, 1.8rem);
+  }
+
+  .home-section-intro {
+    margin: 0;
+    max-width: 34rem;
+    color: var(--dwc-muted);
+    line-height: 1.6;
   }
 
   .home-stats-grid {
@@ -311,6 +495,38 @@ const stats = [
     gap: 1.5rem;
   }
 
+  .home-path-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .home-path-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1.35rem;
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .home-path-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--dwc-blue);
+  }
+
+  .home-path-title {
+    margin: 0;
+    font-size: clamp(1.08rem, 1rem + 0.36vw, 1.2rem);
+    color: var(--dwc-white);
+  }
+
+  .home-path-copy {
+    margin: 0;
+    color: var(--dwc-muted);
+    line-height: 1.65;
+  }
+
   .home-more-card {
     display: flex;
     align-items: center;
@@ -366,12 +582,23 @@ const stats = [
     color: var(--dwc-white);
   }
 
+  .home-topic-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .home-topic-pill {
+    text-decoration: none;
+  }
+
   @media (max-width: 900px) {
     .home-hero,
     .home-about-grid {
       grid-template-columns: 1fr;
     }
 
+    .home-path-grid,
     .home-stats-grid {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -395,7 +622,9 @@ const stats = [
       border-radius: 8px;
     }
 
+    .home-trust-grid,
     .home-about-cards,
+    .home-path-grid,
     .home-stats-grid {
       grid-template-columns: 1fr;
     }

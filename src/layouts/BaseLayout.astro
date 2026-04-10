@@ -1,6 +1,25 @@
 ---
 import '../styles/global.css';
-import { SITE_TITLE, SITE_URL, AUTHOR_NAME, TWITTER_HANDLE, OG_DEFAULT_IMAGE } from '../consts';
+import {
+  SITE_TITLE,
+  SITE_TAGLINE,
+  SITE_DESCRIPTION,
+  SITE_URL,
+  AUTHOR_NAME,
+  AUTHOR_SHORT_NAME,
+  AUTHOR_ROLE,
+  AUTHOR_LOCATION,
+  AUTHOR_URL,
+  AUTHOR_LINKEDIN_URL,
+  AUTHOR_X_URL,
+  AUTHOR_BLUESKY_URL,
+  AUTHOR_GITHUB_URL,
+  CODECRAFTMD_URL,
+  OPENMFM_URL,
+  TWITTER_HANDLE,
+  OG_DEFAULT_IMAGE,
+  ORGANIZATION_LOGO,
+} from '../consts';
 
 interface Props {
   title: string;
@@ -10,7 +29,8 @@ interface Props {
   ogType?: string;
   pubDate?: Date;
   updatedDate?: Date;
-  articleSchema?: object;
+  articleSchema?: object | object[];
+  noIndex?: boolean;
 }
 
 const {
@@ -22,10 +42,96 @@ const {
   pubDate,
   updatedDate,
   articleSchema,
+  noIndex = false,
 } = Astro.props;
 
 const fullTitle = `${title} | ${SITE_TITLE}`;
 const ogImageAbsolute = ogImage.startsWith('http') ? ogImage : `${SITE_URL}${ogImage}`;
+const websiteId = `${SITE_URL}/#website`;
+const organizationId = `${SITE_URL}/#organization`;
+const personId = `${SITE_URL}/about#person`;
+const pageId = `${canonical}#webpage`;
+const combinedSchemas = [
+  {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': websiteId,
+        url: SITE_URL,
+        name: SITE_TITLE,
+        alternateName: 'DoctorsWhoCode.blog',
+        description: SITE_DESCRIPTION,
+        publisher: {
+          '@id': organizationId,
+        },
+        about: {
+          '@id': personId,
+        },
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: {
+            '@type': 'EntryPoint',
+            urlTemplate: `${SITE_URL}/blog?q={search_term_string}`,
+          },
+          'query-input': 'required name=search_term_string',
+        },
+      },
+      {
+        '@type': 'Organization',
+        '@id': organizationId,
+        name: SITE_TITLE,
+        url: SITE_URL,
+        description: SITE_DESCRIPTION,
+        founder: {
+          '@id': personId,
+        },
+        logo: {
+          '@type': 'ImageObject',
+          url: `${SITE_URL}${ORGANIZATION_LOGO}`,
+        },
+        sameAs: [AUTHOR_LINKEDIN_URL, AUTHOR_X_URL, AUTHOR_BLUESKY_URL, AUTHOR_GITHUB_URL, CODECRAFTMD_URL, OPENMFM_URL],
+      },
+      {
+        '@type': 'Person',
+        '@id': personId,
+        name: AUTHOR_SHORT_NAME,
+        honorificPrefix: 'Dr.',
+        honorificSuffix: 'MD, FACOG',
+        description: `${AUTHOR_NAME} is an Atlanta physician-developer, maternal-fetal medicine specialist, and founder of Doctors Who Code.`,
+        url: AUTHOR_URL,
+        jobTitle: AUTHOR_ROLE,
+        homeLocation: {
+          '@type': 'Place',
+          name: AUTHOR_LOCATION,
+        },
+        worksFor: {
+          '@type': 'MedicalOrganization',
+          name: 'Atlanta Perinatal Associates',
+        },
+        sameAs: [AUTHOR_LINKEDIN_URL, AUTHOR_X_URL, AUTHOR_BLUESKY_URL, AUTHOR_GITHUB_URL, CODECRAFTMD_URL, OPENMFM_URL],
+      },
+      {
+        '@type': 'WebPage',
+        '@id': pageId,
+        url: canonical,
+        name: fullTitle,
+        description,
+        isPartOf: {
+          '@id': websiteId,
+        },
+        about: {
+          '@id': personId,
+        },
+        primaryImageOfPage: {
+          '@type': 'ImageObject',
+          url: ogImageAbsolute,
+        },
+      },
+    ],
+  },
+  ...(Array.isArray(articleSchema) ? articleSchema : articleSchema ? [articleSchema] : []),
+];
 ---
 
 <!doctype html>
@@ -34,24 +140,28 @@ const ogImageAbsolute = ogImage.startsWith('http') ? ogImage : `${SITE_URL}${ogI
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0d1b2a" />
 
     <!-- Primary SEO -->
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="author" content={AUTHOR_NAME} />
     <link rel="canonical" href={canonical} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
 
     <!-- Open Graph -->
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageAbsolute} />
+    <meta property="og:image:alt" content={fullTitle} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE_TITLE} />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={TWITTER_HANDLE} />
     <meta name="twitter:creator" content={TWITTER_HANDLE} />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
@@ -62,29 +172,18 @@ const ogImageAbsolute = ogImage.startsWith('http') ? ogImage : `${SITE_URL}${ogI
     {updatedDate && <meta property="article:modified_time" content={updatedDate.toISOString()} />}
 
     <!-- Structured data -->
-    {articleSchema && (
-      <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
-    )}
-
-    <!-- Sitelinks searchbox for homepage -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": SITE_TITLE,
-      "url": SITE_URL,
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": `${SITE_URL}/blog?q={search_term_string}`
-        },
-        "query-input": "required name=search_term_string"
-      }
-    })} />
+    {combinedSchemas.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
 
     <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="me" href={AUTHOR_LINKEDIN_URL} />
+    <link rel="me" href={AUTHOR_X_URL} />
+    <link rel="me" href={AUTHOR_BLUESKY_URL} />
+    <link rel="me" href={AUTHOR_GITHUB_URL} />
 
     <!-- RSS -->
     <link
@@ -132,8 +231,9 @@ const ogImageAbsolute = ogImage.startsWith('http') ? ogImage : `${SITE_URL}${ogI
       <div class="site-shell site-footer-grid">
         <div>
           <p class="site-footer-title">Doctors Who Code</p>
-          <p class="site-footer-copy">Where medicine meets code.</p>
+          <p class="site-footer-copy">{SITE_TAGLINE}</p>
           <p class="site-footer-copy">Written by Chukwuma Onyeije, MD, FACOG</p>
+          <p class="site-footer-copy">Official site: doctorswhocode.blog</p>
         </div>
         <div>
           <p class="label" style="margin-bottom: 0.75rem;">Projects</p>

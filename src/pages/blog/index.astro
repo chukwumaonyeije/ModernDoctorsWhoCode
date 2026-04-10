@@ -3,21 +3,55 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/PostCard.astro';
 import { buildTagIndex, slugifyTag } from '../../utils/tags';
+import { SITE_URL } from '../../consts';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const initialQuery = Astro.url.searchParams.get('q')?.trim() ?? '';
 
 const tagIndex = buildTagIndex(sortedPosts.flatMap((post) => post.data.tags));
 const allTags = [...tagIndex.entries()]
   .filter(([, value]) => value.count >= 3)
   .sort((a, b) => b[1].count - a[1].count)
   .map(([slug, value]) => ({ slug, label: value.label }));
+const blogSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Blog',
+      '@id': `${SITE_URL}/blog#blog`,
+      url: `${SITE_URL}/blog`,
+      name: 'Doctors Who Code Blog',
+      description: 'Physician-developer writing on AI in medicine, clinical software, interoperability, and maternal-fetal medicine.',
+      publisher: {
+        '@id': `${SITE_URL}/#organization`,
+      },
+      author: {
+        '@id': `${SITE_URL}/about#person`,
+      },
+    },
+    {
+      '@type': 'CollectionPage',
+      '@id': `${SITE_URL}/blog#webpage`,
+      url: `${SITE_URL}/blog`,
+      name: 'Doctors Who Code Blog',
+      description: 'Browse all Doctors Who Code posts by Chukwuma Onyeije, MD, FACOG.',
+      mainEntity: {
+        '@id': `${SITE_URL}/blog#blog`,
+      },
+      isPartOf: {
+        '@id': `${SITE_URL}/#website`,
+      },
+    },
+  ],
+};
 ---
 
 <BaseLayout
   title="Physician-Developer Blog"
   description="Physician-developer insights on AI in medicine, clinical software, MFM practice, and building tools that actually work at the bedside."
   canonical="https://www.doctorswhocode.blog/blog"
+  articleSchema={blogSchema}
 >
   <div class="page-shell">
 
@@ -26,25 +60,26 @@ const allTags = [...tagIndex.entries()]
       <div>
         <p class="label" style="margin-bottom: 0.5rem;">All Posts</p>
         <h1 class="gradient-text blog-index-title">The Blog</h1>
+        <p class="blog-index-intro">
+          Essays, build notes, and physician-developer arguments from Chukwuma Onyeije, MD, FACOG.
+          Search by idea, or filter by recurring topics.
+        </p>
       </div>
       <input
         type="search"
         id="post-search"
         placeholder="Search posts..."
         class="site-input blog-index-search"
+        value={initialQuery}
       />
     </div>
 
     <!-- Tag filter — single scrollable row -->
     <div class="blog-index-tags mobile-scroll">
       <div class="blog-index-tags-row" id="tag-filters">
-        <button class="tag-btn active" data-tag="all"
-          class="blog-tag-button blog-tag-button--active"
-        >All</button>
+        <button class="tag-btn blog-tag-button blog-tag-button--active" data-tag="all">All</button>
         {allTags.map(tag => (
-          <button class="tag-btn" data-tag={tag.slug}
-            class="blog-tag-button"
-          >{tag.label}</button>
+          <button class="tag-btn blog-tag-button" data-tag={tag.slug}>{tag.label}</button>
         ))}
       </div>
     </div>
@@ -83,7 +118,26 @@ const allTags = [...tagIndex.entries()]
   const noResults = document.getElementById('no-results')!;
 
   let activeTag = 'all';
-  let searchQuery = '';
+  let searchQuery = searchInput?.value.toLowerCase().trim() ?? '';
+
+  function paintActiveTag() {
+    tagBtns.forEach((btn) => {
+      const isActive = (btn.dataset.tag ?? 'all') === activeTag;
+      btn.style.borderColor = isActive ? 'var(--dwc-cyan)' : 'var(--dwc-border)';
+      btn.style.color = isActive ? 'var(--dwc-navy)' : 'var(--dwc-muted)';
+      btn.style.backgroundColor = isActive ? 'var(--dwc-cyan)' : 'transparent';
+    });
+  }
+
+  function syncQueryParam() {
+    const url = new URL(window.location.href);
+    if (searchQuery) {
+      url.searchParams.set('q', searchQuery);
+    } else {
+      url.searchParams.delete('q');
+    }
+    window.history.replaceState({}, '', `${url.pathname}${url.search}`);
+  }
 
   function filterPosts() {
     let visible = 0;
@@ -106,22 +160,19 @@ const allTags = [...tagIndex.entries()]
   tagBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       activeTag = btn.dataset.tag ?? 'all';
-      tagBtns.forEach(b => {
-        b.style.borderColor = 'var(--dwc-border)';
-        b.style.color = 'var(--dwc-muted)';
-        b.style.backgroundColor = 'transparent';
-      });
-      btn.style.borderColor = 'var(--dwc-cyan)';
-      btn.style.color = 'var(--dwc-navy)';
-      btn.style.backgroundColor = 'var(--dwc-cyan)';
+      paintActiveTag();
       filterPosts();
     });
   });
 
   searchInput.addEventListener('input', () => {
     searchQuery = searchInput.value.toLowerCase().trim();
+    syncQueryParam();
     filterPosts();
   });
+
+  paintActiveTag();
+  filterPosts();
 </script>
 
 <style>
@@ -137,6 +188,13 @@ const allTags = [...tagIndex.entries()]
   .blog-index-title {
     margin: 0;
     font-size: clamp(2rem, 1.45rem + 2vw, 2.5rem);
+  }
+
+  .blog-index-intro {
+    margin: 0.75rem 0 0;
+    max-width: 46rem;
+    color: var(--dwc-muted);
+    line-height: 1.7;
   }
 
   .blog-index-search {

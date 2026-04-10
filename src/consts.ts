@@ -1,8 +1,19 @@
 export const SITE_TITLE = 'Doctors Who Code';
+export const SITE_TAGLINE = 'Where medicine meets code.';
 export const SITE_DESCRIPTION =
-  'Where medicine meets code. Written by Chukwuma Onyeije, MD, FACOG, Maternal-Fetal Medicine specialist and physician-developer.';
+  'Doctors Who Code is the official site of Chukwuma Onyeije, MD, FACOG, an Atlanta maternal-fetal medicine specialist and physician-developer writing about AI in medicine, clinical software, interoperability, and physician-built tools.';
 export const SITE_URL = 'https://www.doctorswhocode.blog';
 export const AUTHOR_NAME = 'Chukwuma Onyeije, MD, FACOG';
-export const AUTHOR_URL = 'https://www.linkedin.com/in/chukwumaonyeije';
+export const AUTHOR_SHORT_NAME = 'Chukwuma Onyeije';
+export const AUTHOR_ROLE = 'Maternal-Fetal Medicine Specialist and Physician-Developer';
+export const AUTHOR_LOCATION = 'Atlanta, Georgia';
+export const AUTHOR_URL = `${SITE_URL}/about`;
+export const AUTHOR_LINKEDIN_URL = 'https://www.linkedin.com/in/chukwumaonyeije';
+export const AUTHOR_X_URL = 'https://x.com/chukwumaonyeije';
+export const AUTHOR_BLUESKY_URL = 'https://bsky.app/profile/chukwumaonyeije.bsky.social';
+export const AUTHOR_GITHUB_URL = 'https://github.com/chukwumaonyeije';
+export const CODECRAFTMD_URL = 'https://codecraftmd.com';
+export const OPENMFM_URL = 'https://openmfm.org';
 export const TWITTER_HANDLE = '@chukwumaonyeije';
 export const OG_DEFAULT_IMAGE = '/images/og-default.jpg';
+export const ORGANIZATION_LOGO = '/favicon.svg';
