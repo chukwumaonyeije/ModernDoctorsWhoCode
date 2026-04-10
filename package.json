@@ -10,7 +10,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "indexnow:submit": "node scripts/submit-indexnow.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.1",
