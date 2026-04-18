@@ -1,0 +1,477 @@
+---
+title: "JavaScript: The Language Your Patients Already Run"
+description: "Every patient portal, tablet consent form, and browser-based clinical tool already runs JavaScript. This is where physician-developers start changing what medicine feels like on a screen."
+pubDate: "2026-04-19T09:01:00-04:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Development"
+tags: ["javascript", "physician-developer", "clinical software", "web development", "beginner"]
+image:
+  url: "/images/posts/physician-developer-stack-javascript.jpeg"
+  alt: "A patient-facing clinical interface and browser developer tools open beside a bedside risk calculator"
+readingTime: 10
+featured: false
+draft: false
+---
+import Callout from '../../../components/Callout.astro';
+import SeriesNav from '../../../components/SeriesNav.astro';
+
+I was in a consultation room last October when the patient's tablet stopped responding.
+
+She was at thirty-two weeks. We were halfway through a consent form for a procedure. The form was web-based, running inside the hospital's patient portal, and it had locked up mid-scroll. She handed it to me. I reloaded the page. It came back. We finished the consent.
+
+On my way out I thought: that form is JavaScript. The scroll behavior is JavaScript. The signature field, the conditional questions that appeared when she checked "yes" to prior preeclampsia — JavaScript. The entire interaction between that patient and that form was built in a language I could learn.
+
+That is when I stopped thinking of JavaScript as something that belonged to software developers and started treating it as a clinical tool I did not yet know how to use.
+
+---
+
+## Why JavaScript Won the Browser
+
+In 1995, Netscape hired a programmer named Brendan Eich to build a scripting language for the web. He wrote the first version in ten days. The language was called LiveScript. They renamed it JavaScript before release, partly as a marketing decision — Java was popular and the name had appeal, even though the two languages share almost nothing.
+
+That ten-day origin story is obvious in the language. JavaScript has inconsistencies and quirks that make experienced programmers wince. It also has something no other language has: it is built into every browser that has ever existed. Not installed. Not configured. Built in.
+
+You do not have to ask a patient to download anything. You do not have to ask IT to install a runtime. You do not have to worry about whether the attending's workstation is running the right version. If there is a browser, JavaScript runs.
+
+That is why it won. Not because it was the best-designed language. Because it was already there.
+
+For a physician who wants to build patient-facing tools, this is decisive. JavaScript is the one language where your code runs on the tablet in the waiting room, the phone in the patient's hand, and the computer in the clinic without any installation step between you and them.
+
+## The Four Concepts That Actually Matter
+
+Most JavaScript tutorials spend weeks on syntax before arriving at the four ideas that determine whether you can build something useful. I am going to give them to you now.
+
+### The DOM
+
+The DOM is the Document Object Model. It is the browser's live representation of the HTML on a page. Every element you see — a button, a form field, a paragraph — exists in the DOM as an object your code can read and change.
+
+```js
+// Find an element on the page
+const riskScore = document.getElementById("risk-score");
+
+// Change what it shows
+riskScore.textContent = "High Risk";
+
+// Change how it looks
+riskScore.style.color = "red";
+```
+
+When you reload a page and it "forgets" what you typed, that is the DOM being reset to its initial state. When a calculator shows you a result without reloading the page, that is JavaScript updating the DOM in place.
+
+This is the first real power JavaScript gives you: the page is not static. You can change it.
+
+### Events
+
+Events are how JavaScript listens to the user.
+
+A click is an event. A keystroke is an event. Submitting a form is an event. JavaScript lets you attach a function to any event on any element, so when that thing happens, your code runs.
+
+```js
+const calculateButton = document.getElementById("calculate");
+
+calculateButton.addEventListener("click", function () {
+  // This runs when the button is clicked
+  runRiskCalculation();
+});
+```
+
+The combination of the DOM and events is enough to build a fully functional bedside calculator. The user fills in the fields. They click the button. Your function reads the values, does the math, and updates the DOM with the result. No server. No database. No network connection required.
+
+That is exactly what we are going to build at the end of this post.
+
+### Fetch
+
+Fetch is how JavaScript talks to the outside world.
+
+When a patient portal loads your chart, it is using fetch behind the scenes. The page loads, and then JavaScript makes a request to a server, gets the data back as JSON, and updates the DOM with what it received. The page did not reload. JavaScript handled the entire exchange.
+
+```js
+async function loadPatientData(patientId) {
+  const response = await fetch(`/api/patients/${patientId}`);
+  const data = await response.json();
+  return data;
+}
+```
+
+You will not need fetch in this post. The risk calculator we build today runs entirely in the browser. But in Post 9, when we deploy the Preeclampsia Risk Companion with a real backend, fetch is how the front end will talk to it.
+
+### Async
+
+JavaScript is single-threaded. It can only do one thing at a time.
+
+That creates a problem. Fetching data from a server takes time. If JavaScript stopped and waited for every network request to finish before doing anything else, your interface would freeze every time it talked to a server. Patients would notice. Physicians would notice. Nobody would use it.
+
+Async/await is how JavaScript handles this. When you mark a function as `async` and `await` a network call, JavaScript starts the call and then continues with other work. When the response arrives, it comes back to finish what was waiting.
+
+```js
+// This freezes everything while it waits
+const data = fetch("/api/risk-factors"); // Wrong
+
+// This yields to other work while it waits
+const data = await fetch("/api/risk-factors"); // Right
+```
+
+For a calculator that runs locally in the browser, you will not use async much. But the moment your tool talks to any external service — a drug database, a risk model API, a patient record system — async is not optional.
+
+## What JavaScript Cannot Do
+
+It is worth being direct about this.
+
+JavaScript running in a browser cannot access a file system, connect directly to a database, or make requests to servers on a different domain without that server's permission. These are security boundaries built into the browser. They exist to prevent malicious scripts from reading your files or stealing your data.
+
+For physician-developers, this means two things.
+
+First, a pure JavaScript clinical tool cannot read from or write to any external data source without a server in the middle. The risk calculator we build today is self-contained. That is fine for a decision-support tool. It is not fine for anything that needs to remember data across sessions or share data across patients.
+
+Second, you should never put PHI into a front-end-only JavaScript application unless you fully understand how that data is being handled. The browser is not a secure data store. Post 12 covers environment variables and secrets. Post 11 covers the database layer. Until then, our running project stays with de-identified inputs.
+
+<Callout type="warning">
+  JavaScript running in the browser has no access to a backend database or file
+  system. Any clinical tool that stores, transmits, or displays PHI needs a
+  server layer, proper authentication, and a Business Associate Agreement if it
+  touches covered health information. The calculator we build today takes no
+  PHI. That is intentional.
+</Callout>
+
+## Package Managers: npm and Why It Exists
+
+One thing you will encounter immediately when working with JavaScript is `npm`. It stands for Node Package Manager. It is the tool you use to install JavaScript libraries that other people have written.
+
+```bash
+npm install some-library
+```
+
+You do not need npm to write JavaScript. The calculator we build below uses zero npm packages. But the moment you move into a framework like Astro (Post 6) or start writing TypeScript (Post 2), npm is how you manage the dependencies.
+
+Think of npm as the pharmacy of the JavaScript ecosystem. You describe what you need in a file called `package.json`. npm fills the order. Everything it installs goes into a folder called `node_modules`. You never edit that folder directly, just as you would not reformulate a medication from scratch.
+
+For now, just know it exists. You will use it starting in Post 2.
+
+---
+
+## Hands-On: The Preeclampsia Risk Companion, Version 1
+
+This is the first version of the project we will build across this series. It lives in a single HTML file. It needs no server, no npm, no build step. You can open it in any browser and it works.
+
+The calculator uses ACOG's preeclampsia risk factor framework. It does not produce a validated clinical score. It produces a structured risk summary based on documented risk categories. Treat it as a decision-support aid, not a diagnostic tool.
+
+Create a new file called `preeclampsia-risk-v1.html` and paste this in:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preeclampsia Risk Companion</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 640px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    h1 { font-size: 1.4rem; margin-bottom: 4px; }
+    .subtitle { color: #666; font-size: 0.9rem; margin-bottom: 32px; }
+    fieldset {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+    legend { font-weight: 600; padding: 0 6px; font-size: 0.95rem; }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
+    button {
+      background: #1d4ed8;
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 8px;
+    }
+    button:hover { background: #1e40af; }
+    #result {
+      margin-top: 24px;
+      padding: 20px;
+      border-radius: 6px;
+      display: none;
+    }
+    .high-risk    { background: #fef2f2; border: 1px solid #fca5a5; }
+    .moderate-risk { background: #fffbeb; border: 1px solid #fcd34d; }
+    .low-risk     { background: #f0fdf4; border: 1px solid #86efac; }
+    .result-label { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    .result-detail { font-size: 0.9rem; color: #444; }
+    .aspirin-rec {
+      margin-top: 12px;
+      font-size: 0.875rem;
+      padding: 10px 14px;
+      background: #eff6ff;
+      border-left: 3px solid #3b82f6;
+      border-radius: 0 4px 4px 0;
+    }
+    .disclaimer {
+      margin-top: 32px;
+      font-size: 0.8rem;
+      color: #888;
+      border-top: 1px solid #eee;
+      padding-top: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Preeclampsia Risk Companion</h1>
+  <p class="subtitle">Risk stratification based on ACOG Practice Bulletin 222</p>
+
+  <form id="risk-form">
+
+    <fieldset>
+      <legend>High-Risk Factors</legend>
+      <p style="font-size:0.85rem;color:#555;margin:0 0 12px;">
+        One high-risk factor is sufficient to recommend low-dose aspirin prophylaxis.
+      </p>
+      <label>
+        <input type="checkbox" name="high" value="prior_preeclampsia" />
+        Prior preeclampsia, especially with adverse outcomes
+      </label>
+      <label>
+        <input type="checkbox" name="high" value="multifetal" />
+        Multifetal gestation
+      </label>
+      <label>
+        <input type="checkbox" name="high" value="chronic_htn" />
+        Chronic hypertension
+      </label>
+      <label>
+        <input type="checkbox" name="high" value="diabetes" />
+        Type 1 or Type 2 diabetes
+      </label>
+      <label>
+        <input type="checkbox" name="high" value="kidney_disease" />
+        Kidney disease
+      </label>
+      <label>
+        <input type="checkbox" name="high" value="autoimmune" />
+        Autoimmune condition (SLE, antiphospholipid syndrome)
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Moderate-Risk Factors</legend>
+      <p style="font-size:0.85rem;color:#555;margin:0 0 12px;">
+        Consider aspirin if the patient has more than one moderate-risk factor.
+      </p>
+      <label>
+        <input type="checkbox" name="moderate" value="nulliparous" />
+        Nulliparity
+      </label>
+      <label>
+        <input type="checkbox" name="moderate" value="obesity" />
+        Obesity (BMI &gt; 30)
+      </label>
+      <label>
+        <input type="checkbox" name="moderate" value="family_history" />
+        Family history of preeclampsia (mother or sister)
+      </label>
+      <label>
+        <input type="checkbox" name="moderate" value="age_over_35" />
+        Age 35 or older at delivery
+      </label>
+      <label>
+        <input type="checkbox" name="moderate" value="low_income" />
+        Low socioeconomic status
+      </label>
+      <label>
+        <input type="checkbox" name="moderate" value="prior_adverse" />
+        Prior adverse pregnancy outcome (IUGR, abruption, fetal demise)
+      </label>
+      <label>
+        <input type="checkbox" name="moderate" value="interval_over_10" />
+        Interpregnancy interval greater than 10 years
+      </label>
+    </fieldset>
+
+    <button type="button" id="calculate-btn">Calculate Risk</button>
+
+  </form>
+
+  <div id="result"></div>
+
+  <p class="disclaimer">
+    This tool is for clinical decision support only. It does not replace clinical
+    judgment or individualized patient counseling. Risk factor list based on
+    ACOG Practice Bulletin 222 (2020). No patient data is stored or transmitted.
+  </p>
+
+  <script>
+    document.getElementById("calculate-btn").addEventListener("click", function () {
+
+      // Read checked values from the form
+      const highFactors = Array.from(
+        document.querySelectorAll('input[name="high"]:checked')
+      );
+      const moderateFactors = Array.from(
+        document.querySelectorAll('input[name="moderate"]:checked')
+      );
+
+      const highCount = highFactors.length;
+      const moderateCount = moderateFactors.length;
+
+      // Determine risk tier
+      let riskTier, riskLabel, riskDetail, aspirinRec, cssClass;
+
+      if (highCount >= 1) {
+        riskTier    = "high";
+        riskLabel   = "High Risk";
+        riskDetail  = `${highCount} high-risk factor${highCount > 1 ? "s" : ""} identified.`;
+        aspirinRec  = "Low-dose aspirin (81 mg/day) is recommended. Initiate between 12 and 28 weeks of gestation, optimally before 16 weeks.";
+        cssClass    = "high-risk";
+      } else if (moderateCount >= 2) {
+        riskTier    = "moderate";
+        riskLabel   = "Moderate Risk";
+        riskDetail  = `${moderateCount} moderate-risk factors identified. No single high-risk factor.`;
+        aspirinRec  = "Consider low-dose aspirin (81 mg/day). The combination of multiple moderate-risk factors supports prophylaxis.";
+        cssClass    = "moderate-risk";
+      } else if (moderateCount === 1) {
+        riskTier    = "moderate";
+        riskLabel   = "Moderate Risk (single factor)";
+        riskDetail  = "1 moderate-risk factor identified. Insufficient alone to recommend aspirin prophylaxis per ACOG PB 222.";
+        aspirinRec  = "Aspirin prophylaxis is not routinely recommended for a single moderate-risk factor. Document and monitor.";
+        cssClass    = "moderate-risk";
+      } else {
+        riskTier    = "low";
+        riskLabel   = "Low Risk";
+        riskDetail  = "No high-risk or moderate-risk factors identified.";
+        aspirinRec  = "Routine prenatal care. No aspirin prophylaxis indicated based on risk factors alone.";
+        cssClass    = "low-risk";
+      }
+
+      // Build the result HTML
+      const resultHTML = `
+        <div class="result-label">${riskLabel}</div>
+        <div class="result-detail">${riskDetail}</div>
+        <div class="aspirin-rec"><strong>Aspirin guidance:</strong> ${aspirinRec}</div>
+      `;
+
+      // Update the DOM
+      const resultEl = document.getElementById("result");
+      resultEl.innerHTML = resultHTML;
+      resultEl.className = cssClass;
+      resultEl.style.display = "block";
+      resultEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  </script>
+
+</body>
+</html>
+```
+
+Open that file in any browser. Select some risk factors. Click the button. You have a working clinical decision-support tool.
+
+No server. No npm. No build step. One file.
+
+### What the Code Is Doing
+
+The JavaScript starts with one line:
+
+```js
+document.getElementById("calculate-btn").addEventListener("click", function () {
+```
+
+This is the DOM and events in one statement. Find the button by its `id`. When it is clicked, run this function.
+
+Inside the function, `querySelectorAll` reads every checked checkbox from each risk group. The `Array.from` call converts the result into a regular JavaScript array, which is easier to work with.
+
+```js
+const highFactors = Array.from(
+  document.querySelectorAll('input[name="high"]:checked')
+);
+```
+
+The risk logic is a straightforward if/else chain. One high-risk factor means high risk. Two or more moderate factors means moderate risk. This maps directly to ACOG Practice Bulletin 222. The logic is readable because we wrote it that way.
+
+At the end, we update the DOM:
+
+```js
+resultEl.innerHTML = resultHTML;
+resultEl.className = cssClass;
+resultEl.style.display = "block";
+```
+
+Three lines. That is all it takes to show a result.
+
+### What This Version Lacks
+
+This version has no types. The `highCount` variable holds a number, but JavaScript does not enforce that. If something in a future version of this code accidentally put a string there, the calculation would fail silently. Post 2 (TypeScript) fixes this.
+
+It has no persistent storage. Refresh the page and the selections are gone. Post 8 (Postgres and Prisma) fixes this.
+
+It has no styling system beyond a few inline rules. Post 7 (Tailwind) fixes this.
+
+It is not deployed anywhere. Post 9 (Deployment) fixes this.
+
+But it works. Open it in a browser right now and it works. That is not a small thing.
+
+<Callout type="note">
+  Save this file. You will rewrite it in every post that follows. By Post 9 it
+  will be a full-stack deployed application, but the logic you just wrote — read
+  the inputs, calculate the risk tier, update the DOM — is still there at the
+  core.
+</Callout>
+
+---
+
+## What Can Go Wrong
+
+**The calculation runs on click but shows nothing.** Check that the `id` on your button matches exactly what is in `document.getElementById`. JavaScript is case-sensitive. `calculate-btn` and `Calculate-Btn` are not the same.
+
+**The result appears and then immediately disappears.** This happens when a `<button>` inside a `<form>` defaults to type `submit`, reloading the page. The calculator above uses `type="button"` explicitly to prevent this. If you adapt this code and see that behavior, check the button's type attribute.
+
+**The risk tier shows "Low Risk" even with boxes checked.** Open the browser console (F12 on most browsers, then click "Console"). Look for error messages in red. The most common cause is a typo in the `name` attribute of the checkboxes — `querySelectorAll('input[name="high"]:checked')` will find nothing if any checkbox has `name="High"` instead.
+
+**The file opens but shows a blank page.** The HTML file may not be saved with a `.html` extension. Some text editors default to `.txt`. Rename it and try again.
+
+---
+
+## Closing
+
+JavaScript is thirty years old. It has been extended, patched, transpiled, and rebuilt so many times that the language running in a modern browser barely resembles what Brendan Eich wrote in ten days in 1995. But it is still the only language that runs everywhere a patient might be.
+
+That fact has not changed. It will not change.
+
+The clinical framing I keep coming back to is vital signs. You never see the vital sign monitoring system itself. You see the numbers it surfaces. The moment it fails, everything else in the clinical encounter becomes harder. JavaScript is the same. You never see it. Everything patient-facing depends on it.
+
+You now have a working clinical tool. It is rough. It has no types, no persistent storage, no deployment, no design system. Every post from here builds one more layer.
+
+In Post 2, we rewrite this calculator in TypeScript and add the type safety that clinical software requires.
+
+---
+
+<SeriesNav
+  current={1}
+  posts={[
+    { label: "Series Overview", href: "/blog/physician-developer-stack-intro" },
+    { label: "JavaScript", href: "/blog/physician-developer-stack-javascript", current: true },
+    { label: "TypeScript", href: "/blog/physician-developer-stack-typescript" },
+    { label: "Python", href: "/blog/physician-developer-stack-python" },
+    { label: "AI-Assisted Coding", href: "/blog/physician-developer-stack-ai" },
+    { label: "MDX", href: "/blog/physician-developer-stack-mdx" },
+    { label: "Astro", href: "/blog/physician-developer-stack-astro" },
+    { label: "Tailwind CSS", href: "/blog/physician-developer-stack-tailwind" },
+    { label: "Postgres & Prisma", href: "/blog/physician-developer-stack-postgres" },
+    { label: "Deployment", href: "/blog/physician-developer-stack-deployment" },
+  ]}
+/>

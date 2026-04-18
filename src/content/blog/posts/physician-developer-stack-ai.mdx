@@ -1,0 +1,295 @@
+---
+title: "AI-Assisted Coding: Your Second Pair of Hands"
+description: "Claude Code, Cursor, and Copilot do not replace judgment. They compress the feedback loop for physician-developers who still read every line before they ship."
+pubDate: "2026-04-19T09:04:00-04:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags: ["ai coding", "claude code", "cursor", "physician-developer", "productivity"]
+image:
+  url: "/images/posts/physician-developer-stack-ai.jpeg"
+  alt: "A physician-developer working at night with an AI coding assistant open beside a software project"
+readingTime: 13
+featured: false
+draft: false
+---
+import Callout from '../../../components/Callout.astro';
+import SeriesNav from '../../../components/SeriesNav.astro';
+
+I was working on a risk model at eleven on a Tuesday night. I needed to convert the Python script from Post 3 into a FastAPI endpoint. I knew what it needed to do. I did not have the FastAPI routing syntax in my head.
+
+I opened Claude Code, described the function's inputs and outputs in two sentences, and had a working endpoint in four minutes. I read every line before using it. I changed two variable names and one return structure. It compiled. It ran correctly.
+
+I did not feel like I had cheated. I felt like I had a colleague who had the syntax memorized.
+
+---
+
+## What AI Coding Tools Actually Do
+
+AI coding tools do not understand code the way you understand a chest X-ray.
+
+They are large language models trained on enormous quantities of text, including enormous quantities of code. When you give one a prompt, it predicts what code is most likely to follow based on patterns in its training data. When those patterns are common and well-documented — calling a FastAPI route, writing a pandas filter, setting up a TypeScript interface — the output is usually correct.
+
+When the patterns are unusual — niche APIs, very recent library versions, your institution's internal data structures, clinical workflows with non-obvious edge cases — the output becomes less reliable.
+
+Understanding this distinction is the foundation of using these tools well.
+
+## The Three Tools
+
+### Claude Code
+
+Claude Code is an AI assistant that runs in your terminal. You open it in your project directory and work with it through a command-line interface. It can read and edit files in your project, run commands, and explain what it is doing.
+
+```bash
+# Install Claude Code
+npm install -g @anthropic-ai/claude-code
+
+# Run it in your project directory
+claude
+```
+
+What makes Claude Code useful for physician-developers is that it operates on your whole project. You can ask it to add a field to your TypeScript interface and update every file that uses that interface. You can ask it to explain a function you do not understand. You can ask it to find the bug in a specific file.
+
+The command-line interface means you work in the same terminal where you compile and run your code. There is no context switch.
+
+### Cursor
+
+Cursor is a code editor built on top of VS Code. If you already use VS Code, the transition is nearly zero. Cursor embeds an AI assistant directly in the editor. You write code and the assistant watches. It suggests completions, answers questions in a chat panel, and can rewrite selected sections when you ask.
+
+The main advantage over Claude Code is the visual integration. You see the code and the AI suggestion side by side. The main tradeoff is that you are working in an editor, not a terminal, which matters less as you get more comfortable.
+
+### GitHub Copilot
+
+Copilot is a VS Code extension (and extension for other editors) that provides inline completions as you type. It watches your code and suggests what comes next, in the same way autocomplete works in an EHR but considerably more capable.
+
+Copilot's strength is speed on repetitive patterns. Writing a series of similar TypeScript interfaces. Filling in the body of a function whose signature makes the intent clear. It is less useful for architectural decisions or for explaining unfamiliar code.
+
+## Which One Should You Use
+
+Use Claude Code if you prefer working in a terminal and want an assistant that can operate across your whole project.
+
+Use Cursor if you prefer a visual editor and want the AI embedded in the interface.
+
+Use Copilot as a secondary layer either way. It costs less, it integrates with almost every editor, and its inline completions are genuinely useful for filling in boilerplate.
+
+The honest answer is that I use all three. Claude Code for project-level work and complex rewrites. Cursor when I am building something visually. Copilot running in the background for completions.
+
+You do not need to pick one permanently. Start with Claude Code.
+
+## Prompting as a Clinical Skill
+
+A physician who writes a vague consult order gets a vague consult. A physician who writes a specific one — including the question, the relevant history, and what they need the consultant to decide — gets a useful answer.
+
+Prompting an AI coding tool is the same skill.
+
+### Be specific about what exists and what you need
+
+**Vague:** "Add authentication to my app."
+
+**Specific:** "I have a FastAPI backend in `api/main.py` and a Postgres database connected via Prisma. I need to add a login endpoint that accepts a username and password, checks it against the `users` table, and returns a JWT. Use the python-jose library."
+
+The specific version tells the tool what you have, what you need, and the implementation constraints. The vague version produces a generic template that probably does not fit your project structure.
+
+### Describe the clinical contract, not just the technical one
+
+When you are building clinical logic, state the clinical requirement explicitly.
+
+**Without clinical context:** "Write a function that takes a number and returns a risk tier."
+
+**With clinical context:** "Write a TypeScript function that takes a count of high-risk preeclampsia factors and moderate-risk factors as separate parameters. Return one of three strings: 'high', 'moderate', or 'low', following ACOG Practice Bulletin 222 criteria. A single high-risk factor returns 'high'. Two or more moderate factors with no high-risk factors returns 'moderate'. Everything else returns 'low'."
+
+The second prompt produces code that matches the clinical specification. The first produces code that might technically work but whose logic is anyone's guess.
+
+### Ask it to explain before you use it
+
+Before running any AI-generated code that touches patient-facing logic, ask the tool to explain what the code does in plain language.
+
+```
+Explain what this function does step by step, and identify any edge cases 
+where it might return an unexpected result.
+```
+
+If the explanation reveals a misunderstanding — the tool assumed gestational age is in days, not weeks, for example — you catch that before it causes a problem.
+
+### Give it the context of the series
+
+When working on a project with existing conventions, tell the tool what those conventions are.
+
+```
+I am working on a TypeScript project. All risk calculations are pure functions 
+that take a typed input interface and return a typed result interface. No DOM 
+access inside calculation functions. Add a function that calculates a severity 
+score based on blood pressure readings following this pattern.
+```
+
+The output will match your project's conventions rather than introducing a new pattern.
+
+## The Hard Line Around PHI
+
+This is not negotiable, so I will state it plainly.
+
+Do not paste PHI into any AI coding tool prompt.
+
+Not names. Not MRNs. Not dates of service. Not clinical notes. Not lab values attached to any patient identifier.
+
+Claude Code runs locally in your terminal and its inputs are not used to train Anthropic's models by default. That helps. But the principle holds regardless of the tool: the moment you paste identifiable patient information into an AI assistant, you have created a potential HIPAA disclosure that your institution did not authorize and that you cannot retract.
+
+The way to work around this is straightforward. Use de-identified examples. Use synthetic data. Describe the structure of the data without including actual patient values.
+
+```
+# Wrong: actual patient data in the prompt
+"The patient has Hgb 8.1, platelets 87k, creatinine 1.3. Write a 
+function that determines if this patient needs urgent evaluation."
+
+# Right: structure without PHI
+"Write a Python function that takes hemoglobin (float, g/dL), 
+platelet count (int, K/uL), and creatinine (float, mg/dL) and returns 
+True if any value crosses the urgent-threshold criteria I define."
+```
+
+The function is the same. No patient data touched a third-party system.
+
+<Callout type="warning">
+  If your institution requires a Business Associate Agreement for AI tools used
+  in clinical workflows, check whether the tools you use have signed BAAs before
+  using them in any context where PHI could appear. Most consumer AI tools do
+  not have BAAs. Most enterprise tiers do. Know which one you are using.
+</Callout>
+
+## The Physician as Director, Not Passenger
+
+The clinical analogy I keep returning to is the attending-intern relationship.
+
+An intern who is good at their job can draft a note, place orders, and run through a differential. You supervise. You read everything before it goes out. You catch the errors that come from incomplete context, from inexperience, from the gaps between what the intern knows and what the case actually requires.
+
+AI coding tools occupy the same role. They are fast, broadly capable, and they miss things. They miss edge cases that are not well-represented in training data. They miss institutional context that you have not told them. They produce code that is syntactically correct and clinically wrong.
+
+Your job is not to write every line. Your job is to know enough to direct the work and evaluate the output.
+
+That requires understanding the tools. A physician who signs an order without understanding it has not reduced their workload. They have transferred their liability to someone who has less information. The same principle applies here.
+
+---
+
+## Hands-On: Adding a Gestational Age Field to the Risk Companion
+
+We are going to use Claude Code to add a feature to the TypeScript version of the Risk Companion from Post 2.
+
+The feature: accept gestational age in weeks and flag whether the patient is in a window where aspirin initiation is still appropriate (before 28 weeks).
+
+### Set up the project
+
+If you do not have Claude Code installed yet:
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+Navigate to the folder where you saved `risk-calculator.ts` from Post 2. Then start Claude Code:
+
+```bash
+claude
+```
+
+### The prompt
+
+Type this into the Claude Code interface:
+
+```
+I have a TypeScript file called risk-calculator.ts. It exports a function 
+called calculatePreeclampsiaRisk that takes a RiskInput (highRiskFactors 
+and moderateRiskFactors as string arrays) and returns a RiskResult.
+
+I want to add gestational age in weeks as an input field. Add it to the 
+RiskInput interface as a required number field called gaWeeks. 
+
+In the RiskResult, add a boolean field called aspirinWindowOpen. It should 
+be true if gaWeeks is between 12 and 28 inclusive, and false otherwise.
+
+Update calculatePreeclampsiaRisk to populate aspirinWindowOpen. If the 
+result is high or moderate risk AND aspirinWindowOpen is false, append 
+a note to aspirinGuidance saying "Aspirin initiation window has passed 
+(>28 weeks). Discuss with attending."
+
+Do not change the existing logic for risk tier calculation. Only add the 
+gestational age field and the window check.
+```
+
+### What to do with the output
+
+Claude Code will show you the proposed changes before applying them. Read them.
+
+Check that:
+- `gaWeeks` was added to `RiskInput` and nowhere else was modified
+- `aspirinWindowOpen` is computed from `gaWeeks` directly, not from a string comparison or an indirect calculation
+- The window boundary (12 to 28) matches the clinical specification
+- The guidance note is appended, not replacing the existing guidance
+
+If anything looks wrong, say so in the next prompt. Claude Code retains the context of the conversation.
+
+```
+The aspirinWindowOpen logic looks correct, but the guidance note should 
+only appear if aspirinRecommended is true. If the risk is low, we should 
+not mention the aspirin window at all.
+```
+
+Iterate until the output matches the clinical specification. Then apply the changes.
+
+### The compiled result
+
+After Claude Code applies the changes, compile:
+
+```bash
+tsc risk-calculator.ts
+```
+
+Fix any compiler errors. If there are errors, paste the error message into Claude Code and ask what is causing it. Nine times out of ten it will have the right answer.
+
+<Callout type="note">
+  The final version of risk-calculator.ts with the gestational-age field will
+  be the version we carry into Post 5 (MDX), where we embed it in a patient
+  education page with a live slider for gestational age input.
+</Callout>
+
+---
+
+## What Can Go Wrong
+
+**Claude Code proposes changes that compile but produce wrong clinical output.** This is the central risk. The tool does not know ACOG Practice Bulletin 222. It knows what you told it in the prompt. If your prompt was imprecise, the output will be imprecise. Test every clinical calculation with known inputs against known expected outputs.
+
+**The AI rewrites more than you asked it to.** This happens when the prompt is ambiguous about scope. Add explicit scope constraints: "Do not change any function other than calculatePreeclampsiaRisk." Review diffs carefully before accepting.
+
+**The AI suggests using a library or API that does not exist or has been deprecated.** This is most common for very recent libraries or for obscure packages. Before adding any npm package or pip library that the AI suggests, verify it exists and check its maintenance status.
+
+**You lose track of what the AI changed versus what you wrote.** Use git. Commit your working version before every AI-assisted change. If the change introduces a bug, `git diff` shows you exactly what changed.
+
+---
+
+## Closing
+
+The resident who built the gestational-age calculator in plain JavaScript — the one with no type safety, no tests, and no separation of concerns — would have taken four hours to add a new field to it. Tracking down every place the data touched, making sure nothing broke, verifying the output manually.
+
+With TypeScript, Claude Code, and a clear prompt, it takes twenty minutes. Fifteen of those are reading what the tool produced.
+
+The technology does not make the clinical decisions. It reduces the distance between the clinical decision you have already made and the working code that implements it.
+
+That is what a second pair of hands is for.
+
+In Post 5, we leave pure code and move into MDX — the format that lets clinical writing and clinical code exist in the same file.
+
+---
+
+<SeriesNav
+  current={4}
+  posts={[
+    { label: "Series Overview", href: "/blog/physician-developer-stack-intro" },
+    { label: "JavaScript", href: "/blog/physician-developer-stack-javascript" },
+    { label: "TypeScript", href: "/blog/physician-developer-stack-typescript" },
+    { label: "Python", href: "/blog/physician-developer-stack-python" },
+    { label: "AI-Assisted Coding", href: "/blog/physician-developer-stack-ai", current: true },
+    { label: "MDX", href: "/blog/physician-developer-stack-mdx" },
+    { label: "Astro", href: "/blog/physician-developer-stack-astro" },
+    { label: "Tailwind CSS", href: "/blog/physician-developer-stack-tailwind" },
+    { label: "Postgres & Prisma", href: "/blog/physician-developer-stack-postgres" },
+    { label: "Deployment", href: "/blog/physician-developer-stack-deployment" },
+  ]}
+/>

@@ -1,0 +1,369 @@
+---
+title: "MDX: Where Writing Meets Code"
+description: "Most physician writing dies in static documents. MDX turns clinical education into living pages that can explain, calculate, and update in one file."
+pubDate: "2026-04-19T09:05:00-04:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Development"
+tags: ["mdx", "markdown", "physician-developer", "content", "patient education"]
+image:
+  url: "/images/posts/physician-developer-stack-mdx.jpeg"
+  alt: "An MDX document with clinical prose and an interactive component displayed side by side"
+readingTime: 10
+featured: false
+draft: false
+---
+import Callout from '../../../components/Callout.astro';
+import SeriesNav from '../../../components/SeriesNav.astro';
+
+I have written the same preeclampsia patient education document three times.
+
+The first version was a Word document. It lived on a shared drive that required a VPN to access, required three clicks to find, and printed badly because someone had adjusted the margins. Patients received a paper copy that they left in the waiting room.
+
+The second version was a PDF I uploaded to our practice website. It was current as of the upload date. It is probably still on the server. I have not updated it since 2022.
+
+The third version is an MDX file on DoctorsWhoCode.blog. It renders as a web page. It has a gestational-age slider that calculates when aspirin initiation is still possible. When the guidance changes, I update one file and push to GitHub. The site rebuilds in ninety seconds.
+
+The third version is the one patients actually use.
+
+---
+
+## What MDX Is
+
+MDX is Markdown with one addition: you can use React components inside it.
+
+Markdown is the format most physicians already use without knowing it. When you write `**bold**` in a Slack message or use `#` to create a heading in a GitHub readme, that is Markdown. It is plain text with lightweight syntax that converts to HTML.
+
+MDX takes that format and adds the ability to drop interactive components into the middle of the prose.
+
+```mdx
+## Understanding Your Risk
+
+Preeclampsia affects 5 to 8 percent of pregnancies. 
+Your risk depends on specific factors present at the start of your pregnancy.
+
+<RiskCalculator />
+
+The calculator above uses the ACOG Practice Bulletin 222 criteria.
+```
+
+The `<RiskCalculator />` line is not Markdown. It is JSX — the same syntax used in React. When MDX processes this file, it renders the prose as HTML and inserts the live component exactly where it appears in the text.
+
+The result is a web page where text and interactive tools are woven together. Not a static page with a link to an external calculator. Not a PDF with a URL printed at the bottom. The same document.
+
+## Why This Matters for Physicians
+
+Physicians produce two kinds of content: content that is meant to inform and content that is meant to help a patient or clinician make a decision.
+
+Most patient education is the first kind. It describes a condition. It lists warning signs. It gives a phone number.
+
+The best clinical decision support is the second kind. It takes inputs specific to the patient, runs them through a validated model, and returns a recommendation.
+
+The problem is that these two kinds of content are almost always in separate places. The patient education pamphlet is in a PDF. The decision-support tool is on a separate website, if it exists at all. The physician reads from one and switches to the other.
+
+MDX closes that gap. You write the explanatory prose the same way you always have. You drop the decision-support component into the exact place in the document where it is needed. The patient reading the education page does not need to navigate anywhere else.
+
+A periviability counseling page can hold a live gestational-age slider. A postpartum hypertension instruction sheet can include a blood pressure input that tells the patient whether to call the office or go to the emergency department. An antepartum testing instruction guide can embed a kick-count tracker.
+
+All of it in one document. All of it updated in one place.
+
+## The MDX File Format
+
+An MDX file is a `.mdx` file. It looks like Markdown at the top and may include import statements and component tags anywhere in the body.
+
+```mdx
+---
+title: "Understanding Preeclampsia Risk"
+description: "What your risk factors mean and when to act."
+pubDate: "2026-04-01"
+---
+
+import RiskSlider from "../../../components/RiskSlider";
+import Callout from "../../../components/Callout.astro";
+
+## What Is Preeclampsia?
+
+Preeclampsia is a pregnancy complication characterized by high blood pressure 
+and signs of damage to organ systems, most often the liver and kidneys.
+
+<Callout type="warning">
+  Call your provider immediately if your blood pressure is above 160/110 
+  or if you have a severe headache, vision changes, or upper abdominal pain.
+</Callout>
+
+## Your Aspirin Window
+
+Low-dose aspirin reduces the risk of preeclampsia in high-risk patients. 
+It works best when started between 12 and 16 weeks. Use the slider below 
+to check whether you are still within the initiation window.
+
+<RiskSlider />
+
+After 28 weeks, aspirin initiation is no longer recommended even for 
+high-risk patients. If you are past that window, discuss monitoring 
+options with your provider.
+```
+
+The frontmatter at the top (the section between the `---` lines) is YAML. It holds metadata. In Post 6, Astro reads this metadata to build your site's routing and SEO tags automatically.
+
+The import statements bring in the components. The component tags (`<Callout>`, `<RiskSlider>`) render wherever they appear in the text. Everything else is standard Markdown.
+
+## Components in MDX
+
+A component in MDX can be an Astro component or a React component. It can be as simple as a styled box or as complex as a fully interactive calculator.
+
+The `Callout` component we have been using in this series is a simple example. In this repo, it is an Astro component:
+
+```astro
+--- 
+interface Props {
+  type: "clinical" | "technical" | "warning" | "note";
+  title?: string;
+}
+
+const { type, title } = Astro.props;
+---
+
+<aside>
+  <p>{title ?? type}</p>
+  <slot />
+</aside>
+```
+
+In the MDX file, you use it like this:
+
+```mdx
+<Callout type="warning">
+  This is a warning for the patient.
+</Callout>
+```
+
+The component can accept props, respond to user input, fetch data, or do anything a React component can do. It is not constrained to static content.
+
+---
+
+## Hands-On: The Preeclampsia Education Page
+
+We are building the patient-facing MDX file for the Preeclampsia Risk Companion. It will eventually live inside the Astro project we build in Post 6. For now, we are writing the content and the component.
+
+### The Risk Slider Component
+
+Create `components/RiskSlider.tsx`:
+
+```tsx
+// components/RiskSlider.tsx
+// A gestational-age slider that shows whether the aspirin initiation 
+// window is open, used inside the preeclampsia education MDX page.
+
+import { useState } from "react";
+
+const MIN_GA = 10;
+const MAX_GA = 40;
+const WINDOW_OPEN_MIN = 12;
+const WINDOW_OPEN_MAX = 28;
+const OPTIMAL_MAX = 16;
+
+function getWindowStatus(ga: number): {
+  label: string;
+  detail: string;
+  colorClass: string;
+} {
+  if (ga < WINDOW_OPEN_MIN) {
+    return {
+      label: "Too early to start",
+      detail: `At ${ga} weeks, aspirin initiation is not yet recommended. The window opens at 12 weeks.`,
+      colorClass: "bg-gray-100 border-gray-300 text-gray-700",
+    };
+  }
+  if (ga <= OPTIMAL_MAX) {
+    return {
+      label: "Optimal window — start now",
+      detail: `At ${ga} weeks, you are in the optimal initiation window. Starting before 16 weeks provides the greatest benefit.`,
+      colorClass: "bg-green-50 border-green-400 text-green-800",
+    };
+  }
+  if (ga <= WINDOW_OPEN_MAX) {
+    return {
+      label: "Window still open",
+      detail: `At ${ga} weeks, aspirin initiation is still appropriate, though benefit is greatest before 16 weeks. Discuss with your provider.`,
+      colorClass: "bg-yellow-50 border-yellow-400 text-yellow-800",
+    };
+  }
+  return {
+    label: "Window has closed",
+    detail: `At ${ga} weeks, the aspirin initiation window has passed. Aspirin is not recommended after 28 weeks. Focus on monitoring.`,
+    colorClass: "bg-red-50 border-red-300 text-red-800",
+  };
+}
+
+export function RiskSlider() {
+  const [ga, setGa] = useState<number>(20);
+  const status = getWindowStatus(ga);
+
+  return (
+    <div className="my-6 p-5 border border-gray-200 rounded-lg bg-white">
+      <label
+        htmlFor="ga-slider"
+        className="block text-sm font-semibold text-gray-700 mb-3"
+      >
+        Current gestational age: <span className="text-blue-700">{ga} weeks</span>
+      </label>
+
+      <input
+        id="ga-slider"
+        type="range"
+        min={MIN_GA}
+        max={MAX_GA}
+        value={ga}
+        onChange={(e) => setGa(Number(e.target.value))}
+        className="w-full accent-blue-600 mb-4"
+      />
+
+      <div className={`p-4 border-l-4 rounded-r ${status.colorClass}`}>
+        <p className="font-semibold mb-1">{status.label}</p>
+        <p className="text-sm">{status.detail}</p>
+      </div>
+
+      <p className="mt-3 text-xs text-gray-500">
+        Based on ACOG Practice Bulletin 222. This tool does not replace clinical
+        judgment. Discuss your individual risk with your provider.
+      </p>
+    </div>
+  );
+}
+```
+
+### The MDX Patient Education Page
+
+Create `src/content/blog/posts/preeclampsia-aspirin-guide.mdx`:
+
+```mdx
+---
+title: "Aspirin and Preeclampsia: What Your Risk Means"
+description: "A guide for patients with preeclampsia risk factors: what low-dose aspirin does, when to start it, and what happens if you are past the window."
+pubDate: "2026-04-01"
+author: "Chukwuma Onyeije, MD, FACOG"
+category: "Patient Education"
+tags: ["preeclampsia", "aspirin", "patient education", "prenatal care"]
+---
+
+import RiskSlider from "../../../components/RiskSlider";
+import Callout from "../../../components/Callout.astro";
+
+Preeclampsia affects roughly 1 in 14 pregnancies in the United States. 
+In patients with specific risk factors, low-dose aspirin started early in 
+pregnancy reduces that risk by about 10 to 20 percent.
+
+That reduction is meaningful. It is also time-limited. The benefit depends 
+on starting before the right window closes.
+
+## What Low-Dose Aspirin Does
+
+Aspirin at 81 mg per day interferes with the abnormal placental blood 
+vessel development that underlies preeclampsia. It works best when started 
+before 16 weeks, while that development is still happening.
+
+It does not eliminate risk. It shifts the probability.
+
+## Your Initiation Window
+
+Use the slider below to see whether you are still within the window.
+
+<RiskSlider />
+
+## Who Should Take It
+
+Your provider will recommend low-dose aspirin if you have:
+
+- A prior pregnancy complicated by preeclampsia
+- Chronic high blood pressure
+- Diabetes (Type 1 or Type 2)
+- Kidney disease
+- An autoimmune condition such as lupus or antiphospholipid syndrome
+- A multiple pregnancy (twins or more)
+
+They may also recommend it if you have two or more moderate-risk factors, 
+such as being a first-time mother, having a BMI over 30, or being 35 or older.
+
+<Callout type="warning">
+  Do not start or stop aspirin without talking to your provider. Aspirin has 
+  interactions with other medications and is not appropriate for every patient.
+</Callout>
+
+## Warning Signs That Require Immediate Attention
+
+Call your provider or go to labor and delivery immediately if you experience:
+
+- Blood pressure above 160/110 on two readings five minutes apart
+- Severe headache that does not respond to acetaminophen
+- Visual changes: blurring, spots, or loss of vision
+- Upper abdominal pain, especially on the right side
+- Sudden swelling of the face or hands
+
+These may be signs of severe preeclampsia or a related condition called 
+HELLP syndrome. Do not wait for your next appointment.
+
+## Questions to Ask at Your Next Visit
+
+- Do I have any high-risk or moderate-risk factors for preeclampsia?
+- Should I be on aspirin, and if so, when should I start?
+- How often will my blood pressure be monitored?
+- At what point would you recommend additional testing?
+```
+
+### What You Now Have
+
+Two files. One component that accepts a gestational age and shows clinical guidance. One MDX document that uses that component inside structured prose.
+
+Neither file works in isolation yet. In Post 6, we drop both of them into an Astro project and they become a live web page.
+
+<Callout type="note">
+  The RiskSlider component uses React's `useState` hook. Astro handles this
+  through its "islands" architecture — static HTML everywhere except where
+  interactivity is needed. Post 6 explains how that works. For now, the
+  component is ready.
+</Callout>
+
+---
+
+## What Can Go Wrong
+
+**The component imports fail with "Cannot find module."** The import path in the MDX file must match the actual file path relative to the MDX file. If your component is at `src/components/RiskSlider.tsx` and your MDX file is at `src/content/blog/posts/preeclampsia-aspirin-guide.mdx`, the import path is `../../../components/RiskSlider`.
+
+**The slider renders but does not update.** Check that the `onChange` handler calls `setGa(Number(e.target.value))`. The `e.target.value` from a range input is a string. Without the `Number()` conversion, the comparison logic in `getWindowStatus` will fail silently.
+
+**The MDX file renders but the component shows nothing.** In Astro (Post 6), interactive components need the `client:load` or `client:visible` directive to hydrate in the browser. A component rendered without a directive is static HTML only — it will not respond to user input. The directive syntax and when to use each one is covered in Post 6.
+
+**The frontmatter does not appear on the page.** Frontmatter is metadata. It does not render into the body of the page automatically. The framework (Astro) reads it and uses it for routing, SEO tags, and layouts. You reference frontmatter fields in layout files, not in the MDX body.
+
+---
+
+## Closing
+
+Word documents do not receive updates. PDFs do not know your patient's gestational age. Static web pages cannot run calculations.
+
+MDX solves a problem that physicians have had since the first patient education handout was printed: the information we write cannot do any of the work we know how to do.
+
+The preeclampsia education page we just built knows when aspirin starts. It tells the patient whether their window is open. It updates instantly as they move the slider. When the guidance changes, one file changes. The next patient who visits that page sees the current recommendation.
+
+That is the work worth doing.
+
+In Post 6, we take this file and the rest of the project and build it into a fast, deployable website with Astro.
+
+---
+
+<SeriesNav
+  current={5}
+  posts={[
+    { label: "Series Overview", href: "/blog/physician-developer-stack-intro" },
+    { label: "JavaScript", href: "/blog/physician-developer-stack-javascript" },
+    { label: "TypeScript", href: "/blog/physician-developer-stack-typescript" },
+    { label: "Python", href: "/blog/physician-developer-stack-python" },
+    { label: "AI-Assisted Coding", href: "/blog/physician-developer-stack-ai" },
+    { label: "MDX", href: "/blog/physician-developer-stack-mdx", current: true },
+    { label: "Astro", href: "/blog/physician-developer-stack-astro" },
+    { label: "Tailwind CSS", href: "/blog/physician-developer-stack-tailwind" },
+    { label: "Postgres & Prisma", href: "/blog/physician-developer-stack-postgres" },
+    { label: "Deployment", href: "/blog/physician-developer-stack-deployment" },
+  ]}
+/>

@@ -1,0 +1,135 @@
+---
+title: "The Physician-Developer's Stack: Nine Tools. One Doctor. A Workflow That Actually Ships."
+description: "A practical 10-part Doctors Who Code series for physicians who want to build and ship clinical tools with the modern web stack, from JavaScript to deployment."
+pubDate: "2026-04-19T09:00:00-04:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Development"
+tags: ["physician-developer", "web development", "clinical software", "tech stack", "series intro"]
+image:
+  url: "/images/posts/physician-developer-stack-intro.jpeg"
+  alt: "A physician-developer standing between a clinical workstation and a coding setup with multiple screens"
+readingTime: 6
+featured: true
+draft: false
+---
+import Callout from '../../../components/Callout.astro';
+import SeriesNav from '../../../components/SeriesNav.astro';
+
+A resident asked me a question after grand rounds last spring. She had just heard me give a talk on physician-developers and wanted to know where to start if she wanted to build clinical tools.
+
+I gave her the honest answer: it is not one thing. It is a sequence.
+
+She pulled out her phone to take notes. I told her to put it away. I said I would write it up.
+
+This series is that write-up.
+
+---
+
+## The Problem With Every Other Resource
+
+The resources that exist for learning web development were written for someone with specific conditions. They assume eight uninterrupted hours a day. They assume no pre-existing technical vocabulary from another domain. They assume that the reader's primary identity is developer-in-training.
+
+Most physicians who want to build things do not fit that profile.
+
+You already have a technical vocabulary. You think in systems. You are used to learning dense material on a schedule that does not accommodate your learning preferences. What you need is not another tutorial that starts from zero and assumes nothing.
+
+What you need is someone to translate.
+
+The modern web stack is not complicated. It is unfamiliar. Those are different problems. The ICU looks chaotic to a first-year medical student and routine to a third-year resident. Nothing about the ICU changed. The frame changed. That is what this series does for the stack.
+
+## What the Stack Is
+
+I use nine tools to build and ship clinical software. Not every tool in existence. Not the most theoretically correct set. The nine I actually reach for.
+
+Three are programming languages. Three are frameworks or formatting layers. One is a database pair. One is a styling system. One is a deployment target. Together they cover what a physician-developer in 2026 needs to build a working clinical tool and put it in front of patients.
+
+Here is how they connect.
+
+**JavaScript** is the foundation. It is the only language that runs natively in every browser on earth. Every EHR interface, every patient portal, every consent form on a tablet in your waiting room is running JavaScript. If you want to change how medicine feels on a screen, you start here.
+
+**TypeScript** sits on top of JavaScript and adds one thing: types. In clinical software, the difference between a string and a number is not a stylistic preference. Gestational age is not a string. A serum creatinine is not a boolean. TypeScript enforces that distinction at the level of the compiler, before the code runs. It catches the class of errors that hurt patients because they are silent.
+
+**Python** is where clinical data lives. Every major biostatistics package assumes it. Every public health dataset provides a Python interface. If JavaScript is the language of the patient-facing screen, Python is the language of the data behind it.
+
+Those three get you to a full-stack capability. The next four shape how you use them.
+
+**AI-assisted coding** is not a tool in the traditional sense. It is the mode in which you use every other tool. Claude Code, Cursor, Copilot. I have a terminal pane with Claude Code open on my screen right now. It does not replace understanding. It multiplies it.
+
+**MDX** is Markdown plus React components. It is how I write patient education, CME content, and clinical decision aids that can actually run logic. A periviability counseling page that holds a live gestational-age slider. A postpartum instruction sheet that generates custom weight targets. MDX makes that kind of document possible.
+
+**Astro** is the framework this site runs on. It is designed for content-first projects. It ships almost no JavaScript by default, which is a clinical virtue. A tool that loads on a resident's phone in a hospital dead zone is a tool that gets used.
+
+**Tailwind CSS** is how you make it look right without a designer. Most physician-built tools do not fail because the logic is wrong. They fail because the interface is hard to use. Design is a clinical intervention. Tailwind is how a solo physician-developer gets there.
+
+The last two close the backend.
+
+**Postgres and Prisma** are the database layer. If your app does not persist data, it is not a clinical tool. It is a calculator. Postgres is the database. Prisma is the interface between your code and the database. This is the post that makes the project longitudinal.
+
+**Vercel and Railway** are where you ship. Vercel runs the front end. Railway runs the back end and the database. Together they are how a physician-developer deploys without a DevOps team. An app on your laptop helps no one.
+
+<Callout type="note">
+  Every post in this series builds one layer of the same project: a preeclampsia
+  risk estimator with a patient-facing interface and a physician-facing admin
+  view. I call it the Preeclampsia Risk Companion. It starts as a single HTML
+  file in Post 1. It ends as a deployed full-stack app in Post 9. You can follow
+  the code at every stage or skip to the final version. Either approach works.
+</Callout>
+
+## Why Preeclampsia
+
+I picked preeclampsia as the running project for reasons that go beyond clinical familiarity.
+
+Preeclampsia is a condition where the right information, delivered at the right time, changes outcomes. Risk stratification matters. Patient understanding matters. The gap between what we know and what patients receive is not primarily a knowledge gap on the physician's side. It is a delivery gap. A software gap.
+
+A physician-developer who finishes this series will have built something that addresses a real problem. That is the point.
+
+The risk calculator is also tractable as a learning project. It takes real inputs. It produces a real output. It requires JavaScript for the interface, TypeScript for the safety, Python for the backend risk model, a database for the longitudinal data, and a deployed URL for the patient to actually use it. Every layer of the stack earns its place.
+
+## Who This Series Is For
+
+It is for physicians who have already crossed the first threshold. You have opened a terminal. You have written some code. You have pushed something to GitHub. You are past the stage where you need to learn what a variable is.
+
+What you have not done yet is built something that works end-to-end and lives at a URL that someone else can visit.
+
+This series closes that gap.
+
+It is not for physicians who have never opened a terminal. That is a different series, and I may write it, but it is not this one.
+
+It is not for professional software engineers. If you are already shipping production software for a living, most of this will be review. The clinical framing may be interesting. The stack choices may provoke an argument. But the pedagogical intent is not aimed at you.
+
+It is for the physician who has momentum but not a map.
+
+## A Note on AI
+
+This series assumes you will code alongside an AI assistant. I do. The honest question is not whether AI tools belong in a physician-developer's workflow. It is what role they play.
+
+They do not replace understanding. A physician who uses Claude Code without understanding the code that Claude Code produces is in the same position as a physician who signs an order they do not understand. The liability does not move.
+
+What AI-assisted coding does is compress the feedback loop. You can try more things. You can recover from mistakes faster. You can build systems that used to require a team. Post 4 covers exactly how I use these tools and, more importantly, where I stop trusting them.
+
+## How to Read This Series
+
+Read the posts in order the first time. The running project only makes sense in sequence. Each post assumes the previous one.
+
+After that, use it as a reference. Every post is written to stand alone as an explanation of the tool it covers.
+
+The first post is about JavaScript. It is already there. Start reading.
+
+---
+
+<SeriesNav
+  current={0}
+  posts={[
+    { label: "Series Overview", href: "/blog/physician-developer-stack-intro", current: true },
+    { label: "JavaScript", href: "/blog/physician-developer-stack-javascript" },
+    { label: "TypeScript", href: "/blog/physician-developer-stack-typescript" },
+    { label: "Python", href: "/blog/physician-developer-stack-python" },
+    { label: "AI-Assisted Coding", href: "/blog/physician-developer-stack-ai" },
+    { label: "MDX", href: "/blog/physician-developer-stack-mdx" },
+    { label: "Astro", href: "/blog/physician-developer-stack-astro" },
+    { label: "Tailwind CSS", href: "/blog/physician-developer-stack-tailwind" },
+    { label: "Postgres & Prisma", href: "/blog/physician-developer-stack-postgres" },
+    { label: "Deployment", href: "/blog/physician-developer-stack-deployment" },
+  ]}
+/>

@@ -1,0 +1,397 @@
+---
+title: "Astro: Building Fast, Clinical-Grade Websites Without the Bloat"
+description: "Physician-developer projects are usually content-first. Astro fits that shape by shipping less JavaScript, faster pages, and cleaner performance by default."
+pubDate: "2026-04-19T09:06:00-04:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Development"
+tags: ["astro", "web development", "physician-developer", "static sites", "performance"]
+image:
+  url: "/images/posts/physician-developer-stack-astro.jpeg"
+  alt: "A fast clinical content site displayed across screens with an architecture-focused web development workspace"
+readingTime: 14
+featured: false
+draft: false
+---
+import Callout from '../../../components/Callout.astro';
+import SeriesNav from '../../../components/SeriesNav.astro';
+
+I checked my site's Lighthouse score the morning after I migrated from WordPress to Astro.
+
+Performance: 98. Accessibility: 100. Best Practices: 100. SEO: 100.
+
+The WordPress site with a caching plugin and an optimized theme had been scoring in the low 60s for performance. The Astro site with zero configuration scored 98 on the first build.
+
+I did not do anything clever. Astro's defaults did it.
+
+---
+
+## Why Framework Choice Is a Clinical Decision
+
+A physician's website is not a social app. It does not need real-time updates. It does not need a shopping cart. It does not need user state synchronized across sessions.
+
+It needs to load. Quickly. On any device. Including a resident's phone on hospital Wi-Fi that has twelve other people on it.
+
+Most JavaScript frameworks — React, Next.js, Vue — solve problems that physician-developer projects do not have. They send a large JavaScript bundle to the browser and rebuild the entire page client-side. For a dashboard that changes data in real time, that architecture makes sense. For a clinical calculator and a set of patient education pages, it is unnecessary weight.
+
+Astro is designed for the content-first case. Its default behavior is to send HTML and CSS and nothing else. JavaScript arrives only in the components that specifically require it. Everything else is static.
+
+The result is a site that loads in under a second on a slow connection, scores well on Core Web Vitals, and costs almost nothing to host.
+
+## The Island Architecture
+
+Astro uses a mental model it calls islands.
+
+Imagine your web page as an ocean of static HTML. Most of it does not move. It is text, headings, images — content that does not need JavaScript. The page loads and it is done.
+
+An island is a section of the page that does need to be interactive. A risk calculator. A slider. A form. Each island is a React (or Svelte, or Vue) component that gets hydrated in the browser independently.
+
+```astro
+---
+// This runs only on the server at build time
+import { RiskSlider } from "../components/RiskSlider";
+---
+
+<!-- Static HTML — no JavaScript sent to browser -->
+<h1>Preeclampsia Risk Companion</h1>
+<p>Use the tool below to check your aspirin window.</p>
+
+<!-- Island — React component, hydrated client-side -->
+<RiskSlider client:visible />
+```
+
+The `client:visible` directive tells Astro to send the JavaScript for `RiskSlider` only when the component is visible in the viewport. Until then, the rest of the page is already loaded and usable.
+
+This matters for clinical tools. A page with three interactive components does not need to wait for all three to hydrate before the patient can read any text. The text loads instantly. The calculators load as the patient scrolls to them.
+
+## The Directives
+
+Astro has five client directives. You need to know three.
+
+`client:load` — Hydrate the component immediately when the page loads. Use this for components that are visible above the fold and need to be interactive right away.
+
+`client:visible` — Hydrate the component when it enters the viewport. Use this for calculators and tools that appear further down the page. The most common choice.
+
+`client:idle` — Hydrate the component when the browser is idle. Use this for low-priority interactive elements that the patient may or may not reach.
+
+A component without any directive renders as static HTML. It will look correct but will not respond to user input. This is the most common beginner error in Astro and the one the "What Can Go Wrong" section below addresses first.
+
+---
+
+## Hands-On: Building the Preeclampsia Risk Companion as an Astro Site
+
+We are assembling everything from Posts 1 through 5 into a working Astro project. By the end of this section, the Risk Companion will run as a local development site.
+
+### Scaffold the project
+
+```bash
+npm create astro@latest preeclampsia-risk-companion
+```
+
+Astro's setup wizard will ask a few questions. Choose:
+- "A basic, minimal starter" (not a blog template — we will add content collections manually)
+- TypeScript: Yes, with strict mode
+- Install dependencies: Yes
+
+Navigate into the project:
+
+```bash
+cd preeclampsia-risk-companion
+```
+
+### Add the integrations
+
+We need three integrations: React (for our interactive components), MDX (for content files), and Tailwind (for Post 7 — we install it now so we do not rebuild the project next post).
+
+```bash
+npx astro add react mdx tailwind
+```
+
+Astro's CLI will ask to install the packages and update your config. Say yes to both. Your `astro.config.mjs` will now look like this:
+
+```js
+// astro.config.mjs
+import { defineConfig } from "astro/config";
+import react from "@astrojs/react";
+import mdx from "@astrojs/mdx";
+import tailwind from "@astrojs/tailwind";
+
+export default defineConfig({
+  integrations: [react(), mdx(), tailwind()],
+});
+```
+
+### The project structure
+
+After setup, your project looks like this:
+
+```
+preeclampsia-risk-companion/
+├── src/
+│   ├── components/        ← Our React components go here
+│   ├── content/
+│   │   └── posts/         ← Our MDX files go here
+│   ├── layouts/
+│   │   └── BaseLayout.astro
+│   └── pages/
+│       └── index.astro
+├── public/                ← Static assets (images, fonts)
+├── astro.config.mjs
+├── package.json
+└── tsconfig.json
+```
+
+### Set up content collections
+
+Astro's content collections system reads your MDX files and gives you a typed API to query them. Create `src/content.config.ts`:
+
+```ts
+// src/content.config.ts
+import { defineCollection, z } from "astro:content";
+
+const posts = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date(),
+    author: z.string(),
+    authorUrl: z.string(),
+    category: z.string(),
+    tags: z.array(z.string()),
+    image: z
+      .object({
+        url: z.string(),
+        alt: z.string(),
+      })
+      .optional(),
+    draft: z.boolean().default(false),
+    featured: z.boolean().default(false),
+    readingTime: z.number().optional(),
+  }),
+});
+
+export const collections = { posts };
+```
+
+The `z.object` schema is Zod — a TypeScript validation library that Astro bundles. Every MDX file's frontmatter is now validated against this schema at build time. A post with a missing `title` field fails the build rather than silently rendering without one. The same principle as TypeScript type checking, applied to your content.
+
+### Move in the components
+
+Copy `RiskSlider.tsx` and `Callout.astro` from Post 5 into `src/components/`.
+
+Create `src/components/SeriesNav.astro`:
+
+```astro
+---
+interface Post {
+  label: string;
+  href: string;
+  current?: boolean;
+}
+
+interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+---
+
+<nav aria-label="Series navigation">
+  {posts.map((post, i) => (
+    <a href={post.href} aria-current={post.current ? "page" : undefined}>
+      {i + 1}. {post.label}
+    </a>
+  ))}
+</nav>
+```
+
+### Move in the MDX file
+
+Copy `preeclampsia-aspirin-guide.mdx` from Post 5 into `src/content/blog/posts/`.
+
+Fix the import path inside that file. From inside `src/content/blog/posts/`, the components live at `../../../components/`:
+
+```mdx
+import RiskSlider from "../../../components/RiskSlider";
+import Callout from "../../../components/Callout.astro";
+```
+
+### Build the base layout
+
+Create `src/layouts/BaseLayout.astro`:
+
+```astro
+---
+// src/layouts/BaseLayout.astro
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen bg-white text-gray-900">
+    <header class="border-b border-gray-200 py-4 px-6">
+      <a href="/" class="font-semibold text-blue-700 text-sm">
+        Preeclampsia Risk Companion
+      </a>
+    </header>
+    <main class="max-w-2xl mx-auto px-6 py-10">
+      <slot />
+    </main>
+    <footer class="border-t border-gray-200 py-6 px-6 text-center text-xs text-gray-400">
+      Clinical decision support only. Not a substitute for clinical judgment.
+    </footer>
+  </body>
+</html>
+```
+
+The `<slot />` element is where Astro inserts the page content. Every page that uses this layout will render inside the `<main>` block.
+
+### Build the post page template
+
+Create `src/pages/blog/[...slug].astro`:
+
+```astro
+---
+// src/pages/blog/[...slug].astro
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article class="prose prose-gray max-w-none">
+    <h1>{post.data.title}</h1>
+    <p class="text-sm text-gray-500">
+      {post.data.author} &middot;
+      {post.data.pubDate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })}
+    </p>
+    <Content />
+  </article>
+</BaseLayout>
+```
+
+`getStaticPaths` tells Astro to generate one page for every MDX file in the `posts` collection. The `[...slug]` in the filename is Astro's syntax for a dynamic route. At build time, this creates `/blog/preeclampsia-aspirin-guide` from your MDX file.
+
+### Build the home page
+
+Replace `src/pages/index.astro` with:
+
+```astro
+---
+// src/pages/index.astro
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const posts = await getCollection("posts");
+const sorted = posts.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout
+  title="Preeclampsia Risk Companion"
+  description="Clinical decision support and patient education for preeclampsia risk."
+>
+  <h1 class="text-2xl font-bold mb-2">Preeclampsia Risk Companion</h1>
+  <p class="text-gray-600 mb-8">
+    Decision support and patient education built with the Physician-Developer's Stack.
+  </p>
+
+  <ul class="space-y-4">
+    {sorted.map((post) => (
+      <li class="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
+        <a href={`/blog/${post.slug}`} class="block">
+          <p class="font-semibold text-blue-700">{post.data.title}</p>
+          <p class="text-sm text-gray-600 mt-1">{post.data.description}</p>
+        </a>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
+```
+
+### Start the development server
+
+```bash
+npm run dev
+```
+
+Open `http://localhost:4321`. You will see the home page listing the preeclampsia education post. Click through to it. The page loads. The `RiskSlider` component renders and the slider is interactive.
+
+That is the Risk Companion running as a local Astro site.
+
+<Callout type="note">
+  The development server uses port 4321 by default. This is Astro's chosen
+  default. If something is already running on that port, pass a different one:
+  `npm run dev -- --port 3000`.
+</Callout>
+
+---
+
+## What Can Go Wrong
+
+**Interactive components render but do not respond to input.** The `client:` directive is missing. Open the `.astro` file that includes the component and add `client:load` or `client:visible` to the component tag. Without a directive, Astro renders the component as static HTML.
+
+**"Cannot find module '../../components/RiskSlider'."** The import path in the MDX file is relative to the MDX file's location. If you moved the MDX file to a different folder than expected, update the import path to match.
+
+**The content collection schema validation fails at build time.** A frontmatter field is missing or the wrong type. The error message names the file and field. Fix the frontmatter in the MDX file to match the schema in `src/content.config.ts`.
+
+**The blog post page shows a 404.** The slug in the URL must match the MDX filename without the extension. `preeclampsia-aspirin-guide.mdx` is available at `/blog/preeclampsia-aspirin-guide`. Check that your navigation links match the filename.
+
+**TypeScript errors in `.astro` files.** Astro uses a TypeScript compiler that understands `.astro` files. If you see type errors in the frontmatter section (between the `---` delimiters), check that the Props interface matches what the parent is passing, and that `Astro.props` is destructured correctly.
+
+---
+
+## Closing
+
+DoctorsWhoCode.blog runs on Astro. This series runs on Astro. The Preeclampsia Risk Companion now runs on Astro.
+
+The reason is not that Astro is the best framework by some absolute measure. The reason is that physician-developer projects are content-first. They are mostly words, structured around moments of clinical interaction. Astro is designed for that shape. It ships the words fast and the interactivity exactly where you need it.
+
+The outpatient efficiency framing holds. You admit patients because they need admission. You do not admit them for observation when the problem can be managed in the office. Astro ships JavaScript only when the page actually needs it. The result is a site that does not keep the patient waiting.
+
+In Post 7, we use Tailwind CSS to style everything we have built so far.
+
+---
+
+<SeriesNav
+  current={6}
+  posts={[
+    { label: "Series Overview", href: "/blog/physician-developer-stack-intro" },
+    { label: "JavaScript", href: "/blog/physician-developer-stack-javascript" },
+    { label: "TypeScript", href: "/blog/physician-developer-stack-typescript" },
+    { label: "Python", href: "/blog/physician-developer-stack-python" },
+    { label: "AI-Assisted Coding", href: "/blog/physician-developer-stack-ai" },
+    { label: "MDX", href: "/blog/physician-developer-stack-mdx" },
+    { label: "Astro", href: "/blog/physician-developer-stack-astro", current: true },
+    { label: "Tailwind CSS", href: "/blog/physician-developer-stack-tailwind" },
+    { label: "Postgres & Prisma", href: "/blog/physician-developer-stack-postgres" },
+    { label: "Deployment", href: "/blog/physician-developer-stack-deployment" },
+  ]}
+/>

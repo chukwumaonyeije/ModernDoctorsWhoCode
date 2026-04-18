@@ -1,0 +1,421 @@
+---
+title: "TypeScript: Because a Misplaced Decimal Can Hurt a Patient"
+description: "Clinical software cannot afford vague inputs. TypeScript gives physician-developers safer contracts, clearer data shapes, and fewer silent failures."
+pubDate: "2026-04-19T09:02:00-04:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Development"
+tags: ["typescript", "javascript", "physician-developer", "clinical software", "type safety"]
+image:
+  url: "/images/posts/physician-developer-stack-typescript.jpeg"
+  alt: "A code editor showing structured clinical data and validation cues in a TypeScript workflow"
+readingTime: 11
+featured: false
+draft: false
+---
+import Callout from '../../../components/Callout.astro';
+import SeriesNav from '../../../components/SeriesNav.astro';
+
+A few years ago I was reviewing a clinical decision tool built by a resident on a research rotation. The logic was sound. The interface was clean. The tool took a gestational age in weeks, ran it through a growth chart lookup, and returned a percentile.
+
+The problem was that the function accepted a plain number. Nothing in the code enforced that the number was weeks. You could pass it a value in days by accident. You could pass it a BMI. You could pass it a blood pressure reading. The function would run. It would return a number. The number would be wrong. The tool would not tell you.
+
+He had built a calculator that trusted its inputs completely. Clinical software cannot do that.
+
+---
+
+## What TypeScript Actually Is
+
+TypeScript is JavaScript with a type system bolted on.
+
+You write TypeScript in `.ts` files. A compiler called `tsc` reads those files and produces regular JavaScript. The browser never sees TypeScript directly. It only sees the compiled output.
+
+That compilation step is where TypeScript earns its place. Before your code runs anywhere, the compiler checks it. It makes sure every function receives the kind of data it expects. It catches the class of errors that JavaScript would let through silently.
+
+```
+TypeScript source (.ts)  →  tsc  →  JavaScript output (.js)  →  browser / Node.js
+```
+
+The compiler does not run at midnight when a nurse is entering a value in your tool. It runs when you build. The goal is that by the time the tool reaches anyone clinical, the obvious type errors are already gone.
+
+## Types as Clinical Contracts
+
+In medicine, a number without a unit is dangerous. "The magnesium is 2" means something different depending on whether you are in the United States (mg/dL) or Europe (mmol/L). "Gestational age is 32" means something different if the input expects weeks versus days.
+
+TypeScript cannot enforce units natively the way a physics library would. But it can enforce shape. It can enforce that a function designed to receive a gestational age in weeks refuses to accept a raw `number` from an untrusted source without an explicit conversion.
+
+This is the concept of a type as a contract. When you define what a function accepts, you are writing a clinical contract into the code. Any caller who violates that contract gets a compiler error before the code runs.
+
+Here is the JavaScript version of a gestational-age input:
+
+```js
+// JavaScript: accepts anything
+function getTriTrimester(ga) {
+  if (ga < 14) return "First";
+  if (ga < 28) return "Second";
+  return "Third";
+}
+
+getTriTrimester(280);   // wrong: days, not weeks. No error.
+getTriTrimester("32");  // wrong: string, not number. No error.
+getTriTrimester(32.4);  // correct
+```
+
+And the TypeScript version:
+
+```ts
+// TypeScript: the contract is explicit
+type WeeksGA = number;
+
+function getTrimester(ga: WeeksGA): string {
+  if (ga < 14) return "First";
+  if (ga < 28) return "Second";
+  return "Third";
+}
+
+getTrimester(280);   // runs, but we can add a range guard
+getTrimester("32");  // TypeScript error: Argument of type 'string' is not assignable
+getTrimester(32.4);  // correct
+```
+
+The string case is caught before the code ever runs. That is the minimum value TypeScript provides, and it is not small.
+
+## The Minimum TypeScript a Physician Needs
+
+TypeScript has a lot of features. You do not need most of them to build clinical tools. Here are the five concepts that cover the work.
+
+### Primitive types
+
+```ts
+let gestationalAgeWeeks: number = 32;
+let patientName: string = "Patient A";
+let aspirinRecommended: boolean = true;
+```
+
+When you declare a variable with a type, TypeScript will error if you later try to assign a value of a different type to it. This catches reassignment mistakes that are common in long functions.
+
+### Interfaces
+
+An interface defines the shape of an object. It is the closest TypeScript equivalent to a clinical data dictionary.
+
+```ts
+interface RiskInput {
+  highRiskFactors: string[];
+  moderateRiskFactors: string[];
+}
+
+interface RiskResult {
+  tier: "high" | "moderate" | "low";
+  label: string;
+  detail: string;
+  aspirinRecommended: boolean;
+  aspirinGuidance: string;
+}
+```
+
+With these two interfaces defined, the `calculateRisk` function signature becomes a contract:
+
+```ts
+function calculateRisk(input: RiskInput): RiskResult {
+  // TypeScript now knows exactly what comes in and what must come out
+}
+```
+
+If you return an object missing the `aspirinRecommended` field, the compiler tells you. If you try to access `input.moderateFactors` instead of `input.moderateRiskFactors`, the compiler tells you.
+
+### Union types and literal types
+
+A union type means "one of these specific values." For risk tiers:
+
+```ts
+type RiskTier = "high" | "moderate" | "low";
+```
+
+Now `tier` cannot be `"HIGH"` or `"medium"` or `"unclear"`. It is one of three exact strings. Every place in the code that handles a `RiskTier` value is forced to handle all three cases.
+
+### Type narrowing
+
+TypeScript tracks what you have already checked. Inside an `if` block that tests whether `tier === "high"`, TypeScript knows `tier` is `"high"`. This is called narrowing.
+
+```ts
+if (result.tier === "high") {
+  // TypeScript knows result.tier is "high" here
+  showAspirinWarning(); // safe to call
+}
+```
+
+### The `as` cast (and when not to use it)
+
+When you receive data from outside TypeScript's view — a form input, a JSON response, user input — you sometimes need to tell the compiler what type you believe it to be.
+
+```ts
+const value = document.getElementById("ga-input") as HTMLInputElement;
+const ga = parseFloat(value.value);
+```
+
+The `as` cast is a promise to the compiler. You are saying "I know what this is." If you are wrong, TypeScript cannot help you. Use it at system boundaries only: form inputs, API responses, JSON parsing. Never use it to silence a type error in your own logic.
+
+<Callout type="warning">
+  Using `as` to silence a type error in your own logic is the TypeScript
+  equivalent of ignoring a critical lab value. The compiler is trying to tell
+  you something. Listen to it first.
+</Callout>
+
+## Setting Up TypeScript
+
+TypeScript requires Node.js and npm. If you do not have them installed, download Node.js from nodejs.org. npm comes with it.
+
+Then install TypeScript globally:
+
+```bash
+npm install -g typescript
+```
+
+Check that it worked:
+
+```bash
+tsc --version
+# Version 5.x.x
+```
+
+That is the entire setup for this post. Later posts (Astro, especially) will handle TypeScript configuration automatically. For now, we are running `tsc` directly.
+
+---
+
+## Hands-On: The Preeclampsia Risk Companion, Version 2
+
+We are rewriting `preeclampsia-risk-v1.html` in TypeScript. The logic is identical. What changes is that every input, intermediate value, and output is typed. The compiler now enforces the clinical contract.
+
+Create a new file called `risk-calculator.ts`:
+
+```ts
+// risk-calculator.ts
+// Preeclampsia Risk Companion — v2
+// TypeScript rewrite of the v1 JavaScript calculator.
+
+// --- Types ---
+
+type RiskTier = "high" | "moderate-multiple" | "moderate-single" | "low";
+
+interface RiskInput {
+  highRiskFactors: string[];
+  moderateRiskFactors: string[];
+}
+
+interface RiskResult {
+  tier: RiskTier;
+  label: string;
+  detail: string;
+  aspirinRecommended: boolean;
+  aspirinGuidance: string;
+}
+
+// --- Logic ---
+
+function calculatePreeclampsiaRisk(input: RiskInput): RiskResult {
+  const highCount: number = input.highRiskFactors.length;
+  const moderateCount: number = input.moderateRiskFactors.length;
+
+  if (highCount >= 1) {
+    return {
+      tier: "high",
+      label: "High Risk",
+      detail: `${highCount} high-risk factor${highCount > 1 ? "s" : ""} identified.`,
+      aspirinRecommended: true,
+      aspirinGuidance:
+        "Low-dose aspirin (81 mg/day) is recommended. Initiate between 12 and 28 weeks, optimally before 16 weeks.",
+    };
+  }
+
+  if (moderateCount >= 2) {
+    return {
+      tier: "moderate-multiple",
+      label: "Moderate Risk",
+      detail: `${moderateCount} moderate-risk factors identified. No single high-risk factor.`,
+      aspirinRecommended: true,
+      aspirinGuidance:
+        "Consider low-dose aspirin (81 mg/day). The combination of multiple moderate-risk factors supports prophylaxis.",
+    };
+  }
+
+  if (moderateCount === 1) {
+    return {
+      tier: "moderate-single",
+      label: "Moderate Risk (single factor)",
+      detail:
+        "1 moderate-risk factor identified. Insufficient alone to recommend aspirin prophylaxis per ACOG PB 222.",
+      aspirinRecommended: false,
+      aspirinGuidance:
+        "Aspirin prophylaxis is not routinely recommended for a single moderate-risk factor. Document and monitor.",
+    };
+  }
+
+  return {
+    tier: "low",
+    label: "Low Risk",
+    detail: "No high-risk or moderate-risk factors identified.",
+    aspirinRecommended: false,
+    aspirinGuidance:
+      "Routine prenatal care. No aspirin prophylaxis indicated based on risk factors alone.",
+  };
+}
+
+// --- DOM integration ---
+
+function readCheckedValues(name: string): string[] {
+  const checked = document.querySelectorAll<HTMLInputElement>(
+    `input[name="${name}"]:checked`
+  );
+  return Array.from(checked).map((el) => el.value);
+}
+
+function getCssClass(tier: RiskTier): string {
+  if (tier === "high") return "high-risk";
+  if (tier === "moderate-multiple" || tier === "moderate-single") return "moderate-risk";
+  return "low-risk";
+}
+
+function renderResult(result: RiskResult): void {
+  const resultEl = document.getElementById("result") as HTMLDivElement;
+
+  resultEl.innerHTML = `
+    <div class="result-label">${result.label}</div>
+    <div class="result-detail">${result.detail}</div>
+    <div class="aspirin-rec">
+      <strong>Aspirin guidance:</strong> ${result.aspirinGuidance}
+    </div>
+  `;
+
+  resultEl.className = getCssClass(result.tier);
+  resultEl.style.display = "block";
+  resultEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function onCalculate(): void {
+  const input: RiskInput = {
+    highRiskFactors: readCheckedValues("high"),
+    moderateRiskFactors: readCheckedValues("moderate"),
+  };
+
+  const result: RiskResult = calculatePreeclampsiaRisk(input);
+  renderResult(result);
+}
+
+// Attach the event listener once the DOM is ready
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("calculate-btn") as HTMLButtonElement;
+  btn.addEventListener("click", onCalculate);
+});
+```
+
+Compile it:
+
+```bash
+tsc risk-calculator.ts
+```
+
+This produces `risk-calculator.js` in the same folder. That file is plain JavaScript — the same thing we wrote manually in Post 1, but generated from typed source. Copy the original HTML from Post 1, update the script tag to point to `risk-calculator.js`, and it works identically in the browser.
+
+```html
+<!-- In preeclampsia-risk-v2.html, replace the inline <script> block with: -->
+<script src="risk-calculator.js"></script>
+```
+
+### What TypeScript Caught That JavaScript Would Not
+
+Try this in `risk-calculator.ts` before compiling:
+
+```ts
+// Deliberately wrong: passing a number where the interface expects string[]
+const badInput: RiskInput = {
+  highRiskFactors: 3,         // Error: Type 'number' is not assignable to type 'string[]'
+  moderateRiskFactors: [],
+};
+```
+
+The compiler refuses. The code does not compile. The wrong value never reaches the function.
+
+Now try accessing a property that does not exist:
+
+```ts
+const result = calculatePreeclampsiaRisk(someInput);
+console.log(result.recommendation); // Error: Property 'recommendation' does not exist on type 'RiskResult'
+```
+
+The compiler tells you the property is `aspirinGuidance`. You do not find out at runtime. You find out before the code ships.
+
+### The Separated Logic
+
+Notice that `calculatePreeclampsiaRisk` in the TypeScript version takes a plain `RiskInput` and returns a plain `RiskResult`. It knows nothing about the DOM. It does not read form fields. It does not call `document.getElementById`.
+
+This separation matters. A function that is pure — takes input, returns output, touches nothing else — is a function you can test. In Post 13 we will write tests for this function. Those tests will not need a browser. They will not need a form. They will just call `calculatePreeclampsiaRisk` with known inputs and verify the outputs.
+
+You cannot easily test the v1 version. It is tangled with the DOM. The v2 version is not.
+
+<Callout type="note">
+  The discipline of separating logic from interface is one of the most durable
+  improvements TypeScript encourages. It is not a TypeScript feature exactly.
+  It is a habit TypeScript makes easier to maintain, because types make pure
+  functions easy to define clearly.
+</Callout>
+
+---
+
+## What Can Go Wrong
+
+**`tsc` is not found after installing.** Close and reopen your terminal. Global npm packages are not available in sessions that were open before the install.
+
+**"Cannot find name 'document'."** TypeScript by default does not include browser types. Add a `tsconfig.json` to your project folder:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM"],
+    "strict": true,
+    "outDir": "./dist"
+  }
+}
+```
+
+The `"DOM"` entry in `lib` tells TypeScript that `document`, `HTMLInputElement`, and other browser APIs exist.
+
+**"Object is possibly 'null'."** `document.getElementById` returns `HTMLElement | null` because the element might not exist on the page. TypeScript flags this with strict mode on. The fix is the `as` cast at a system boundary, or a null check:
+
+```ts
+const btn = document.getElementById("calculate-btn");
+if (!btn) throw new Error("Button not found in DOM");
+btn.addEventListener("click", onCalculate);
+```
+
+**The compiled JavaScript is in a different folder than expected.** If you added a `tsconfig.json` with an `outDir`, the compiled output goes there. Update your HTML script tag accordingly.
+
+---
+
+## Closing
+
+The resident's calculator I described at the opening would not have compiled in TypeScript. The function that accepted a raw number where a gestational-age value was expected would have required a type annotation. The annotation would have made the ambiguity visible. The code review would have caught it.
+
+TypeScript does not prevent all bugs. It prevents the bugs that come from data being something other than what the code expects. In clinical software, that class of bug is not abstract. It is the reason a dosing calculator returns a number that looks plausible but is wrong by a factor of seven.
+
+The compiler is a second attending. It does not replace your judgment. It checks your arithmetic before the patient sees it.
+
+In Post 3, we leave the browser entirely and move to Python — the language where clinical data actually lives.
+
+---
+
+<SeriesNav
+  current={2}
+  posts={[
+    { label: "Series Overview", href: "/blog/physician-developer-stack-intro" },
+    { label: "JavaScript", href: "/blog/physician-developer-stack-javascript" },
+    { label: "TypeScript", href: "/blog/physician-developer-stack-typescript", current: true },
+    { label: "Python", href: "/blog/physician-developer-stack-python" },
+    { label: "AI-Assisted Coding", href: "/blog/physician-developer-stack-ai" },
+    { label: "MDX", href: "/blog/physician-developer-stack-mdx" },
+    { label: "Astro", href: "/blog/physician-developer-stack-astro" },
+    { label: "Tailwind CSS", href: "/blog/physician-developer-stack-tailwind" },
+    { label: "Postgres & Prisma", href: "/blog/physician-developer-stack-postgres" },
+    { label: "Deployment", href: "/blog/physician-developer-stack-deployment" },
+  ]}
+/>
