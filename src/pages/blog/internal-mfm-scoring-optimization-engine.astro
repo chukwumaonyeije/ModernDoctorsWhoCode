@@ -1,0 +1,193 @@
+---
+import slideshowHtml from '../../content/internal/mfm-scoring-optimization-engine.html?raw';
+import PostLayout from '../../layouts/PostLayout.astro';
+import ProtectedContent from '../../components/ProtectedContent.astro';
+import { encryptProtectedContent, escapeHtmlAttribute } from '../../utils/protectedContent';
+
+const title = 'MFM Scoring Optimization Engine: Internal QA Infrastructure for Documentation Standardization';
+const description =
+  'A protected internal Doctors Who Code post on the MFM Scoring Optimization Engine, built to audit consult documentation, reduce note drift, and create a shared standard for quality review.';
+const heroImage = {
+  url: '/images/posts/documentation-engine.jpeg',
+  alt: 'MFM Scoring Optimization Engine clinical documentation QA hero image',
+};
+const pubDate = new Date('2026-04-21');
+const category = 'Clinical Operations';
+const tags = [
+  'maternal-fetal-medicine',
+  'documentation-quality',
+  'quality-assurance',
+  'standardization',
+  'internal-tools',
+  'clinical-operations',
+];
+const headings = [
+  { depth: 2, slug: 'why-this-exists', text: 'Why This Exists' },
+  { depth: 2, slug: 'what-the-engine-standardizes', text: 'What The Engine Standardizes' },
+  { depth: 2, slug: 'why-local-and-deterministic', text: 'Why Local And Deterministic Matters' },
+  { depth: 2, slug: 'embedded-slideshow', text: 'Embedded Slideshow' },
+];
+
+const configuredPassword = import.meta.env.PRIVATE_MFM_SCORING_POST_PASSWORD;
+const passphrase = configuredPassword || 'CHANGE-ME-MFM-SCORING-POST';
+
+const articleText = `
+The problem is not that MFM physicians do not know how to write strong consults. The problem is that documentation quality drifts when there is no shared rubric, no repeatable review process, and no consistent way to separate a thin note from a truly high-value consult.
+
+This engine was built as internal infrastructure for that gap. It is a local, auditable workflow that reads consultation notes, scores them across six weighted domains, and produces physician-actionable feedback at the consult, physician, and practice level.
+
+It is not a branding exercise. It is not a black-box AI grader. It is a quality-assurance layer for documentation standardization.
+
+The standardization target is practical: clinical completeness, risk framing, ultrasound integration, assessment and plan quality, billing-support structure, and communication clarity. Those are the areas where note drift becomes operational friction. They are also the areas where a consistent review framework can actually change habits.
+
+The important design choice here is determinism. Every score comes from explicit rubric logic, not generative inference. That matters when the goal is cross-physician comparison, resident coaching, and practice-level quality review. If the scoring logic moves every time the model moves, the rubric stops being useful.
+
+This also stays local on purpose. Internal QA work should minimize unnecessary exposure, preserve auditability, and make it obvious what was scored, why it was scored that way, and where the output lives.
+`;
+
+const wordCount = articleText
+  .trim()
+  .split(/\s+/)
+  .filter(Boolean)
+  .length;
+const readingTime = Math.max(1, Math.ceil(wordCount / 200));
+
+const protectedArticleHtml = `
+  <style>
+    .internal-post-grid {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .internal-post-grid p {
+      max-width: 70ch;
+    }
+
+    .internal-post-callout {
+      padding: 1rem 1.1rem;
+      border: 1px solid var(--dwc-border);
+      border-left: 3px solid var(--dwc-cyan);
+      border-radius: 0 10px 10px 0;
+      background: rgba(56, 189, 248, 0.05);
+      color: var(--dwc-muted);
+    }
+
+    .internal-post-list {
+      padding-left: 1.25rem;
+    }
+
+    .internal-post-list li + li {
+      margin-top: 0.55rem;
+    }
+
+    .internal-post-embed-wrap {
+      max-width: 100%;
+      margin-top: 1rem;
+      padding: clamp(0.8rem, 0.6rem + 1vw, 1.1rem);
+      border-radius: 16px;
+      border: 1px solid var(--dwc-border);
+      background: linear-gradient(180deg, rgba(15,18,25,0.98) 0%, rgba(10,13,26,0.98) 100%);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    .internal-post-embed-frame {
+      width: 100%;
+      min-height: 78vh;
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      border-radius: 12px;
+      background: #0a1520;
+    }
+
+    .internal-post-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .internal-post-note {
+      margin: 0;
+      color: var(--dwc-muted);
+      font-size: var(--font-size-meta);
+    }
+
+    @media (max-width: 720px) {
+      .internal-post-embed-frame {
+        min-height: 66vh;
+      }
+    }
+  </style>
+
+  <div class="internal-post-grid">
+    <div class="internal-post-callout">
+      Internal review asset for documentation QA and standardization. This workflow supports note-quality assessment only. It is not legal advice, coding advice, or autonomous clinical decision-making.
+    </div>
+
+    <h2 id="why-this-exists">Why This Exists</h2>
+    <p>MFM note quality has a drift problem. The issue is not intelligence. The issue is variability. Strong physicians still produce uneven documentation when the system relies on memory, habit, and individual style instead of a shared review architecture.</p>
+    <p>This internal engine exists to make note quality inspectable. It creates a common language for feedback, surfaces repeatable weaknesses, and turns documentation review from vague opinion into a structured operational process.</p>
+
+    <h2 id="what-the-engine-standardizes">What The Engine Standardizes</h2>
+    <p>The scoring framework focuses on the parts of the consult that matter most for downstream utility, defensibility, and teaching value.</p>
+    <ul class="internal-post-list">
+      <li>Clinical completeness, so key history and consult context are not silently dropped.</li>
+      <li>Risk stratification and medical decision-making, so the note shows how the physician is thinking, not just what was observed.</li>
+      <li>Ultrasound integration, so imaging is interpreted and connected to management.</li>
+      <li>Assessment and plan quality, so the referring team can act on the note without reconstructing intent.</li>
+      <li>Billing-support structure and communication clarity, so the document reflects complexity without becoming unreadable.</li>
+    </ul>
+    <p>The engine then writes outputs at three levels: consult review, physician summary, and practice summary. That is what makes it useful for habit change. A single score is interesting. Recurring patterns across a service are actionable.</p>
+
+    <h2 id="why-local-and-deterministic">Why Local And Deterministic Matters</h2>
+    <p>This system stays local because internal QA should be auditable and tightly controlled. Source files are not edited in place. Outputs are regenerated inside the project directory. Every run produces review artifacts that can be inspected line by line.</p>
+    <p>The rubric is deterministic because standardization depends on consistency. If the scoring system changes its personality from run to run, it cannot support fair coaching, physician comparison, or practice-level review.</p>
+
+    <h2 id="embedded-slideshow">Embedded Slideshow</h2>
+    <p>The slideshow below walks through the engine, the six-domain rubric, the output structure, and the safety constraints that make the workflow usable for internal QA.</p>
+
+    <div class="full-bleed internal-post-embed-wrap">
+      <iframe
+        class="internal-post-embed-frame"
+        data-protected-deck
+        title="MFM Scoring Optimization Engine slideshow"
+        loading="lazy"
+        sandbox="allow-scripts allow-same-origin"
+        srcdoc="${escapeHtmlAttribute(slideshowHtml)}"
+      ></iframe>
+    </div>
+
+    <div class="internal-post-actions">
+      <button class="site-button site-button--secondary" type="button" data-open-protected-deck>
+        Open slideshow in a new window
+      </button>
+      <p class="internal-post-note">Use the same password in this browser session to reopen the post if needed.</p>
+    </div>
+  </div>
+`;
+
+const payload = encryptProtectedContent(protectedArticleHtml, passphrase);
+---
+
+<PostLayout
+  title={title}
+  description={description}
+  pubDate={pubDate}
+  author="Chukwuma Onyeije, MD, FACOG"
+  authorUrl="https://www.linkedin.com/in/chukwumaonyeije"
+  tags={tags}
+  category={category}
+  image={heroImage}
+  ogImage={heroImage.url}
+  readingTime={readingTime}
+  wordCount={wordCount}
+  headings={headings}
+  noIndex={true}
+>
+  <ProtectedContent
+    storageKey="dwc:internal-mfm-scoring-optimization-engine"
+    title="Protected internal post"
+    description="This page contains an internal QA slideshow and supporting writeup for documentation standardization. Enter the shared password to unlock it."
+    payload={payload}
+  />
+</PostLayout>

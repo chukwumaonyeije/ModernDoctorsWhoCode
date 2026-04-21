@@ -1,0 +1,228 @@
+---
+import type { EncryptedPayload } from '../utils/protectedContent';
+import { protectedContentIterations } from '../utils/protectedContent';
+
+interface Props {
+  title?: string;
+  description?: string;
+  storageKey: string;
+  payload: EncryptedPayload;
+}
+
+const {
+  title = 'Internal access required',
+  description = 'Enter the shared password to unlock this internal post.',
+  storageKey,
+  payload,
+} = Astro.props;
+---
+
+<div
+  class="protected-content-shell"
+  data-protected-content
+  data-storage-key={storageKey}
+  data-payload={JSON.stringify(payload)}
+  data-iterations={String(protectedContentIterations)}
+>
+  <div class="card protected-gate" data-protected-gate>
+    <p class="label" style="margin-bottom: 0.8rem;">Internal Access</p>
+    <h2 class="protected-title">{title}</h2>
+    <p class="protected-copy">{description}</p>
+
+    <form class="protected-form" data-protected-form>
+      <label class="sr-only" for={`${storageKey}-password`}>Password</label>
+      <input
+        id={`${storageKey}-password`}
+        class="site-input protected-input"
+        type="password"
+        name="password"
+        autocomplete="current-password"
+        placeholder="Enter password"
+        required
+      />
+      <button class="site-button site-button--primary protected-button" type="submit">
+        Unlock post
+      </button>
+    </form>
+
+    <p class="protected-status eyebrow-copy" data-protected-status>
+      Password stays in this browser session only.
+    </p>
+  </div>
+
+  <div class="prose protected-body" data-protected-body hidden></div>
+</div>
+
+<script>
+  const roots = document.querySelectorAll('[data-protected-content]');
+
+  const textDecoder = new TextDecoder();
+  const textEncoder = new TextEncoder();
+
+  function base64ToBytes(value) {
+    const binary = atob(value);
+    const bytes = new Uint8Array(binary.length);
+    for (let index = 0; index < binary.length; index += 1) {
+      bytes[index] = binary.charCodeAt(index);
+    }
+    return bytes;
+  }
+
+  async function deriveKey(passphrase, salt, iterations) {
+    const baseKey = await crypto.subtle.importKey(
+      'raw',
+      textEncoder.encode(passphrase),
+      { name: 'PBKDF2' },
+      false,
+      ['deriveKey'],
+    );
+
+    return crypto.subtle.deriveKey(
+      {
+        name: 'PBKDF2',
+        salt,
+        iterations,
+        hash: 'SHA-256',
+      },
+      baseKey,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['decrypt'],
+    );
+  }
+
+  async function decryptPayload(payload, passphrase, iterations) {
+    const salt = base64ToBytes(payload.salt);
+    const iv = base64ToBytes(payload.iv);
+    const ciphertext = base64ToBytes(payload.ciphertext);
+    const tag = base64ToBytes(payload.tag);
+    const encrypted = new Uint8Array(ciphertext.length + tag.length);
+
+    encrypted.set(ciphertext);
+    encrypted.set(tag, ciphertext.length);
+
+    const key = await deriveKey(passphrase, salt, iterations);
+    const decrypted = await crypto.subtle.decrypt(
+      {
+        name: 'AES-GCM',
+        iv,
+        tagLength: 128,
+      },
+      key,
+      encrypted,
+    );
+
+    return textDecoder.decode(decrypted);
+  }
+
+  function attachDeckActions(root) {
+    const openButton = root.querySelector('[data-open-protected-deck]');
+    if (!openButton) return;
+
+    openButton.addEventListener('click', () => {
+      const iframe = root.querySelector('[data-protected-deck]');
+      const srcdoc = iframe?.getAttribute('srcdoc');
+      if (!srcdoc) return;
+
+      const popup = window.open('', '_blank', 'noopener,noreferrer');
+      if (!popup) return;
+
+      popup.document.open();
+      popup.document.write(srcdoc);
+      popup.document.close();
+    });
+  }
+
+  async function unlock(root, passphrase) {
+    const payload = JSON.parse(root.dataset.payload ?? '{}');
+    const iterations = Number.parseInt(root.dataset.iterations ?? '250000', 10);
+    const gate = root.querySelector('[data-protected-gate]');
+    const body = root.querySelector('[data-protected-body]');
+    const status = root.querySelector('[data-protected-status]');
+    const storageKey = root.dataset.storageKey ?? '';
+
+    try {
+      const html = await decryptPayload(payload, passphrase, iterations);
+      body.innerHTML = html;
+      body.hidden = false;
+      gate.hidden = true;
+      sessionStorage.setItem(storageKey, passphrase);
+      attachDeckActions(root);
+    } catch {
+      if (status) {
+        status.textContent = 'That password did not work. Please try again.';
+      }
+    }
+  }
+
+  roots.forEach((root) => {
+    const form = root.querySelector('[data-protected-form]');
+    const input = root.querySelector('input[name="password"]');
+    const storageKey = root.dataset.storageKey ?? '';
+    const savedPassphrase = storageKey ? sessionStorage.getItem(storageKey) : null;
+
+    if (savedPassphrase) {
+      unlock(root, savedPassphrase);
+    }
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const passphrase = input?.value ?? '';
+      if (!passphrase) return;
+      await unlock(root, passphrase);
+    });
+  });
+</script>
+
+<style>
+  .protected-content-shell {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .protected-gate {
+    padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    border-left: 3px solid var(--dwc-cyan);
+  }
+
+  .protected-title {
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.7rem);
+  }
+
+  .protected-copy {
+    margin-bottom: 1rem;
+    color: var(--dwc-muted);
+    max-width: 52ch;
+  }
+
+  .protected-form {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .protected-input {
+    flex: 1 1 260px;
+    min-width: 0;
+  }
+
+  .protected-button {
+    width: auto;
+  }
+
+  .protected-status {
+    margin: 0.85rem 0 0;
+  }
+
+  .protected-body[hidden] {
+    display: none;
+  }
+
+  @media (max-width: 560px) {
+    .protected-button {
+      width: 100%;
+    }
+  }
+</style>

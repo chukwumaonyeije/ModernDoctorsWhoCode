@@ -39,6 +39,7 @@ interface Props {
   canonical?: string;
   headings?: { depth: number; slug: string; text: string }[];
   audioUrl?: string;
+  noIndex?: boolean;
 }
 
 const postSlug = Astro.url.pathname.replace(/^\/blog\//, '').replace(/\/$/, '');
@@ -59,6 +60,7 @@ const {
   canonical = Astro.url.href,
   headings = [],
   audioUrl,
+  noIndex = false,
 } = Astro.props;
 
 const articleSchema = {
@@ -138,6 +140,7 @@ const relatedPosts = allPosts
   pubDate={pubDate}
   updatedDate={updatedDate}
   articleSchema={articleSchema}
+  noIndex={noIndex}
 >
   <div class="post-shell">
 

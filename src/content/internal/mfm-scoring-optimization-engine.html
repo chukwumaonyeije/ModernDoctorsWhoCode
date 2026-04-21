@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MFM Scoring Optimization Engine</title>
+<style>
+  :root {
+    --bg: #0f1923;
+    --slide-bg: #152232;
+    --accent: #4fc3f7;
+    --accent2: #81c784;
+    --accent3: #ffb74d;
+    --accent4: #ef9a9a;
+    --text: #e8edf2;
+    --subtext: #9eb3c2;
+    --border: #1e3a50;
+    --tag-bg: #1a3348;
+    --nav-h: 72px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .deck {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    position: relative;
+  }
+
+  .slide {
+    display: none;
+    position: absolute;
+    inset: 0;
+    padding: 52px 68px calc(var(--nav-h) + 16px);
+    flex-direction: column;
+    justify-content: center;
+    background: var(--slide-bg);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  .slide.active { display: flex; }
+
+  .slide::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    flex-shrink: 0;
+  }
+
+  /* Title slide */
+  .slide-title {
+    background: linear-gradient(135deg, #0a1520 0%, #152232 60%, #0d1f30 100%);
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding-bottom: calc(var(--nav-h) + 24px);
+  }
+
+  .slide-title::after {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(79,195,247,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-size: clamp(26px, 5.5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #fff;
+    max-width: 800px;
+    margin-bottom: 20px;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    font-size: clamp(14px, 2vw, 18px);
+    color: var(--subtext);
+    max-width: 620px;
+    line-height: 1.6;
+    margin-bottom: 36px;
+  }
+
+  .author-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 8px 18px;
+    font-size: 14px;
+    color: var(--subtext);
+  }
+
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent2);
+    flex-shrink: 0;
+  }
+
+  /* Section headers */
+  h2 {
+    font-size: clamp(20px, 3.8vw, 36px);
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: clamp(16px, 2.5vw, 32px);
+    line-height: 1.2;
+  }
+
+  h2 span { color: var(--accent); }
+
+  h3 {
+    font-size: clamp(14px, 1.8vw, 18px);
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: clamp(13px, 1.5vw, 16px);
+    color: var(--subtext);
+    line-height: 1.7;
+    max-width: 800px;
+    margin-bottom: 14px;
+  }
+
+  /* Grid layouts */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    width: 100%;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .grid-4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 18px;
+    width: 100%;
+  }
+
+  /* Cards */
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .card-accent { border-top: 3px solid var(--accent); }
+  .card-green  { border-top: 3px solid var(--accent2); }
+  .card-orange { border-top: 3px solid var(--accent3); }
+  .card-red    { border-top: 3px solid var(--accent4); }
+
+  .card h3 { margin-bottom: 8px; }
+  .card p  { font-size: 13px; margin-bottom: 0; }
+
+  /* Score badge */
+  .score-badge {
+    display: inline-block;
+    background: rgba(79,195,247,0.15);
+    border: 1px solid rgba(79,195,247,0.3);
+    color: var(--accent);
+    border-radius: 100px;
+    padding: 4px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .score-badge.green {
+    background: rgba(129,199,132,0.15);
+    border-color: rgba(129,199,132,0.3);
+    color: var(--accent2);
+  }
+
+  .score-badge.orange {
+    background: rgba(255,183,77,0.15);
+    border-color: rgba(255,183,77,0.3);
+    color: var(--accent3);
+  }
+
+  /* Lists */
+  ul.clean {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  ul.clean li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: clamp(13px, 1.4vw, 15px);
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  ul.clean li::before {
+    content: '›';
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.3;
+    flex-shrink: 0;
+  }
+
+  ul.clean.green li::before  { color: var(--accent2); }
+  ul.clean.orange li::before { color: var(--accent3); }
+  ul.clean.red li::before    { color: var(--accent4); }
+
+  /* Flow diagram */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    margin: 20px 0;
+  }
+
+  .flow-step {
+    flex: 1;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .flow-step .icon  { font-size: 24px; margin-bottom: 6px; }
+  .flow-step .label { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .flow-step .desc  { font-size: 10px; color: var(--subtext); line-height: 1.4; }
+
+  .flow-arrow {
+    font-size: 18px;
+    color: var(--accent);
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+
+  /* Domain bar */
+  .domain-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 13px;
+  }
+
+  .domain-label {
+    font-size: 12px;
+    color: var(--text);
+    width: 220px;
+    flex-shrink: 0;
+  }
+
+  .domain-bar-wrap {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border-radius: 100px;
+    height: 10px;
+    overflow: hidden;
+  }
+
+  .domain-bar {
+    height: 100%;
+    border-radius: 100px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+
+  .domain-pts {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    width: 40px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* Code / monospace */
+  code {
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 12px;
+    background: rgba(79,195,247,0.1);
+    color: var(--accent);
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+
+  pre {
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 12px;
+    background: #0a1520;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    color: var(--accent2);
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  /* Highlight box */
+  .highlight-box {
+    background: rgba(79,195,247,0.07);
+    border: 1px solid rgba(79,195,247,0.2);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: clamp(12px, 1.4vw, 15px);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .highlight-box.green {
+    background: rgba(129,199,132,0.07);
+    border-color: rgba(129,199,132,0.2);
+    border-left-color: var(--accent2);
+  }
+
+  .highlight-box.orange {
+    background: rgba(255,183,77,0.07);
+    border-color: rgba(255,183,77,0.2);
+    border-left-color: var(--accent3);
+  }
+
+  /* Two-col with narrow left */
+  .split-left {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 36px;
+    align-items: start;
+    width: 100%;
+  }
+
+  /* Pill tags */
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+  .tag {
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 4px 14px;
+    font-size: 12px;
+    color: var(--subtext);
+  }
+
+  /* Nav — centered, always visible above slide content */
+  .nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    z-index: 100;
+    background: linear-gradient(to top, var(--bg) 60%, transparent);
+    pointer-events: none;
+  }
+
+  .nav > * { pointer-events: auto; }
+
+  .nav-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 10px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background 0.15s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .nav-btn:hover,
+  .nav-btn:active { background: rgba(255,255,255,0.18); }
+
+  .nav-counter {
+    font-size: 13px;
+    color: var(--subtext);
+    min-width: 56px;
+    text-align: center;
+  }
+
+  /* Progress bar */
+  .progress {
+    position: fixed;
+    bottom: var(--nav-h);
+    left: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.25s ease;
+    z-index: 101;
+  }
+
+  /* Slide number (top right) */
+  .slide-num {
+    position: absolute;
+    top: 20px;
+    right: 32px;
+    font-size: 11px;
+    color: rgba(158,179,194,0.35);
+    letter-spacing: 1px;
+  }
+
+  /* Section divider slide */
+  .slide-divider {
+    background: linear-gradient(135deg, #0a1520 0%, #152232 100%);
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .section-number {
+    font-size: clamp(64px, 14vw, 96px);
+    font-weight: 900;
+    color: rgba(79,195,247,0.08);
+    line-height: 1;
+    margin-bottom: -16px;
+    letter-spacing: -4px;
+  }
+
+  .section-title {
+    font-size: clamp(24px, 4vw, 46px);
+    font-weight: 800;
+    color: #fff;
+    max-width: 700px;
+    line-height: 1.15;
+  }
+
+  .section-title span { color: var(--accent); }
+
+  /* Big number callout */
+  .big-num {
+    font-size: clamp(52px, 10vw, 72px);
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  /* Warning / disclaimer */
+  .disclaimer {
+    font-size: 12px;
+    color: rgba(158,179,194,0.5);
+    font-style: italic;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  /* ── Tablet (≤900px) ──────────────────────────── */
+  @media (max-width: 900px) {
+    .slide {
+      padding: 32px 28px calc(var(--nav-h) + 12px);
+      justify-content: flex-start;
+    }
+    .slide-title { justify-content: flex-end; padding-bottom: calc(var(--nav-h) + 20px); }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .split-left { grid-template-columns: 1fr; gap: 20px; }
+    .flow { flex-wrap: wrap; gap: 8px; }
+    .flow-arrow { padding: 0 4px; }
+    .domain-label { width: 160px; }
+    [style*="grid-column: span"] { grid-column: span 1 !important; }
+  }
+
+  /* ── Phone (≤600px) ───────────────────────────── */
+  @media (max-width: 600px) {
+    :root { --nav-h: 68px; }
+
+    .slide {
+      padding: 40px 16px calc(var(--nav-h) + 8px);
+      justify-content: flex-start;
+    }
+
+    .slide-title {
+      padding: 40px 16px calc(var(--nav-h) + 16px);
+      justify-content: flex-end;
+    }
+
+    .eyebrow { font-size: 10px; letter-spacing: 2px; }
+
+    h2 { margin-bottom: 12px; }
+
+    .subtitle { font-size: 13px; margin-bottom: 24px; }
+
+    .author-tag { font-size: 12px; padding: 6px 14px; }
+
+    .card { padding: 14px; }
+
+    .domain-label { width: 110px; font-size: 11px; }
+    .domain-pts   { font-size: 11px; }
+
+    /* Flow goes vertical on phones */
+    .flow {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      margin: 12px 0;
+    }
+    .flow-step { padding: 12px; }
+    .flow-step .icon  { font-size: 20px; }
+    .flow-step .label { font-size: 12px; }
+    .flow-arrow {
+      align-self: center;
+      transform: rotate(90deg);
+      padding: 2px 0;
+      font-size: 16px;
+    }
+
+    .section-number { font-size: 56px; }
+
+    pre {
+      font-size: 11px;
+      padding: 12px 14px;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    code { font-size: 11px; }
+
+    .highlight-box { padding: 12px 14px; }
+
+    .nav-btn { width: 52px; height: 52px; }
+
+    .slide-num { top: 14px; right: 16px; }
+
+    .score-badge { font-size: 11px; padding: 3px 10px; }
+
+    ul.clean { gap: 8px; }
+    ul.clean li { gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- SLIDE 1: Title -->
+  <section class="slide slide-title active">
+    <div class="eyebrow">Atlanta Perinatal Associates &nbsp;·&nbsp; Documentation Quality Initiative</div>
+    <h1>MFM Scoring<br><span>Optimization Engine</span></h1>
+    <p class="subtitle">A local, auditable, rubric-based workflow that scores Maternal-Fetal Medicine consultation notes across six clinical documentation domains and generates physician-actionable feedback.</p>
+    <div class="author-tag">
+      <div class="dot"></div>
+      Chukwuma I. Onyeije, MD · MFM · Medical Director, APA
+    </div>
+    <div class="slide-num">01</div>
+  </section>
+
+  <!-- SLIDE 2: The Problem -->
+  <section class="slide">
+    <div class="slide-num">02</div>
+    <h2>The Documentation <span>Gap</span></h2>
+    <div class="grid-2" style="margin-top:8px;">
+      <div>
+        <p>MFM consultation notes are complex clinical documents that must simultaneously serve four distinct audiences — and most notes are not optimized for any of them.</p>
+        <div class="highlight-box orange" style="margin-top:24px;">
+          Inconsistent documentation structure makes it difficult to identify recurring patterns, teach residents, or demonstrate note-level complexity for documentation review.
+        </div>
+      </div>
+      <div>
+        <ul class="clean" style="margin-top:8px;">
+          <li><strong>Referring OB/GYN</strong> — needs a clear handoff with urgency, timing, and next steps</li>
+          <li><strong>Consulting MFM</strong> — needs to demonstrate clinical reasoning and complexity</li>
+          <li><strong>Documentation reviewers</strong> — need visible MDM support and structured evidence</li>
+          <li><strong>Medico-legal record</strong> — needs explicit counseling, uncertainty, and follow-up</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: What it does -->
+  <section class="slide">
+    <div class="slide-num">03</div>
+    <h2>What the Engine <span>Does</span></h2>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="icon">📄</div>
+        <div class="label">PDF Consult</div>
+        <div class="desc">Reads source PDFs from <code>Sample patients/</code></div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="icon">🔍</div>
+        <div class="label">Text Extraction</div>
+        <div class="desc">pypdf + pdfplumber, best-yield selection</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="icon">⚡</div>
+        <div class="label">Feature Detection</div>
+        <div class="desc">30+ clinical feature flags from note text</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="icon">📊</div>
+        <div class="label">Domain Scoring</div>
+        <div class="desc">6 domains, 100-point rubric</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="icon">📝</div>
+        <div class="label">Reports</div>
+        <div class="desc">Markdown + JSON + physician summaries</div>
+      </div>
+    </div>
+    <div class="grid-3" style="margin-top:16px;">
+      <div class="card card-accent">
+        <h3>Per-Consult Review</h3>
+        <p>Scored markdown report with domain breakdown, strengths, gaps, and rewritten A&amp;P</p>
+      </div>
+      <div class="card card-green">
+        <h3>Physician Summary</h3>
+        <p>Aggregated view of recurring deficiencies, billing-support patterns, and top improvement recs</p>
+      </div>
+      <div class="card card-orange">
+        <h3>Practice Summary</h3>
+        <p>Cross-physician ranking, common strengths and weaknesses, standardization opportunities</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4: Scoring Architecture -->
+  <section class="slide">
+    <div class="slide-num">04</div>
+    <h2>Scoring <span>Architecture</span></h2>
+    <div class="split-left">
+      <div>
+        <div class="big-num">100</div>
+        <p style="color:var(--subtext); font-size:14px; margin-top:4px;">Total points across<br>6 weighted domains</p>
+        <div class="highlight-box" style="margin-top:24px; font-size:13px;">
+          Scores are <strong>deterministic and rubric-based</strong> — not AI-generated — so cross-physician comparisons remain internally consistent.
+        </div>
+      </div>
+      <div>
+        <div class="domain-row">
+          <span class="domain-label">Clinical Completeness</span>
+          <div class="domain-bar-wrap"><div class="domain-bar" style="width:25%"></div></div>
+          <span class="domain-pts">25 pts</span>
+        </div>
+        <div class="domain-row">
+          <span class="domain-label">Risk Stratification &amp; MDM</span>
+          <div class="domain-bar-wrap"><div class="domain-bar" style="width:20%"></div></div>
+          <span class="domain-pts">20 pts</span>
+        </div>
+        <div class="domain-row">
+          <span class="domain-label">Assessment &amp; Plan Quality</span>
+          <div class="domain-bar-wrap"><div class="domain-bar" style="width:20%"></div></div>
+          <span class="domain-pts">20 pts</span>
+        </div>
+        <div class="domain-row">
+          <span class="domain-label">Ultrasound Integration</span>
+          <div class="domain-bar-wrap"><div class="domain-bar" style="width:15%"></div></div>
+          <span class="domain-pts">15 pts</span>
+        </div>
+        <div class="domain-row">
+          <span class="domain-label">Billing &amp; Documentation</span>
+          <div class="domain-bar-wrap"><div class="domain-bar" style="width:10%"></div></div>
+          <span class="domain-pts">10 pts</span>
+        </div>
+        <div class="domain-row">
+          <span class="domain-label">Communication Clarity</span>
+          <div class="domain-bar-wrap"><div class="domain-bar" style="width:10%"></div></div>
+          <span class="domain-pts">10 pts</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5: Domain 1 -->
+  <section class="slide">
+    <div class="slide-num">05</div>
+    <div class="score-badge">Domain 1 · 25 points</div>
+    <h2>Clinical <span>Completeness</span></h2>
+    <p>The foundation of any defensible MFM note. Evaluates whether a cold reader can reconstruct the clinical context without access to the chart.</p>
+    <div class="grid-3" style="margin-top:8px;">
+      <div class="card">
+        <h3>Indication</h3>
+        <p>Is the consult question explicit and clinically anchored?</p>
+      </div>
+      <div class="card">
+        <h3>Gestational Age</h3>
+        <p>Is GA stated with dating basis near the top of the note?</p>
+      </div>
+      <div class="card">
+        <h3>Obstetric History</h3>
+        <p>Prior losses, preterm birth, hypertensive disease, anomalies</p>
+      </div>
+      <div class="card" style="margin-top:4px;">
+        <h3>Medical Background</h3>
+        <p>PMH, PSH, medications, allergies — or explicit "noncontributory"</p>
+      </div>
+      <div class="card" style="margin-top:4px;">
+        <h3>Symptom Context</h3>
+        <p>HPI with pertinent positives, negatives, and referral reason</p>
+      </div>
+      <div class="card" style="margin-top:4px;">
+        <h3>Common Deficit</h3>
+        <p style="color:var(--accent4);">Obstetric history absent or too thin for MFM handoff</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6: Domain 2 -->
+  <section class="slide">
+    <div class="slide-num">06</div>
+    <div class="score-badge">Domain 2 · 20 points</div>
+    <h2>Risk Stratification <span>&amp; MDM</span></h2>
+    <p>Evaluates whether the note demonstrates <em>visible</em> medical decision-making — not just data collection, but synthesis and clinical hierarchy.</p>
+    <div class="grid-2" style="margin-top:16px;">
+      <ul class="clean">
+        <li>High-risk issues named explicitly (not implied)</li>
+        <li>Numbered, prioritized problem list in the assessment</li>
+        <li>Clinical reasoning language: "raises concern," "consistent with," "warrants"</li>
+        <li>Independent interpretation and counseling are surfaced, not buried</li>
+        <li>Clinical significance of each finding is interpreted, not just described</li>
+      </ul>
+      <div>
+        <div class="highlight-box orange">
+          <strong>Most common failure mode:</strong> Findings are described accurately but the note leaves the reader to infer what they mean for risk and management.
+        </div>
+        <div class="highlight-box" style="margin-top:16px;">
+          <strong>Fix:</strong> "State why each abnormal finding matters and what conclusion you draw from it."
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 7: Domain 3 -->
+  <section class="slide">
+    <div class="slide-num">07</div>
+    <div class="score-badge">Domain 3 · 15 points</div>
+    <h2>Ultrasound Integration <span>&amp; Interpretation</span></h2>
+    <p>MFM consults are nearly always imaging-driven. This domain checks whether ultrasound findings are documented, interpreted, and linked to management.</p>
+    <div class="grid-3" style="margin-top:16px;">
+      <div class="card card-accent">
+        <div class="score-badge" style="font-size:11px; padding:2px 10px;">5 pts</div>
+        <h3>Findings Block</h3>
+        <p>Key imaging findings in one focused, locatable block — not dispersed across the note</p>
+      </div>
+      <div class="card card-accent">
+        <div class="score-badge" style="font-size:11px; padding:2px 10px;">4 pts</div>
+        <h3>Clinical Interpretation</h3>
+        <p>A sentence that converts the ultrasound findings into a management-relevant impression</p>
+      </div>
+      <div class="card card-accent">
+        <div class="score-badge" style="font-size:11px; padding:2px 10px;">3 pts</div>
+        <h3>Linkage to Management</h3>
+        <p>Each major imaging finding tied to a corresponding recommendation or follow-up action</p>
+      </div>
+      <div class="card" style="grid-column: span 3; margin-top:4px;">
+        <h3>Uncertainty Documentation</h3>
+        <p>When certainty is limited, name what remains uncertain and how that changes the plan — especially in early pregnancy viability consultations</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 8: Domain 4 -->
+  <section class="slide">
+    <div class="slide-num">08</div>
+    <div class="score-badge">Domain 4 · 20 points</div>
+    <h2>Assessment <span>&amp; Plan Quality</span></h2>
+    <p>The section the referring OB reads first and the documentation reviewer scrutinizes most carefully. Structure and specificity drive this score.</p>
+    <div class="grid-2" style="margin-top:8px;">
+      <div>
+        <ul class="clean green">
+          <li><strong>Problem-based structure:</strong> Numbered problems, each with its own plan block directly attached</li>
+          <li><strong>Actionable recommendations:</strong> Imperative statements with owner, action, and follow-up</li>
+          <li><strong>Explicit follow-up timing:</strong> Interval, responsible service, and escalation triggers</li>
+          <li><strong>Handoff paragraph:</strong> Short summary block for the referring team with urgency and next steps</li>
+        </ul>
+      </div>
+      <div>
+        <div class="highlight-box green">
+          <strong>Engine behavior:</strong> The engine extracts numbered problem blocks from the Assessment & Plan section and uses them to auto-generate a rewritten A&amp;P that fills structural gaps while preserving the physician's clinical content.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 9: Domain 5 -->
+  <section class="slide">
+    <div class="slide-num">09</div>
+    <div class="score-badge">Domain 5 · 10 points</div>
+    <h2>Billing <span>&amp; Documentation Optimization</span></h2>
+    <p style="font-size:14px; color:var(--accent4); margin-bottom:16px;">⚠ Documentation-support analysis only — not legal, coding, or billing advice.</p>
+    <div class="grid-2">
+      <div>
+        <ul class="clean orange">
+          <li><strong>MDM surface area:</strong> Numbered problems + explicit clinical reasoning visible to a reviewer</li>
+          <li><strong>Data review evidence:</strong> Prior imaging, labs, outside records, independent interpretation</li>
+          <li><strong>Risk framing:</strong> Named maternal and fetal risks with consequence of missed follow-up</li>
+          <li><strong>Structural support:</strong> Consistent headings, diagnosis framing, brief MDM summary</li>
+        </ul>
+      </div>
+      <div>
+        <div class="card card-orange">
+          <h3>Output: Complexity Impression</h3>
+          <p>Each consult receives a <strong>documentation_strength</strong> rating (strong / moderate / low) and a <strong>likely_complexity_impression</strong> (high / moderate / low / straightforward) derived from the billing and risk domain subscores.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 10: Domain 6 -->
+  <section class="slide">
+    <div class="slide-num">10</div>
+    <div class="score-badge">Domain 6 · 10 points</div>
+    <h2>Communication <span>Clarity</span></h2>
+    <p>A technically accurate note that is poorly organized or ambiguously worded fails at the moment of handoff — when a busy referring provider has 30 seconds.</p>
+    <div class="grid-4" style="margin-top:16px;">
+      <div class="card card-accent">
+        <div class="score-badge" style="font-size:11px; padding:2px 10px;">3 pts</div>
+        <h3>Organization</h3>
+        <p>Stable section headings and tight paragraph structure</p>
+      </div>
+      <div class="card card-accent">
+        <div class="score-badge" style="font-size:11px; padding:2px 10px;">2 pts</div>
+        <h3>Conciseness</h3>
+        <p>Note length 5,000–16,000 chars: complete but not padded</p>
+      </div>
+      <div class="card card-accent">
+        <div class="score-badge" style="font-size:11px; padding:2px 10px;">2 pts</div>
+        <h3>Ambiguity Control</h3>
+        <p>Follow-up timing + clinical interpretation both explicit</p>
+      </div>
+      <div class="card card-accent">
+        <div class="score-badge" style="font-size:11px; padding:2px 10px;">3 pts</div>
+        <h3>Handoff Value</h3>
+        <p>Concise referring-provider paragraph a clinician can act on immediately</p>
+      </div>
+    </div>
+    <div class="highlight-box" style="margin-top:20px;">
+      A note that earns full marks here ends with a paragraph another clinician can act on <em>immediately</em>, without reading the full consult.
+    </div>
+  </section>
+
+  <!-- SLIDE 11: Feature Detection -->
+  <section class="slide">
+    <div class="slide-num">11</div>
+    <h2>How Scoring Works: <span>Feature Flags</span></h2>
+    <p>The engine converts raw note text into 30+ boolean and integer feature flags before scoring. No large language model is involved — all logic is deterministic Python.</p>
+    <div class="grid-2" style="margin-top:8px; gap:20px;">
+      <div>
+        <h3 style="color:var(--accent2); margin-bottom:12px;">Clinical Flags</h3>
+        <ul class="clean green" style="font-size:13px;">
+          <li><code>has_indication</code> — consult question is explicit</li>
+          <li><code>has_ob_history</code> — G/P designation or prior pregnancy history</li>
+          <li><code>has_symptoms</code> — HPI, denials, referral context</li>
+          <li><code>has_problem_list</code> — numbered assessment blocks extracted</li>
+          <li><code>has_reasoning</code> — ≥2 reasoning phrases detected</li>
+          <li><code>has_counseling</code> — counseling content documented</li>
+          <li><code>has_handoff</code> — referring-provider section present</li>
+          <li><code>has_followup_timeframe</code> — specific follow-up interval named</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color:var(--accent3); margin-bottom:12px;">Imaging &amp; Risk Flags</h3>
+        <ul class="clean orange" style="font-size:13px;">
+          <li><code>has_ultrasound_findings</code> — ≥4 sonographic terms detected</li>
+          <li><code>has_clinical_interpretation</code> — "reassuring," "consistent with," etc.</li>
+          <li><code>has_linkage_to_management</code> — imaging tied to recommendation</li>
+          <li><code>has_independent_interpretation</code> — phrase is explicit</li>
+          <li><code>has_uncertainty_acknowledged</code> — "pending," "possible," etc.</li>
+          <li><code>high_risk_keyword_count</code> — count of risk-flagging terms</li>
+          <li><code>has_actionable_plan</code> — ≥4 action terms or ≥3 plan bullets</li>
+          <li><code>has_diagnoses</code> — ICD-10 section extracted</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 12: Output Reports -->
+  <section class="slide">
+    <div class="slide-num">12</div>
+    <h2>Output <span>Reports</span></h2>
+    <div class="grid-2" style="margin-top:4px;">
+      <div>
+        <h3>Per-Consult Markdown Review</h3>
+        <ul class="clean" style="font-size:13px; margin-top:10px;">
+          <li>Header with patient name, physician, date, consultation type</li>
+          <li>Global score out of 100 with overall justification</li>
+          <li>Domain-by-domain breakdown: score, explanation, missing elements, suggestions</li>
+          <li>Billing support estimate with complexity impression</li>
+          <li>Medico-legal risk review (5 risk categories)</li>
+          <li>High-yield optimizations: Add / Clarify / Upgrade</li>
+          <li>Rewritten Assessment &amp; Plan (auto-generated from extracted content)</li>
+          <li>Teaching feedback: did well / habit to adopt / habit to eliminate</li>
+        </ul>
+      </div>
+      <div>
+        <div class="card card-green" style="margin-bottom:16px;">
+          <h3>Physician Summary</h3>
+          <p style="font-size:13px;">Average score by domain · Recurring deficiencies · Billing-support weaknesses · Top 5 improvement recommendations · Strongest habits observed</p>
+        </div>
+        <div class="card card-orange">
+          <h3>Practice Summary</h3>
+          <p style="font-size:13px;">All physicians ranked by average total score · Common strengths and weaknesses practice-wide · Standardization opportunities</p>
+        </div>
+        <div style="margin-top:14px; font-size:12px; color:var(--subtext);">
+          Each run also writes <code>output/json/manifest.json</code> with source SHA-256 hashes for auditability.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 13: Medico-Legal Risk Review -->
+  <section class="slide">
+    <div class="slide-num">13</div>
+    <h2>Medico-Legal <span>Risk Review</span></h2>
+    <p>Every consult review includes a structured risk flag section across five categories — designed to identify documentation vulnerabilities before they matter.</p>
+    <div class="grid-2" style="margin-top:16px;">
+      <ul class="clean red">
+        <li><strong>Ambiguity</strong> — key findings present but clinical meaning not stated; physician attribution uncertain</li>
+        <li><strong>Weak follow-up language</strong> — timing or ownership not explicit enough for high-reliability handoff</li>
+        <li><strong>Missing counseling documentation</strong> — counseling content and patient understanding under-documented</li>
+      </ul>
+      <ul class="clean red">
+        <li><strong>Poor linkage between findings and plan</strong> — major findings not tied to a corresponding action</li>
+        <li><strong>Reduced handoff utility</strong> — note lacks a concise referring-provider summary</li>
+      </ul>
+    </div>
+    <div class="highlight-box orange" style="margin-top:24px;">
+      Each flag bucket either reports a specific issue from the note text, or states <em>"No major issue detected from the extracted text"</em> — never blank, never fabricated.
+    </div>
+  </section>
+
+  <!-- SLIDE 14: Teaching Feedback -->
+  <section class="slide">
+    <div class="slide-num">14</div>
+    <h2>Teaching <span>Feedback</span></h2>
+    <p>The engine generates a brief, constructive teaching note for each consult — designed to reinforce good habits and correct the single highest-yield gap.</p>
+    <div class="grid-3" style="margin-top:24px;">
+      <div class="card card-green">
+        <div class="score-badge green">Did Well</div>
+        <h3>Positive Reinforcement</h3>
+        <p>The strongest documentation habit observed in this specific note — drawn from achieved feature flags, not generic praise</p>
+      </div>
+      <div class="card card-accent">
+        <div class="score-badge">Habit to Adopt</div>
+        <h3>Priority Improvement</h3>
+        <p>The single highest-yield change from the top suggestion list — specific and immediately actionable</p>
+      </div>
+      <div class="card card-red" style="border-top-color:var(--accent4);">
+        <div class="score-badge" style="background:rgba(239,154,154,0.15);border-color:rgba(239,154,154,0.3);color:var(--accent4);">Habit to Eliminate</div>
+        <h3>Pattern to Break</h3>
+        <p>Either "leaving the reader to infer why an abnormal finding changes management" or "burying the handoff inside long narrative paragraphs"</p>
+      </div>
+    </div>
+    <div class="highlight-box" style="margin-top:24px; font-size:14px;">
+      Tone is <strong>constructive, not punitive</strong> — the AGENTS.md design principle. Feedback is framed as habit formation, not performance evaluation.
+    </div>
+  </section>
+
+  <!-- SLIDE 15: Sample Patients -->
+  <section class="slide">
+    <div class="slide-num">15</div>
+    <h2>Current Sample <span>Dataset</span></h2>
+    <p>Five real consultation types representing the breadth of MFM referral complexity.</p>
+    <div class="grid-2" style="margin-top:16px; gap:20px;">
+      <ul class="clean" style="font-size:14px;">
+        <li><strong>Ashleigh Morgan</strong> — Early pregnancy dating / viability, IUP 6.5 weeks</li>
+        <li><strong>Anne Pierre-Antoine</strong> — Fetal anomaly: leftward cardiac axis + mildly dilated right atrium</li>
+        <li><strong>Kaylee Wilder</strong> — Maternal neurologic: pituitary macroadenoma at 17 weeks, neurology co-management</li>
+      </ul>
+      <ul class="clean" style="font-size:14px;">
+        <li><strong>Kiana Burgess</strong> — Missed abortion / pregnancy loss consultation (04/14/26)</li>
+        <li><strong>Marari De Jesus</strong> — IUGR with abnormal Doppler + amniocentesis, addendum note (04/14/26)</li>
+      </ul>
+    </div>
+    <div class="highlight-box" style="margin-top:24px; font-size:13px;">
+      Consultation type is <strong>inferred automatically</strong> from filename and note text — one of: early dating/viability · missed abortion · fetal anomaly · IUGR/Doppler · maternal neurologic/endocrine · general MFM consultation.
+    </div>
+  </section>
+
+  <!-- SLIDE 16: Privacy & Safety -->
+  <section class="slide">
+    <div class="slide-num">16</div>
+    <h2>Privacy &amp; <span>Safety Principles</span></h2>
+    <div class="grid-2" style="margin-top:16px;">
+      <div>
+        <ul class="clean green">
+          <li>All processing is <strong>fully local</strong> — no data leaves the machine</li>
+          <li>Source PDF files are <strong>never edited in place</strong></li>
+          <li>All output stays within the project directory</li>
+          <li>Missing information is labeled as <em>"missing from note"</em> — never fabricated</li>
+          <li>Physician attribution falls back to <em>"Unknown Physician"</em> if not confidently extractable</li>
+          <li>Each source file is SHA-256 hashed for auditability</li>
+        </ul>
+      </div>
+      <div>
+        <div class="card card-orange">
+          <h3>⚠ Billing Disclaimer</h3>
+          <p>Billing support estimates are documentation-support analysis only — not legal, coding, or billing advice. The output never recommends specific codes or documentation levels.</p>
+        </div>
+        <div class="card" style="margin-top:16px;">
+          <h3>No OCR</h3>
+          <p>The engine does not perform OCR. If a PDF is image-only, the output warns that extraction volume is low and manual review is recommended.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 17: Getting Started -->
+  <section class="slide">
+    <div class="slide-num">17</div>
+    <h2>Getting <span>Started</span></h2>
+    <div class="split-left" style="align-items:start; margin-top:8px;">
+      <div>
+        <h3 style="color:var(--accent2);">One-Time Setup</h3>
+        <pre>python -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install pypdf pdfplumber</pre>
+        <div style="height:20px;"></div>
+        <h3 style="color:var(--accent2);">Run the Workflow</h3>
+        <pre>python tools\run_consult_scoring.py</pre>
+        <div style="height:20px;"></div>
+        <h3 style="color:var(--subtext); font-size:13px;">Add new consults, then rerun:</h3>
+        <pre style="font-size:12px;">python tools\run_consult_scoring.py \
+  --input-dir "Sample patients" \
+  --output-dir "output"</pre>
+      </div>
+      <div>
+        <h3 style="color:var(--accent);">Output Structure</h3>
+        <pre style="font-size:12px; color:var(--subtext);">output/
+├── consult_reviews/
+│   └── &lt;patient_name&gt;_review.md
+├── json/
+│   ├── &lt;patient_name&gt;_review.json
+│   └── manifest.json
+└── physician_summaries/
+    ├── &lt;physician_name&gt;_summary.md
+    └── practice_summary.md</pre>
+        <div class="highlight-box green" style="margin-top:20px; font-size:13px;">
+          Existing output files are overwritten on each run. Source PDFs are never changed.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 18: Summary -->
+  <section class="slide slide-divider">
+    <div class="slide-num">18</div>
+    <div class="section-number">∑</div>
+    <div class="section-title">Local · Deterministic<br><span>Physician-Actionable</span></div>
+    <div style="margin-top:32px; max-width:640px;">
+      <ul class="clean" style="font-size:15px;">
+        <li>Six weighted domains capture every layer of MFM note quality</li>
+        <li>30+ feature flags, fully rule-based — no AI black-box scoring</li>
+        <li>Per-consult, per-physician, and practice-level reports in one run</li>
+        <li>Rewritten A&amp;P auto-generated as a structural teaching aid</li>
+        <li>All processing local — no PHI transmission, no external dependencies</li>
+      </ul>
+    </div>
+    <div class="tags" style="margin-top:28px;">
+      <span class="tag">Python</span>
+      <span class="tag">pypdf</span>
+      <span class="tag">pdfplumber</span>
+      <span class="tag">Markdown</span>
+      <span class="tag">JSON</span>
+      <span class="tag">Atlanta Perinatal Associates</span>
+      <span class="tag">MFM Documentation</span>
+    </div>
+  </section>
+
+</div>
+
+<!-- Progress bar -->
+<div class="progress" id="progress"></div>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav-btn" id="prev" title="Previous (←)" aria-label="Previous slide">‹</div>
+  <span class="nav-counter" id="counter">1 / 18</span>
+  <div class="nav-btn" id="next" title="Next (→)" aria-label="Next slide">›</div>
+</nav>
+
+<script>
+  const slides   = document.querySelectorAll('.slide');
+  const counter  = document.getElementById('counter');
+  const progress = document.getElementById('progress');
+  const total    = slides.length;
+  let current = 0;
+
+  function show(n) {
+    slides[current].classList.remove('active');
+    current = (n + total) % total;
+    const slide = slides[current];
+    slide.classList.add('active');
+    slide.scrollTop = 0;
+    counter.textContent = `${current + 1} / ${total}`;
+    progress.style.width = `${((current + 1) / total) * 100}%`;
+  }
+
+  document.getElementById('next').addEventListener('click', () => show(current + 1));
+  document.getElementById('prev').addEventListener('click', () => show(current - 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault(); show(current + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault(); show(current - 1);
+    }
+  });
+
+  // Touch swipe — only register as swipe if mostly horizontal
+  let touchX = null, touchY = null;
+  document.addEventListener('touchstart', e => {
+    touchX = e.touches[0].clientX;
+    touchY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    const dy = e.changedTouches[0].clientY - touchY;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      show(current + (dx < 0 ? 1 : -1));
+    }
+    touchX = touchY = null;
+  }, { passive: true });
+
+  // Init progress bar
+  show(0);
+</script>
+</body>
+</html>
