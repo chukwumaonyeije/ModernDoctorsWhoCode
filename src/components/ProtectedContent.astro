@@ -116,19 +116,36 @@ const {
   }
 
   function attachDeckActions(root) {
+    const iframe = root.querySelector('[data-protected-deck]');
+    const deckSource = root.querySelector('[data-protected-deck-html]');
+    const deckHtml =
+      deckSource instanceof HTMLTextAreaElement
+        ? deckSource.value
+        : deckSource?.textContent ?? '';
+
+    if (iframe instanceof HTMLIFrameElement && deckHtml) {
+      const previousUrl = iframe.dataset.blobUrl;
+      if (previousUrl) {
+        URL.revokeObjectURL(previousUrl);
+      }
+
+      const blob = new Blob([deckHtml], { type: 'text/html' });
+      const blobUrl = URL.createObjectURL(blob);
+      iframe.src = blobUrl;
+      iframe.dataset.blobUrl = blobUrl;
+    }
+
     const openButton = root.querySelector('[data-open-protected-deck]');
     if (!openButton) return;
 
     openButton.addEventListener('click', () => {
-      const iframe = root.querySelector('[data-protected-deck]');
-      const srcdoc = iframe?.getAttribute('srcdoc');
-      if (!srcdoc) return;
+      if (!deckHtml) return;
 
       const popup = window.open('', '_blank', 'noopener,noreferrer');
       if (!popup) return;
 
       popup.document.open();
-      popup.document.write(srcdoc);
+      popup.document.write(deckHtml);
       popup.document.close();
     });
   }

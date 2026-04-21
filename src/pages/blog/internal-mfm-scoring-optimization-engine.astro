@@ -2,7 +2,7 @@
 import slideshowHtml from '../../content/internal/mfm-scoring-optimization-engine.html?raw';
 import PostLayout from '../../layouts/PostLayout.astro';
 import ProtectedContent from '../../components/ProtectedContent.astro';
-import { encryptProtectedContent, escapeHtmlAttribute } from '../../utils/protectedContent';
+import { encryptProtectedContent, escapeHtml } from '../../utils/protectedContent';
 
 const title = 'MFM Scoring Optimization Engine: Internal QA Infrastructure for Documentation Standardization';
 const description =
@@ -91,6 +91,7 @@ const protectedArticleHtml = `
     }
 
     .internal-post-embed-frame {
+      display: block;
       width: 100%;
       min-height: 78vh;
       border: 1px solid rgba(56, 189, 248, 0.18);
@@ -153,8 +154,9 @@ const protectedArticleHtml = `
         title="MFM Scoring Optimization Engine slideshow"
         loading="lazy"
         sandbox="allow-scripts allow-same-origin"
-        srcdoc="${escapeHtmlAttribute(slideshowHtml)}"
+        src="about:blank"
       ></iframe>
+      <textarea hidden data-protected-deck-html>${escapeHtml(slideshowHtml)}</textarea>
     </div>
 
     <div class="internal-post-actions">

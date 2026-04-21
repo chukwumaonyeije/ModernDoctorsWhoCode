@@ -40,4 +40,11 @@ export function escapeHtmlAttribute(value: string) {
     .replace(/>/g, '&gt;');
 }
 
+export function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 export const protectedContentIterations = PBKDF2_ITERATIONS;
