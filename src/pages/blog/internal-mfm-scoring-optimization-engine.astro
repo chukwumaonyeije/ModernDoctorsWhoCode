@@ -90,6 +90,42 @@ const protectedArticleHtml = `
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
     }
 
+    .internal-post-embed-stage {
+      position: relative;
+    }
+
+    .internal-post-embed-toolbar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.65rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .internal-post-icon-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.85rem;
+      height: 2.85rem;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 12px;
+      background: rgba(20, 28, 41, 0.92);
+      color: #d9f4ff;
+      transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+    }
+
+    .internal-post-icon-button:hover,
+    .internal-post-icon-button:focus-visible {
+      transform: translateY(-1px);
+      border-color: rgba(56, 189, 248, 0.42);
+      background: rgba(24, 35, 51, 0.98);
+    }
+
+    .internal-post-icon-button svg {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+
     .internal-post-embed-frame {
       display: block;
       width: 100%;
@@ -97,6 +133,16 @@ const protectedArticleHtml = `
       border: 1px solid rgba(56, 189, 248, 0.18);
       border-radius: 12px;
       background: #0a1520;
+    }
+
+    .internal-post-embed-stage:fullscreen {
+      padding: 1rem;
+      background: #08111a;
+    }
+
+    .internal-post-embed-stage:fullscreen .internal-post-embed-frame {
+      min-height: calc(100vh - 4.5rem);
+      border-color: rgba(56, 189, 248, 0.3);
     }
 
     .internal-post-actions {
@@ -148,22 +194,44 @@ const protectedArticleHtml = `
     <p>The slideshow below walks through the engine, the six-domain rubric, the output structure, and the safety constraints that make the workflow usable for internal QA.</p>
 
     <div class="full-bleed internal-post-embed-wrap">
-      <iframe
-        class="internal-post-embed-frame"
-        data-protected-deck
-        title="MFM Scoring Optimization Engine slideshow"
-        loading="lazy"
-        sandbox="allow-scripts allow-same-origin"
-        src="about:blank"
-      ></iframe>
+      <div class="internal-post-embed-stage" data-protected-deck-stage>
+        <div class="internal-post-embed-toolbar">
+          <button
+            class="internal-post-icon-button"
+            type="button"
+            data-toggle-protected-deck-fullscreen
+            aria-label="Maximize slideshow"
+            title="Maximize slideshow"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.9"
+              />
+            </svg>
+          </button>
+        </div>
+        <iframe
+          class="internal-post-embed-frame"
+          data-protected-deck
+          title="MFM Scoring Optimization Engine slideshow"
+          loading="lazy"
+          sandbox="allow-scripts allow-same-origin"
+          src="about:blank"
+        ></iframe>
+      </div>
       <textarea hidden data-protected-deck-html>${escapeHtml(slideshowHtml)}</textarea>
     </div>
 
     <div class="internal-post-actions">
       <button class="site-button site-button--secondary" type="button" data-open-protected-deck>
-        Open slideshow in a new window
+        Open slideshow in a new tab
       </button>
-      <p class="internal-post-note">Use the same password in this browser session to reopen the post if needed.</p>
+      <p class="internal-post-note">Use the maximize icon inside the presentation for a larger view, or open the slideshow in a separate tab if needed.</p>
     </div>
   </div>
 `;

@@ -116,12 +116,18 @@ const {
   }
 
   function attachDeckActions(root) {
+    if (root.dataset.deckActionsBound === 'true') {
+      return;
+    }
+
     const iframe = root.querySelector('[data-protected-deck]');
+    const stage = root.querySelector('[data-protected-deck-stage]');
     const deckSource = root.querySelector('[data-protected-deck-html]');
     const deckHtml =
       deckSource instanceof HTMLTextAreaElement
         ? deckSource.value
         : deckSource?.textContent ?? '';
+    let blobUrl = '';
 
     if (iframe instanceof HTMLIFrameElement && deckHtml) {
       const previousUrl = iframe.dataset.blobUrl;
@@ -130,24 +136,66 @@ const {
       }
 
       const blob = new Blob([deckHtml], { type: 'text/html' });
-      const blobUrl = URL.createObjectURL(blob);
+      blobUrl = URL.createObjectURL(blob);
       iframe.src = blobUrl;
       iframe.dataset.blobUrl = blobUrl;
+    }
+
+    const fullscreenButton = root.querySelector('[data-toggle-protected-deck-fullscreen]');
+    const fullscreenTarget =
+      stage instanceof HTMLElement ? stage : iframe instanceof HTMLIFrameElement ? iframe : null;
+
+    if (fullscreenButton instanceof HTMLButtonElement && fullscreenTarget) {
+      const syncFullscreenLabel = () => {
+        const isFullscreen = document.fullscreenElement === fullscreenTarget;
+        fullscreenButton.setAttribute(
+          'aria-label',
+          isFullscreen ? 'Exit fullscreen slideshow' : 'Maximize slideshow',
+        );
+        fullscreenButton.setAttribute(
+          'title',
+          isFullscreen ? 'Exit fullscreen slideshow' : 'Maximize slideshow',
+        );
+      };
+
+      syncFullscreenLabel();
+      document.addEventListener('fullscreenchange', syncFullscreenLabel);
+
+      fullscreenButton.addEventListener('click', async () => {
+        if (document.fullscreenElement === fullscreenTarget) {
+          if (document.exitFullscreen) {
+            await document.exitFullscreen();
+          }
+          return;
+        }
+
+        if (fullscreenTarget.requestFullscreen) {
+          await fullscreenTarget.requestFullscreen();
+          return;
+        }
+
+        if (blobUrl) {
+          const popup = window.open(blobUrl, '_blank');
+          if (!popup) {
+            window.location.assign(blobUrl);
+          }
+        }
+      });
     }
 
     const openButton = root.querySelector('[data-open-protected-deck]');
     if (!openButton) return;
 
     openButton.addEventListener('click', () => {
-      if (!deckHtml) return;
+      if (!blobUrl) return;
 
-      const popup = window.open('', '_blank', 'noopener,noreferrer');
-      if (!popup) return;
-
-      popup.document.open();
-      popup.document.write(deckHtml);
-      popup.document.close();
+      const popup = window.open(blobUrl, '_blank');
+      if (!popup) {
+        window.location.assign(blobUrl);
+      }
     });
+
+    root.dataset.deckActionsBound = 'true';
   }
 
   async function unlock(root, passphrase) {
