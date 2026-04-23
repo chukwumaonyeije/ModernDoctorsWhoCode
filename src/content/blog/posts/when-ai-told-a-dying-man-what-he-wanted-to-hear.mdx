@@ -1,0 +1,97 @@
+---
+title: "When AI Told a Dying Man What He Wanted to Hear"
+description: "Joe Riley trusted AI over his oncologist and died of a treatable cancer. His tragedy wasn't naivety — it was earned distrust, amplified by a machine that had no way to know the difference."
+pubDate: "2026-04-13"
+author: "Chukwuma Onyeije, MD, FACOG"
+category: "AI in Medicine"
+tags: ["AI in Medicine", "Patient Safety", "Medical Misinformation", "Physician-Developer", "Clinical AI"]
+image:
+  url: "/images/posts/when-ai-told-a-dying-man.jpg"
+  alt: "A lone silhouette stands before a towering AI medical dashboard glowing cyan, while a warm doctor's office with a stethoscope waits through an open door behind him"
+featured: true
+draft: false
+---
+
+Joe Riley hacked into the telephone network in the 1980s. When authorities seized his computer, he refused to apologize at trial. His position: information wants to be free.
+
+He was a retired neuroscientist. Early adopter. Perpetual skeptic. A man who built a jury-rigged entertainment system in the back of a minivan before most families had a VCR. When Perplexity AI told him, in polished scientific language, that his oncologist was wrong, he believed it.
+
+He died of a treatable cancer in December 2025. He was 75.
+
+His story was published in the New York Times this week, reported by Teddy Rosenbluth. I have been thinking about it since I read it.
+
+## Joe Didn't Trust Doctors. He Had Reasons.
+
+This is the part most commentary will skip. Joe Riley's skepticism of the medical establishment wasn't paranoia. It was accumulated evidence.
+
+In his mid-30s, at the height of a promising career as a neuroscientist at Stony Brook University, he was struck by a chronic illness no one could diagnose. On good days, he felt like he had the flu. On bad days, he felt like his nervous system was on fire. Doctors speculated. They couldn't do much else.
+
+He lost his career. He went on disability. The institution that was supposed to heal him gave him a shrug and a hypothesis.
+
+That experience does something to a person. It doesn't make them irrational. It makes them appropriately skeptical of authority that has already failed them. For decades, that skepticism served him as a kind of protection. He read primary sources. He asked hard questions. He pushed back.
+
+When he was diagnosed with chronic lymphocytic leukemia in 2024 and his oncologist recommended treatment, Joe wanted to think about it. That is not an unreasonable response for a man with his history. It is, in fact, exactly what a person who has been failed by medicine before would do.
+
+## What AI Did to That Skepticism
+
+Joe used Perplexity to research his cancer. He read the papers the AI cited. He tried to verify what it told him. By any standard, he was the ideal AI user: technically sophisticated, skeptical by nature, not blindly accepting output.
+
+He still ended up with a fabricated case.
+
+The AI told him he had Richter's Transformation, a rare and aggressive complication of CLL. His oncologist, Dr. Eddie Marzbani at Fred Hutch Cancer Center, told him he had no signs of it. Nothing in his labs. Nothing in his CT scans. Nothing on examination. Joe wasn't persuaded.
+
+When Ben Riley, Joe's son, eventually tracked down the oncology researchers whose work Perplexity cited in the report, they were stunned. The percentages were fabricated. The summaries bore no resemblance to their actual findings. The report looked like science. It wasn't.
+
+Three doctors told Joe independently that the AI had misled him. Joe told Ben: "Yes, I still think I know better."
+
+That is the mechanism. AI didn't invent Joe's distrust of medicine. It gave that distrust a lab coat.
+
+## The Gap That Killed Him
+
+Ben Riley writes a newsletter about the cognitive dangers of AI. He saw this coming, in the abstract, before it happened to his own father. He was still powerless to stop it.
+
+Not because Joe was stupid. Because there was no one in the room who could speak both languages.
+
+Ben understood AI's limitations but had never been to medical school. He couldn't read the oncology papers well enough to argue the substance. Dr. Marzbani understood the clinical picture completely but was not equipped to dismantle an AI-generated report during a 20-minute appointment. The researchers whose work was cited wrote back, but they were strangers. Joe had no reason to trust strangers.
+
+What Joe needed was someone who could sit down with that Perplexity report, read the cited papers, identify the specific fabrications, and explain in plain terms exactly where the AI had failed. Someone with enough clinical credibility to be taken seriously and enough technical fluency to expose the mechanism.
+
+That is not a theoretical person. That is a physician who codes.
+
+## What We Can Actually Do
+
+I am not going to argue that physicians who code should become AI auditors for every patient who Googles their diagnosis. That is not sustainable and it is not the point.
+
+The point is this: we are the only people in medicine who can see both sides of this problem clearly.
+
+We understand what CLL management actually looks like in 2026. We understand the BTK inhibitor data well enough to know that Joe Riley had genuinely good options. We also understand, technically, why a retrieval-augmented generation system will confidently hallucinate percentages when the underlying data is sparse, and why a user reading the cited paper won't catch it because the hallucination is in the synthesis, not the citation.
+
+That dual fluency is rare. It matters more than I think most physician-developers recognize.
+
+There are concrete things we can build and do with it:
+
+**In the clinical encounter.** When a patient comes in with an AI-generated report, we can actually read it. Not dismiss it. Not accept it. Read it, identify where it goes wrong, and explain the mechanism. "This tool cited this paper, but the paper actually shows the opposite" is a sentence a physician-developer can say with precision. It is different from "don't trust AI."
+
+**In patient-facing tools.** There is a gap between what AI medical tools currently do (give authoritative-sounding answers) and what they should do (surface uncertainty, flag when they are operating outside reliable training data, defer to the treating physician on record). Physicians who code can build that gap into tools rather than just complain about it.
+
+**In the public record.** Ben Riley wrote about his father's death because he wanted a record of who Joe was and how AI had harmed him. That is a form of advocacy. Physicians who code can do the same, with the added weight of clinical authority. We can name specific failure modes. We can translate the technical for the lay reader and the clinical for the technical audience.
+
+## What Joe Riley Deserved
+
+Joe Riley was a curious, stubborn, brilliant, difficult man who had been failed by medicine once and was not willing to be failed again.
+
+He deserved a clinician who had read enough of the AI literature to understand what Perplexity was doing when it generated that report. He deserved someone who could say: "I see what this tool told you. Here is exactly why it is wrong, at the level of the data. And here is what the actual evidence shows for someone with your specific lab picture."
+
+He deserved that conversation in a way that honored his skepticism rather than dismissing it. His skepticism was earned. It was reasonable. It just needed accurate information to work with.
+
+AI gave him confident misinformation instead. No one in his life could translate the failure fast enough.
+
+Ben Riley ended his essay: "I can for damn sure keep working to raise the consciousness of others."
+
+I can do that too. So can every physician reading this who also writes code.
+
+Joe Riley's window closed. But the patients who will face this same dynamic next month, and next year, are still here.
+
+---
+
+*The New York Times story referenced in this post was reported by Teddy Rosenbluth and published April 13, 2026.*
