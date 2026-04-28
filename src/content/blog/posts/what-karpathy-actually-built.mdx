@@ -1,0 +1,150 @@
+---
+audioUrl: /audio/what-karpathy-actually-built.mp3
+title: "What Karpathy Actually Built (and Why It Matters for Medicine)"
+description: "The compilation analogy, explained for clinicians. How LLM Wiki compiles clinical knowledge into synthesized entity pages instead of re-retrieving chunks on every query."
+pubDate: 2026-05-04
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags: ["second brain", "Karpathy", "LLM Wiki", "RAG", "physician builder", "clinical knowledge", "AI"]
+category: "Artificial Intelligence"
+image:
+  url: "/images/posts/what-karpathy-actually-built-hero.jpeg"
+  alt: "Physician workstation showing clinical evidence synthesis in a dark knowledge vault interface beside medical references"
+draft: false
+featured: true
+readingTime: 9
+series: "The Physician's Second Brain"
+seriesPart: 2
+canonical: "https://www.doctorswhocode.blog/blog/what-karpathy-actually-built"
+---
+
+If you read the first post in this series, you now know why existing PKM systems failed physicians. They treated clinical knowledge like it was creative output. They built for people who produce. Not for people who apply.
+
+Karpathy's insight was not complicated. It was that an LLM could maintain a knowledge base better than you could.
+
+But the *mechanism* is worth understanding closely. Because understanding it explains exactly why it works for medicine.
+
+## The Compilation Analogy
+
+When you write code, the flow is source → compiler → binary artifact → runtime execution.
+
+You do not execute the source code directly every time you run the program. That would be absurd. The compiler transforms the source into an optimized binary once. The runtime then uses that compiled artifact. Fast, efficient, consistent.
+
+The compiler step is expensive. But you pay it once per source file, and every subsequent execution benefits.
+
+Now imagine if you had a different architecture: every time someone asked your program a question, the computer re-read the source code, parsed it from scratch, compiled it on demand, and executed. You would have the right answer but at catastrophic performance cost. You would be paying the compilation penalty every single time.
+
+That is retrieval augmented generation (RAG).
+
+That is also what your brain does when you open UpToDate at 2 AM with a question about atypical antipsychotics in pregnancy. You are not retrieving an existing synthesis. You are retrieving raw evidence and re-synthesizing on demand.
+
+The LLM Wiki inverts this.
+
+You feed sources into the wiki. The AI compiles them into an optimized knowledge artifact. An entity page that summarizes everything known about atypical antipsychotics in pregnancy, cross-referenced with teratology, breastfeeding safety, and specific drug interactions relevant to your patient population. The next query does not re-derive the answer. It retrieves the compiled synthesis that already exists.
+
+That is the essential difference. And it is not incremental.
+
+## The Three Operations
+
+A Karpathy-style LLM Wiki has three core operations:
+
+### Ingest
+
+You give it a source. A PDF of the SMFM guideline on fetal growth restriction. A journal article on novel biomarkers for preterm birth. A case report on an unusual presentation you want integrated into your knowledge base.
+
+The AI reads the source. Extracts key concepts. Identifies which entity pages it relates to. Creates new entities if needed. Updates existing entity pages with the new information. Notes contradictions if the new source conflicts with prior synthesis. Flags the evidence quality.
+
+The entity page for "fetal growth restriction management" now includes not just the SMFM guideline but your institution's specific protocol, plus the most current literature you fed it, all integrated and cross-linked.
+
+That is ingest. The work of synthesis happens once. The artifact persists.
+
+### Query
+
+You ask your vault a question. The system retrieves the relevant compiled entities and synthesizes an answer from existing synthesis instead of chunks.
+
+"What is the evidence for delivery at 37 weeks in asymmetric FGR with normal Dopplers?"
+
+RAG would find textually similar passages and reassemble them. You would get chunks from multiple sources that may or may not cohere. The LLM Wiki has already compiled an FGR entity page that distinguishes symmetric from asymmetric cases, integrates the evidence hierarchy, and understands your institution's guidelines. The query returns synthesis that already exists. Faster, more consistent, more authoritative.
+
+### Lint
+
+Periodically, the AI audits the entire vault. It looks for contradictions. It flags entities with weak evidence foundations. It notes which source material is becoming stale. It suggests areas where the wiki is incomplete.
+
+Your guideline update comes in from SMFM. You feed it to the vault. The lint operation catches that the prior guidance on surveillance intervals is now contradicted. It flags the conflict. You manually resolve which version is current. The vault updates.
+
+This is not automatic. You are still the human in the loop. The lint operation just makes the maintenance burden transparent and manageable instead of hidden until you accidentally follow outdated guidance.
+
+## Why RAG Fails Clinically
+
+Standard RAG is query-centric. Every question restarts the reasoning process. The system finds the most relevant chunks, passes them to an LLM, and generates an answer.
+
+This works fine for answering isolated questions.
+
+It fails completely for building a cumulative understanding.
+
+Consider a simple case: you are tracking literature on absent end-diastolic velocity (AEDV) in the setting of severe FGR. You add a 2024 journal article about surveillance frequency. You add an ACOG committee opinion from 2023. You add an SMFM guideline addendum from late 2024 that revises recommended intervals.
+
+With RAG, each query retrieves whatever chunks are textually similar to your question. One time you might get the ACOG guidance. Next time you might get the older literature. You have no reliable way to know that the SMFM addendum was published more recently and supersedes prior recommendations.
+
+An LLM Wiki has already compiled an AEDV entity page that *knows* the difference between 2023 and 2024 guidance, *knows* that SMFM supersedes general ACOG in specialty guidance, and *knows* that the surveillance interval was revised from every 48 hours to every 72 hours based on the latest evidence.
+
+That compiled synthesis is persistent. The next query does not re-derive it. It retrieves it.
+
+For a physician accumulating knowledge over months and years, this is the difference between a system that helps you think and a system that makes you think the same question multiple ways every time.
+
+## The Hierarchy Problem Gets Solved
+
+In Post 1, I argued that clinical knowledge is hierarchical: an RCT carries different weight than a case report carries different weight than expert opinion carries different weight than your own institutional experience.
+
+RAG has no built-in hierarchy. It weights textual similarity, not evidence quality.
+
+An LLM Wiki can be instructed to tag every entity with evidence attribution. When the AI ingests a source, it labels whether claims are supported by RCT-level evidence, observational data, expert consensus, or your own practice data. If a synthesis is built primarily on case reports with no RCT backup, that gets flagged.
+
+Your query can then ask for synthesis built on strong evidence only. Or it can ask for a tiered summary: what do we know from RCTs, and where does expert opinion diverge. You have agency. The hierarchy is explicit.
+
+## Temporal Volatility and the Lint Operation
+
+Clinical guidelines update. Sometimes they contradict prior guidance. Sometimes they nuance it. Your knowledge base needs to know when that happened.
+
+The lint operation is how you stay current without constant manual maintenance.
+
+You ingest the new ACOG statement on gestational hypertension. The lint pass compares it to your prior synthesis on that topic. It flags: "Prior guidance recommended X at 34 weeks. New guidance recommends Y at 34 weeks. Update needed."
+
+You review the actual change. Maybe the new guidance is different because of newer evidence. Maybe it is methodologically weaker. You decide. Your vault updates. The next query reflects the current state.
+
+This is not hands-off. But it is drastically lower friction than scanning your entire vault manually for stale claims.
+
+## Provenance and Auditability
+
+Every fact in a well-designed LLM Wiki is traced back to its source.
+
+"What does the literature say about corticosteroid administration at periviability?" The wiki not only tells you the recommendation but shows you which sources informed it. ACOG 2019 guideline. NEJM 2015 trial. Your own consult notes from cases at that gestational age.
+
+You can then drill down. Read the actual source. Verify the synthesis. Decide whether to trust it.
+
+This is radically different from generic AI responses where the reasoning is opaque. You know what fed your answer. You can audit it. You can update it.
+
+## What Comes Next
+
+The theory is clean. The principle is sound. But theory does not help if you cannot build it.
+
+Post 3 covers the actual stack: how to set up Obsidian, Claude Code, and a local LLM layer so that your vault stays private and under your control.
+
+Then Post 4 covers the clinical reasoning applications: the thinking-partner commands that turn your accumulated vault into active diagnostic pressure-testing and hypothesis generation.
+
+The compilation analogy is powerful. But a compiled vault only becomes valuable when you know how to use it.
+
+## Key Takeaways
+
+- Source code compilers optimize once; RAG re-derives on every query
+- An LLM Wiki ingests sources into compiled entity pages instead of raw chunks
+- Lint operations audit for contradictions and flag stale or weak-evidence claims
+- Clinical evidence hierarchy can be explicit: RCT vs. observational vs. case report vs. your practice
+- Provenance tracking makes every fact auditable and updates transparent
+- Accumulation compounds over time instead of restarting fresh on each query
+
+---
+
+## Series Navigation
+
+**← [Post 1: The PKM System That Was Never Built for You](the-pkm-system-that-was-never-built-for-you)** | **[Post 3: The Physician's Stack](the-physicians-stack) →**

@@ -1,0 +1,180 @@
+---
+audioUrl: /audio/the-pkm-system-that-was-never-built-for-you.mp3
+title: "The PKM System That Was Never Built for You"
+description: "Why every personal knowledge management app failed physicians specifically, and why Karpathy's April 2026 LLM Wiki changes everything."
+pubDate: 2026-04-27
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags: ["second brain", "PKM", "Karpathy", "LLM Wiki", "physician builder", "clinical knowledge", "Obsidian", "AI"]
+category: "Artificial Intelligence"
+image:
+  url: "/images/posts/the-pkm-system-that-was-never-built-for-you-hero.jpeg"
+  alt: "Physician overwhelmed by unread medical PDFs, journal articles, guidelines, treatment protocols, and abandoned digital notes"
+draft: false
+featured: true
+readingTime: 9
+series: "The Physician's Second Brain"
+seriesPart: 1
+canonical: "https://www.doctorswhocode.blog/blog/the-pkm-system-that-was-never-built-for-you"
+---
+
+Every physician I know has a graveyard somewhere.
+
+Not a real one. A digital one.
+
+It is the folder of PDFs you downloaded during residency that you have not opened since. The Evernote account with 3,000 notes and a search bar you do not trust. The Notion workspace that was going to organize your entire clinical life until it turned into a second job. The Obsidian vault you set up in January, used for six weeks, and forgot existed.
+
+You clipped articles. You highlighted guidelines. You bookmarked things you intended to return to.
+
+You never returned to any of them.
+
+This is not a failure of discipline. It is a failure of design.
+
+## The Wrong System for the Wrong Knowledge Worker
+
+Every major personal knowledge management system of the last twenty years was built for a specific type of knowledge worker: the writer, the entrepreneur, the creative professional, the consultant who produces deliverables from accumulated ideas. Tiago Forte built PARA for people whose output is documents. David Allen built GTD for people whose knowledge lives in tasks. The Zettelkasten obsessives built their system for academics who needed to produce a book from thousands of index cards.
+
+None of them built anything for the physician.
+
+## What Makes Clinical Knowledge Different
+
+Clinical knowledge is not like any other professional knowledge. It has properties that no generic PKM system was designed to handle.
+
+**It is hierarchical.** A case report is not equivalent to a randomized controlled trial, which is not equivalent to a practice guideline, which is not equivalent to expert consensus. The weight of any given piece of evidence depends on where it sits in that hierarchy, and the hierarchy shifts as new evidence arrives.
+
+**It is temporally volatile.** The surveillance interval for absent end-diastolic velocity at 28 weeks that was standard of care in 2019 may not be the same as what SMFM recommends now. Guidelines update. Your knowledge base has to update with them, and you have to know which notes are stale.
+
+**It is hyper-particular.** Your institution's protocol for managing PPROM at 32 weeks reflects your referral patterns, your neonatal unit's capabilities, your maternal transport agreements, and your attending group's accumulated clinical judgment. A protocol from another institution with a different case mix is not interchangeable with yours. UpToDate does not know any of that.
+
+**It carries consequence.** If a designer files something in the wrong folder, the cost is a few minutes of searching. If a physician draws on an outdated or misattributed piece of clinical knowledge at 3 AM, someone can get hurt.
+
+These properties mean that the standard PKM playbook was never good enough. The bottleneck was never capture. Physicians are excellent at capturing things. We highlight, we bookmark, we download. The bottleneck was always maintenance. The cost of keeping clinical knowledge current, cross-linked, and trustworthy was always too high for any individual clinician to sustain manually.
+
+So we stopped sustaining it.
+
+We hired UpToDate.
+
+## What UpToDate Solved and What It Didn't
+
+UpToDate solved the maintenance problem by centralizing it. A large editorial team reads the literature, updates the summaries, resolves the contradictions, and presents you with a single trusted reference. That is genuinely valuable.
+
+What it could not solve was the particularity problem.
+
+UpToDate does not know your patient population. It does not know that your institution runs a level IV NICU with an established fetal surgery program and a different risk tolerance for preterm delivery than the academic center two counties over. It does not know the clinical pearls you have accumulated across 15 years of managing fetal growth restriction. It does not know how you reason through a complex case.
+
+It knows what the evidence says. It does not know what you know.
+
+The physician who uses only UpToDate has outsourced their knowledge maintenance, and in the process, outsourced the synthesis of their own clinical expertise. Your personal experience, your hard-won pattern recognition, your evolving interpretation of the evidence as it interacts with your specific practice context: none of that lives anywhere. It lives in your head, and when you leave a room, it goes with you.
+
+That is not a knowledge management system. That is a knowledge management crisis wearing a comfortable subscription fee.
+
+## A Different Failure Mode
+
+The physicians who recognized this problem went looking for alternatives. Some of them found Obsidian.
+
+Obsidian solved one real problem: it gave you a local, private, interconnected vault that you owned. Your notes were Markdown files on your hard drive. They could link to each other. They could be searched. They were yours.
+
+But Obsidian solved only the structural problem. It did not solve the maintenance problem.
+
+You still had to clip the article. You still had to write the summary. You still had to update the note when the guideline changed. You still had to add the backlinks. You still had to decide where the note went, what it was called, and whether it contradicted something you wrote three months ago.
+
+Obsidian gave you a better filing cabinet. The filing was still your job.
+
+Most physicians who tried Obsidian seriously could tell you exactly when they stopped. It was usually around month two. Right around the time the maintenance burden started to exceed the retrieval benefit. Right around the time they realized they were spending more time organizing knowledge than using it.
+
+The graveyard problem did not go away. It just moved into a prettier application.
+
+## What Changed in April 2026
+
+On April 4, 2026, Andrej Karpathy, co-founder of OpenAI and former Director of AI at Tesla, posted a GitHub Gist.
+
+It was called "llm-wiki."
+
+It received 5,000 stars in four days.
+
+The idea was not complicated. In fact, the simplicity was the point.
+
+Instead of you maintaining a knowledge base and occasionally asking AI questions about it, the LLM builds and maintains the entire knowledge base for you.
+
+You drop in a source. The AI reads it, extracts the key concepts, integrates them into the existing wiki, updating entity pages, revising topic summaries, noting where the new information contradicts prior entries. The wiki grows more accurate, more cross-linked, more comprehensive with every source you give it.
+
+You do not file anything. You do not write summaries. You do not update backlinks. You do not decide where the note goes.
+
+You curate. The AI maintains.
+
+Karpathy called this pattern the LLM Wiki. The broader AI community immediately recognized it as something they had been circling around for years without quite articulating. Within 48 hours, hundreds of developers were building implementations.
+
+## The Shift That Actually Matters
+
+The technical difference between an LLM Wiki and a standard RAG system is worth understanding, even if you never write a line of code.
+
+Standard RAG, Retrieval Augmented Generation, is what most AI knowledge tools use. You ask a question. The system finds the chunks of text most similar to your question. It passes those chunks to the model. The model generates an answer based on what it retrieved.
+
+Then it forgets.
+
+Next question, it starts over. There is no accumulation. The knowledge base stays flat. The synthesis happens fresh on every query.
+
+The LLM Wiki compiles instead of retrieves.
+
+Karpathy's analogy is from software engineering: when you write source code, a compiler transforms it into an optimized binary artifact. You do not execute the source code directly every time. You compile once and run efficiently on demand. The compilation step is expensive, but you pay it once per source, and every subsequent query benefits.
+
+RAG runs the interpreter on raw source every time you ask a question.
+
+The LLM Wiki compiles your sources once, maintains the compiled artifact, and every query runs against synthesis that already exists, not chunks that have to be assembled from scratch.
+
+For clinical knowledge, this distinction is not academic.
+
+A RAG system over your MFM literature corpus will retrieve the most textually similar chunks to "what is the surveillance interval for absent end-diastolic velocity?" It might find the right passage. It might not. It has no way to know that the 28-week and 34-week recommendations differ, because it never built the conceptual structure that would make that distinction visible.
+
+An LLM Wiki over the same corpus has already built an AEDV entity page. It has already integrated the SMFM and ACOG recommendations. It has already flagged where they diverge. It has already cross-linked to the underlying evidence. When you query it, you are not asking the AI to synthesize for the first time. You are asking it to retrieve synthesis that already exists.
+
+That is a different system. Not incrementally different. Categorically different.
+
+## Why This Is the System Physicians Should Have Had
+
+The properties of clinical knowledge that made standard PKM fail physicians are exactly the properties the LLM Wiki was designed to handle.
+
+The hierarchy problem? An LLM Wiki can be instructed to treat a randomized controlled trial differently from a case report, and to flag when an evidence synthesis is based primarily on low-quality sources.
+
+The temporal volatility problem? The lint operation, a periodic pass where the AI audits the wiki for contradictions and stale claims, is built into the pattern. The system is designed to degrade gracefully and correct itself.
+
+The particularity problem? Your wiki reflects your sources. Your PPROM protocol note is based on your institution's literature, your unit's outcomes data, your attending group's accumulated experience. No one else has that wiki. UpToDate has its wiki. You have yours.
+
+The consequence problem? Every entry in an LLM Wiki is provenance-tracked. You know which source a piece of information came from. You can audit it. You can verify it. You can decide whether to trust it.
+
+The maintenance problem? That one is solved. The AI maintains it. Every ingest is handled by the agent. Every lint pass runs on command. The human role is curation and judgment, which is exactly the role a physician should play in a clinical knowledge system.
+
+## What Comes Next
+
+Over the next four posts, I am going to show you how to build this.
+
+Not the generic version. The physician's version.
+
+Post 2 covers what Karpathy actually built and why the compilation analogy matters for clinical data specifically.
+
+Post 3 covers the physician's stack: Obsidian, Claude Code or Codex, and the local LLM layer that keeps patient-adjacent data where it belongs, on your hardware, not on someone else's server.
+
+Post 4 covers the thinking-partner commands: the slash-command toolkit that turns your accumulated vault into active diagnostic pressure-testing, cross-domain hypothesis generation, and automated SOAP note formatting.
+
+Post 5 covers the flywheel: what happens to a physician's knowledge system after six months of compounding, and why the physician who builds this is not a hobbyist.
+
+The model is not the product.
+
+The vault is the product.
+
+And you are the only person who can build the vault that reflects your clinical expertise, because you are the only person who has it.
+
+## Key Takeaways
+
+- Standard PKM apps fail physicians because clinical knowledge is hierarchical, temporally volatile, institution-specific, and carries real consequences if wrong
+- UpToDate solved centralized maintenance but cannot capture your institution's protocols, clinical expertise, and reasoning patterns
+- Obsidian provided structure but left the burden of curation and linkage entirely on you
+- Karpathy's April 2026 LLM Wiki inverts this relationship: the AI builds and maintains the knowledge base, you curate
+- The compilation approach accumulates synthesis rather than re-deriving it on every query, a categorical difference for clinical applications
+- Ownership matters: a physician's wiki reflects their evidence, their institution, their practice, their reasoning
+
+---
+
+## Series Navigation
+
+**← [Series Overview](the-physicians-second-brain-series-overview)** | **[Post 2: What Karpathy Actually Built](what-karpathy-actually-built) →**

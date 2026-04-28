@@ -1,0 +1,176 @@
+---
+title: "The Physician's Second Brain: A 5-Post Series"
+description: "A complete guide to building an LLM-powered clinical knowledge vault. Why existing PKM failed physicians, how to build one that works, and why this is the infrastructure layer physicians must own."
+pubDate: 2026-04-27
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags: ["second brain", "LLM Wiki", "physician builder", "clinical knowledge", "PKM", "AI infrastructure"]
+category: "Artificial Intelligence"
+image:
+  url: "/images/posts/the-physicians-second-brain-series-overview-hero.jpeg"
+  alt: "Physician seated in a clinical office with a circular second-brain knowledge vault of case notes, guidelines, literature, protocols, and insights"
+draft: false
+featured: true
+readingTime: 3
+series: "The Physician's Second Brain"
+seriesPart: 0
+canonical: "https://www.doctorswhocode.blog/blog/the-physicians-second-brain-series-overview"
+---
+
+Every physician has a graveyard of abandoned knowledge systems.
+
+Evernote notebooks that stopped growing. Obsidian vaults set up in January, forgotten by March. Notion workspaces that became beautiful mausoleums. PDFs downloaded with intention, never opened again.
+
+The problem is not you. The problem is that every knowledge management system built in the last twenty years was designed for the wrong kind of professional.
+
+They built for people who *produce* (writers, entrepreneurs, consultants). Not for people who *apply* (physicians, engineers, scientists whose knowledge carries consequence).
+
+In April 2026, that changed.
+
+Andrej Karpathy, co-founder of OpenAI, posted a GitHub Gist called "llm-wiki." The idea was simple: instead of you maintaining a knowledge base and occasionally asking AI about it, the AI builds and maintains the knowledge base for you. You curate. The AI compiles. The synthesis compounds over time instead of restarting from scratch on every query.
+
+This is not a marginal improvement. This is categorical.
+
+For physicians, it solves every problem that existing systems could not: the hierarchy problem (RCT vs. case report vs. your institutional practice), the temporal volatility problem (guidelines update), the particularity problem (your vault reflects your practice, not consensus), and the maintenance problem (the AI maintains it).
+
+This five-post series shows you how to build it, why it matters, and why the physician who builds this is not a hobbyist—they are building the infrastructure layer that clinical AI will eventually run on.
+
+---
+
+## **The Series**
+
+### [**Post 1: The PKM System That Was Never Built for You**](the-pkm-system-that-was-never-built-for-you)
+
+**The problem diagnosis.** Why Obsidian, Notion, Evernote, and even UpToDate failed physicians specifically.
+
+You will learn:
+- What makes clinical knowledge different from any other professional knowledge
+- Why PKM systems designed for writers cannot work for clinicians
+- What UpToDate solved and what it catastrophically missed
+- Why Obsidian's structure could not solve Obsidian's maintenance burden
+- What Karpathy's LLM Wiki changes about the equation
+
+**Read this if:** You have tried multiple PKM systems and abandoned them all. You suspect the problem is design, not discipline.
+
+**Length:** ~9 min read
+
+---
+
+### [**Post 2: What Karpathy Actually Built (and Why It Matters for Medicine)**](what-karpathy-actually-built)
+
+**The theory made concrete.** How compilation differs from retrieval, and why clinical knowledge needs compilation.
+
+You will learn:
+- The compiler analogy: source code → binary (not re-interpreting each time)
+- The three core operations: ingest, query, lint
+- Why RAG fails clinically (no accumulation, no hierarchy, no auditability)
+- How an LLM Wiki solves the hierarchy problem (RCT vs. case vs. expert vs. your practice)
+- Why temporal volatility needs lint operations to stay current
+- How provenance tracking makes every fact auditable
+
+**Read this if:** You want to understand the mechanism deeply enough to trust it, or you are the kind of physician-developer who needs the theory before the implementation.
+
+**Length:** ~9 min read
+
+---
+
+### [**Post 3: The Physician's Stack: Obsidian + Claude Code + Local LLM**](the-physicians-stack)
+
+**The blueprint.** How to actually build this. Architecture, ingestion workflows, HIPAA-first policy, and full setup instructions.
+
+You will learn:
+- Two-vault architecture: AI Vault (where the LLM Wiki lives) and Human Vault (your original thinking)
+- CLAUDE.md as vault constitution (governance in version control)
+- Three ingestion workflows: published guidelines (via Docling), journal articles (web clipper), your own cases (local Ollama)
+- The local-first HIPAA policy: what goes to Claude Code, what stays on your hardware, and why the line matters
+- Step-by-step setup: Obsidian, Ollama, Claude Code integration, web clipper, first ingest
+- What changes after your first three ingests (the flywheel begins)
+
+**Read this if:** You are ready to build. You want prescriptive, detailed guidance with no ambiguity. You care about HIPAA compliance and data sovereignty.
+
+**Length:** ~12 min read
+
+---
+
+### [**Post 4: The Thinking Partner Commands Every Physician Should Build**](the-thinking-partner-commands)
+
+**The application layer.** Five slash commands that turn your vault into an active diagnostic and reasoning collaborator.
+
+You will learn:
+- `/challenge`: Pressure-test your working diagnosis against your vault and your own past reasoning
+- `/emerge`: Surface buried clinical patterns you accumulated but never consciously articulated
+- `/connect`: Generate cross-domain hypotheses for complex, ambiguous cases
+- `/close-clinic`: Scaffold end-of-day SOAP notes from fragmented daily documentation
+- `/graduate`: Elevate individual cases to generalizable entity pages in your wiki
+- Why these work (they operate on your vault, not generic models)
+- How they compound in effectiveness as your vault grows
+
+**Read this if:** You want to know what this system actually *does* for you clinically. How does it change your practice day-to-day.
+
+**Length:** ~11 min read
+
+---
+
+### [**Post 5: Building the Physician's Knowledge Flywheel**](building-the-physicians-knowledge-flywheel)
+
+**The long game.** Why the vault becomes exponentially more valuable over time, and why this is infrastructure that vendors cannot build.
+
+You will learn:
+- The three-month inflection: vault is useful but not transformative
+- The six-month shift: your vault now contains synthesis specific to your practice, not generic guidance
+- The one-year pattern recognition: vault surfaces clinical patterns in your own reasoning you never consciously noticed
+- Why vendors cannot build this (they cannot know your practice better than you)
+- The physician-builder infrastructure thesis: you are building the layer that next-generation clinical AI will run on
+- Why the model is commodity but your vault is not
+
+**Read this if:** You need to understand the long-game value proposition. You want to know why investing the time now matters in 2026 and beyond.
+
+**Length:** ~10 min read
+
+---
+
+## **How to Read This Series**
+
+### **Path A: You have tried every PKM system and abandoned them all**
+Start with **Post 1**. You need the permission structure—the understanding that this is not a discipline problem, it is a design problem. Once you understand the diagnosis, move sequentially through all 5 posts.
+
+### **Path B: You are already convinced the idea is sound**
+Start with **Post 3** (the build). You do not need the theory. You want the blueprint. Once you have built it, read Post 4 and Post 5 to understand application and long-game value.
+
+### **Path C: You are a physician-developer who cares about architecture**
+Start with **Post 2** (the theory), then Post 3 (the implementation). These posts are designed for people who think in systems. Posts 1, 4, and 5 are clinical application—useful, but secondary to your interest in the infrastructure layer.
+
+### **Path D: You want the complete picture**
+Read all five sequentially. Post 1 → Post 2 → Post 3 → Post 4 → Post 5. The arc is intentional: problem diagnosis → theory → build → application → long-game.
+
+---
+
+## **Why This Series Matters Now**
+
+Foundation models are commoditizing. By 2027, twenty vendors will have capable LLMs. GPT, Claude, Llama—all accessible.
+
+But the domain-specific knowledge layers? The institutional vaults? The practice-specific synthesis systems that know how *you* reason?
+
+Those cannot commoditize. They require someone who lived in the domain. Someone who knows the constraints, the tradeoffs, the actual outcomes in their practice setting.
+
+The physicians who build these systems in 2026 are not hobbyists. They are building the infrastructure layer that clinical AI will eventually run on.
+
+The question is not whether this infrastructure will exist. It will. The question is whether it will belong to you or whether you will be licensing it from a vendor for the next twenty years.
+
+---
+
+## **Get Started**
+
+Choose your path above. Read the relevant posts. If you have questions, build in public. Share your vault architecture. Show your ingestion workflows. The physician-builder community grows by example.
+
+The model is commodity.
+
+Your vault is not.
+
+And you are the only person who can build the vault that reflects your clinical expertise, because you are the only person who has it.
+
+---
+
+## Ready to Start?
+
+**[Post 1: The PKM System That Was Never Built for You](the-pkm-system-that-was-never-built-for-you)** — The problem diagnosis. Why every note-taking app failed physicians, and what Karpathy changed.
