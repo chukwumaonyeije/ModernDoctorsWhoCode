@@ -1,0 +1,1131 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = "Stop Feeding Your RAG Garbage PDFs: Docling for Physician Developers";
+const description = "Your RAG pipeline is only as good as your parsed input. Most physicians building clinical AI tools ignore this — they plug in PyPDF2, get mangled text from scanned guidelines, and wonder why their LLM gives wrong answers. Docling fixes this at the source.";
+const canonical = "https://www.doctorswhocode.blog/blog/docling-rag-tutorial";
+const ogImage = "/images/posts/the-pdf-wall-clinical-rag-hallucination-hero.jpeg";
+const pubDate = new Date("2026-04-24");
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  dateModified: pubDate.toISOString(),
+  url: canonical,
+  image: `https://www.doctorswhocode.blog${ogImage}`,
+  author: {
+    "@type": "Person",
+    name: "Chukwuma Onyeije, MD, FACOG",
+    honorificPrefix: "Dr.",
+    honorificSuffix: "MD, FACOG",
+    jobTitle: "Maternal-Fetal Medicine Specialist",
+    worksFor: { "@type": "MedicalOrganization", name: "Atlanta Perinatal Associates" },
+    url: "https://www.linkedin.com/in/chukwumaonyeije",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Doctors Who Code",
+    url: "https://www.doctorswhocode.blog",
+    logo: { "@type": "ImageObject", url: "https://www.doctorswhocode.blog/og-default.jpg" },
+  },
+  keywords: ["Docling", "RAG", "clinical AI", "PDF parsing", "physician developer", "LangChain", "LlamaIndex", "HIPAA", "document pipeline"],
+  articleSection: "Tutorial",
+  about: [
+    { "@type": "SoftwareApplication", name: "Docling" },
+    { "@type": "MedicalCondition", name: "Clinical AI document processing" },
+  ],
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  ogImage={ogImage}
+  ogType="article"
+  pubDate={pubDate}
+  articleSchema={articleSchema}
+>
+  <style is:global>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:wght@300;400;600&display=swap');
+
+    /* ── Scoped CSS variables (tutorial-specific palette) ─────────────────── */
+    .dt-page {
+      --bg:              #0d1117;
+      --surface:         #161b22;
+      --surface2:        #1c2330;
+      --border:          #30363d;
+      --accent:          #58a6ff;
+      --accent2:         #3fb950;
+      --accent3:         #f78166;
+      --accent4:         #e3b341;
+      --text:            #e6edf3;
+      --text-muted:      #8b949e;
+      --text-dim:        #484f58;
+      --code-bg:         #0d1117;
+      --inline-code-bg:  #1c2330;
+    }
+
+    /* ── Reset (scoped) ───────────────────────────────────────────────────── */
+    .dt-page * {
+      box-sizing: border-box;
+    }
+
+    /* ── Page wrapper ─────────────────────────────────────────────────────── */
+    .dt-page {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+
+    /* ── Hero ─────────────────────────────────────────────────────────────── */
+    .dt-page .hero {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 72px 32px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dt-page .hero-kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dt-page .hero-kicker::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .dt-page .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+
+    .dt-page .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .dt-page .hero-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .dt-page .hero-deck {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      max-width: 640px;
+      font-weight: 300;
+    }
+
+    /* ── Layout grid ──────────────────────────────────────────────────────── */
+    .dt-page .layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      max-width: 1100px;
+      margin: 0 auto;
+      gap: 0;
+    }
+
+    /* ── Sidebar TOC ──────────────────────────────────────────────────────── */
+    .dt-page .toc {
+      border-right: 1px solid var(--border);
+      padding: 40px 24px 40px 32px;
+      position: sticky;
+      top: 4rem;
+      height: calc(100vh - 4rem);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    .dt-page .toc-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .dt-page .toc ol {
+      list-style: none;
+      counter-reset: toc;
+      padding: 0;
+      margin: 0;
+    }
+
+    .dt-page .toc ol li {
+      counter-increment: toc;
+      margin-bottom: 8px;
+    }
+
+    .dt-page .toc ol li a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      transition: color 0.2s;
+      line-height: 1.4;
+    }
+
+    .dt-page .toc ol li a::before {
+      content: counter(toc, decimal-leading-zero);
+      color: var(--text-dim);
+      flex-shrink: 0;
+      font-size: 10px;
+      margin-top: 1px;
+    }
+
+    .dt-page .toc ol li a:hover { color: var(--accent); }
+
+    /* ── Main content ─────────────────────────────────────────────────────── */
+    .dt-page .content {
+      padding: 56px 56px 80px 56px;
+      max-width: 760px;
+    }
+
+    /* ── Sections ─────────────────────────────────────────────────────────── */
+    .dt-page .section {
+      margin-bottom: 64px;
+      animation: dtFadeUp 0.6s ease both;
+    }
+
+    @keyframes dtFadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .dt-page .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .dt-page .section h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .dt-page .section h3 {
+      font-family: 'Source Serif 4', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent);
+      margin: 32px 0 12px;
+    }
+
+    .dt-page .section p {
+      color: #cdd5e0;
+      margin-bottom: 16px;
+    }
+
+    /* ── Callout boxes ────────────────────────────────────────────────────── */
+    .dt-page .callout {
+      border-left: 3px solid var(--accent2);
+      background: rgba(63, 185, 80, 0.06);
+      padding: 16px 20px;
+      border-radius: 0 6px 6px 0;
+      margin: 24px 0;
+      font-size: 15px;
+    }
+
+    .dt-page .callout.warning {
+      border-left-color: var(--accent4);
+      background: rgba(227, 179, 65, 0.06);
+    }
+
+    .dt-page .callout.clinical {
+      border-left-color: var(--accent3);
+      background: rgba(247, 129, 102, 0.06);
+    }
+
+    .dt-page .callout-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: var(--accent2);
+    }
+
+    .dt-page .callout.warning .callout-label { color: var(--accent4); }
+    .dt-page .callout.clinical .callout-label { color: var(--accent3); }
+
+    /* ── Code blocks ──────────────────────────────────────────────────────── */
+    .dt-page .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 24px 0;
+      font-size: 13.5px;
+    }
+
+    .dt-page .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dt-page .code-lang {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent2);
+      letter-spacing: 0.05em;
+    }
+
+    .dt-page .code-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .dt-page .code-block pre {
+      padding: 20px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+      margin: 0;
+    }
+
+    .dt-page .code-block code {
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.65;
+      color: #e6edf3;
+      background: transparent;
+      border: none;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    /* ── Syntax highlight tokens ──────────────────────────────────────────── */
+    .dt-page .kw  { color: #ff7b72; }
+    .dt-page .fn  { color: #d2a8ff; }
+    .dt-page .str { color: #a5d6ff; }
+    .dt-page .cm  { color: #8b949e; font-style: italic; }
+    .dt-page .num { color: #f2cc60; }
+    .dt-page .cls { color: #ffa657; }
+    .dt-page .var { color: #e6edf3; }
+    .dt-page .op  { color: #ff7b72; }
+    .dt-page .imp { color: #79c0ff; }
+
+    /* ── Comparison table ─────────────────────────────────────────────────── */
+    .dt-page .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 24px 0;
+    }
+
+    .dt-page .compare-table th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      background: var(--surface);
+    }
+
+    .dt-page .compare-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      color: #cdd5e0;
+      vertical-align: top;
+    }
+
+    .dt-page .compare-table tr:hover td { background: rgba(88, 166, 255, 0.04); }
+
+    .dt-page .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .dt-page .badge.good { background: rgba(63, 185, 80, 0.2);  color: var(--accent2); }
+    .dt-page .badge.bad  { background: rgba(247, 129, 102, 0.2); color: var(--accent3); }
+    .dt-page .badge.ok   { background: rgba(227, 179, 65, 0.2);  color: var(--accent4); }
+
+    /* ── Pipeline diagram ─────────────────────────────────────────────────── */
+    .dt-page .pipeline {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin: 28px 0;
+      flex-wrap: wrap;
+    }
+
+    .dt-page .pipe-step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      flex: 1;
+      min-width: 100px;
+    }
+
+    .dt-page .pipe-step.highlight {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(88, 166, 255, 0.08);
+    }
+
+    .dt-page .pipe-arrow {
+      color: var(--text-dim);
+      font-size: 18px;
+      flex-shrink: 0;
+      padding: 0 2px;
+    }
+
+    /* ── Inline code (override DWC global) ───────────────────────────────── */
+    .dt-page code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      background: var(--inline-code-bg);
+      color: var(--accent);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    /* ── Feature grid ─────────────────────────────────────────────────────── */
+    .dt-page .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .dt-page .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 14px;
+    }
+
+    .dt-page .feature-card .icon {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .dt-page .feature-card strong {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent2);
+      margin-bottom: 4px;
+    }
+
+    .dt-page .feature-card p {
+      font-size: 13px;
+      margin: 0;
+      color: var(--text-muted);
+    }
+
+    /* ── Step counter ─────────────────────────────────────────────────────── */
+    .dt-page .steps { margin: 24px 0; }
+
+    .dt-page .step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .dt-page .step-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+
+    .dt-page .step-body strong {
+      font-family: 'Source Serif 4', serif;
+      font-weight: 600;
+      font-size: 15px;
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .dt-page .step-body p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* ── Responsive ───────────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .dt-page .layout          { grid-template-columns: 1fr; }
+      .dt-page .toc             { display: none; }
+      .dt-page .content         { padding: 32px 24px; }
+      .dt-page .feature-grid    { grid-template-columns: 1fr; }
+      .dt-page .pipeline        { flex-direction: column; }
+      .dt-page .pipe-arrow      { transform: rotate(90deg); }
+    }
+  </style>
+
+  <div class="dt-page">
+
+    <div class="hero">
+      <div class="hero-kicker">Physician Developer Tutorial</div>
+      <h1>Stop Feeding Your RAG<br><em>Garbage PDFs</em></h1>
+      <div class="hero-meta">
+        <span>Chukwuma Onyeije, MD, FACOG</span>
+        <span>Atlanta Perinatal Associates</span>
+        <span>April 2026</span>
+      </div>
+      <p class="hero-deck">
+        Your RAG pipeline is only as good as your parsed input. Most physicians building clinical AI tools ignore this. They plug in PyPDF2, get mangled text from scanned guidelines, and wonder why their LLM gives wrong answers. Docling fixes this at the source.
+      </p>
+    </div>
+
+    <div class="layout">
+      <nav class="toc">
+        <div class="toc-label">Contents</div>
+        <ol>
+          <li><a href="#s1">Why PDF parsing matters for clinical AI</a></li>
+          <li><a href="#s2">What Docling actually does</a></li>
+          <li><a href="#s3">Docling vs. PyPDF2 and friends</a></li>
+          <li><a href="#s4">Install and first parse</a></li>
+          <li><a href="#s5">The full RAG pipeline with LangChain</a></li>
+          <li><a href="#s6">LlamaIndex alternative</a></li>
+          <li><a href="#s7">Clinical document use cases</a></li>
+          <li><a href="#s8">Local execution for HIPAA environments</a></li>
+          <li><a href="#s9">What to do next</a></li>
+        </ol>
+      </nav>
+
+      <main class="content">
+
+        <section class="section" id="s1">
+          <div class="section-number">01</div>
+          <h2>Why PDF parsing matters for clinical AI</h2>
+
+          <p>Most physician developers building RAG systems spend their time picking LLMs, writing retrieval logic, and tuning prompts. Almost none of them look hard at the first stage of the pipeline: document ingestion.</p>
+
+          <p>That is a mistake. Garbage in, garbage out applies with particular force in medicine, where a single misread table — a dosing chart, a gestational age curve, a lab reference range — can propagate downstream into a wrong clinical recommendation.</p>
+
+          <div class="callout clinical">
+            <div class="callout-label">Clinical reality</div>
+            ACOG and SMFM guidelines are published as multi-column PDFs with complex tables, footnotes, and embedded figures. A naive PDF extractor collapses those columns into garbled text. Your LLM then ingests that garbled text and confabulates.
+          </div>
+
+          <p>The fix is not a better prompt. The fix is better parsing. Docling is the tool that solves this problem in the open-source world.</p>
+
+          <div class="pipeline">
+            <div class="pipe-step">Raw PDF</div>
+            <div class="pipe-arrow">→</div>
+            <div class="pipe-step highlight">Docling Parser</div>
+            <div class="pipe-arrow">→</div>
+            <div class="pipe-step">Structured chunks</div>
+            <div class="pipe-arrow">→</div>
+            <div class="pipe-step">Vector DB</div>
+            <div class="pipe-arrow">→</div>
+            <div class="pipe-step">LLM + RAG</div>
+          </div>
+
+          <p>Swap out the second box in that pipeline and everything downstream improves. That is the entire argument for Docling.</p>
+        </section>
+
+        <section class="section" id="s2">
+          <div class="section-number">02</div>
+          <h2>What Docling actually does</h2>
+
+          <p>Docling is an open-source Python library developed at IBM. It uses specialized AI models to understand documents, not just extract text from them.</p>
+
+          <p>Two core models power it:</p>
+
+          <div class="feature-grid">
+            <div class="feature-card">
+              <div class="icon">🗺️</div>
+              <strong>DocLayNet</strong>
+              <p>AI model for page layout analysis. Identifies headers, body text, figures, tables, footnotes, and reading order across complex multi-column layouts.</p>
+            </div>
+            <div class="feature-card">
+              <div class="icon">📊</div>
+              <strong>TableFormer</strong>
+              <p>AI model for table structure recognition. Extracts table rows, columns, and cell relationships from scanned and digital PDFs.</p>
+            </div>
+            <div class="feature-card">
+              <div class="icon">🔍</div>
+              <strong>OCR engine</strong>
+              <p>Handles scanned documents and images inside PDFs. Supports both classical OCR and vision-language model (VLM) backends.</p>
+            </div>
+            <div class="feature-card">
+              <div class="icon">📄</div>
+              <strong>DoclingDocument</strong>
+              <p>A unified document representation format. Exports to Markdown, HTML, or JSON. LangChain and LlamaIndex integrations are built on top of it.</p>
+            </div>
+          </div>
+
+          <div class="callout">
+            <div class="callout-label">What Docling can parse</div>
+            PDF, DOCX, PPTX, XLSX, HTML, images (PNG, TIFF, JPEG), WAV, MP3, LaTeX, and more. For physician developers, this means one ingestion library handles clinical PDFs, Word letters, and scanned referral documents in the same pipeline.
+          </div>
+
+          <p>It runs locally. No API calls, no cloud service, no data leaving your machine. That matters for clinical workflows where patient data is involved.</p>
+        </section>
+
+        <section class="section" id="s3">
+          <div class="section-number">03</div>
+          <h2>Docling vs. PyPDF2 and friends</h2>
+
+          <p>Here is a direct comparison of the common PDF parsing tools physician developers reach for and how they perform on clinically relevant document types.</p>
+
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Library</th>
+                <th>Multi-column layouts</th>
+                <th>Table extraction</th>
+                <th>Scanned PDFs</th>
+                <th>Local / private</th>
+                <th>RAG-ready chunks</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>PyPDF2 / pypdf</strong></td>
+                <td><span class="badge bad">Fails</span></td>
+                <td><span class="badge bad">No</span></td>
+                <td><span class="badge bad">No</span></td>
+                <td><span class="badge good">Yes</span></td>
+                <td><span class="badge bad">No</span></td>
+              </tr>
+              <tr>
+                <td><strong>pdfplumber</strong></td>
+                <td><span class="badge ok">Partial</span></td>
+                <td><span class="badge ok">Heuristic</span></td>
+                <td><span class="badge bad">No</span></td>
+                <td><span class="badge good">Yes</span></td>
+                <td><span class="badge bad">No</span></td>
+              </tr>
+              <tr>
+                <td><strong>PyMuPDF</strong></td>
+                <td><span class="badge ok">Partial</span></td>
+                <td><span class="badge ok">Basic</span></td>
+                <td><span class="badge bad">No</span></td>
+                <td><span class="badge good">Yes</span></td>
+                <td><span class="badge bad">No</span></td>
+              </tr>
+              <tr>
+                <td><strong>Unstructured.io</strong></td>
+                <td><span class="badge ok">OK</span></td>
+                <td><span class="badge ok">OK</span></td>
+                <td><span class="badge ok">Paid tier</span></td>
+                <td><span class="badge ok">Partial</span></td>
+                <td><span class="badge ok">OK</span></td>
+              </tr>
+              <tr>
+                <td><strong>Docling</strong></td>
+                <td><span class="badge good">AI-powered</span></td>
+                <td><span class="badge good">AI-powered</span></td>
+                <td><span class="badge good">Yes</span></td>
+                <td><span class="badge good">Yes</span></td>
+                <td><span class="badge good">Native chunks</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>The benchmark studies confirm this. Independent evaluations in 2025 consistently ranked Docling as the top open-source performer on complex document structures. The only tool that consistently outperforms it is LlamaParse, which is a commercial API. Docling is free and runs locally.</p>
+        </section>
+
+        <section class="section" id="s4">
+          <div class="section-number">04</div>
+          <h2>Install and first parse</h2>
+
+          <p>Requires Python 3.10 or higher. Install into a virtual environment.</p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">bash</span>
+              <span class="code-title">terminal</span>
+            </div>
+            <pre><code><span class="cm"># Create and activate a virtual environment</span>
+python3 -m venv venv
+source venv/bin/activate
+
+<span class="cm"># Install Docling</span>
+pip install docling
+
+<span class="cm"># For GPU acceleration (recommended if available)</span>
+pip install docling[gpu]</code></pre>
+          </div>
+
+          <p>First parse — this is all it takes to get structured output from any PDF:</p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">python</span>
+              <span class="code-title">basic_parse.py</span>
+            </div>
+            <pre><code><span class="kw">from</span> <span class="imp">docling.document_converter</span> <span class="kw">import</span> <span class="cls">DocumentConverter</span>
+
+<span class="cm"># Initialize the converter</span>
+converter = <span class="cls">DocumentConverter</span>()
+
+<span class="cm"># Parse a clinical PDF — ACOG bulletin, SMFM consult, scanned referral, etc.</span>
+result = converter.convert(<span class="str">"acog_gdm_guidelines.pdf"</span>)
+
+<span class="cm"># Export to Markdown (preserves structure, tables, headings)</span>
+markdown_output = result.document.export_to_markdown()
+<span class="fn">print</span>(markdown_output)
+
+<span class="cm"># Or export to JSON for programmatic access</span>
+json_output = result.document.export_to_dict()
+</code></pre>
+          </div>
+
+          <p>The difference between this and <code>pypdf.PdfReader</code> is not cosmetic. Docling returns a structured document model. Tables are tables. Headings are headings. Reading order is correct even in multi-column layouts. That structure is what makes downstream RAG retrieval accurate.</p>
+
+          <h3>Inspect what Docling extracted</h3>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">python</span>
+              <span class="code-title">inspect_output.py</span>
+            </div>
+            <pre><code><span class="kw">from</span> <span class="imp">docling.document_converter</span> <span class="kw">import</span> <span class="cls">DocumentConverter</span>
+
+converter = <span class="cls">DocumentConverter</span>()
+result = converter.convert(<span class="str">"smfm_consult_periviability.pdf"</span>)
+doc = result.document
+
+<span class="cm"># Iterate over all content elements</span>
+<span class="kw">for</span> element, level <span class="kw">in</span> doc.iterate_items():
+    <span class="fn">print</span>(<span class="fn">type</span>(element).__name__, <span class="str">":"</span>, <span class="fn">str</span>(element)[:80])
+
+<span class="cm"># Access tables directly</span>
+<span class="kw">for</span> table <span class="kw">in</span> doc.tables:
+    <span class="fn">print</span>(<span class="str">"\n--- TABLE ---"</span>)
+    <span class="fn">print</span>(table.export_to_markdown())
+</code></pre>
+          </div>
+
+          <div class="callout warning">
+            <div class="callout-label">Performance note</div>
+            First run downloads the DocLayNet and TableFormer model weights (~1–2 GB). Subsequent runs are fast. On CPU-only hardware, plan for 30–60 seconds per complex PDF page. On GPU, it is significantly faster.
+          </div>
+        </section>
+
+        <section class="section" id="s5">
+          <div class="section-number">05</div>
+          <h2>The full RAG pipeline with LangChain</h2>
+
+          <p>The LangChain integration is the easiest path to a working RAG system. The <code>DoclingLoader</code> class handles the entire ingestion step.</p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">bash</span>
+              <span class="code-title">terminal</span>
+            </div>
+            <pre><code>pip install langchain-docling langchain-core langchain langchain-openai chromadb</code></pre>
+          </div>
+
+          <h3>Step 1: Load and chunk your clinical PDFs</h3>
+
+          <p>Docling supports two export modes. <code>DOC_CHUNKS</code> is the right choice for RAG — it produces semantically coherent chunks that respect document structure.</p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">python</span>
+              <span class="code-title">load_documents.py</span>
+            </div>
+            <pre><code><span class="kw">from</span> <span class="imp">langchain_docling</span> <span class="kw">import</span> <span class="cls">DoclingLoader</span>
+<span class="kw">from</span> <span class="imp">langchain_docling.loader</span> <span class="kw">import</span> <span class="cls">ExportType</span>
+
+<span class="cm"># Your clinical document library</span>
+<span class="cm"># Can be local file paths or URLs</span>
+CLINICAL_DOCS = [
+    <span class="str">"acog_gdm_practice_bulletin.pdf"</span>,
+    <span class="str">"smfm_periviability_consult.pdf"</span>,
+    <span class="str">"acog_preeclampsia_task_force.pdf"</span>,
+    <span class="str">"smfm_fgr_consult_series.pdf"</span>,
+]
+
+<span class="cm"># DOC_CHUNKS: splits document into structured chunks</span>
+<span class="cm"># Each chunk preserves section context (heading, page, table vs. paragraph)</span>
+loader = <span class="cls">DoclingLoader</span>(
+    file_path=<span class="var">CLINICAL_DOCS</span>,
+    export_type=<span class="cls">ExportType</span>.DOC_CHUNKS
+)
+
+docs = loader.load()
+<span class="fn">print</span>(<span class="fn">f</span><span class="str">"Loaded {len(docs)} chunks from {len(CLINICAL_DOCS)} documents"</span>)
+<span class="fn">print</span>(<span class="str">"\nSample chunk metadata:"</span>)
+<span class="fn">print</span>(docs[<span class="num">0</span>].metadata)
+</code></pre>
+          </div>
+
+          <h3>Step 2: Embed and store in a vector database</h3>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">python</span>
+              <span class="code-title">vectorstore.py</span>
+            </div>
+            <pre><code><span class="kw">from</span> <span class="imp">langchain_openai</span> <span class="kw">import</span> <span class="cls">OpenAIEmbeddings</span>
+<span class="kw">from</span> <span class="imp">langchain_community.vectorstores</span> <span class="kw">import</span> <span class="cls">Chroma</span>
+
+<span class="cm"># Using OpenAI embeddings — swap for a local model if needed</span>
+embeddings = <span class="cls">OpenAIEmbeddings</span>(model=<span class="str">"text-embedding-3-small"</span>)
+
+<span class="cm"># Build the vector store from Docling chunks</span>
+vectorstore = <span class="cls">Chroma</span>.from_documents(
+    documents=<span class="var">docs</span>,
+    embedding=<span class="var">embeddings</span>,
+    collection_name=<span class="str">"clinical_guidelines"</span>,
+    persist_directory=<span class="str">"./chroma_db"</span>
+)
+
+<span class="fn">print</span>(<span class="str">"Vector store built. Documents indexed."</span>)
+</code></pre>
+          </div>
+
+          <h3>Step 3: Build the retrieval chain</h3>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">python</span>
+              <span class="code-title">rag_chain.py</span>
+            </div>
+            <pre><code><span class="kw">from</span> <span class="imp">langchain_openai</span> <span class="kw">import</span> <span class="cls">ChatOpenAI</span>
+<span class="kw">from</span> <span class="imp">langchain_core.prompts</span> <span class="kw">import</span> <span class="cls">PromptTemplate</span>
+<span class="kw">from</span> <span class="imp">langchain_core.runnables</span> <span class="kw">import</span> <span class="cls">RunnablePassthrough</span>
+<span class="kw">from</span> <span class="imp">langchain_core.output_parsers</span> <span class="kw">import</span> <span class="cls">StrOutputParser</span>
+
+<span class="cm"># Load the persisted vector store</span>
+vectorstore = <span class="cls">Chroma</span>(
+    collection_name=<span class="str">"clinical_guidelines"</span>,
+    embedding_function=<span class="cls">OpenAIEmbeddings</span>(model=<span class="str">"text-embedding-3-small"</span>),
+    persist_directory=<span class="str">"./chroma_db"</span>
+)
+
+retriever = vectorstore.as_retriever(search_kwargs={<span class="str">"k"</span>: <span class="num">5</span>})
+
+<span class="cm"># Clinical-context prompt</span>
+PROMPT_TEMPLATE = <span class="str">"""You are a Maternal-Fetal Medicine clinical decision support tool.
+Answer the question using only the retrieved guideline excerpts below.
+Cite the source document when possible.
+If the answer is not in the context, say so — do not speculate.
+
+Context:
+{context}
+
+Question: {question}
+
+Answer:"""</span>
+
+prompt = <span class="cls">PromptTemplate</span>.from_template(<span class="var">PROMPT_TEMPLATE</span>)
+llm = <span class="cls">ChatOpenAI</span>(model=<span class="str">"gpt-4o"</span>, temperature=<span class="num">0</span>)
+
+<span class="kw">def</span> <span class="fn">format_docs</span>(docs):
+    <span class="kw">return</span> <span class="str">"\n\n"</span>.join(d.page_content <span class="kw">for</span> d <span class="kw">in</span> docs)
+
+chain = (
+    {<span class="str">"context"</span>: retriever | <span class="fn">format_docs</span>, <span class="str">"question"</span>: <span class="cls">RunnablePassthrough</span>()}
+    | prompt
+    | llm
+    | <span class="cls">StrOutputParser</span>()
+)
+
+<span class="cm"># Ask a clinical question</span>
+question = <span class="str">"What are the diagnostic criteria for gestational diabetes using the two-step approach?"</span>
+answer = chain.invoke(question)
+<span class="fn">print</span>(answer)
+</code></pre>
+          </div>
+
+          <div class="callout">
+            <div class="callout-label">Why this works better</div>
+            Docling's <code>DOC_CHUNKS</code> mode produces chunks that know their structural context — whether they came from a table, a heading, a figure caption, or body text. That metadata surfaces in retrieval, so your LLM gets chunks with semantic coherence, not arbitrary character-length slices.
+          </div>
+        </section>
+
+        <section class="section" id="s6">
+          <div class="section-number">06</div>
+          <h2>LlamaIndex alternative</h2>
+
+          <p>If you are already using LlamaIndex, the Docling integration is equally clean.</p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">bash</span>
+              <span class="code-title">terminal</span>
+            </div>
+            <pre><code>pip install llama-index-core llama-index-readers-docling llama-index-node-parser-docling</code></pre>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">python</span>
+              <span class="code-title">llamaindex_rag.py</span>
+            </div>
+            <pre><code><span class="kw">from</span> <span class="imp">llama_index.core</span> <span class="kw">import</span> <span class="cls">VectorStoreIndex</span>
+<span class="kw">from</span> <span class="imp">llama_index.readers.docling</span> <span class="kw">import</span> <span class="cls">DoclingReader</span>
+<span class="kw">from</span> <span class="imp">llama_index.node_parser.docling</span> <span class="kw">import</span> <span class="cls">DoclingNodeParser</span>
+
+<span class="cm"># DoclingReader: loads and converts the PDFs</span>
+reader = <span class="cls">DoclingReader</span>()
+
+<span class="cm"># Load your documents</span>
+documents = reader.load_data(
+    file_path=[
+        <span class="str">"acog_gdm_practice_bulletin.pdf"</span>,
+        <span class="str">"smfm_fgr_consult_series.pdf"</span>,
+    ]
+)
+
+<span class="cm"># DoclingNodeParser: produces structure-aware nodes for indexing</span>
+node_parser = <span class="cls">DoclingNodeParser</span>()
+nodes = node_parser.get_nodes_from_documents(documents)
+
+<span class="cm"># Build the vector index</span>
+index = <span class="cls">VectorStoreIndex</span>(nodes)
+
+<span class="cm"># Query</span>
+query_engine = index.as_query_engine()
+response = query_engine.query(
+    <span class="str">"What fetal weight percentile defines fetal growth restriction?"</span>
+)
+<span class="fn">print</span>(response)
+</code></pre>
+          </div>
+
+          <p>The <code>DoclingNodeParser</code> is the key addition. Standard LlamaIndex text splitters cut at character counts. The Docling parser cuts at structural boundaries — end of a section, end of a table — so each node is semantically complete.</p>
+        </section>
+
+        <section class="section" id="s7">
+          <div class="section-number">07</div>
+          <h2>Clinical document use cases</h2>
+
+          <p>Here are the specific workflows where Docling makes the biggest difference for physician developers building clinical tools.</p>
+
+          <h3>ACOG/SMFM practice bulletins and consult series</h3>
+          <p>These are published in two-column journal format with numbered references, footnoted tables, and embedded figures. Standard parsers collapse the columns. Docling preserves reading order and extracts tables as structured data. A RAG system built on top can accurately answer dosing, threshold, and management questions.</p>
+
+          <h3>Scanned prior records and referral letters</h3>
+          <p>Real clinical practice involves scanned documents — old operative notes, outside records, handwritten lab results. Docling's OCR engine handles these. You can build an ingestion pipeline that processes uploaded patient documents and makes them queryable.</p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">python</span>
+              <span class="code-title">scanned_doc_pipeline.py</span>
+            </div>
+            <pre><code><span class="kw">from</span> <span class="imp">docling.document_converter</span> <span class="kw">import</span> <span class="cls">DocumentConverter</span>
+<span class="kw">from</span> <span class="imp">docling.datamodel.pipeline_options</span> <span class="kw">import</span> <span class="cls">PdfPipelineOptions</span>
+
+<span class="cm"># Enable full OCR pipeline for scanned documents</span>
+pipeline_options = <span class="cls">PdfPipelineOptions</span>()
+pipeline_options.do_ocr = <span class="kw">True</span>
+pipeline_options.do_table_structure = <span class="kw">True</span>
+
+converter = <span class="cls">DocumentConverter</span>(
+    format_options={
+        <span class="str">"pdf"</span>: {<span class="str">"pipeline_options"</span>: pipeline_options}
+    }
+)
+
+result = converter.convert(<span class="str">"scanned_outside_records.pdf"</span>)
+markdown = result.document.export_to_markdown()
+</code></pre>
+          </div>
+
+          <h3>Lab result tables and growth charts</h3>
+          <p>Docling's TableFormer model extracts table structure including multi-row headers and merged cells. A GDM monitoring dashboard, a growth chart percentile lookup, a lab threshold reference system — all of these depend on accurate table extraction. Docling delivers it.</p>
+
+          <h3>Clinical trial papers and systematic reviews</h3>
+          <p>Research-based clinical AI tools need to ingest academic PDFs with complex layouts, math notation, and citation structures. Docling handles all of these, including formula extraction.</p>
+
+          <div class="callout warning">
+            <div class="callout-label">HIPAA note</div>
+            If you are ingesting documents that contain PHI, run Docling locally. It requires no external API calls. The local execution model is a feature, not a limitation.
+          </div>
+        </section>
+
+        <section class="section" id="s8">
+          <div class="section-number">08</div>
+          <h2>Local execution for HIPAA environments</h2>
+
+          <p>This is where Docling separates from commercial parsing APIs. The entire pipeline runs on your machine.</p>
+
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>No data transmission</strong>
+                <p>Documents never leave your server. Model weights download once at setup; inference is local.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Air-gapped deployment</strong>
+                <p>Cache the model weights and run entirely offline. Valid for clinical environments with strict network policies.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Pair with a local LLM</strong>
+                <p>Use Docling for parsing, Chroma for vector storage, and Ollama for inference. A completely local, zero-egress RAG pipeline.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>BAA compliance path</strong>
+                <p>Local deployment eliminates the BAA requirement for the parsing step. Combine with HIPAA-compliant cloud LLM APIs (OpenAI Healthcare, AWS Bedrock) for the generation step.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">python</span>
+              <span class="code-title">local_rag_stack.py</span>
+            </div>
+            <pre><code><span class="cm"># Fully local stack: Docling + Chroma + Ollama</span>
+<span class="cm"># pip install docling chromadb langchain-community</span>
+
+<span class="kw">from</span> <span class="imp">langchain_docling</span> <span class="kw">import</span> <span class="cls">DoclingLoader</span>
+<span class="kw">from</span> <span class="imp">langchain_docling.loader</span> <span class="kw">import</span> <span class="cls">ExportType</span>
+<span class="kw">from</span> <span class="imp">langchain_community.embeddings</span> <span class="kw">import</span> <span class="cls">OllamaEmbeddings</span>
+<span class="kw">from</span> <span class="imp">langchain_community.vectorstores</span> <span class="kw">import</span> <span class="cls">Chroma</span>
+<span class="kw">from</span> <span class="imp">langchain_community.llms</span> <span class="kw">import</span> <span class="cls">Ollama</span>
+
+<span class="cm"># Parse with Docling — local, no API</span>
+loader = <span class="cls">DoclingLoader</span>(
+    file_path=[<span class="str">"patient_records/"</span>],
+    export_type=<span class="cls">ExportType</span>.DOC_CHUNKS
+)
+docs = loader.load()
+
+<span class="cm"># Embed with local Ollama model</span>
+embeddings = <span class="cls">OllamaEmbeddings</span>(model=<span class="str">"nomic-embed-text"</span>)
+
+<span class="cm"># Store in local Chroma DB</span>
+vectorstore = <span class="cls">Chroma</span>.from_documents(
+    documents=<span class="var">docs</span>,
+    embedding=<span class="var">embeddings</span>,
+    persist_directory=<span class="str">"./local_chroma_db"</span>
+)
+
+<span class="cm"># Query with local LLM — zero data egress</span>
+llm = <span class="cls">Ollama</span>(model=<span class="str">"llama3.2"</span>)
+retriever = vectorstore.as_retriever()
+</code></pre>
+          </div>
+        </section>
+
+        <section class="section" id="s9">
+          <div class="section-number">09</div>
+          <h2>What to do next</h2>
+
+          <p>The path from here is straightforward.</p>
+
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Audit your current parser</strong>
+                <p>Take a PDF you already use in production — an ACOG bulletin, a local protocol — and compare raw output between PyPDF and Docling. Look specifically at tables.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Build a small test corpus</strong>
+                <p>Pick 5–10 clinical PDFs that represent your actual use case. Parse them with Docling. Inspect the Markdown output. That is your ground truth for downstream retrieval quality.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Implement DOC_CHUNKS retrieval</strong>
+                <p>Drop <code>DoclingLoader</code> into your existing LangChain or LlamaIndex pipeline. Run the same test questions you use to evaluate your current system. Compare retrieval quality.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Build your local stack if you handle PHI</strong>
+                <p>Docling + Chroma + Ollama is a complete, zero-egress RAG stack. Deploy it on Railway or a local server and you have a HIPAA-compatible clinical AI foundation.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <div class="callout-label">Key resources</div>
+            Docling documentation: <strong>docling-project.github.io/docling</strong><br />
+            LangChain integration: <strong>pip install langchain-docling</strong><br />
+            LlamaIndex integration: <strong>pip install llama-index-readers-docling</strong><br />
+            Source code: <strong>github.com/docling-project/docling</strong>
+          </div>
+
+          <p>The physician developer who fixes their parsing layer fixes everything downstream. Better chunks mean better retrieval. Better retrieval means fewer hallucinations. Fewer hallucinations mean a tool you can actually trust in a clinical workflow.</p>
+
+          <p>That is the entire case for Docling. It starts with the PDF.</p>
+        </section>
+
+      </main>
+    </div>
+
+  </div>
+</BaseLayout>
