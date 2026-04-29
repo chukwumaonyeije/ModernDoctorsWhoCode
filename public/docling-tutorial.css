@@ -1,0 +1,466 @@
+    /* -- Scoped CSS variables (tutorial-specific palette) ------------------- */
+    .dt-page {
+      --bg:              #0d1117;
+      --surface:         #161b22;
+      --surface2:        #1c2330;
+      --border:          #30363d;
+      --accent:          #58a6ff;
+      --accent2:         #3fb950;
+      --accent3:         #f78166;
+      --accent4:         #e3b341;
+      --text:            #e6edf3;
+      --text-muted:      #8b949e;
+      --text-dim:        #484f58;
+      --code-bg:         #0d1117;
+      --inline-code-bg:  #1c2330;
+    }
+
+    /* -- Reset (scoped) ----------------------------------------------------- */
+    .dt-page * {
+      box-sizing: border-box;
+    }
+
+    /* -- Page wrapper ------------------------------------------------------- */
+    .dt-page {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+
+    /* -- Hero --------------------------------------------------------------- */
+    .dt-page .hero {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 72px 32px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dt-page .hero-kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dt-page .hero-kicker::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .dt-page .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+
+    .dt-page .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .dt-page .hero-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .dt-page .hero-deck {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      max-width: 640px;
+      font-weight: 300;
+    }
+
+    /* -- Layout grid -------------------------------------------------------- */
+    .dt-page .layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      max-width: 1100px;
+      margin: 0 auto;
+      gap: 0;
+    }
+
+    /* -- Sidebar TOC -------------------------------------------------------- */
+    .dt-page .toc {
+      border-right: 1px solid var(--border);
+      padding: 40px 24px 40px 32px;
+      position: sticky;
+      top: 4rem;
+      height: calc(100vh - 4rem);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    .dt-page .toc-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .dt-page .toc ol {
+      list-style: none;
+      counter-reset: toc;
+      padding: 0;
+      margin: 0;
+    }
+
+    .dt-page .toc ol li {
+      counter-increment: toc;
+      margin-bottom: 8px;
+    }
+
+    .dt-page .toc ol li a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      transition: color 0.2s;
+      line-height: 1.4;
+    }
+
+    .dt-page .toc ol li a::before {
+      content: counter(toc, decimal-leading-zero);
+      color: var(--text-dim);
+      flex-shrink: 0;
+      font-size: 10px;
+      margin-top: 1px;
+    }
+
+    .dt-page .toc ol li a:hover { color: var(--accent); }
+
+    /* -- Main content ------------------------------------------------------- */
+    .dt-page .content {
+      padding: 56px 56px 80px 56px;
+      max-width: 760px;
+    }
+
+    /* -- Sections ----------------------------------------------------------- */
+    .dt-page .section {
+      margin-bottom: 64px;
+      animation: dtFadeUp 0.6s ease both;
+    }
+
+    @keyframes dtFadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .dt-page .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .dt-page .section h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .dt-page .section h3 {
+      font-family: 'Source Serif 4', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent);
+      margin: 32px 0 12px;
+    }
+
+    .dt-page .section p {
+      color: #cdd5e0;
+      margin-bottom: 16px;
+    }
+
+    /* -- Callout boxes ------------------------------------------------------ */
+    .dt-page .callout {
+      border-left: 3px solid var(--accent2);
+      background: rgba(63, 185, 80, 0.06);
+      padding: 16px 20px;
+      border-radius: 0 6px 6px 0;
+      margin: 24px 0;
+      font-size: 15px;
+    }
+
+    .dt-page .callout.warning {
+      border-left-color: var(--accent4);
+      background: rgba(227, 179, 65, 0.06);
+    }
+
+    .dt-page .callout.clinical {
+      border-left-color: var(--accent3);
+      background: rgba(247, 129, 102, 0.06);
+    }
+
+    .dt-page .callout-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: var(--accent2);
+    }
+
+    .dt-page .callout.warning .callout-label { color: var(--accent4); }
+    .dt-page .callout.clinical .callout-label { color: var(--accent3); }
+
+    /* -- Code blocks -------------------------------------------------------- */
+    .dt-page .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 24px 0;
+      font-size: 13.5px;
+    }
+
+    .dt-page .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dt-page .code-lang {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent2);
+      letter-spacing: 0.05em;
+    }
+
+    .dt-page .code-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .dt-page .code-block pre {
+      padding: 20px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+      margin: 0;
+    }
+
+    .dt-page .code-block code {
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.65;
+      color: #e6edf3;
+      background: transparent;
+      border: none;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    /* -- Syntax highlight tokens -------------------------------------------- */
+    .dt-page .kw  { color: #ff7b72; }
+    .dt-page .fn  { color: #d2a8ff; }
+    .dt-page .str { color: #a5d6ff; }
+    .dt-page .cm  { color: #8b949e; font-style: italic; }
+    .dt-page .num { color: #f2cc60; }
+    .dt-page .cls { color: #ffa657; }
+    .dt-page .var { color: #e6edf3; }
+    .dt-page .op  { color: #ff7b72; }
+    .dt-page .imp { color: #79c0ff; }
+
+    /* -- Comparison table --------------------------------------------------- */
+    .dt-page .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 24px 0;
+    }
+
+    .dt-page .compare-table th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      background: var(--surface);
+    }
+
+    .dt-page .compare-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      color: #cdd5e0;
+      vertical-align: top;
+    }
+
+    .dt-page .compare-table tr:hover td { background: rgba(88, 166, 255, 0.04); }
+
+    .dt-page .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .dt-page .badge.good { background: rgba(63, 185, 80, 0.2);  color: var(--accent2); }
+    .dt-page .badge.bad  { background: rgba(247, 129, 102, 0.2); color: var(--accent3); }
+    .dt-page .badge.ok   { background: rgba(227, 179, 65, 0.2);  color: var(--accent4); }
+
+    /* -- Pipeline diagram --------------------------------------------------- */
+    .dt-page .pipeline {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin: 28px 0;
+      flex-wrap: wrap;
+    }
+
+    .dt-page .pipe-step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      flex: 1;
+      min-width: 100px;
+    }
+
+    .dt-page .pipe-step.highlight {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(88, 166, 255, 0.08);
+    }
+
+    .dt-page .pipe-arrow {
+      color: var(--text-dim);
+      font-size: 18px;
+      flex-shrink: 0;
+      padding: 0 2px;
+    }
+
+    /* -- Inline code (override DWC global) --------------------------------- */
+    .dt-page code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      background: var(--inline-code-bg);
+      color: var(--accent);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    /* -- Feature grid ------------------------------------------------------- */
+    .dt-page .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .dt-page .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 14px;
+    }
+
+    .dt-page .feature-card .icon {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .dt-page .feature-card strong {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent2);
+      margin-bottom: 4px;
+    }
+
+    .dt-page .feature-card p {
+      font-size: 13px;
+      margin: 0;
+      color: var(--text-muted);
+    }
+
+    /* -- Step counter ------------------------------------------------------- */
+    .dt-page .steps { margin: 24px 0; }
+
+    .dt-page .step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .dt-page .step-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+
+    .dt-page .step-body strong {
+      font-family: 'Source Serif 4', serif;
+      font-weight: 600;
+      font-size: 15px;
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .dt-page .step-body p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* -- Responsive --------------------------------------------------------- */
+    @media (max-width: 768px) {
+      .dt-page .layout          { grid-template-columns: 1fr; }
+      .dt-page .toc             { display: none; }
+      .dt-page .content         { padding: 32px 24px; }
+      .dt-page .feature-grid    { grid-template-columns: 1fr; }
+      .dt-page .pipeline        { flex-direction: column; }
+      .dt-page .pipe-arrow      { transform: rotate(90deg); }
+    }
