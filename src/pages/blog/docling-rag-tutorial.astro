@@ -52,7 +52,7 @@ const articleSchema = {
   <style is:global>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:wght@300;400;600&display=swap');
 
-    /* ── Scoped CSS variables (tutorial-specific palette) ─────────────────── */
+    /* -- Scoped CSS variables (tutorial-specific palette) ------------------- */
     .dt-page {
       --bg:              #0d1117;
       --surface:         #161b22;
@@ -69,12 +69,12 @@ const articleSchema = {
       --inline-code-bg:  #1c2330;
     }
 
-    /* ── Reset (scoped) ───────────────────────────────────────────────────── */
+    /* -- Reset (scoped) ----------------------------------------------------- */
     .dt-page * {
       box-sizing: border-box;
     }
 
-    /* ── Page wrapper ─────────────────────────────────────────────────────── */
+    /* -- Page wrapper ------------------------------------------------------- */
     .dt-page {
       background: var(--bg);
       color: var(--text);
@@ -83,7 +83,7 @@ const articleSchema = {
       line-height: 1.75;
     }
 
-    /* ── Hero ─────────────────────────────────────────────────────────────── */
+    /* -- Hero --------------------------------------------------------------- */
     .dt-page .hero {
       max-width: 800px;
       margin: 0 auto;
@@ -143,7 +143,7 @@ const articleSchema = {
       font-weight: 300;
     }
 
-    /* ── Layout grid ──────────────────────────────────────────────────────── */
+    /* -- Layout grid -------------------------------------------------------- */
     .dt-page .layout {
       display: grid;
       grid-template-columns: 220px 1fr;
@@ -152,7 +152,7 @@ const articleSchema = {
       gap: 0;
     }
 
-    /* ── Sidebar TOC ──────────────────────────────────────────────────────── */
+    /* -- Sidebar TOC -------------------------------------------------------- */
     .dt-page .toc {
       border-right: 1px solid var(--border);
       padding: 40px 24px 40px 32px;
@@ -207,13 +207,13 @@ const articleSchema = {
 
     .dt-page .toc ol li a:hover { color: var(--accent); }
 
-    /* ── Main content ─────────────────────────────────────────────────────── */
+    /* -- Main content ------------------------------------------------------- */
     .dt-page .content {
       padding: 56px 56px 80px 56px;
       max-width: 760px;
     }
 
-    /* ── Sections ─────────────────────────────────────────────────────────── */
+    /* -- Sections ----------------------------------------------------------- */
     .dt-page .section {
       margin-bottom: 64px;
       animation: dtFadeUp 0.6s ease both;
@@ -254,7 +254,7 @@ const articleSchema = {
       margin-bottom: 16px;
     }
 
-    /* ── Callout boxes ────────────────────────────────────────────────────── */
+    /* -- Callout boxes ------------------------------------------------------ */
     .dt-page .callout {
       border-left: 3px solid var(--accent2);
       background: rgba(63, 185, 80, 0.06);
@@ -286,7 +286,7 @@ const articleSchema = {
     .dt-page .callout.warning .callout-label { color: var(--accent4); }
     .dt-page .callout.clinical .callout-label { color: var(--accent3); }
 
-    /* ── Code blocks ──────────────────────────────────────────────────────── */
+    /* -- Code blocks -------------------------------------------------------- */
     .dt-page .code-block {
       background: var(--code-bg);
       border: 1px solid var(--border);
@@ -336,7 +336,7 @@ const articleSchema = {
       font-size: inherit;
     }
 
-    /* ── Syntax highlight tokens ──────────────────────────────────────────── */
+    /* -- Syntax highlight tokens -------------------------------------------- */
     .dt-page .kw  { color: #ff7b72; }
     .dt-page .fn  { color: #d2a8ff; }
     .dt-page .str { color: #a5d6ff; }
@@ -347,7 +347,7 @@ const articleSchema = {
     .dt-page .op  { color: #ff7b72; }
     .dt-page .imp { color: #79c0ff; }
 
-    /* ── Comparison table ─────────────────────────────────────────────────── */
+    /* -- Comparison table --------------------------------------------------- */
     .dt-page .compare-table {
       width: 100%;
       border-collapse: collapse;
@@ -388,7 +388,7 @@ const articleSchema = {
     .dt-page .badge.bad  { background: rgba(247, 129, 102, 0.2); color: var(--accent3); }
     .dt-page .badge.ok   { background: rgba(227, 179, 65, 0.2);  color: var(--accent4); }
 
-    /* ── Pipeline diagram ─────────────────────────────────────────────────── */
+    /* -- Pipeline diagram --------------------------------------------------- */
     .dt-page .pipeline {
       display: flex;
       align-items: center;
@@ -423,7 +423,7 @@ const articleSchema = {
       padding: 0 2px;
     }
 
-    /* ── Inline code (override DWC global) ───────────────────────────────── */
+    /* -- Inline code (override DWC global) --------------------------------- */
     .dt-page code {
       font-family: 'JetBrains Mono', monospace;
       font-size: 13px;
@@ -434,7 +434,7 @@ const articleSchema = {
       border: 1px solid var(--border);
     }
 
-    /* ── Feature grid ─────────────────────────────────────────────────────── */
+    /* -- Feature grid ------------------------------------------------------- */
     .dt-page .feature-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -469,7 +469,7 @@ const articleSchema = {
       color: var(--text-muted);
     }
 
-    /* ── Step counter ─────────────────────────────────────────────────────── */
+    /* -- Step counter ------------------------------------------------------- */
     .dt-page .steps { margin: 24px 0; }
 
     .dt-page .step {
@@ -509,7 +509,7 @@ const articleSchema = {
       margin: 0;
     }
 
-    /* ── Responsive ───────────────────────────────────────────────────────── */
+    /* -- Responsive --------------------------------------------------------- */
     @media (max-width: 768px) {
       .dt-page .layout          { grid-template-columns: 1fr; }
       .dt-page .toc             { display: none; }
