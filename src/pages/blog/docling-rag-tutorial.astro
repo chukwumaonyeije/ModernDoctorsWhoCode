@@ -343,7 +343,7 @@ loader = <span class="cls">DoclingLoader</span>(
 )
 
 docs = loader.load()
-<span class="fn">print</span>(<span class="fn">f</span><span class="str">"Loaded {len(docs)} chunks from {len(CLINICAL_DOCS)} documents"</span>)
+<span class="fn">print</span>(<span class="fn">f</span><span class="str">"Loaded &#123;len(docs)&#125; chunks from &#123;len(CLINICAL_DOCS)&#125; documents"</span>)
 <span class="fn">print</span>(<span class="str">"\nSample chunk metadata:"</span>)
 <span class="fn">print</span>(docs[<span class="num">0</span>].metadata)
 </code></pre>
@@ -393,7 +393,7 @@ vectorstore = <span class="cls">Chroma</span>(
     persist_directory=<span class="str">"./chroma_db"</span>
 )
 
-retriever = vectorstore.as_retriever(search_kwargs={<span class="str">"k"</span>: <span class="num">5</span>})
+retriever = vectorstore.as_retriever(search_kwargs=&#123;<span class="str">"k"</span>: <span class="num">5</span>&#125;)
 
 <span class="cm"># Clinical-context prompt</span>
 PROMPT_TEMPLATE = <span class="str">"""You are a Maternal-Fetal Medicine clinical decision support tool.
@@ -402,9 +402,9 @@ Cite the source document when possible.
 If the answer is not in the context, say so — do not speculate.
 
 Context:
-{context}
+&#123;context&#125;
 
-Question: {question}
+Question: &#123;question&#125;
 
 Answer:"""</span>
 
@@ -415,7 +415,7 @@ llm = <span class="cls">ChatOpenAI</span>(model=<span class="str">"gpt-4o"</span
     <span class="kw">return</span> <span class="str">"\n\n"</span>.join(d.page_content <span class="kw">for</span> d <span class="kw">in</span> docs)
 
 chain = (
-    {<span class="str">"context"</span>: retriever | <span class="fn">format_docs</span>, <span class="str">"question"</span>: <span class="cls">RunnablePassthrough</span>()}
+    &#123;<span class="str">"context"</span>: retriever | <span class="fn">format_docs</span>, <span class="str">"question"</span>: <span class="cls">RunnablePassthrough</span>()&#125;
     | prompt
     | llm
     | <span class="cls">StrOutputParser</span>()
@@ -513,9 +513,9 @@ pipeline_options.do_ocr = <span class="kw">True</span>
 pipeline_options.do_table_structure = <span class="kw">True</span>
 
 converter = <span class="cls">DocumentConverter</span>(
-    format_options={
-        <span class="str">"pdf"</span>: {<span class="str">"pipeline_options"</span>: pipeline_options}
-    }
+    format_options=&#123;
+        <span class="str">"pdf"</span>: &#123;<span class="str">"pipeline_options"</span>: pipeline_options&#125;
+    &#125;
 )
 
 result = converter.convert(<span class="str">"scanned_outside_records.pdf"</span>)
