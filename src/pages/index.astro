@@ -4,12 +4,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import NewsletterForm from '../components/NewsletterForm.astro';
 import { SITE_DESCRIPTION, SITE_URL } from '../consts';
+import { sortBlogPosts } from '../utils/blog';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
-const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const sortedPosts = sortBlogPosts(allPosts);
 const featuredPosts = sortedPosts.filter((post) => post.data.featured);
-const homepageFeaturedSlug = 'the-physicians-second-brain-series-overview';
-const featuredPost = sortedPosts.find((post) => post.id === homepageFeaturedSlug) ?? featuredPosts[0] ?? sortedPosts[0];
+const featuredPost = featuredPosts[0] ?? sortedPosts[0];
 const recentPosts = sortedPosts.filter((post) => post.id !== featuredPost?.id).slice(0, 5);
 
 const hexTerms = [

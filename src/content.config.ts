@@ -21,6 +21,7 @@ const blog = defineCollection({
       .optional(),
     draft: z.boolean().default(false),
     featured: z.boolean().default(false),
+    featuredRank: z.number().default(0),
     readingTime: z.number().optional(),
     canonical: z.string().optional(),
     audioUrl: z.string().optional(),
