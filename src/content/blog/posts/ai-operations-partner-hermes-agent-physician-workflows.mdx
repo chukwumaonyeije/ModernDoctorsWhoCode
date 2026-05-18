@@ -1,0 +1,264 @@
+---
+title: "I Gave an AI Agent 94 Skills and Let It Help Run My Clinical, Coding, and Theology Workflows"
+description: "Three weeks into running Hermes Agent in production, I can say this: the real value is not the model. It is the workflow ecosystem wrapped around it. Here is what 94 specialized skills looks like in a real physician-developer stack."
+pubDate: "2026-05-17"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+- "hermes-agent"
+- "ai-in-medicine"
+- "physician-developer"
+- "clinical-documentation"
+- "agentic-ai"
+- "healthcare-automation"
+- "doctors-who-code"
+- "physician-productivity"
+series: "Building a 24/7 AI Operations Partner"
+seriesPart: 1
+image:
+  url: /images/posts/hermes-ai-operations-partner-hero.jpeg
+  alt: "Hermes AI operations partner dashboard concept with clinical, coding, and workflow systems connected around a physician-builder stack"
+featured: false
+draft: false
+readingTime: 12
+---
+
+I have a Telegram bot that knows my clinical practice, my content voice, my theology writing, and my codebase.
+
+I have been using it for three weeks.
+
+It is already the most useful tool I have built for myself.
+
+The bot is the front end for Hermes Agent — a self-hosted, multi-model AI system running on a VPS. It is not a chatbot. It is not a thin wrapper around a commercial API. It is an orchestration layer I built to handle the volume and variety of work that comes with being a physician, a developer, a writer, and a researcher at the same time.
+
+This is part one of two. Here I explain what Hermes does and why I built it. Part two covers how it is built: the architecture, the model stack, the rate limits, and what I learned deploying production AI infrastructure as a solo physician-developer.
+
+---
+
+## The Problem It Solves
+
+I have four active domains of work running in parallel.
+
+**Clinical practice.** I am a Maternal-Fetal Medicine specialist and Medical Director at Atlanta Perinatal Associates. My day includes complex consultations, inpatient management, ultrasound interpretation, and documentation. I also teach, precept, and consult on high-risk referrals.
+
+**CodeCraftMD.** An AI-powered medical billing and documentation platform I founded. Active development. Real users. Real infrastructure decisions.
+
+**OpenMFM.org.** An open-source MFM patient education and clinical decision support platform. I submitted an abstract for SMFM 2026. It has multiple live microsites covering cervical length screening, periviability counseling, cfDNA navigation, fetal growth restriction, and hydrops fetalis.
+
+**DoctorsWhoCode.blog and theology writing.** Long-form content across two distinct voices: one technical, one pastoral. Both require consistency, structure, and depth.
+
+The problem is not that any one of these domains is hard. The problem is context-switching. Every transition between them costs time and cognitive load. Every time I sit down to write a blog post after a clinical shift, I have to rebuild the mental model of what I was doing, where I left off, and what voice I am writing in.
+
+I built Hermes to hold that context for me.
+
+---
+
+## The Physician Does Not Need Another Chatbot
+
+A chatbot is useful when you have a question.
+
+An operations partner is useful when you have a workflow.
+
+That is the shift.
+
+A physician asking, "What is Potter sequence?" may get a decent answer from almost any modern language model. But a physician who says, "I have a 19-week pregnancy with anhydramnios, suspected renal anomaly, possible Potter sequence, negative rupture evaluation, outpatient workup pending, and I need a sign-out, a patient-friendly explanation, a referral letter, an MRI requisition note, and a structured plan for tomorrow's team," is not asking a question.
+
+That physician is running a workflow.
+
+The same is true outside clinical medicine.
+
+A physician-developer does not merely ask, "How do I deploy this app?" He has a GitHub repository, a half-working build, a Vercel deployment, broken environment variables, a blog post to publish, a landing page to update, and a HIPAA concern he has not fully resolved yet.
+
+Again: workflow.
+
+Most AI assistants in medicine fail because they stay trapped at the level of conversation. They are impressive in a blank box. They are not attached to the physician's operational environment.
+
+Hermes changed that for me because I stopped thinking of AI as one assistant and started thinking of it as a coordinated skill ecosystem.
+
+---
+
+## What 94 Skills Actually Means
+
+The current build has 94 specialized skills distributed across clinical, technical, theological, productivity, research, DevOps, GitHub, and creative workflows.
+
+That number is less important than the architecture behind it. The point is not that 94 is magical. The point is that focused skills beat vague intelligence.
+
+A general model can write a letter. A skill knows that my MFM letters need to be concise, clinically structured, and readable by a busy referring physician who has thirty seconds to understand the plan.
+
+A general model can summarize a Bible passage. A skill knows I teach from a Seventh-day Adventist theological perspective, that I care about exegesis, pastoral application, and the moral imagination of Scripture.
+
+A general model can explain a GitHub pull request. A skill knows that Doctors Who Code content should speak to physicians who are curious about software but may not yet think of themselves as builders.
+
+This is the central lesson from three weeks of production use: the value is not one giant assistant. It is a network of narrow, reusable, context-aware skills.
+
+---
+
+## The Skill Categories
+
+**Clinical documentation.** The highest-value cluster. These are the skills that replace 30 to 45 minutes of documentation work per case.
+
+**Creative and content.** Blog post drafting in the DWC voice, Facebook caption generation from a URL, theology writing with denomination-specific framing, devotional content delivery.
+
+**DevOps.** Server maintenance, backups, webhook management, and operational support.
+
+**GitHub.** Pull request review, issue triage, code quality checks, repository maintenance, release notes, and documentation drafts.
+
+**Productivity.** Voice memo to action plan conversion, Obsidian integration for knowledge management, structured notes, and task planning.
+
+**Research.** Article triage, topic monitoring, and research synthesis workflows.
+
+**MLOps.** Model-oriented workflows, inference optimization, and evaluation patterns.
+
+The most-used skills in my actual workflow became predictable quickly:
+
+1. Theology content generation for daily devotionals, sermon preparation, and Bible study outlines
+2. Voice memo to action plan for clinical and operational next steps
+3. Signout-to-APSO pipeline for inpatient MFM documentation
+4. GitHub pull request review and issue drafting
+5. DWC Facebook caption generation from a post URL
+
+That mixture may look strange: obstetrics, theology, GitHub, and blog content. But that is exactly the point. Physicians are not just clinical reasoning machines. We are whole people with overlapping responsibilities. If AI is going to be useful, it must enter the physician's real operating environment.
+
+---
+
+## Use Case 1: Clinical Documentation
+
+The most obvious use case was clinical writing. Not autonomous medical decision-making. The large volume of clinical language that surrounds decision-making.
+
+A voice memo from a busy shift might begin rough:
+
+> "19-week pregnancy, absent amniotic fluid, rupture ruled out, concern for possible Potter sequence, needs detailed anatomy, fetal renal assessment, MRI consideration, possible tertiary referral, discussion of RAFT protocol if appropriate."
+
+The Hermes signout-to-APSO skill turns that into:
+
+- A physician-facing sign-out
+- A patient-friendly explanation
+- A referral note
+- A structured outpatient workup plan
+- A list of missing data that still needs to be gathered
+- A care coordination plan
+- A draft message to the referring provider
+
+That is not the same as practicing medicine. It is clinical language operations.
+
+The physician remains responsible for accuracy, judgment, counseling, and final recommendations. But the first draft appears faster, and the physician spends more time editing for meaning rather than staring at a blank page.
+
+In maternal-fetal medicine, where communication is often the intervention itself, that matters. A well-written note reduces confusion. A clear sign-out prevents missed follow-up. A concise letter helps the referring physician understand the plan at a glance.
+
+The AI does not replace the physician. It helps the physician become more operationally coherent.
+
+---
+
+## Use Case 2: Theological Content Pipeline
+
+This may seem outside the usual scope of a physician-developer blog. It is central to how I think about technology.
+
+I use the Hermes stack for theological writing and devotional content under my Chukwuma Theology platform on Substack.
+
+The system supports daily devotional generation with Seventh-day Adventist framing, biblical word studies, pastoral reflection, and practical application. It can produce sermon outlines organized around biblical themes, then export them as structured notes for long-form content management.
+
+My recent devotional draft on the Elijah narrative, "When the Tank Is Not Low. It Is Empty," was built inside this pipeline.
+
+The same architecture that helps with clinical sign-outs helps with sermon outlines. The same habit of structured reasoning that serves maternal-fetal medicine serves biblical study. The same Markdown workflow that supports GitHub documentation supports devotional writing.
+
+This is not because AI is spiritual. It is because disciplined writing has structure. A sermon has structure. A consult note has structure. A GitHub issue has structure. A patient letter has structure.
+
+Once you see the patterns, AI becomes less mysterious. It is a pattern engine. The physician's job is to bring judgment, context, humility, and truth-testing.
+
+That principle applies in medicine. It applies in theology. It applies in code.
+
+---
+
+## Use Case 3: GitHub and Development Operations
+
+Doctors Who Code exists because I believe physicians should not merely consume software. We should learn to build.
+
+That does not mean every doctor needs to become a full-time software engineer. It means physicians should understand enough about software to shape the systems that increasingly shape our professional lives.
+
+The GitHub skills help with pull request review, issue triage, repository cleanup, code quality checks, security reminders, documentation drafts, release notes, and project planning.
+
+For a physician-developer, the value is not that AI writes all the code. The value is that it reduces the friction of staying organized across too many hats. A solo physician-builder is simultaneously product manager, developer, QA tester, documentation writer, deployment engineer, and compliance worrier.
+
+An AI operations partner carries some of the scaffolding.
+
+It asks: Is there a README? Are the environment variables documented? Did we create a deployment checklist? Is there a security note? Does this feature tie to a real clinical workflow?
+
+Those questions are not glamorous. They are the difference between a weekend prototype and a usable tool.
+
+---
+
+## What Three Weeks Has Taught Me
+
+**The skill library compounds.** The first week, I spent as much time building skills as using them. By week two, the ratio flipped. Skills I built early were running daily without modification. New skills became cheaper to build because established patterns were already there.
+
+**Voice consistency is harder than task completion.** Getting Hermes to complete a task correctly is the easy part. Getting it to do so in the right voice required more iteration than anything else. The skill definitions for content workflows are longer and more specific than the ones for documentation, even though documentation is more technically complex.
+
+**The Telegram interface changes the behavior pattern.** I thought I would use Hermes primarily at my desk. I use it constantly on my phone: between patients, during workout recovery, in the car. The accessibility of a Telegram bot means the system reaches moments that no desktop application ever did.
+
+**Security boundaries matter immediately.** I run clinical workflows on this system. The HIPAA considerations are real and required deliberate architectural decisions before I ran a single clinical task. Part two covers this directly.
+
+**Automation amplifies both accuracy and error.** The most dangerous output is not the obviously bad answer. It is the almost-right answer. An almost-right clinical summary can mislead. An almost-right theological statement can distort. Automation does not remove the need for oversight. It increases the importance of oversight because the output arrives faster and looks polished.
+
+---
+
+## The Most Important Lesson: Specialized Skills Beat General Intelligence
+
+After three weeks, the clearest lesson is this: a specialized workflow beats a general model.
+
+A general model is impressive. A specialized workflow is useful.
+
+Physicians already understand this. We do not send every patient to "the smart doctor." We send patients to the right specialist with the right context. The same logic applies to AI.
+
+A clinical letter skill should behave differently from a sermon outline skill. A GitHub review skill should behave differently from a patient explanation skill. A DevOps skill should behave differently from a blog post skill.
+
+When people say AI is not reliable, they are often reacting to poorly specified AI. They ask a general model to do a high-context task with minimal instruction, then act surprised when the output is generic.
+
+The answer is not blind trust. The answer is workflow design.
+
+For physician-developers, this is the opportunity. We know the work. We know the edge cases. We know when a note sounds clinically wrong. We know when a patient explanation is too technical. We know when a vendor is overpromising.
+
+That domain knowledge is the moat.
+
+The future belongs to clinicians who can encode their workflows.
+
+---
+
+## The Physician-Builder Takeaway
+
+Doctors do not need to wait for permission to understand AI.
+
+We do not need to become machine learning researchers. We do not need to build foundation models. We do not need to pretend we are software engineers with white coats.
+
+But we do need to become literate builders.
+
+We need to understand workflows, data, prompts, APIs, privacy, deployment, evaluation, and failure modes. We need to know enough to ask better questions. We need to know enough to protect patients from bad implementations. We need to know enough to build small tools when commercial tools do not understand our work.
+
+Three weeks of Hermes convinced me that the physician of the near future will not simply use AI.
+
+The physician will supervise systems of AI-mediated work.
+
+That is a different skill set. It is part clinical judgment, part informatics, part operations, part writing, part software literacy, and part ethical discipline.
+
+The doctors who learn that language early will shape the tools. The doctors who do not may find themselves shaped by them.
+
+---
+
+## Closing Thought
+
+The goal is not perfect automation.
+
+The goal is better augmentation.
+
+A 24/7 AI operations partner does not make the physician less necessary. It makes the physician's judgment more available.
+
+That is the point.
+
+Not to remove the human from medicine. To remove enough friction that the human can return to the center of medicine.
+
+Part two covers the architecture: the VPS, the Docker setup, the model stack, the rate limits, the logs, the HIPAA boundaries, and the failure modes I now watch for every week.
+
+---
+
+_Chukwuma Onyeije, MD, FACOG is a Maternal-Fetal Medicine specialist and Medical Director at Atlanta Perinatal Associates, and the founder of CodeCraftMD and OpenMFM.org. He writes at DoctorsWhoCode.blog at the intersection of clinical medicine, software development, and AI._
+
