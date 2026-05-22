@@ -1,0 +1,286 @@
+---
+title: "Burnout Is Not From Working Too Hard. It Is From Working on the Wrong Things."
+description: "For physician-developers, burnout often comes from low-value technical friction. The answer is not more endurance. It is better delegation to systems, automation, and agents."
+pubDate: "2026-05-22"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Technology"
+tags:
+  - "automation"
+  - "physician-developer"
+  - "burnout"
+  - "ai-agents"
+  - "openmfm"
+  - "doctors-who-code"
+  - "workflow"
+  - "observability"
+image:
+  url: "/images/posts/burnout-wrong-things.jpeg"
+  alt: "Physician-developer sitting with a laptop at night, surrounded by visible signs of technical friction and clinical responsibility"
+draft: false
+featured: true
+featuredRank: 2000
+readingTime: 7
+---
+
+I used to lose 20 minutes every time a documentation template broke.
+
+Not because the fix was hard.
+
+It usually was not.
+
+The time disappeared in the context switch. I would be in the middle of work that actually deserved my attention: a cervical length module for OpenMFM, a preeclampsia risk calculator, a post for DoctorsWhoCode.blog. Then something in the infrastructure would surface a problem only I could fix.
+
+A broken build.
+
+A malformed output.
+
+A form field that stopped rendering correctly after a dependency update.
+
+I would drop the real work, trace the failure, apply the fix, and try to climb back into the thought I had been carrying before the interruption.
+
+Twenty minutes gone.
+
+The work I returned to felt like starting over.
+
+That is not burnout from effort.
+
+That is burnout from friction.
+
+## The Burnout Diagnosis Needs Better Specificity
+
+Dan Martell makes a useful argument in [*Buy Back Your Time*](https://www.amazon.com/Buy-Back-Your-Time-Unstuck/dp/B09YMNQ5HF/ref=sr_1_1): many people who feel burned out are not suffering because they work hard. They are suffering because too much of their energy is spent on low-value tasks that should never have reached their desk.
+
+His answer is delegation.
+
+Delegate to people. Delegate to machines. Delegate to systems.
+
+For a physician-developer, that lands differently than it does for a startup CEO.
+
+Most of us do not have engineering teams waiting for tickets. We have clinic, call, inboxes, EMRs, family obligations, and a laptop we open at 10 p.m. when the house is finally quiet.
+
+The work that drains us is not always administrative in the classic sense. Sometimes it is embedded inside the technical work we actually want to do.
+
+The build fails.
+
+The deployment breaks.
+
+The template renders wrong.
+
+The clinical calculator looks fine on desktop and collapses on mobile.
+
+The problem is not that these tasks are difficult. The problem is that they are interruptive, repetitive, and beneath the level of attention they consume.
+
+## Delegation Does Not Always Mean Hiring
+
+My first version of delegation was too narrow.
+
+I thought delegation meant finding a person. Who can I hand this to? Who can take this task off my plate?
+
+That is not a realistic model for most solo physician-developers.
+
+But Martell's broader point is more useful: the entity receiving the task does not have to be a person.
+
+A robot mower is delegation. A scheduled script is delegation. A CI check that catches a broken metadata field before deployment is delegation. A local agent that watches for a failed build, diagnoses the likely cause, opens a draft patch, and logs what it did is delegation.
+
+The logic is the same.
+
+You define the task.
+
+You define the trigger.
+
+You define the boundary.
+
+Then the system runs when your brain should not have to.
+
+That realization changed how I think about my own work.
+
+## The Real Example: Clinical Tools Break at the Worst Time
+
+OpenMFM.org is a free, open-source patient education and clinical decision support platform for maternal-fetal medicine.
+
+It includes microsites on cervical length surveillance, periviability counseling, cfDNA screening, and other high-stakes clinical topics. Some pages are educational. Others include interactive tools, calculators, risk assessments, and reference tables that clinicians and patients actually use.
+
+When something breaks there, the failure is not abstract.
+
+A patient may be reading through a difficult periviability diagnosis.
+
+A resident may be preparing for a consult.
+
+A clinician may be trying to explain risk in language a patient can understand.
+
+That changes the obligation. The fix feels immediate because the work matters.
+
+But the fixes themselves are usually not the highest use of a physician-developer's mind.
+
+A dependency update broke a rendering path.
+
+A component stopped validating correctly.
+
+A layout collapsed on a small screen.
+
+A build step failed because metadata drifted out of shape.
+
+That is pattern-recognition work. It is not clinical judgment. It is not product strategy. It is not architecture.
+
+It is interrupt-and-fix work.
+
+DoctorsWhoCode.blog has the same problem in a different costume. A post moves from MDX draft to Astro build to Vercel deployment to SEO metadata and structured data validation. When any part of that pipeline breaks, it usually announces itself at the worst possible time: mid-draft, mid-thought, with a shift starting in six hours.
+
+That is the kind of work worth offloading.
+
+## The Low-Value Tax Inventory
+
+Not every task deserves an agent.
+
+Some tasks should be deleted. Some should be handled by ordinary code. Some should stay human because judgment is the point.
+
+The first step is to identify the tax.
+
+For two weeks, track the tasks that interrupt your real work. Do not track only what is hard. Track what is repetitive, low-complexity, and costly because it forces a context switch.
+
+For me, the pattern is clear.
+
+Failed builds.
+
+Broken MDX output.
+
+Rendering errors I did not create intentionally.
+
+Form validation regressions.
+
+Deployment problems that require the same diagnosis every time.
+
+These are high-frequency, low-cognitive-load interruptions. They steal time from work that requires a physician's brain.
+
+That is the low-value tax.
+
+Once you can name it, you can decide what should happen to it.
+
+## Deterministic First, AI Second
+
+This is the most important rule.
+
+Do not use AI for work that ordinary code can handle better.
+
+A script should check file paths. A schema should validate frontmatter. A test should catch a broken calculator. A formatter should normalize predictable structure. A CI job should fail loudly when required metadata is missing.
+
+That work does not require an LLM.
+
+It requires discipline.
+
+The model should enter only when the task genuinely requires reasoning over ambiguity: interpreting an unfamiliar error, proposing a likely fix, drafting a plain-language explanation, or comparing a failure against prior patterns.
+
+Using AI where deterministic code would work is not innovation.
+
+It is waste.
+
+The best automation stack is usually boring at the edges and intelligent only where intelligence is actually needed.
+
+## Observability Before Autonomy
+
+Headless automation with no visibility is not delegation.
+
+It is abdication.
+
+Every automated task in my workflow needs a trail. What ran? What changed? What failed? What did the model see? What did it decide? What did it cost?
+
+That matters even more when the work touches clinical tools.
+
+If an agent attempts to fix a broken calculator, I want logs. If it changes a component, I want a diff. If it calls a model, I want to know which model, how many tokens, and what prompt or context shaped the answer.
+
+The monitoring layer is not decoration.
+
+It is part of the product.
+
+Without observability, automation eventually creates a new kind of burden: problems you cannot explain.
+
+That is not buying back time.
+
+That is borrowing trouble at interest.
+
+## Treat the Automation Like a Product
+
+The first version will be crude.
+
+That is normal.
+
+My own monitoring infrastructure did not arrive fully formed. I added it because I needed better granularity. I needed to know which jobs were expensive, which failures repeated, and where the system was making guesses instead of following rules.
+
+That is a software development cycle.
+
+Prototype.
+
+Observe.
+
+Instrument.
+
+Tighten the boundary.
+
+Repeat.
+
+The mistake is treating your internal automation as disposable because it only serves you.
+
+That is exactly backward.
+
+If your system protects your attention, it protects your ability to build everything else.
+
+## What This Has to Do With Medicine
+
+Physician burnout is often described as an individual endurance problem.
+
+That diagnosis is too shallow.
+
+A major driver is administrative burden: documentation, inbox work, prior authorizations, fragmented systems, and all the surrounding labor that crowds out patient care.
+
+Physician-developers face a parallel version of the same problem.
+
+The work that breaks our concentration is often not intellectually demanding. It is frequent, shallow, and interruptive. It is the software equivalent of a prior authorization for a medication the patient clearly needs.
+
+The institution may not fix that for you.
+
+The vendor may not fix that for you.
+
+But physician-developers have an option most clinicians do not.
+
+We can build the relief layer ourselves.
+
+We can define our own triggers. We can deploy our own checks. We can create agents that handle bounded tasks. We can design observability into the systems that protect our time.
+
+That is not a small thing.
+
+It is one of the most important reasons doctors should learn to code.
+
+## The Real Question
+
+The question is not whether you are working hard enough.
+
+Most physicians are already working hard enough.
+
+The better question is whether the work in front of you deserves your brain.
+
+Some work does.
+
+Clinical judgment does. Product direction does. Architecture does. Patient communication does. The hard parts of writing, teaching, designing, and building do.
+
+But broken templates, repetitive build failures, recurring validation errors, and predictable deployment friction do not deserve the same level of attention.
+
+Those tasks do not need more heroism.
+
+They need systems.
+
+The physician-developer advantage is not that we can work forever.
+
+It is that we can notice friction, name it, and build something to carry it.
+
+The work that deserves your mind should get your mind.
+
+The rest should get architecture.
+
+---
+
+*This post was inspired by a Dreams of Code video on delegating CI/CD failures to custom AI agents. It is a developer-focused use case, but the philosophy translates directly to physician-developers building clinical tools. [Watch it here](http://www.youtube.com/watch?v=WkpEuogh3OY).*
+
+---
+
+*Chukwuma Onyeije, MD, FACOG is a Maternal-Fetal Medicine specialist at Atlanta Perinatal Associates, founder of CodeCraftMD and OpenMFM.org, and a physician-developer at the intersection of clinical medicine and software. He writes about building physician-owned AI tools at DoctorsWhoCode.blog.*
