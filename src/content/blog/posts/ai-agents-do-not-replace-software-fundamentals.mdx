@@ -1,0 +1,245 @@
+---
+title: "AI Agents Do Not Replace Software Fundamentals. They Expose Whether You Have Any."
+description: "For physician-builders, agentic engineering is not prompt magic. It is bounded context, vertical slices, observability, and accountability."
+pubDate: "2026-05-22"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Technology"
+tags:
+  - "agentic-engineering"
+  - "ai-agents"
+  - "doctors-who-code"
+  - "physician-developer"
+  - "clinical-ai"
+  - "software-engineering"
+  - "observability"
+  - "llm-workflows"
+image:
+  url: "/images/posts/ai-agents-fundamentals.jpeg"
+  alt: "Physician-developer reviewing an AI agent workflow with software fundamentals, code structure, and clinical accountability represented across screens"
+draft: false
+featured: false
+readingTime: 8
+---
+
+A physician recently asked me whether AI agents mean doctors no longer need to learn software engineering.
+
+The question is understandable.
+
+The demos are intoxicating. You type a request. The agent reads files, edits code, runs tests, fixes errors, and sometimes builds the thing before you have finished your coffee.
+
+It feels like the old rules have been suspended.
+
+They have not.
+
+The rules have become more visible.
+
+AI agents do not make software fundamentals obsolete. They expose whether your system has any.
+
+## The Demo Is Not the Discipline
+
+Most people first meet agentic coding through a demo.
+
+The agent opens a repository. It finds the bug. It writes the patch. It explains itself. The human nods. The future arrives on schedule.
+
+That is the fantasy.
+
+The real version is messier.
+
+The agent reads too much context and starts drifting. It fixes the symptom and breaks the boundary. It changes three files when one would have done. It creates a helper function that looks clean but does not belong anywhere. It passes the local test and fails the workflow that matters.
+
+This is not because the model is useless.
+
+It is because agents behave differently inside structured systems than they do inside chaotic ones.
+
+A well-organized codebase gives the agent a map. A messy codebase gives it a swamp.
+
+Physician-builders need to understand this early. The agent is not a substitute for architecture. The agent is a stress test of architecture.
+
+## The Smart Zone and the Dumb Zone
+
+Every AI model has a smart zone.
+
+Inside that zone, it looks almost magical. It can read a component, infer the pattern, make a focused change, and explain the tradeoff.
+
+Then you push it past the boundary.
+
+You ask it to refactor the whole app. You give it a sprawling prompt with unclear priorities. You ask it to change authentication, database shape, UI behavior, error handling, and deployment logic in one pass.
+
+Now the same model enters its dumb zone.
+
+It still sounds confident. That is the dangerous part.
+
+It may preserve the surface of competence while losing the structure underneath. It gives you fluent code with hidden damage.
+
+This is why context windows do not solve everything.
+
+A larger context window lets the agent see more. It does not guarantee the agent understands what matters.
+
+In medicine, more data is not the same as better judgment. A chart with 600 pages can obscure the diagnosis as easily as reveal it. The skill is not merely reading everything. The skill is knowing what belongs in the frame.
+
+Agentic engineering works the same way.
+
+The physician-builder's job is to keep the agent inside a usable frame.
+
+## Vertical Slices Beat Sprawling Tasks
+
+The safest agent task is a vertical slice.
+
+Small enough to reason about. Real enough to matter. Bounded enough to verify.
+
+Do not ask an agent to "build the app."
+
+Ask it to add password reset to the existing auth flow. Ask it to write the missing test for the billing-code parser. Ask it to convert one clinical protocol card into the established MDX component pattern. Ask it to add one dashboard metric and wire it to the existing data source.
+
+That is a vertical slice.
+
+It touches the stack, but it does not swallow the system.
+
+This matters for physician-builders because our clinical ideas are often large by nature. We do not think in toy problems. We think in workflows: consult generation, diabetic log review, fetal growth restriction management, chart orientation, billing support.
+
+Those workflows are real. They are also too large to hand to an agent as one command.
+
+The work is decomposition.
+
+Clinical reasoning already trained us for this. We do not treat "shortness of breath" as one undifferentiated problem. We break it into physiology, risk, urgency, differential diagnosis, testing, intervention, reassessment.
+
+Agentic coding requires the same discipline.
+
+Break the workflow into slices. Give the agent one slice. Verify the slice. Then move.
+
+## Fundamentals Matter More With Agents, Not Less
+
+There is a lazy version of the AI coding argument that says fundamentals no longer matter.
+
+That argument is wrong.
+
+Fundamentals matter because they create the environment where agents can work safely.
+
+**Modularity** matters because the agent needs boundaries.
+
+**Testing** matters because the agent needs feedback.
+
+**Domain modeling** matters because the agent needs names that reflect reality.
+
+**Observability** matters because the agent can produce code that works in a demo and quietly burns money, latency, or trust in production.
+
+**Version control** matters because rollback is part of supervision.
+
+**Documentation** matters because agents use it as context.
+
+These are not old-world rituals. They are the operating room lights of agentic software development. They let you see what is happening before harm accumulates.
+
+## The Physician-Builder Standard
+
+Medicine gives us a useful advantage here.
+
+We already understand supervised autonomy.
+
+A resident can do more as competence grows, but supervision does not disappear. The attending still defines the problem, watches the boundaries, checks the plan, and signs the note.
+
+AI agents should be treated the same way.
+
+Not as interns. Not as colleagues. Not as mystical collaborators.
+
+As powerful automation systems that can operate under supervision when the work is bounded, observable, and reviewable.
+
+That distinction matters.
+
+I do not care whether an AI touched the code. I care who remained accountable for the code.
+
+This is the same principle I apply to clinical LLM use. The ethical boundary is not whether AI helped draft, summarize, or structure the work. The ethical boundary is whether the physician surrendered responsibility.
+
+Agentic engineering is professional tool use.
+
+It is not outsourcing judgment.
+
+## Clinical AI Raises the Stakes
+
+For generic software, a sloppy agent workflow may create a slow endpoint or a broken button.
+
+For clinical-adjacent software, the stakes change.
+
+A chart-orientation tool can surface the wrong context.
+
+A documentation assistant can omit the detail that supports the plan.
+
+A billing helper can generate a plausible code that does not match the work performed.
+
+A protocol tool can make a pathway look more certain than it is.
+
+That does not mean physicians should avoid building with agents.
+
+It means we need a higher standard for the harness around the agent.
+
+The model is not the product. The harness is the product.
+
+The product is the retrieval layer, the prompt boundary, the validation step, the audit log, the user interface, the failure state, the review workflow, and the human accountability loop.
+
+Physician-builders belong at that harness layer because that is where clinical reality enters the system.
+
+## What I Look For Before Trusting an Agent
+
+Before I let an agent do meaningful work in a repository, I want five things.
+
+**First**, I want a clear task boundary.
+
+**Second**, I want the agent to operate inside an existing pattern.
+
+**Third**, I want tests, linting, or some other verification path.
+
+**Fourth**, I want a clean diff I can review.
+
+**Fifth**, I want rollback.
+
+Without those five things, I am not doing agentic engineering. I am gambling with a confident autocomplete system.
+
+That may be fine for a throwaway prototype.
+
+It is not fine for tools that touch clinical workflow, patient communication, billing, documentation, or decision support.
+
+## The New Skill Is Not Prompting
+
+Prompting matters.
+
+But prompting is not the core skill.
+
+The core skill is shaping the work so the agent can succeed.
+
+That means writing clear issues. Maintaining readable code. Naming concepts honestly. Keeping files small enough to reason about. Separating responsibilities. Creating tests. Watching logs. Measuring cost. Reviewing diffs with suspicion and charity.
+
+This is less glamorous than the demo.
+
+It is also where the real leverage lives.
+
+The physician who learns this becomes more than an AI user. He becomes a builder of clinical systems that can absorb AI without being deformed by it.
+
+## The Bottom Line
+
+AI agents are going to change how physicians build software.
+
+They already have.
+
+But the winning physician-builder will not be the one who writes the longest prompt or trusts the flashiest demo.
+
+The winning physician-builder will be the one who understands how to constrain power.
+
+Small slices.
+
+Clear boundaries.
+
+Visible failure modes.
+
+Human accountability.
+
+That is agentic engineering.
+
+Not magic.
+
+Discipline.
+
+And in medicine, discipline is still the difference between a tool that impresses people and a tool that can be trusted.
+
+---
+
+*Chukwuma Onyeije, MD, FACOG is a Maternal-Fetal Medicine specialist at Atlanta Perinatal Associates, founder of CodeCraftMD and OpenMFM.org, and a physician-developer at the intersection of clinical medicine and software. He writes about building physician-owned AI tools at DoctorsWhoCode.blog.*
