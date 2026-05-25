@@ -1,0 +1,198 @@
+---
+title: "My Slides Became Code: Why I Use Marp for AI-Generated Presentations"
+description: "Marp lets physician-builders turn reviewed knowledge into version-controlled, AI-assisted teaching decks without surrendering clinical responsibility."
+pubDate: 2026-05-25
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Technology"
+tags:
+  - "doctors-who-code"
+  - "marp"
+  - "ai-generated-presentations"
+  - "physician-developer"
+  - "openmfm"
+  - "clinical-education"
+  - "open-source"
+  - "version-control"
+  - "markdown"
+image:
+  url: "/images/posts/marp-presentations-hero.jpeg"
+  alt: "Physician-developer reviewing a Markdown-based clinical presentation workflow on a monitor in a dark, cyan-lit workspace"
+draft: false
+featured: false
+readingTime: 9
+---
+
+A patient with a complex placenta accreta spectrum presentation needed counseling. Our team also needed a clear framework for the multidisciplinary conversation ahead.
+
+I had older teaching slides. I did not have time to search through folders, decide which version was current, rebuild the visual structure, and then repeat the work for a different audience.
+
+The problem was not that I lacked information.
+
+The problem was that the information was trapped in slide files.
+
+That clinical moment changed how I think about presentations. A medical slide deck is not decoration for a lecture. At the right moment, it is an interface between evidence, judgment, and human understanding.
+
+That is why my slides became code. It is also why I use [Marp](https://marp.app/) for AI-assisted presentations.
+
+## PowerPoint Was Never the Real Problem
+
+PowerPoint is useful. I have used it for years. Most physicians have.
+
+But the default presentation workflow creates an avoidable kind of disorder. We build a deck, export a PDF, email a file, revise it later, and soon have six versions, three of them called "final." There is no dependable way to know which explanation a learner or colleague is seeing.
+
+That matters in medicine because our educational content is not static.
+
+Guidelines change. Counseling language improves. New evidence clarifies old uncertainty. A diagram that seemed adequate for a conference lecture may fail when a patient is frightened and trying to understand what happens next.
+
+The conventional workflow treats every revision as another object to manage.
+
+I wanted a workflow that treated a presentation as a maintained clinical teaching asset.
+
+The framing is simple: the problem is not slide design. The problem is knowledge architecture.
+
+## What Marp Changes
+
+Marp is a Markdown presentation system. I write the substance of a deck as plain text, divide it into slides, apply a theme when needed, and render it for distribution. The official Marp toolset can export Markdown presentations to HTML, PDF, and PowerPoint files.
+
+That may sound like a technical preference. It is not.
+
+When a presentation is text, it becomes legible to the same tools I already use to manage research, revise prose, maintain websites, and review software. A deck can sit beside the notes and sources that produced it. It can be searched. It can be reviewed through Git. A change in one paragraph does not require manually rebuilding a visual artifact.
+
+Most importantly, text is an effective collaboration surface for AI.
+
+An AI agent can draft structured Markdown, apply an established theme, shorten an overcrowded slide, adapt a teaching sequence to a different audience, or flag claims that still need physician verification. It is far less reliable when asked to invent polished clinical meaning from an empty prompt and an attractive template.
+
+Marp makes the presentation structured enough for automation and readable enough for clinical review.
+
+That is the useful middle ground.
+
+## The Presentation Workflow I Wanted
+
+My work with [OpenMFM](https://openmfm.org/) begins with a recurring challenge. I may need to explain the same clinical subject to a patient, a resident, a fellow, or a room of physicians.
+
+The evidence may overlap. The presentation should not.
+
+A patient needs clarity without avoidable alarm. A resident needs an organizing framework. A specialist needs detail, limitations, references, and room for disagreement.
+
+Marp allows those outputs to share a source architecture without pretending they are the same educational product.
+
+My workflow now looks like this:
+
+1. I start with reviewed source material and define the intended audience.
+2. I state the clinical teaching point in plain language before I design anything.
+3. I use an AI agent to help outline the sequence and draft Marp Markdown.
+4. I revise the medical language, reduce text density, and verify claims against the source material.
+5. I render the deck and inspect the actual slides, because readable Markdown can still produce poor communication.
+6. I publish only after review and maintain the deck in a repository with a stable public location.
+
+This is not the automation of medical judgment.
+
+It is the automation of avoidable formatting work around medical judgment.
+
+## AI Should Not Begin With an Empty Prompt
+
+There is a tempting version of AI-assisted content creation that starts with: "Make me a presentation about a complicated pregnancy."
+
+That is not a clinical education workflow. It is a styling exercise with clinical risk attached.
+
+A beautiful slide can contain an unsupported claim. A confident summary can erase the uncertainty that matters. A clinically misleading sentence can still look impressive against a dark background with a bright accent line.
+
+For physician-builders, the evidence set must come first.
+
+A useful prompt is closer to this:
+
+> Using this reviewed evidence set and this defined audience, create a concise Marp teaching deck with one major point per slide. Preserve the stated limitations. Mark any clinical claims that still require physician verification before publication or patient use.
+
+That prompt does not ask the model to be the doctor. It asks the model to help assemble a reviewable teaching artifact.
+
+AI can accelerate structure.
+
+It cannot inherit responsibility.
+
+## Why This Became Part of OpenMFM
+
+I first built an HTML presentation repository because my teaching materials were scattered across folders, PDFs, screenshots, and older slide files. I wanted permanent URLs, predictable organization, and the ability to update a teaching resource without breaking every prior link.
+
+I described that first step in [A Weekend Project for Clinicians: Building an HTML Slide Repository for Maternal-Fetal Medicine](/blog/a-weekend-project-for-clinicians-building-an-html-slide-repository-for-maternal-fetal-medicine).
+
+Later, a real clinical encounter made the architecture practical. I needed a patient-facing explanation and a clinician-facing presentation on a related subject, both built from reviewed knowledge and both adapted to the people in the room. That experience became [The Anatomy of a Real-Time Clinical Presentation](/blog/the-anatomy-of-a-real-time-clinical-presentation-from-clinical-encounter-to-open-source-slides-in-minutes).
+
+Those were not separate experiments. Together, they exposed a larger idea.
+
+OpenMFM should not be a warehouse of old presentations. It should be a maintained public library for maternal-fetal medicine education: accessible, updateable, audience-aware, and accountable.
+
+Marp fits that model because it keeps the teaching material close to its source. A presentation is no longer trapped inside a proprietary editor. It can be drafted from structured notes, revised as evidence changes, reviewed through version history, and published as a stable web resource.
+
+That is what a modern teaching library should be.
+
+## The Physician-Builder Advantage
+
+Physicians are often taught to accept the technical layer as someone else's territory.
+
+We create the content. A vendor creates the interface. A learning management system stores the lecture. A platform determines how the material is found, updated, or forgotten.
+
+That division is no longer necessary.
+
+A physician who can write Markdown, understand a repository, and supervise an AI drafting workflow can build educational infrastructure directly. The required skill is not advanced computer science. The required skill is the willingness to treat communication as part of the clinical system.
+
+This matters because format affects understanding.
+
+A patient facing a fetal diagnosis does not need a 60-slide conference lecture. A fellow preparing for management decisions does not need a vague infographic. An educational system designed by physicians can respect those differences at the level of architecture, not as an afterthought.
+
+Marp does not make me a better clinician.
+
+It gives me a better medium for translating clinical knowledge after I have done the clinical work.
+
+## The Boundary Matters
+
+AI-generated clinical education is not ready for use simply because it renders correctly.
+
+Any deck that touches patient counseling, clinical recommendations, or management pathways requires review by a qualified clinician. Guideline-sensitive statements must be checked against current professional guidance and relevant evidence before publication. Patient-identifying information should not be placed into a general cloud AI workflow without an approved privacy and compliance framework.
+
+The slide is a communication tool.
+
+It is not the decision maker.
+
+Version control strengthens that boundary. I can see what changed. I can correct a sentence. I can update a reference. I can revise a counseling phrase. I can maintain a public educational resource rather than abandon a static file after a single lecture.
+
+That is not a minor improvement.
+
+It is the difference between publishing content and maintaining knowledge.
+
+## What I Would Tell a Physician Starting Today
+
+Do not begin by trying to build an entire educational platform.
+
+Choose one topic you teach repeatedly. Choose one audience. Gather the sources you already trust. Build one short deck in Markdown. Render it with Marp. Read it as though a patient, learner, or colleague will depend on your clarity.
+
+Then revise it.
+
+Store it in a repository. Give it a stable home. Keep the source close to the output. Learn what becomes easier when the deck is text rather than an opaque file.
+
+You will discover quickly that the value is not only speed.
+
+The value is ownership.
+
+## The Work Is Not Making More Slides
+
+Medicine does not suffer from a shortage of presentations.
+
+It suffers from knowledge that is hard to find, hard to update, hard to adapt, and too often disconnected from the moment when someone needs to understand it.
+
+Marp is one practical tool for changing that. AI can help draft the structure. Git can preserve the history. HTML can make the teaching accessible. OpenMFM can give the material a public home.
+
+But the physician must still do the work that matters most: select the evidence, frame the uncertainty, respect the audience, and stand behind the final message.
+
+I do not use Marp because I want software to replace teaching.
+
+I use it because clinical knowledge deserves better infrastructure than a folder full of forgotten slide decks.
+
+## References and Related Reading
+
+- [Marp: Markdown Presentation Ecosystem](https://marp.app/)
+- [Marp CLI documentation](https://github.com/marp-team/marp-cli)
+- [A Weekend Project for Clinicians: Building an HTML Slide Repository for Maternal-Fetal Medicine](/blog/a-weekend-project-for-clinicians-building-an-html-slide-repository-for-maternal-fetal-medicine)
+- [The Anatomy of a Real-Time Clinical Presentation: From Clinical Encounter to Open-Source Slides in Minutes](/blog/the-anatomy-of-a-real-time-clinical-presentation-from-clinical-encounter-to-open-source-slides-in-minutes)
+
+_Clinical and medical-legal review note: This article describes a de-identified educational workflow and does not provide diagnosis or management recommendations. Clinical presentations built with AI assistance require qualified clinician review, source verification, and appropriate privacy safeguards before use or publication._
