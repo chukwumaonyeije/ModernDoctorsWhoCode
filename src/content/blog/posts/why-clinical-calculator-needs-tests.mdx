@@ -1,0 +1,260 @@
+---
+title: "Why Your Clinical Calculator Needs Tests"
+description: "A clinical calculator is not safer because it is written in code. It becomes safer when its expected behavior is explicit, checked, and protected from silent drift."
+pubDate: "2026-05-30"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Development"
+tags:
+  - "doctors-who-code"
+  - "physician-developer"
+  - "clinical-software"
+  - "testing"
+  - "clinical-calculators"
+  - "ai-generated-code"
+draft: false
+featured: true
+featuredRank: 4998
+image:
+  url: /images/posts/why-clinical-calculator-needs-tests-hero.jpeg
+  alt: Clinical calculator interface with glowing test checkpoints at critical boundary thresholds
+readingTime: 8
+---
+
+The dangerous bug in a clinical calculator rarely looks dramatic.
+
+It looks like a threshold.
+
+It looks like a unit conversion.
+
+It looks like a value that was correct for one patient and wrong for the next.
+
+A BMI category changes at 30. A gestational-age pathway changes at 24 weeks. A dosing recommendation assumes kilograms but the user enters pounds. A default value carries over from the previous patient because the form did not reset.
+
+No alarm sounds.
+
+The interface still looks clean.
+
+The output still looks clinical.
+
+That is the problem.
+
+## A Calculator Is a Clinical Argument
+
+A calculator is not just arithmetic.
+
+It is a clinical argument with a small interface.
+
+It decides which inputs matter. It decides which thresholds matter. It decides how missing values behave. It decides whether an edge case gets handled or ignored.
+
+That compression is useful.
+
+It is also risky.
+
+Clinical judgment often happens in full view. We speak it in a room, write it in a note, explain it to a patient, defend it during sign-out, or revise it after new data arrives.
+
+A calculator can hide the place where judgment was compressed.
+
+It turns a clinical pathway into an output.
+
+Normal.
+
+High risk.
+
+Enhanced surveillance.
+
+Refer.
+
+Repeat in one week.
+
+Those words carry weight. They direct attention. They shape documentation. They change follow-up.
+
+If the calculator is wrong, the error does not need to injure someone immediately to matter. It can still misallocate attention. It can still create false reassurance. It can still turn clinical work into cleanup.
+
+## Code Is Not Automatically Safer
+
+Moving a spreadsheet into Python is progress.
+
+It is not the finish line.
+
+Clean code can still be wrong. A well-named function can still mishandle a boundary. A refactor can preserve the appearance of the tool while changing the clinical behavior underneath.
+
+This becomes more important when physicians use AI to modify code.
+
+AI agents and coding assistants are useful. I use them. They can turn a rough clinical idea into working code faster than any previous tool I have had.
+
+But they also make change cheap.
+
+Cheap change increases the need for memory.
+
+If the calculator has no tests, every AI-assisted edit becomes an act of trust. The model changes a function, the page still loads, the output looks plausible, and the physician assumes the logic survived.
+
+That is not discipline.
+
+That is hope with syntax highlighting.
+
+I have argued elsewhere that observability matters for AI-generated code because fluent output is not the same as trustworthy behavior. Testing is the smallest version of that same obligation.
+
+The tool needs to show what it still knows.
+
+## Testing Is Not Developer Theater
+
+Testing often sounds foreign to physicians because it arrives wrapped in developer vocabulary.
+
+Unit tests. Assertions. Fixtures. Coverage. Continuous integration.
+
+The vocabulary can obscure the familiar behavior underneath.
+
+Physicians already test.
+
+We check whether a lab value fits the clinical picture. We repeat a measurement that seems inconsistent. We verify units before acting on a dose. We review protocols at the boundary cases because that is where mistakes cluster.
+
+Testing in software is the same discipline made explicit.
+
+It is a way of writing down what must remain true.
+
+Not everything.
+
+The important things.
+
+For a clinical calculator, the important things are usually ordinary cases, boundary cases, and impossible cases.
+
+That is the Three-Check Standard.
+
+## The Three-Check Standard
+
+Every clinical tool that shapes attention needs three kinds of checks.
+
+A sanity check.
+
+A boundary check.
+
+A garbage check.
+
+The sanity check asks whether an ordinary patient produces the expected output.
+
+The boundary check asks whether values near a threshold behave correctly.
+
+The garbage check asks whether impossible inputs fail visibly.
+
+That is enough to start.
+
+Imagine a simple BMI category function used inside a dosing workflow.
+
+```python
+def bmi_category(bmi: float) -> str:
+    if bmi < 0:
+        raise ValueError("BMI cannot be negative")
+    if bmi < 30:
+        return "standard"
+    return "obesity"
+```
+
+The clinical logic is simple enough to read.
+
+It still needs tests.
+
+```python
+def test_bmi_category_for_ordinary_value():
+    assert bmi_category(26.4) == "standard"
+
+def test_bmi_category_at_threshold():
+    assert bmi_category(29.9) == "standard"
+    assert bmi_category(30.0) == "obesity"
+
+def test_bmi_category_rejects_impossible_value():
+    with raises(ValueError):
+        bmi_category(-3)
+```
+
+This is not a full tutorial.
+
+It is the shape of the responsibility.
+
+The test records the ordinary case. It records the threshold. It records the impossible input.
+
+Now the next edit has something to answer to.
+
+## Boundaries Are Where Bugs Hide
+
+Clinical calculators love boundaries.
+
+Less than. Greater than. Greater than or equal to. Before 24 weeks. At 24 weeks. More than 48 hours. At least two values. No more than one prior cesarean. Three elevated readings. One severe-range pressure.
+
+Boundaries are where clinical software gets quietly dangerous.
+
+The code may be wrong by one comparison operator.
+
+```python
+if gestational_age_weeks > 24:
+    return "viability pathway"
+```
+
+That is not the same as:
+
+```python
+if gestational_age_weeks >= 24:
+    return "viability pathway"
+```
+
+The difference is one character.
+
+The clinical difference may be real.
+
+This is why boundary tests matter more than they look. They protect the exact point where clinical language becomes executable logic.
+
+Medicine already respects thresholds. Software needs to respect them with equal precision.
+
+## A Small Test Suite Is Clinical Memory
+
+A small test suite is not about proving that the whole tool is perfect.
+
+It is about giving the tool memory.
+
+The test remembers what the builder meant.
+
+It remembers that 29.9 and 30.0 were supposed to fall on opposite sides of a line.
+
+It remembers that pounds and kilograms are not interchangeable.
+
+It remembers that an impossible gestational age should fail visibly instead of being coerced into a plausible pathway.
+
+This matters most after the tool starts evolving.
+
+The first version is written carefully. The second version adds a feature. The third version fixes a display issue. The fourth version is edited by an AI assistant because the physician wants to add a new protocol branch before clinic.
+
+Without tests, every change asks the physician to manually rediscover whether the old behavior survived.
+
+That is a waste of clinical attention.
+
+The human checkpoint should remain where judgment belongs. It should not be spent rechecking whether the same calculator still handles 30.0 correctly.
+
+Tests protect the parts of the workflow that should not require repeated human attention.
+
+## Tests Do Not Replace Judgment
+
+There is a narrow way to misunderstand testing.
+
+The test passed, so the tool is safe.
+
+No.
+
+The test passed, so the tool still behaves the way the builder explicitly said it should behave for the cases tested.
+
+That is all.
+
+Clinical judgment remains. Governance remains. Validation remains. Local review remains. A calculator used for real clinical workflow needs more than a few tests in a blog post.
+
+But the absence of tests tells you something too.
+
+It tells you the tool has no executable memory.
+
+It tells you the next edit can change behavior silently.
+
+It tells you the physician using the tool must keep spending attention on something the architecture should already protect.
+
+That is not acceptable once the calculator shapes clinical attention.
+
+Clinical judgment should not be spent rediscovering whether the calculator still works.
+
+That is what tests are for.

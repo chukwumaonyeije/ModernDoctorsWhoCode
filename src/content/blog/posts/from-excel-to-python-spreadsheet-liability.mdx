@@ -1,0 +1,235 @@
+---
+title: "From Excel to Python: When Your Spreadsheet Becomes a Liability"
+description: "Excel is often the right first move for a physician-builder. The problem begins when clinical logic stays trapped in a container that can no longer safely hold it."
+pubDate: "2026-05-29"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Development"
+tags:
+  - "doctors-who-code"
+  - "physician-developer"
+  - "python"
+  - "excel"
+  - "clinical-software"
+  - "version-control"
+draft: false
+featured: true
+featuredRank: 4999
+image:
+  url: /images/posts/from-excel-to-python-hero.jpeg
+  alt: Excel spreadsheet formula cracking under pressure, transitioning to clean Python code
+readingTime: 8
+---
+
+Every physician-developer has met this spreadsheet.
+
+It began as a favor to yourself.
+
+Then a colleague asked for a copy.
+
+Then someone changed a formula and nobody noticed.
+
+At first, the spreadsheet solved a real problem. That part matters. It may have tracked consult volume, calculated a risk category, organized a QI dataset, monitored antenatal testing indications, or translated a messy protocol into something a human could use during clinic.
+
+The spreadsheet was not the failure.
+
+The spreadsheet was the first prototype.
+
+The failure begins when the prototype keeps accumulating clinical responsibility after its structure has stopped being safe.
+
+## Excel Is Not the Problem
+
+Excel is one of the most important clinical software environments in medicine.
+
+That sentence will sound wrong only to people who define software by the tools professional developers prefer.
+
+Physicians define software differently.
+
+Software is whatever carries logic from one moment to the next.
+
+By that definition, Excel has carried an enormous amount of clinical logic. It has helped departments track patients, calculate measures, summarize outcomes, coordinate research, and repair workflows that formal systems ignored.
+
+Excel works because it is immediate.
+
+Open a sheet. Add columns. Write a formula. Sort the list. Share the file.
+
+No deployment. No authentication layer. No database migration. No ticket to IT.
+
+For a physician-builder, that immediacy is powerful. It lets you externalize a workflow before you know whether the workflow deserves a real system. It lets you test the logic with real clinical pressure applied to it.
+
+That is why the first move should often be a spreadsheet.
+
+But the first move cannot always be the last move.
+
+## The Liability Line
+
+The Liability Line is the point where a spreadsheet stops being a working surface and starts becoming an unsafe container for clinical logic.
+
+It is crossed quietly.
+
+The formula becomes too long to inspect.
+
+The lookup table requires manual maintenance.
+
+Several people need simultaneous access.
+
+The output needs to connect to another system.
+
+The spreadsheet becomes the source of truth instead of a temporary working surface.
+
+None of these signals means the physician did something wrong.
+
+They mean the tool succeeded enough to become dangerous.
+
+That is the uncomfortable part. A spreadsheet usually becomes risky because it worked. People trusted it. The workflow formed around it. The output became part of clinical attention.
+
+Then the container lagged behind the responsibility.
+
+## The Formula Bar Is a Warning Light
+
+The formula bar is where many physician-built tools reveal their age.
+
+At first, the formula is readable.
+
+```text
+=IF(BMI>=30,"High risk","Routine")
+```
+
+Then the workflow grows.
+
+Gestational age matters. Prior history matters. Medication status matters. Race should not be used as a proxy. A missing value needs a visible failure, not a silent default. A local protocol changed last month. The risk category now needs three branches instead of two.
+
+The formula becomes a paragraph.
+
+The paragraph becomes a wall.
+
+The wall becomes clinical reasoning hidden inside punctuation.
+
+That is not sustainable.
+
+Long formulas hide reasoning. Hidden cells become hidden clinical assumptions. Manual edits create undocumented state. Copying a sheet creates a fork that looks identical until it is not.
+
+Medicine has enough hidden assumptions already.
+
+Clinical software should not add more.
+
+## Python Is Not a Badge. It Is a Boundary.
+
+The next move is not "learn Python" in the abstract.
+
+The next move is learning when clinical logic needs a real system.
+
+Python is useful because it creates a boundary around logic that Excel often leaves smeared across cells.
+
+The same idea that becomes opaque in a spreadsheet can become legible as code.
+
+```text
+=IF(AND(B2>=30,C2="Yes"),"Enhanced surveillance","Routine care")
+```
+
+That may be acceptable while the sheet is private.
+
+But in Python, the clinical decision can have a name.
+
+```python
+def surveillance_plan(bmi: float, prior_preeclampsia: bool) -> str:
+    if bmi >= 30 and prior_preeclampsia:
+        return "Enhanced surveillance"
+    return "Routine care"
+```
+
+The code is not automatically safer.
+
+It is safer only because it can now participate in better discipline.
+
+The function has a name. The inputs are explicit. The output is explicit. The file can be tracked in Git. The behavior can be tested. The change history can be reviewed. The next edit can be compared against the old one.
+
+This is why I wrote about [Python as the language of clinical data](/blog/physician-developer-stack-python) and [version control for physicians](/blog/github-for-physicians-why-version-control-changes-how-you-build). The tools matter because they give clinical logic a memory.
+
+Excel remembers the current state.
+
+Git remembers the history.
+
+That difference matters when a tool is guiding care.
+
+## The First Python Project Should Be Boring
+
+The first Python version should not be an app.
+
+That is where many physician-builders go wrong.
+
+They take a fragile spreadsheet and immediately imagine a dashboard, login system, database, deployment target, and polished interface. The scope becomes impressive. Then it becomes unfinished.
+
+Start smaller.
+
+Translate one spreadsheet into one script.
+
+Use clear inputs and outputs.
+
+Preserve the old spreadsheet as the comparison target.
+
+Run the same sample patients through both.
+
+Make the Python script boring enough that its correctness can be seen.
+
+The first milestone is not beauty.
+
+The first milestone is parity.
+
+If the spreadsheet calculates an estimated dosing category from five fields, the Python script should calculate the same category from the same five fields. If the spreadsheet flags a follow-up interval, the script should reproduce that flag. If the spreadsheet fails silently when a value is missing, the script should fail visibly.
+
+That is progress.
+
+Not because the script is more sophisticated.
+
+Because the clinical logic is now portable.
+
+## Manual Edits Are Clinical State
+
+One reason spreadsheets feel comfortable is that they allow direct manipulation.
+
+Click the cell. Change the value. Add a row. Override the output. Highlight the concern.
+
+That is sometimes useful during exploration.
+
+It is dangerous in a tool that other people trust.
+
+Manual edits become clinical state without an audit trail. A cell value changes and the reason disappears. A formula gets overwritten by a number. A column gets sorted without its companion column. A file is attached to an email, downloaded, edited, and reattached with the same name.
+
+The spreadsheet still opens.
+
+That does not mean the logic is intact.
+
+In clinical care, state matters. We care who changed the medication list. We care when the ultrasound finding appeared. We care whether the platelet count came before or after the blood pressure spike.
+
+Clinical software deserves the same respect.
+
+Version control is not a developer hobby. It is the audit trail that says what changed, when it changed, and why someone believed the change was appropriate.
+
+## The Real Transition Is Cognitive
+
+The movement from Excel to Python is not primarily technical.
+
+It is cognitive.
+
+The physician stops thinking in cells.
+
+The physician starts thinking in systems.
+
+A cell asks, "What value belongs here?"
+
+A system asks, "What are the inputs, what are the rules, what should happen when the input is missing, and how will I know if this breaks later?"
+
+That is a different posture.
+
+It is the posture of a physician-developer.
+
+The point is not to abandon spreadsheets. They remain useful. They remain fast. They remain one of the best ways to sketch a clinical workflow.
+
+The point is to stop pretending that every working spreadsheet can safely remain a spreadsheet.
+
+When the logic becomes too important, it needs a better container.
+
+The spreadsheet was not a mistake.
+
+Leaving clinical logic trapped inside it would be.

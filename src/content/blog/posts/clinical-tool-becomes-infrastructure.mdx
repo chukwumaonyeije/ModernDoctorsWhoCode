@@ -1,0 +1,219 @@
+---
+title: "The Moment a Clinical Tool Becomes Infrastructure"
+description: "A short introduction to a DoctorsWhoCode series on spreadsheets, tests, and retrieval as the basic discipline of physician-built clinical software."
+pubDate: "2026-05-28"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Development"
+tags:
+  - "doctors-who-code"
+  - "physician-developer"
+  - "clinical-software"
+  - "testing"
+  - "python"
+  - "rag"
+  - "clinical-ai"
+draft: false
+featured: true
+featuredRank: 5000
+image:
+  url: /images/posts/clinical-tool-becomes-infrastructure-hero.jpeg
+  alt: A small clinical tool becoming the foundation of larger infrastructure, dark navy and cyan
+readingTime: 7
+---
+
+The first clinical tool usually does not announce itself as software.
+
+It is an Excel sheet on a shared drive.
+
+It is a dosing calculator copied from one laptop to another.
+
+It is a protocol summary pasted into a note because the official document is too slow to find during clinic.
+
+Nobody calls it infrastructure at first.
+
+It is a workaround. A private repair. A small act of clinical self-defense against a system that made the useful thing harder than it needed to be.
+
+Then someone else uses it.
+
+That is the moment the work changes.
+
+The tool may still look small. The spreadsheet may still have three tabs. The calculator may still fit on one screen. The protocol assistant may still be a collection of Markdown notes in a folder.
+
+But the clinical meaning has changed.
+
+Someone now trusts it.
+
+That trust creates an obligation the original prototype did not have.
+
+## The Workaround Becomes the Source
+
+Clinical software rarely begins as software.
+
+It begins as clinical logic under pressure.
+
+A fellow needs a cleaner way to track antenatal testing indications. An attending needs a faster way to calculate a dosing range. A resident needs to stop searching through three PDFs every time a protocol question comes up on labor and delivery.
+
+The first version is usually crude because the first version is trying to prove that the logic has value.
+
+That is appropriate.
+
+Excel is often the right first move. A spreadsheet makes hidden clinical logic visible. It lets a physician externalize a workflow, inspect it, revise it, and share it before a full application exists. In many departments, the spreadsheet is the first honest map of a broken process.
+
+But visibility is not reliability.
+
+A formula can be visible and still be wrong. A lookup table can be editable and still be stale. A protocol summary can be readable and still be out of date. A language model can sound fluent and still be institutionally false.
+
+This is where physician-developers need a different kind of judgment.
+
+Not just clinical judgment.
+
+Architecture judgment.
+
+## The Container Test
+
+Every clinical tool lives inside a container.
+
+A spreadsheet is a container.
+
+A Python script is a container.
+
+A web application is a container.
+
+A retrieval system is a container.
+
+The question is not whether the container is impressive. The question is whether it matches the clinical responsibility carried by the tool.
+
+That is the Container Test.
+
+A clinical tool has outgrown its container when more than one person depends on it.
+
+It has outgrown its container when the logic is too complex to audit by sight.
+
+It has outgrown its container when the output affects clinical attention, documentation, counseling, triage, dosing, surveillance, follow-up, or referral.
+
+It has outgrown its container when the source knowledge changes faster than the tool can be manually maintained.
+
+This test is intentionally plain.
+
+It is not a maturity model. It is not an enterprise governance framework. It is the question a physician-builder should ask before a private workaround becomes a clinical habit for other people.
+
+The tool does not need to be connected to the EHR to matter.
+
+It matters when it begins shaping attention.
+
+## I. The Spreadsheet Was the First Prototype
+
+Physicians should not be embarrassed by spreadsheets.
+
+Spreadsheets are often the first place clinical logic becomes inspectable.
+
+Before the spreadsheet, the workflow may live in memory. It may live in one attending's head. It may live in a laminated card, a stale PDF, or a sequence of steps that everyone performs slightly differently.
+
+The spreadsheet forces the logic into rows, columns, thresholds, categories, and outputs.
+
+That is useful.
+
+It is also dangerous to mistake useful for durable.
+
+The formula bar has a ceiling. The hidden cell has a cost. The manual edit becomes undocumented state. The shared copy becomes a fork. The version saved to the desktop becomes a local truth that no one else can audit.
+
+I wrote about Python as part of the physician-developer stack because Python is not merely a language for people who want to sound technical. It is a way to move clinical logic into named functions, versioned files, and testable behavior. The transition from spreadsheet to code is not about prestige.
+
+It is about containment.
+
+The logic needs a container that can remember what changed.
+
+## II. The Calculator Is Where Responsibility Starts
+
+A calculator feels small because the interface is small.
+
+One input. One button. One output.
+
+That simplicity can be misleading.
+
+A calculator is a clinical argument compressed into a user interface. It decides which inputs matter. It decides how thresholds behave. It decides what is excluded, rounded, converted, categorized, or flagged.
+
+The risk is not the interface.
+
+The risk is the decision it shapes.
+
+A gestational-age threshold that handles 23 weeks and 6 days differently from 24 weeks and 0 days is not just arithmetic. A BMI category that changes a dosing recommendation is not just a label. A default unit that assumes kilograms when the user entered pounds is not a cosmetic bug.
+
+That is why testing belongs in clinical software from the beginning.
+
+Testing is not developer theater.
+
+It is a way of writing down what must remain true after the tool changes.
+
+Physicians already understand this pattern. We verify protocols. We check units. We review edge cases. We ask what happens at the boundary. We build safeguards around the places where a mundane error can look clinically normal.
+
+Code deserves the same discipline.
+
+Especially code built by physicians.
+
+Especially code modified by AI.
+
+## III. The Knowledge Base Has a Half-Life
+
+Clinical knowledge does not stay still.
+
+Some knowledge is bedrock. Anatomy changes slowly. Physiology changes slowly. The structure of a consultation note changes slowly.
+
+Other knowledge moves quickly.
+
+Protocols change. Formularies change. Referral pathways change. Ultrasound workflows change. Prior authorization rules change. Local practice changes after one departmental meeting and one revised PDF.
+
+A model can sound current while being locally wrong.
+
+That is the danger.
+
+The failure is not always hallucination in the dramatic sense. Sometimes the answer is generally plausible and locally unusable. Sometimes the model knows the medical concept but not your hospital's implementation. Sometimes it knows the guideline but not the way your department operationalized it.
+
+This is why retrieval is clinical infrastructure.
+
+Retrieval-augmented generation is not decoration around a chatbot. It is the mechanism by which current, local, auditable knowledge reaches the point of care. A department protocol assistant that cannot show the source, date, section, and uncertainty behind an answer is not ready for workflow trust.
+
+The model is not enough.
+
+The knowledge layer must be maintained.
+
+## IV. The Physician-Developer Obligation
+
+Physician-developers sit in an uncomfortable but necessary position.
+
+We see the clinical salience of small tools.
+
+We also see their technical fragility.
+
+That combination creates responsibility.
+
+The obligation is not to build everything. Most clinical workarounds should remain small. Some should remain private. Some should die after proving that the workflow itself needs repair.
+
+The obligation is to know when the tool has crossed the line from private helper to shared infrastructure.
+
+When that happens, usefulness is no longer enough.
+
+The spreadsheet needs a migration path.
+
+The calculator needs tests.
+
+The protocol assistant needs retrieval, provenance, and source freshness.
+
+The human checkpoint must remain where clinical judgment belongs.
+
+This series is about that transition.
+
+From spreadsheet thinking to Python.
+
+From calculators to tests.
+
+From static model answers to grounded retrieval.
+
+Not because physicians need to become professional software engineers before they begin.
+
+Because the responsibility arrives earlier than most builders expect.
+
+The tool does not become safer because it is useful.
+
+It becomes safer when its architecture catches up to its clinical importance.
