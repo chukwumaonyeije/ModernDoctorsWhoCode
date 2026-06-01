@@ -1,0 +1,177 @@
+---
+title: "The Search Box Is Disappearing"
+description: "Medicine is moving from retrieval to synthesis. That changes the physician's work from finding information to judging synthesized information under clinical pressure."
+pubDate: "2026-06-01"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - "clinical-ai"
+  - "medical-informatics"
+  - "physician-developer"
+  - "evidence-based-medicine"
+  - "large-language-models"
+  - "doctors-who-code"
+draft: false
+featured: false
+readingTime: 7
+image:
+  url: "/images/posts/the-search-box-is-disappearing-hero.png"
+  alt: "Clinical workstation showing a disappearing search field becoming structured evidence cards and human review checkpoints."
+---
+
+I used to open UpToDate with a clinical question already half-formed in my head.
+
+Not a broad question.
+
+A narrow one.
+
+A dosing edge case. A surveillance interval. A contraindication hiding in the details. A threshold from a guideline that I knew existed but could not quite recall while the patient was still in the room.
+
+The search box was never the work.
+
+The work was knowing what to ask.
+
+That distinction matters more now than it did ten years ago, because the search box is starting to disappear.
+
+In a recent *NEJM AI* editorial, Jeffrey Drazen and Charlotte Haug describe medicine as an information enterprise. The phrase is simple and correct. Clinicians gather data, combine it with prior knowledge, consult external sources, and make decisions for a particular patient in front of them.
+
+That has always been medicine.
+
+What has changed is the interface.
+
+## I. From Retrieval to Synthesis
+
+For most of modern medicine, clinical information has been a retrieval problem.
+
+The journal arrived. The textbook sat on the shelf. The index pointed to a chapter. PubMed returned citations. UpToDate summarized the literature. The clinician still had to search, scan, compare, and translate.
+
+The internet improved access. It did not remove the work.
+
+Every practicing physician knows this. The answer may be available somewhere, but availability is not the same as clinical usefulness. A guideline PDF is available. A table buried on page 41 is available. A randomized trial abstract is available. A specialty society update is available.
+
+None of that means the answer is available at the point of care.
+
+The NEJM AI editorial names the new shift clearly. Large language models move medicine from retrieval to synthesis.
+
+The model does not merely return a list of sources.
+
+It produces an answer.
+
+It takes the question, the context, and the corpus it has access to, then returns organized language.
+
+That is a different category of tool.
+
+It is also a different category of risk.
+
+## II. The Old Skill Is Not Obsolete
+
+It is tempting to think that if a system can synthesize information, the clinician no longer needs the old search skill.
+
+That is wrong.
+
+The skill is not disappearing. It is moving upstream.
+
+When I searched manually, I had to decide what question to ask, which source to trust, which date mattered, which patient-specific fact changed the interpretation, and when the evidence did not fit the case.
+
+Those same decisions still exist.
+
+They are just hidden behind a smoother interface.
+
+A language model can make the retrieval process feel finished before the clinician has done the necessary clinical work. It can return a paragraph that sounds organized, complete, and current. It can collapse uncertainty into prose. It can make the absence of sourcing feel like a style choice rather than a safety problem.
+
+That is the danger of synthesis.
+
+Not that it is useless.
+
+That it feels usable before it has been examined.
+
+## III. The Question Layer
+
+The physician-developer should pay attention to the layer before the answer.
+
+I call this the question layer.
+
+The question layer is the part of the system where clinical intent is formed, constrained, and translated into something a machine can act on. It includes the patient context, the clinical scenario, the uncertainty, the required level of evidence, and the acceptable form of the answer.
+
+A vague prompt produces a vague synthesis.
+
+A clinically precise query produces something better.
+
+There is a meaningful difference between asking:
+
+"What do I do for fetal growth restriction?"
+
+and asking:
+
+"In a singleton pregnancy at 31 weeks with estimated fetal weight below the 3rd percentile, normal umbilical artery Dopplers, no preeclampsia, and reassuring antenatal testing, what surveillance and delivery timing are recommended by current SMFM guidance?"
+
+The second question is not just longer. It is clinically structured. It carries the facts that change the answer. It constrains the evidence base. It asks for a guideline-level response rather than a general explanation.
+
+The physician is still doing the work.
+
+The work has moved from searching after the question to specifying before synthesis.
+
+## IV. The Physician as Specification Writer
+
+This is where the physician-developer has an advantage.
+
+Software has always punished vague requirements. Clinical AI will do the same thing, only with more polished language and higher stakes.
+
+A good clinical system needs specifications. It needs to know what counts as a valid source. It needs dates. It needs specialty context. It needs patient constraints. It needs to distinguish guidelines from review articles, randomized trials from editorials, and durable anatomy from provisional criteria.
+
+This is not prompt engineering in the shallow sense.
+
+This is clinical specification.
+
+The physician who can write a clear clinical specification has a different relationship to AI than the physician who asks a chatbot for help. One is consuming language. The other is designing the conditions under which language can be trusted enough to enter a workflow.
+
+That is the difference that matters.
+
+The search box is disappearing, but the need for clinical structure is increasing.
+
+## V. What We Should Build
+
+The right response is not to preserve the old search interface out of nostalgia.
+
+The right response is to build systems that make the question layer visible.
+
+A clinical LLM tool should show the assumptions behind the query. It should display the patient facts it used. It should identify the sources it searched. It should separate guideline recommendations from model inference. It should make uncertainty explicit. It should allow the physician to revise the question before accepting the answer.
+
+That is not friction.
+
+That is the human checkpoint.
+
+The checkpoint does not belong only at the end, when the model has already generated a polished response. It belongs at the beginning, where clinical intent enters the system.
+
+If the physician does not shape the question, the model will shape the answer around whatever it thinks the question means.
+
+That is not clinical decision support.
+
+That is autocomplete wearing a white coat.
+
+## VI. The New Scarce Skill
+
+Medicine has always depended on information. Drazen and Haug are right about that.
+
+But medicine has never been only information.
+
+It is information under constraint. Information under time pressure. Information filtered through anatomy, physiology, patient values, available resources, and the uncomfortable fact that the patient in front of you is never a perfect match for the patient in the study.
+
+LLMs can help with the information burden.
+
+They cannot remove the clinical burden.
+
+The new scarce skill is not memorizing every answer. It is not typing better prompts. It is the ability to convert clinical reality into precise specifications, then judge the synthesized answer before it becomes part of care.
+
+The physician who treats AI as a better search box will get better search.
+
+The physician-developer who treats AI as clinical infrastructure will build safer pathways through the evidence.
+
+The search box is disappearing.
+
+The obligation to ask well is not.
+
+---
+
+*This is part one of the "Medicine as Information Infrastructure" series, responding to Drazen and Haug's NEJM AI editorial, "Medicine as an Information Industry in the Age of Language Models" (DOI: [10.1056/AIe2600526](https://doi.org/10.1056/AIe2600526)).*

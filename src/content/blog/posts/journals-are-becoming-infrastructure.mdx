@@ -1,0 +1,205 @@
+---
+title: "Journals Are Becoming Infrastructure"
+description: "Medical journals are no longer only read by clinicians. They are becoming upstream inputs to AI systems. That makes provenance, evidence hierarchy, and distribution part of clinical infrastructure."
+pubDate: "2026-06-01"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - "medical-journals"
+  - "clinical-ai"
+  - "evidence-infrastructure"
+  - "physician-developer"
+  - "medical-informatics"
+  - "doctors-who-code"
+draft: false
+featured: false
+readingTime: 8
+image:
+  url: "/images/posts/journals-are-becoming-infrastructure-hero.png"
+  alt: "Medical journals and archival papers feeding a digital evidence pipeline with citation chains and provenance markers."
+---
+
+In 1812, a medical journal moved by horseback.
+
+In 2026, the same kind of knowledge moves through a model weight, an API call, and a sentence that may never show its source.
+
+That is not a publishing problem.
+
+It is an infrastructure problem.
+
+Drazen and Haug make a quiet but important observation in their *NEJM AI* editorial. Medical journals have long served as curators of validated knowledge. They reviewed, selected, edited, published, and preserved information for clinicians.
+
+That role still matters.
+
+But journals are now becoming something else.
+
+They are becoming upstream inputs to AI systems.
+
+## I. The Old Pathway
+
+The old pathway was visible.
+
+Investigator to manuscript. Manuscript to peer review. Peer review to journal. Journal to physician. Physician to patient.
+
+The pathway was imperfect.
+
+Slow. Uneven. Biased by access, subscription models, institutional privilege, and the ordinary limits of time.
+
+But the pathway was visible enough to inspect.
+
+You could hold the journal. You could see the article. You could read the methods. You could check the references. You could ask whether the study population matched your patient. You could disagree with the authors and still know where the argument came from.
+
+That visibility is part of clinical safety.
+
+The internet changed the speed of distribution, but it did not fundamentally hide the pathway. PubMed returned citations. Journal websites displayed abstracts. Guidelines linked to evidence tables. The physician still moved through visible layers of knowledge.
+
+Large language models change that.
+
+They can ingest, summarize, repackage, and redistribute medical knowledge without preserving the original shape of the evidence.
+
+The pathway becomes harder to see.
+
+## II. The New Pathway
+
+The new pathway looks different.
+
+Journal to corpus. Corpus to model. Model to interface. Interface to clinician. Clinician to patient.
+
+Sometimes there is retrieval. Sometimes there is fine-tuning. Sometimes there is a proprietary pipeline no practicing physician can inspect. Sometimes the output includes citations. Sometimes the citation is decorative rather than load-bearing. Sometimes the system answers from training data that may already be out of date.
+
+This is the part of the AI conversation in medicine that still feels underdeveloped.
+
+We talk about model performance.
+
+We talk about hallucination.
+
+We talk about whether clinicians will use the tools.
+
+We spend less time talking about the knowledge supply chain.
+
+That is a mistake.
+
+If medicine is an information enterprise, then the pathway by which information becomes clinical language is part of care.
+
+## III. Evidence Has a Supply Chain
+
+Every clinical answer has a supply chain.
+
+Someone generated the data. Someone analyzed it. Someone wrote it. Someone reviewed it. Someone published it. Someone indexed it. Someone summarized it. Someone turned it into a recommendation. Someone placed it in front of a physician.
+
+AI adds new steps.
+
+Someone selected the corpus. Someone parsed the documents. Someone chunked the text. Someone embedded the content. Someone designed the retrieval logic. Someone chose the model. Someone wrote the system prompt. Someone decided whether citations would be required. Someone decided what the interface would hide.
+
+Those are clinical decisions even when they are made by engineers.
+
+They shape what the physician sees.
+
+They shape what the physician misses.
+
+That is why journals are becoming infrastructure.
+
+Their work no longer ends when a physician reads an article.
+
+Their work may now feed systems that synthesize answers for thousands of clinicians who never touch the original paper.
+
+The journal has become part of the stack.
+
+## IV. Provenance Is a Clinical Feature
+
+Provenance is usually discussed like a documentation preference.
+
+It is more than that.
+
+Provenance is a clinical feature.
+
+When a model tells me a recommendation, I need to know where the recommendation came from. Not as an academic courtesy. As a safety requirement.
+
+Was it drawn from a current guideline?
+
+Was it inferred from a review article?
+
+Was it based on a study population that excludes the patient in front of me?
+
+Was it trained into the model two years ago and never updated?
+
+Was it retrieved from a source with a clear evidence hierarchy?
+
+Without provenance, the physician is forced to evaluate language without a chain of custody.
+
+That is unacceptable in clinical care.
+
+We would not accept a lab value without knowing the specimen source. We would not accept an ultrasound image without knowing the patient, date, and anatomy. We would not accept a medication order with no prescriber.
+
+We should not accept clinical synthesis with no provenance.
+
+## V. The Evidence Interface
+
+The next generation of clinical tools will need a better evidence interface.
+
+Not just a chat window.
+
+An evidence interface.
+
+It should show the answer. It should show the sources. It should separate guideline statements from model synthesis. It should display publication dates and update dates. It should make conflicts visible. It should indicate when evidence is old, weak, indirect, or not applicable to the patient context.
+
+It should also show what was not found.
+
+Absence matters in medicine.
+
+If the system cannot find a current guideline, the physician should know that. If the evidence is limited to expert opinion, the physician should know that. If the answer depends on extrapolation from a nonpregnant population, the physician should know that.
+
+An answer without that context is not enough.
+
+It may be useful as a draft.
+
+It is not yet clinical infrastructure.
+
+## VI. What Journals Should Become
+
+Journals should not respond to AI by thinking only about copyright or content licensing.
+
+Those questions matter. They are not the whole problem.
+
+The deeper issue is whether validated medical knowledge can survive translation into machine-mediated clinical workflows without losing its evidentiary structure.
+
+That means journals need to think like infrastructure.
+
+Structured abstracts should be machine-readable. Evidence tables should be extractable. Guideline links should be durable. Corrections and retractions should propagate through downstream systems. Article metadata should support provenance. Recommendations should carry evidence grades in a form that software can preserve.
+
+This is not a request for journals to become software companies.
+
+It is a recognition that medical publishing now touches software whether it wants to or not.
+
+The PDF was built for human reading.
+
+The clinical AI era needs evidence that can be read by humans and handled safely by machines.
+
+## VII. What Physicians Should Build
+
+The physician-developer should not wait for the entire publishing industry to solve this.
+
+We can build at the edges now.
+
+We can build retrieval systems that cite sources by default. We can build clinical tools that expose the evidence layer. We can build workflows that distinguish source text from synthesis. We can reject interfaces that make the answer more visible than the reasoning. We can preserve the chain of custody from article to recommendation.
+
+This is not glamorous work.
+
+It is table stakes.
+
+If a system cannot tell me how it knows, it has not earned a place in clinical care.
+
+The question is not whether journals will matter in the age of language models. They will matter more. But their role will change. They will not only publish knowledge for clinicians to read. They will help determine what AI systems can safely say.
+
+That makes journals part of the clinical stack.
+
+And once something becomes part of the clinical stack, physicians who build have a responsibility to understand it.
+
+Knowledge does not become safer because it moves faster.
+
+It becomes safer when its pathway remains visible.
+
+---
+
+*This is part three of the "Medicine as Information Infrastructure" series, following [The Search Box Is Disappearing](/blog/the-search-box-is-disappearing) and [Fluent Answers Are Not Clinical Judgment](/blog/fluent-answers-are-not-clinical-judgment). The series responds to Drazen and Haug's NEJM AI editorial, "Medicine as an Information Industry in the Age of Language Models" (DOI: [10.1056/AIe2600526](https://doi.org/10.1056/AIe2600526)).*
