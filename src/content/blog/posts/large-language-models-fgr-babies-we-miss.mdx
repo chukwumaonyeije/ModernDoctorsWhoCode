@@ -1,0 +1,287 @@
+---
+title: "Clinical AI Should Help Us Find the Growth Restriction Cases We Miss"
+description: "Fetal growth restriction is not just an ultrasound diagnosis. It is a longitudinal data problem. Clinical AI will not replace MFM judgment, but it can help surface the pregnancies whose risk is already visible in the record."
+pubDate: 2026-06-07
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - "fetal-growth-restriction"
+  - "large-language-models"
+  - "clinical-ai"
+  - "maternal-fetal-medicine"
+  - "physician-developer"
+  - "clinical-decision-support"
+  - "placental-insufficiency"
+  - "doctors-who-code"
+draft: false
+featured: true
+featuredRank: 7000
+readingTime: 9
+image:
+  url: "/images/posts/clinical-ai-growth-restriction-hero.jpeg"
+  alt: "Clinical AI fetal growth restriction surveillance interface with ultrasound and longitudinal pregnancy data."
+---
+
+On a busy ultrasound day, fetal growth restriction does not arrive as a diagnosis.
+
+It arrives as fragments.
+
+A patient with chronic hypertension. A prior pregnancy complicated by preeclampsia. A biometric pattern that still clears the tenth percentile but no longer looks like itself. An umbilical artery Doppler that is technically normal but moving in the wrong direction. A referral that arrives two visits later than it should have.
+
+None of those facts is dramatic by itself.
+
+Together, they are the beginning of placental disease.
+
+The problem is that clinical systems are not built to see them together.
+
+That is where large language models become interesting.
+
+Not as fetal growth restriction experts.
+
+As longitudinal attention systems.
+
+## I. FGR Is a Detection Problem Before It Is a Management Problem
+
+Once fetal growth restriction is clearly present, the management pathway is familiar.
+
+We measure estimated fetal weight. We review abdominal circumference. We classify severity. We follow the umbilical artery Doppler. We decide whether the pregnancy belongs in routine surveillance, intensified testing, hospitalization, corticosteroids, magnesium sulfate, or delivery.
+
+The [SMFM Consult Series #52 guidance](https://publications.smfm.org/publications/289-society-for-maternal-fetal-medicine-consult-series-52/) gives clinicians a usable management scaffold. Estimated fetal weight or abdominal circumference below the tenth percentile defines FGR. Umbilical artery Doppler status helps determine surveillance intensity and delivery timing. Reversed end-diastolic velocity is not the same disease state as a normally grown fetus with a normal Doppler. [3]
+
+That distinction matters.
+
+But the harder clinical problem often begins before the diagnosis is clean.
+
+The fetus is not yet below the tenth percentile. The interval growth has slowed. The maternal disease burden is high. The aspirin opportunity may have passed. The Doppler is not abnormal enough to trigger an alert, but the pattern is no longer reassuring.
+
+That is why the definition of growth restriction has become more than a percentile. The Delphi consensus separated the constitutionally small fetus from the fetus that is failing its own growth potential. FIGO then pushed the field toward a broader diagnostic frame: size, growth velocity, and evidence of placental dysfunction belong together. [1,2]
+
+This is clinically correct.
+
+It is also operationally harder.
+
+This is the detection gap.
+
+The detection gap is the distance between risk that is already visible in the record and risk that has become visible enough for the workflow to notice.
+
+Fetal growth restriction lives in that gap more often than we admit.
+
+## II. The Record Already Knows More Than the Workflow Uses
+
+A modern MFM practice generates a large amount of structured and unstructured data.
+
+Maternal age. Body mass index. Chronic hypertension. Diabetes. Prior preeclampsia. Prior fetal growth restriction. Assisted reproductive technology. Smoking history. Blood pressure trajectories. Baseline labs. Ultrasound biometrics. Growth velocity. Amniotic fluid. Umbilical artery Dopplers. Antenatal testing. Delivery outcomes.
+
+Those data points do not live in one place.
+
+Some live in the referral note. Some live in the ultrasound report. Some live in the EHR problem list. Some live in scanned records. Some live in a dictated paragraph. Some live in the memory of the physician who saw the patient last time.
+
+That is not a knowledge problem.
+
+It is an interface problem.
+
+Physicians are asked to maintain continuity across systems that do not preserve continuity for us.
+
+Large language models can help because they are unusually good at extracting meaning from messy clinical text and connecting it to structured data. That does not make them clinicians. It makes them useful plumbing.
+
+The distinction matters.
+
+An LLM should not decide whether a pregnancy is growth restricted.
+
+It can identify that the patient has chronic hypertension, a prior FGR pregnancy, missed aspirin prophylaxis, a declining abdominal circumference percentile, and no scheduled follow-up growth study.
+
+That is not diagnosis.
+
+That is clinical signal retrieval.
+
+The aspirin example is the cleanest one.
+
+A patient at 14 weeks with chronic hypertension and a prior growth-restricted pregnancy is not just a risk factor list. She is a closing window. Low-dose aspirin is most useful when the right patient is identified early enough for placentation to still be influenced. The ASPRE trial made that timing problem hard to ignore. [5]
+
+The clinical AI task is not to debate aspirin.
+
+The task is to make sure the patient does not pass through the window unnoticed.
+
+## III. The Model Should Work Below the Level of Judgment
+
+The safest use of large language models in FGR surveillance is below the level of final clinical judgment.
+
+Not "Does this patient have placental insufficiency?"
+
+Better questions are more concrete.
+
+- Which patients meet criteria for aspirin prophylaxis but do not have aspirin documented?
+- Which pregnancies have declining growth velocity despite an estimated fetal weight above the tenth percentile?
+- Which patients with chronic hypertension have no third-trimester growth study scheduled?
+- Which ultrasound reports show worsening umbilical artery Doppler categories over time?
+- Which referrals arrive after the first abnormal growth pattern was already visible elsewhere?
+
+These are not replacement questions.
+
+They are retrieval questions.
+
+They ask the model to find what the clinician should review, not to become the clinician.
+
+I think of this as the review queue model.
+
+A review queue model does not generate a final answer. It builds a ranked queue of pregnancies that deserve human attention. It exposes the reason each pregnancy entered the queue. It links back to the source data. It lets the MFM physician accept, reject, or revise the signal.
+
+That architecture respects the work.
+
+The physician keeps judgment.
+
+The model reduces missed attention.
+
+## IV. Deterministic First, Probabilistic Second
+
+This is where clinical AI systems need discipline.
+
+Some parts of FGR surveillance are probabilistic. A note has to be read. A scanned outside record has to be interpreted. A risk factor has to be extracted from a paragraph written by someone who was not thinking about data structure.
+
+A language model is useful there.
+
+Other parts are deterministic. A delivery window tied to umbilical artery Doppler category is not a prose problem. It is a rule. A surveillance interval is not a paragraph. It is a table.
+
+That belongs in code.
+
+I think of this as the two-engine rule.
+
+Use the probabilistic engine to find and structure the clinical signal.
+
+Use the deterministic engine to apply the guideline.
+
+Do not reverse them.
+
+A model can read the record and surface the patient whose abdominal circumference has crossed downward while the estimated fetal weight still clears the tenth percentile. A rules engine can then apply the surveillance and delivery logic from SMFM and ACOG. [3,4]
+
+That line matters because FGR decisions are reviewable decisions.
+
+If a case goes to peer review, no one wants to hear that a model seemed confident. They need to know which measurement, which Doppler category, which guideline version, and which rule produced the recommendation.
+
+The output has to be traceable.
+
+That is the difference between clinical AI and a demo.
+
+## V. Population Surveillance Is the Unfinished Work
+
+Individual FGR management is only one layer.
+
+The larger opportunity is population surveillance.
+
+A high-volume MFM practice may perform tens of thousands of ultrasound examinations each year. Inside those studies are patterns no individual physician can hold in memory.
+
+Which clinic diagnoses FGR earliest?
+
+Which referral source sends patients latest?
+
+Which patients repeatedly miss the window for aspirin prophylaxis?
+
+Which maternal risk profiles progress from small-for-gestational-age to pathologic FGR?
+
+Which Doppler trajectories precede NICU admission?
+
+These are quality questions.
+
+They are also build questions.
+
+In metropolitan Atlanta, this matters because the risk is not evenly distributed. Chronic hypertension, diabetes, obesity, delayed entry to prenatal care, and fragmented access do not arrive randomly. They cluster by geography, insurance status, and structural disadvantage.
+
+If a surveillance system improves the average while leaving the highest-risk patients last in line, it has failed the clinical problem.
+
+The traditional healthcare analytics stack is poorly suited for them because the clinically important facts are split across notes, ultrasound reports, scheduling data, and delivery outcomes. A dashboard can count diagnoses after they exist. It is much weaker at identifying the clinical narrative before the label appears.
+
+Large language models can help bridge that gap.
+
+They can turn paragraphs into variables. They can summarize trajectories. They can flag discordance between the plan and the guideline. They can identify patients whose risk is distributed across several documents instead of one clean field.
+
+That is where the physician-developer has an advantage.
+
+The point is not to ask a vendor for a generic AI module.
+
+The point is to define the clinical question precisely enough that the system can be tested.
+
+## VI. The Human Checkpoint Is the Safety Feature
+
+Any FGR surveillance system built with large language models needs a human checkpoint by design.
+
+The model should show its work.
+
+It should identify the data elements that triggered concern. It should separate documented facts from inferred patterns. It should link to the source note, report, or measurement. It should make uncertainty visible.
+
+If it cannot do that, it does not belong near clinical care.
+
+This is especially important because fetal growth restriction is not one disease. A constitutionally small fetus, an aneuploid fetus, a fetus affected by infection, and a fetus with placental insufficiency can all appear small on an ultrasound report. The management implications are not interchangeable.
+
+SMFM also cautions against using certain Doppler measures, including middle cerebral artery, ductus venosus, and uterine artery Dopplers, for routine clinical management of early- or late-onset FGR. [3]
+
+That matters for AI systems.
+
+A model that blindly treats every available measurement as equally actionable will create noise.
+
+A useful model has clinical guardrails.
+
+It knows which signals belong in routine management, which belong in selected contexts, and which should simply prompt physician review.
+
+The more severe the growth restriction, the more this matters.
+
+The TRUFFLE data remind us that early severe FGR is not an abstract data problem. It is a timing problem with neonatal and neurodevelopmental consequences. [6]
+
+That is why the human checkpoint is not decorative.
+
+It is the safety feature.
+
+## VII. From Prompting to Infrastructure
+
+The weak version of this work is a prompt.
+
+Paste the note. Ask whether the patient is at risk. Read the answer. Decide whether to trust it.
+
+That is not enough.
+
+FGR surveillance needs infrastructure.
+
+It needs scheduled ingestion of ultrasound reports. It needs structured extraction of fetal biometry, Doppler category, maternal risk factors, and follow-up plans. It needs source-linked summaries. It needs versioned rules. It needs an audit trail. It needs clinician review. It needs outcomes feedback.
+
+It also needs validation.
+
+Not a vibes-based validation.
+
+A labeled chart set. Field-level precision and recall. Boundary testing for Doppler categories. Unit tests for every delivery-timing branch. A failure mode for missing data that stops the system instead of filling in the blank.
+
+Clinical AI should fail closed.
+
+This is why physicians cannot limit themselves to advising software teams from the conference room.
+
+The clinical question is too specific.
+
+The failure mode is too subtle.
+
+The workflow has to be built by someone who knows what it feels like to review the growth chart, read the Doppler report, answer the referring physician, and decide whether the patient needs to be seen again in one week or delivered tonight.
+
+That is not product feedback.
+
+That is architecture.
+
+## VIII. The Work Ahead
+
+The next major advance in fetal growth restriction may not come from collecting one more measurement.
+
+It may come from using the information we already collect with more discipline.
+
+Large language models will not make fetal growth restriction simple. They should not try.
+
+Their better role is quieter.
+
+Find the pregnancies whose risk is already present.
+
+Bring them back to the physician before the placenta declares itself too late.
+
+## References
+
+1. Gordijn SS, Beune IM, Thilaganathan B, et al. [Consensus definition of fetal growth restriction: a Delphi procedure](https://pubmed.ncbi.nlm.nih.gov/26909664/). *Ultrasound Obstet Gynecol*. 2016;48(3):333-339.
+2. Melamed N, Baschat A, Yinon Y, et al. [FIGO initiative on fetal growth: best practice advice for screening, diagnosis, and management of fetal growth restriction](https://pubmed.ncbi.nlm.nih.gov/33740264/). *Int J Gynaecol Obstet*. 2021;152(Suppl 1):3-57.
+3. Martins JG, Biggio JR, Abuhamad A; Society for Maternal-Fetal Medicine. [SMFM Consult Series #52: Diagnosis and management of fetal growth restriction](https://publications.smfm.org/publications/289-society-for-maternal-fetal-medicine-consult-series-52/). *Am J Obstet Gynecol*. 2020;223(4):B2-B17.
+4. American College of Obstetricians and Gynecologists. [Fetal Growth Restriction. ACOG Practice Bulletin No. 227](https://publications.smfm.org/publications/375-acog-practice-bulletin-227-fetal-growth-restriction/). *Obstet Gynecol*. 2021;137(2):e16-e28.
+5. Rolnik DL, Wright D, Poon LC, et al. [Aspirin versus placebo in pregnancies at high risk for preterm preeclampsia](https://pubmed.ncbi.nlm.nih.gov/28657417/). *N Engl J Med*. 2017;377(7):613-622.
+6. Lees CC, Marlow N, van Wassenaer-Leemhuis A, et al; TRUFFLE Study Group. [2 year neurodevelopmental and intermediate perinatal outcomes in infants with very preterm fetal growth restriction (TRUFFLE): a randomised trial](https://pubmed.ncbi.nlm.nih.gov/25747582/). *Lancet*. 2015;385(9983):2162-2172.
