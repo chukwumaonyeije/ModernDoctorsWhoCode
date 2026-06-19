@@ -14,6 +14,9 @@ import {
   AUTHOR_X_URL,
   AUTHOR_BLUESKY_URL,
   AUTHOR_GITHUB_URL,
+  AUTHOR_EMORY_URL,
+  AUTHOR_PIEDMONT_URL,
+  AUTHOR_DOXIMITY_URL,
   CODECRAFTMD_URL,
   OPENMFM_URL,
   TWITTER_HANDLE,
@@ -31,6 +34,7 @@ interface Props {
   updatedDate?: Date;
   articleSchema?: object | object[];
   noIndex?: boolean;
+  includeSiteTitle?: boolean;
 }
 
 const {
@@ -43,13 +47,14 @@ const {
   updatedDate,
   articleSchema,
   noIndex = false,
+  includeSiteTitle = true,
 } = Astro.props;
 
-const fullTitle = `${title} | ${SITE_TITLE}`;
+const fullTitle = includeSiteTitle ? `${title} | ${SITE_TITLE}` : title;
 const ogImageAbsolute = ogImage.startsWith('http') ? ogImage : `${SITE_URL}${ogImage}`;
 const websiteId = `${SITE_URL}/#website`;
 const organizationId = `${SITE_URL}/#organization`;
-const personId = `${SITE_URL}/about#person`;
+const personId = `${SITE_URL}/chukwuma-onyeije#person`;
 const pageId = `${canonical}#webpage`;
 const combinedSchemas = [
   {
@@ -90,17 +95,39 @@ const combinedSchemas = [
           '@type': 'ImageObject',
           url: `${SITE_URL}${ORGANIZATION_LOGO}`,
         },
-        sameAs: [AUTHOR_LINKEDIN_URL, AUTHOR_X_URL, AUTHOR_BLUESKY_URL, AUTHOR_GITHUB_URL, CODECRAFTMD_URL, OPENMFM_URL],
+        sameAs: [
+          `${SITE_URL}/`,
+          'https://chukwumaonyeije.com/',
+          `${OPENMFM_URL}/`,
+          'https://chukwumatheology.substack.com/',
+          AUTHOR_X_URL,
+          AUTHOR_BLUESKY_URL,
+          AUTHOR_LINKEDIN_URL,
+          AUTHOR_GITHUB_URL,
+          AUTHOR_EMORY_URL,
+          AUTHOR_PIEDMONT_URL,
+          AUTHOR_DOXIMITY_URL,
+          CODECRAFTMD_URL,
+        ],
       },
       {
         '@type': 'Person',
         '@id': personId,
-        name: AUTHOR_SHORT_NAME,
+        name: AUTHOR_NAME,
+        givenName: 'Chukwuma',
+        familyName: 'Onyeije',
+        alternateName: [
+          'Dr. Chukwuma Onyeije',
+          'Chukwuma Onyeije MD',
+          'Chukwuma Ijeoma Onyeije',
+          'Dr. O',
+          '@chukwumaonyeije',
+        ],
         honorificPrefix: 'Dr.',
         honorificSuffix: 'MD, FACOG',
         description: `${AUTHOR_NAME} is an Atlanta physician-developer, maternal-fetal medicine specialist, and founder of Doctors Who Code.`,
         url: AUTHOR_URL,
-        jobTitle: AUTHOR_ROLE,
+        jobTitle: ['Maternal-Fetal Medicine Specialist', 'Physician-Developer', 'Founder of Doctors Who Code'],
         homeLocation: {
           '@type': 'Place',
           name: AUTHOR_LOCATION,
@@ -109,7 +136,42 @@ const combinedSchemas = [
           '@type': 'MedicalOrganization',
           name: 'Atlanta Perinatal Associates',
         },
-        sameAs: [AUTHOR_LINKEDIN_URL, AUTHOR_X_URL, AUTHOR_BLUESKY_URL, AUTHOR_GITHUB_URL, CODECRAFTMD_URL, OPENMFM_URL],
+        mainEntityOfPage: AUTHOR_URL,
+        founder: [
+          { '@id': organizationId },
+          {
+            '@type': 'Organization',
+            name: 'OpenMFM.org',
+            url: OPENMFM_URL,
+          },
+        ],
+        knowsAbout: [
+          'Maternal-Fetal Medicine',
+          'High-Risk Obstetrics',
+          'Fetal Growth Restriction',
+          'Gestational Diabetes',
+          'Preeclampsia',
+          'Clinical AI',
+          'Medical Documentation',
+          'Medical Billing',
+          'FHIR',
+          'Physician-Developer Education',
+          'Open Medical Education',
+        ],
+        sameAs: [
+          `${SITE_URL}/`,
+          'https://chukwumaonyeije.com/',
+          `${OPENMFM_URL}/`,
+          'https://chukwumatheology.substack.com/',
+          AUTHOR_X_URL,
+          AUTHOR_BLUESKY_URL,
+          AUTHOR_LINKEDIN_URL,
+          AUTHOR_GITHUB_URL,
+          AUTHOR_EMORY_URL,
+          AUTHOR_PIEDMONT_URL,
+          AUTHOR_DOXIMITY_URL,
+          CODECRAFTMD_URL,
+        ],
       },
       {
         '@type': 'WebPage',
@@ -236,18 +298,21 @@ const combinedSchemas = [
           <p class="site-footer-copy">Official site: doctorswhocode.blog</p>
         </div>
         <div>
-          <p class="label" style="margin-bottom: 0.75rem;">Projects</p>
+          <p class="label" style="margin-bottom: 0.75rem;">Official projects</p>
           <ul class="site-footer-list">
             <li><a href="https://codecraftmd.com" class="site-footer-link">CodeCraftMD</a></li>
             <li><a href="https://openmfm.org" class="site-footer-link">OpenMFM.org</a></li>
           </ul>
         </div>
         <div>
-          <p class="label" style="margin-bottom: 0.75rem;">Connect</p>
+          <p class="label" style="margin-bottom: 0.75rem;">Official identity</p>
           <ul class="site-footer-list">
             <li><a href="/chukwuma-onyeije" class="site-footer-link">Official Profile</a></li>
+            <li><a href="/verified" class="site-footer-link">Verified Accounts</a></li>
+            <li><a href="https://chukwumaonyeije.com/" class="site-footer-link">ChukwumaOnyeije.com</a></li>
             <li><a href="https://linkedin.com/in/chukwumaonyeije" class="site-footer-link">LinkedIn</a></li>
             <li><a href="https://x.com/chukwumaonyeije" class="site-footer-link">X / Twitter</a></li>
+            <li><a href="https://bsky.app/profile/chukwumaonyeije.bsky.social" class="site-footer-link">Bluesky</a></li>
             <li><a href="/contact" class="site-footer-link">Newsletter</a></li>
           </ul>
         </div>

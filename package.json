@@ -11,7 +11,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "indexnow:submit": "node scripts/submit-indexnow.mjs"
+    "indexnow:submit": "node scripts/submit-indexnow.mjs",
+    "validate:identity": "node scripts/validate-identity.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.1",

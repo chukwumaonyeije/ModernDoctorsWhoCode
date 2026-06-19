@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const pageUrl = 'https://www.doctorswhocode.blog/chukwuma-onyeije';
-const personId = 'https://www.doctorswhocode.blog/about#person';
+const personId = 'https://www.doctorswhocode.blog/chukwuma-onyeije#person';
 const imageUrl = 'https://www.doctorswhocode.blog/images/author-headshot.jpg';
 
 const profileSchema = {
@@ -12,7 +12,7 @@ const profileSchema = {
       '@type': 'ProfilePage',
       '@id': `${pageUrl}#webpage`,
       url: pageUrl,
-      name: 'Chukwuma Onyeije, MD, FACOG | Official Site and Profile',
+      name: 'Chukwuma Onyeije, MD, FACOG | Physician-Developer and Founder of Doctors Who Code',
       description:
         'Official profile page for Chukwuma Onyeije, MD, FACOG, an Atlanta maternal-fetal medicine specialist, physician-developer, and founder of Doctors Who Code.',
       mainEntity: {
@@ -25,6 +25,51 @@ const profileSchema = {
       isPartOf: {
         '@id': 'https://www.doctorswhocode.blog/#website',
       },
+    },
+    {
+      '@type': 'Person',
+      '@id': personId,
+      name: 'Chukwuma Onyeije, MD, FACOG',
+      givenName: 'Chukwuma',
+      familyName: 'Onyeije',
+      alternateName: ['Dr. Chukwuma Onyeije', 'Chukwuma Onyeije MD', 'Chukwuma Ijeoma Onyeije', 'Dr. O', '@chukwumaonyeije'],
+      honorificSuffix: 'MD, FACOG',
+      jobTitle: ['Maternal-Fetal Medicine Specialist', 'Physician-Developer', 'Founder of Doctors Who Code'],
+      description: 'Atlanta-based maternal-fetal medicine specialist and physician-developer building physician-led AI tools, clinical education systems, and open maternal-fetal medicine resources.',
+      url: pageUrl,
+      mainEntityOfPage: pageUrl,
+      founder: [
+        { '@id': 'https://www.doctorswhocode.blog/#organization' },
+        { '@type': 'Organization', name: 'OpenMFM.org', url: 'https://openmfm.org/' },
+      ],
+      sameAs: [
+        'https://www.doctorswhocode.blog/',
+        'https://chukwumaonyeije.com/',
+        'https://openmfm.org/',
+        'https://chukwumatheology.substack.com/',
+        'https://x.com/chukwumaonyeije',
+        'https://bsky.app/profile/chukwumaonyeije.bsky.social',
+        'https://providers.emoryhealthcare.org/provider/chukwuma-onyeije/778536',
+        'https://www.care.piedmont.org/provider/Chukwuma+Ijeoma+Onyeije/390542',
+        'https://www.doximity.com/pub/chukwuma-onyeije-md',
+      ],
+      knowsAbout: ['Maternal-Fetal Medicine', 'High-Risk Obstetrics', 'Fetal Growth Restriction', 'Gestational Diabetes', 'Preeclampsia', 'Clinical AI', 'Medical Documentation', 'Medical Billing', 'FHIR', 'Physician-Developer Education', 'Open Medical Education'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://www.doctorswhocode.blog/#website',
+      name: 'Doctors Who Code',
+      url: 'https://www.doctorswhocode.blog/',
+      publisher: { '@id': 'https://www.doctorswhocode.blog/#organization' },
+      about: { '@id': personId },
+    },
+    {
+      '@type': 'Organization',
+      '@id': 'https://www.doctorswhocode.blog/#organization',
+      name: 'Doctors Who Code',
+      url: 'https://www.doctorswhocode.blog/',
+      founder: { '@id': personId },
+      description: 'A physician-developer publication by Chukwuma Onyeije, MD, FACOG, focused on AI in medicine, clinical software, medical documentation, billing, interoperability, and physician-built tools.',
     },
     {
       '@type': 'BreadcrumbList',
@@ -70,27 +115,26 @@ const quickLinks = [
 ---
 
 <BaseLayout
-  title="Chukwuma Onyeije, MD, FACOG | Official Site and Profile"
-  description="Official site profile for Chukwuma Onyeije, MD, FACOG: Atlanta maternal-fetal medicine specialist, physician-developer, and founder of Doctors Who Code."
+  title="Chukwuma Onyeije, MD, FACOG | Physician-Developer and Founder of Doctors Who Code"
+  description="Official physician-builder profile of Chukwuma Onyeije, MD, FACOG: Atlanta maternal-fetal medicine specialist, founder of Doctors Who Code, creator of OpenMFM.org, and builder of physician-led AI tools."
   canonical={pageUrl}
   ogImage="/images/author-headshot.jpg"
   ogType="profile"
   articleSchema={profileSchema}
+  includeSiteTitle={false}
 >
   <div class="page-shell page-shell--narrow">
     <section class="profile-hero">
       <p class="label" style="margin-bottom: 0.75rem;">Official Site</p>
       <h1 class="gradient-text profile-title">Chukwuma Onyeije, MD, FACOG</h1>
-      <p class="profile-kicker">
-        Maternal-Fetal Medicine specialist, physician-developer, and founder of Doctors Who Code.
-      </p>
+      <p class="profile-kicker">Maternal-Fetal Medicine Specialist | Physician-Developer | Founder of Doctors Who Code | Creator of OpenMFM.org</p>
       <p class="profile-copy">
         If you searched for Chukwuma Onyeije, Dr. Chukwuma Onyeije, or Chukwuma Onyeije MD,
         this is the official site profile. I practice maternal-fetal medicine in Atlanta,
         build physician-led AI and clinical software, and write about the case for doctors who build.
       </p>
       <div class="profile-actions">
-        <a href="/about" class="site-button site-button--primary profile-action">Read the full profile</a>
+        <a href="/verified" class="site-button site-button--primary profile-action">Official accounts</a>
         <a href="/blog" class="site-button site-button--secondary profile-action">Read the blog</a>
         <a href="/contact" class="site-button site-button--secondary profile-action">Subscribe</a>
       </div>
@@ -118,6 +162,37 @@ const quickLinks = [
           and OpenMFM.org for open maternal-fetal medicine education.
         </p>
       </div>
+    </section>
+
+    <section class="profile-section">
+      <p class="label">Writing and public work</p>
+      <h2>Medicine, software, and the systems between them.</h2>
+      <p class="profile-copy">Doctors Who Code is the public record of this work: clinical AI, documentation, billing, interoperability, and the responsibility physicians carry when software enters care. Chukwuma Theology is a separate publication for theological writing.</p>
+    </section>
+
+    <section class="profile-section">
+      <p class="label">Official projects</p>
+      <div class="profile-links">
+        <a href="/blog" class="profile-link-card"><h2 class="profile-link-title">Doctors Who Code</h2><p class="profile-card-copy">The official physician-builder publication.</p></a>
+        <a href="https://openmfm.org/" class="profile-link-card"><h2 class="profile-link-title">OpenMFM.org</h2><p class="profile-card-copy">Open maternal-fetal medicine education and clinical resources.</p></a>
+        <a href="https://chukwumaonyeije.com/" class="profile-link-card"><h2 class="profile-link-title">ChukwumaOnyeije.com</h2><p class="profile-card-copy">The broader personal and professional site.</p></a>
+      </div>
+    </section>
+
+    <section class="profile-section">
+      <p class="label">Verified accounts</p>
+      <p class="profile-copy">The official websites and public accounts associated with this work are listed on the <a href="/verified">Verified Accounts and Official Projects</a> page. Treat that page as the source of record for identity links.</p>
+    </section>
+
+    <section class="profile-section">
+      <p class="label">Clinical corroboration</p>
+      <p class="profile-copy">Clinical identity is corroborated through the official <a href="https://providers.emoryhealthcare.org/provider/chukwuma-onyeije/778536">Emory Healthcare profile</a>, <a href="https://www.care.piedmont.org/provider/Chukwuma+Ijeoma+Onyeije/390542">Piedmont provider profile</a>, and <a href="https://www.doximity.com/pub/chukwuma-onyeije-md">Doximity profile</a>.</p>
+    </section>
+
+    <section class="profile-section">
+      <p class="label">Contact / official inquiry route</p>
+      <p class="profile-copy">For speaking, collaboration, publication, or professional inquiries, use the <a href="/contact">Doctors Who Code contact route</a>.</p>
+      <p class="profile-disclaimer">This site is for education, commentary, and professional writing. It does not provide individualized medical advice and does not replace care from a qualified clinician.</p>
     </section>
 
     <section>
@@ -182,6 +257,29 @@ const quickLinks = [
 
   .profile-grid {
     margin-bottom: 3rem;
+  }
+
+  .profile-section {
+    margin: 0 0 3rem;
+  }
+
+  .profile-section h2 {
+    margin: 0.55rem 0 0.85rem;
+    color: var(--dwc-white);
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  }
+
+  .profile-section a {
+    color: var(--dwc-cyan);
+  }
+
+  .profile-disclaimer {
+    margin: 1.25rem 0 0;
+    padding: 1rem;
+    border-left: 2px solid var(--dwc-cyan);
+    background: var(--dwc-card);
+    color: var(--dwc-muted);
+    line-height: 1.65;
   }
 
   .profile-card,

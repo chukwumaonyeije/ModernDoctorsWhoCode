@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageUrl = 'https://www.doctorswhocode.blog/verified';
+const identityPage = 'https://www.doctorswhocode.blog/chukwuma-onyeije';
+---
+
+<BaseLayout
+  title="Verified Accounts and Official Projects | Chukwuma Onyeije, MD, FACOG"
+  description="Official websites, publications, and public accounts associated with Chukwuma Onyeije, MD, FACOG."
+  canonical={pageUrl}
+  ogImage="/images/author-headshot.jpg"
+  includeSiteTitle={false}
+>
+  <div class="page-shell page-shell--narrow">
+    <section class="verified-hero">
+      <p class="label">Official identity</p>
+      <h1 class="gradient-text">Verified Accounts and Official Projects</h1>
+      <p class="verified-copy">This page lists the official websites, publications, and public accounts controlled by or officially associated with Chukwuma Onyeije, MD, FACOG.</p>
+    </section>
+
+    <section class="verified-section">
+      <h2>Official physician-builder publication</h2>
+      <a href="https://www.doctorswhocode.blog/">Doctors Who Code</a>
+      <p>The official physician-builder publication covering clinical AI, clinical software, documentation, billing, interoperability, and physician-built tools.</p>
+    </section>
+
+    <section class="verified-section">
+      <h2>Official profile</h2>
+      <a href={identityPage}>Chukwuma Onyeije, MD, FACOG</a>
+      <p>The canonical physician-builder profile and canonical person-schema reference for this identity.</p>
+    </section>
+
+    <section class="verified-section">
+      <h2>Official projects and writing</h2>
+      <ul>
+        <li><a href="https://chukwumaonyeije.com/">ChukwumaOnyeije.com</a> — broader personal and professional site.</li>
+        <li><a href="https://openmfm.org/">OpenMFM.org</a> — medical education and maternal-fetal medicine resources.</li>
+        <li><a href="https://chukwumatheology.substack.com/">Chukwuma Theology on Substack</a> — theology writing.</li>
+      </ul>
+    </section>
+
+    <section class="verified-section">
+      <h2>Official social accounts</h2>
+      <ul>
+        <li><a href="https://x.com/chukwumaonyeije">X / Twitter: @chukwumaonyeije</a></li>
+        <li><a href="https://bsky.app/profile/chukwumaonyeije.bsky.social">Bluesky: @chukwumaonyeije.bsky.social</a></li>
+      </ul>
+    </section>
+
+    <section class="verified-section">
+      <h2>Clinical identity corroboration</h2>
+      <ul>
+        <li><a href="https://providers.emoryhealthcare.org/provider/chukwuma-onyeije/778536">Emory Healthcare profile</a></li>
+        <li><a href="https://www.care.piedmont.org/provider/Chukwuma+Ijeoma+Onyeije/390542">Piedmont provider profile</a></li>
+        <li><a href="https://www.doximity.com/pub/chukwuma-onyeije-md">Doximity profile</a></li>
+      </ul>
+    </section>
+
+    <section class="identity-warning">
+      <h2>Impersonation warning</h2>
+      <p>No other account, newsletter, website, or AI-generated profile should be treated as official unless it is linked from this page.</p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .verified-hero, .verified-section { margin-bottom: 2.5rem; }
+  .verified-hero h1 { margin: 0.6rem 0 1rem; font-size: clamp(2rem, 1.45rem + 2vw, 2.6rem); }
+  .verified-copy, .verified-section p, .verified-section li, .identity-warning p { color: var(--dwc-muted); font-size: var(--font-size-body); line-height: 1.75; }
+  .verified-section h2, .identity-warning h2 { color: var(--dwc-white); font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem); margin-bottom: 0.75rem; }
+  .verified-section a { color: var(--dwc-cyan); }
+  .verified-section ul { padding-left: 1.25rem; }
+  .identity-warning { padding: 1.25rem; border: 1px solid var(--dwc-border); border-left: 3px solid var(--dwc-cyan); background: var(--dwc-card); }
+</style>
