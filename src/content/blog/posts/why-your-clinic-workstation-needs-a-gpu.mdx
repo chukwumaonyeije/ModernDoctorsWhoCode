@@ -1,0 +1,198 @@
+---
+audioUrl: /audio/why-your-clinic-workstation-needs-a-gpu.mp3
+title: "Why Your Clinic Workstation Needs a GPU"
+description: "A clinic workstation with local GPU inference changes the privacy, latency, and ownership posture of clinical AI workflows."
+pubDate: "2026-06-25"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Infrastructure Imperative"
+tags:
+  - "local-llm"
+  - "gpu"
+  - "clinical-ai"
+  - "physician-developer"
+  - "hipaa"
+  - "ollama"
+  - "clinical-infrastructure"
+image:
+  url: "/images/posts/clinic-workstation-gpu-hero.png"
+  alt: "Clinic workstation with dual monitors, local GPU tower, and ultrasound equipment in a quiet medical office"
+draft: false
+featured: true
+featuredRank: 7600
+readingTime: 7
+---
+
+It was 2:14 PM in clinic and the schedule had already started to compress.
+
+On one monitor I had a maternal-fetal medicine consultation note. Severe fetal growth restriction. Umbilical artery Doppler findings. A long maternal history with enough detail to matter and enough noise to slow everything down.
+
+The extraction task was simple.
+
+Pull the gestational age. Pull the Doppler pattern. Pull the active diagnoses. Return structured JSON that another tool could use downstream.
+
+A large language model can do that in seconds.
+
+The harder question is where that model should run.
+
+If the note leaves the clinic network, the workflow changes. Now I am not just building software. I am creating a data movement problem. I have to know the vendor posture, the Business Associate Agreement status, the retention policy, the audit trail, the failure mode, and the cost profile.
+
+That is a lot of architecture for one extraction step.
+
+Across the room, a workstation with a local GPU changes the conversation.
+
+Not because local models are magical. Because the inference boundary moves.
+
+## The Inference Boundary Matters
+
+Every clinical AI workflow has an inference boundary.
+
+That boundary is the place where clinical text, images, or structured data are handed to a model for computation. On one side sits the clinical system. On the other side sits the intelligence layer.
+
+If that boundary is a third-party API, then every request is also a governance event.
+
+Protected health information may be leaving the network. A vendor contract may be controlling retention. A remote outage may be controlling availability. A token meter may be controlling scale. A model update may be controlling behavior.
+
+None of those issues make cloud AI unusable.
+
+They make it a production dependency.
+
+Physician-developers need to name dependencies clearly. A cloud model is not just a model. It is a network call, a contract, a billing surface, a privacy posture, and a failure domain.
+
+A local GPU collapses that dependency into hardware you can see.
+
+The model still needs validation. The output still needs review. The workflow still needs logs, access controls, and human checkpoints. Local inference does not make a clinical tool safe by itself.
+
+It does remove one class of avoidable exposure.
+
+That is the **inference boundary test**.
+
+Before a clinical AI feature reaches production, ask one question: where does the first clinically sensitive token leave the system?
+
+If the answer is outside the practice, the architecture has to justify that choice.
+
+## VRAM Is Clinical Infrastructure
+
+Physicians are used to thinking about clinical equipment as capital infrastructure.
+
+Ultrasound machines. NST monitors. Secure workstations. Networked printers that somehow still become the bottleneck at the worst possible moment.
+
+A GPU belongs in that category now.
+
+Not for every physician. Not for every office. But for the physician-developer building clinical AI workflows, video RAM is no longer a gaming specification. It is the practical limit of what you can run locally.
+
+The model has to fit somewhere.
+
+For language models, that somewhere is usually GPU memory or unified memory. If the model fits, inference can be fast enough for real work. If it does not, the machine spills computation into slower system memory and the workflow becomes unusable.
+
+That difference is not academic.
+
+A note extraction workflow that returns in five seconds can sit inside a clinical process. A workflow that returns in four minutes becomes another tab you forgot to check. Latency decides whether the tool becomes infrastructure or a demonstration.
+
+This is where hardware becomes clinical.
+
+The GPU is not valuable because it is powerful. It is valuable because it makes a private workflow fast enough to use while the patient care day is still moving.
+
+## The Workstation Is the Smallest Useful Server
+
+The first local AI server in a clinic does not need to look like a data center.
+
+It can look like a workstation.
+
+One machine running Ollama or another model server. One local API endpoint. One controlled set of models. One small wrapper service that handles authentication, prompt management, logging, validation, and output formatting.
+
+The shape is simple:
+
+```text
+Clinical source
+  |
+Local preprocessing
+  |
+GPU-backed model server
+  |
+Structured output
+  |
+Human review
+  |
+Clinical system
+```
+
+That last step matters.
+
+Local inference does not remove the physician. It removes a network dependency before the physician reviews the output.
+
+For an MFM documentation workflow, the local model can extract the gestational age, indication, ultrasound findings, active diagnoses, recommended surveillance interval, and missing fields. The system can return a structured draft. The physician still decides whether the interpretation is correct, whether the plan fits the patient, and whether the note should move forward.
+
+The human checkpoint is not decorative.
+
+It is the part of the architecture that keeps computation from pretending to be judgment.
+
+## The Cloud Still Has a Place
+
+I use frontier cloud models constantly.
+
+They are excellent for public data, software development, argument structure, code review, and work that does not contain patient information. They are often better than local models for difficult reasoning tasks. I do not pretend otherwise.
+
+The issue is not cloud versus local as ideology.
+
+The issue is workload placement.
+
+Use the cloud where its strengths matter and the data posture is appropriate. Use local inference where privacy, latency, cost predictability, or operational control matter more than frontier capability.
+
+That distinction is easy to lose because consumer AI made the interface feel universal. One chat box. One answer. One subscription.
+
+Clinical software cannot be designed around that feeling.
+
+Clinical software has to respect boundaries.
+
+There is a meaningful difference between asking a cloud model to help outline a public blog post and sending it a consultation note with obstetric history, fetal findings, and identifiable clinical context. Treating those two actions as the same kind of computation is architectural carelessness.
+
+The physician-developer has to be more precise than that.
+
+## Ownership Is a Safety Feature
+
+Owning the clinical intelligence layer does not mean building every model from scratch.
+
+It means controlling the part of the stack that touches clinical reality.
+
+The prompt lives with you. The model version is known. The logs are yours. The update schedule is yours. The access controls are yours. The review process is yours. The failure mode is visible.
+
+That kind of ownership is not romantic. It is operational.
+
+When a vendor changes a model, the output can change. When an API goes down, the workflow can stop. When token costs rise, a daily automation can become a monthly budget problem. When a privacy policy shifts, the governance review starts again.
+
+A local workstation does not eliminate maintenance.
+
+It makes the maintenance legible.
+
+That matters because clinical AI will not remain a novelty. It will become part of documentation, triage, patient messaging, coding, registry construction, and guideline retrieval. The practices that understand their infrastructure will be able to decide what belongs where. The practices that do not will inherit whatever architecture the vendor offers.
+
+That is not enough.
+
+## What I Would Buy First
+
+If I were building the first local inference workstation for a small clinical AI project, I would optimize for memory before almost anything else.
+
+For Apple Silicon, that means unified memory large enough to run the models you actually intend to use. A Mac Studio with a large unified memory configuration can be a quiet, practical local inference machine for many documentation and extraction tasks.
+
+For a custom PC, that means NVIDIA hardware with enough VRAM to keep the model resident and fast. The CUDA ecosystem still matters. It matters especially if fine-tuning, quantization workflows, or local model experimentation are part of the plan.
+
+The exact machine will change.
+
+The principle will not.
+
+Buy enough memory to keep the workflow local. Buy enough compute to keep the workflow usable. Then build the smallest service that can do one real clinical job under review.
+
+Do not begin with the dream of a hospital-wide AI platform.
+
+Begin with one local workflow that passes the inference boundary test.
+
+## The Quiet Machine in the Corner
+
+The workstation in the corner is not impressive because it has lights or fans or a benchmark score.
+
+It is impressive because it changes who owns the clinical computation.
+
+The note stays local. The model is known. The output is reviewable. The physician remains responsible for judgment.
+
+That is the architecture worth building.
