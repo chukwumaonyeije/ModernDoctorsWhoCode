@@ -1,0 +1,107 @@
+---
+title: "From Meetings to Modules: Redefining Clinical Coordination"
+description: "Clinical teams do not move slowly because clinicians are slow. They move slowly because pages, meetings, and verbal handoffs force physicians to keep re-explaining decisions that software should carry forward."
+pubDate: "2026-07-14"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Clinical Workflow"
+tags:
+  - "clinical-workflow"
+  - "clinical-coordination"
+  - "documentation-as-code"
+  - "physician-developer"
+  - "agentic-ai"
+  - "clinical-documentation"
+  - "doctors-who-code"
+draft: false
+featured: true
+featuredRank: 12000
+readingTime: 6
+---
+
+A nurse flags an abnormal glucose value.
+
+She pages the attending. The attending calls back an hour later. The plan is relayed to the resident, who enters it from memory. The chart is reviewed on rounds the next morning, where three more people reconstruct the same case.
+
+No one in that sequence is moving slowly.
+
+The system is.
+
+Clinical coordination still depends on a person carrying context from one conversation to the next. Every page, meeting, and verbal handoff becomes another place where the plan can wait, drift, or disappear.
+
+That is the **retelling tax**: the clinical time lost when a decision has been made but the system cannot carry it forward.
+
+This is not primarily a staffing problem. It is an architecture problem.
+
+## I. The Hospital Moves at the Speed of Its Slowest Conversation
+
+Healthcare still assumes that coordination happens through meetings, pages, and verbal handoffs. Documentation arrives later as a record of what happened.
+
+That sequence is backward.
+
+The documentation should not merely describe the work. It should help execute the work.
+
+Software teams learned this when they began moving repeatable human interactions into code. When every decision requires one person to explain context to another person, people become the transport layer. More meetings do not repair that design. They add bandwidth to a broken interface.
+
+Clinical teams have the same problem, with higher stakes.
+
+A plan that exists only in a physician's memory is not yet part of the clinical system. It is waiting to become a page, a callback, a handoff, or an omission.
+
+## II. A Sign-Out Note Is an Interface
+
+A sign-out note is not paperwork.
+
+It is an interface between the physician who made the plan and the team that must carry it out.
+
+If I write it clearly enough, the night team should not need to page me to understand the next step. If I structure it consistently, a billing workflow should be able to identify the relevant CPT and ICD-10 codes without another person rereading the entire chart. If I make the plan machine-readable, an agent can flag a missed aspirin order or an overdue cervical-length screen before the omission becomes harm.
+
+The goal is not to replace clinical judgment.
+
+The goal is to stop spending clinical judgment on repeated explanation.
+
+Every time I restate a plan I have already made, I am not practicing medicine. I am compensating for a coordination failure.
+
+## III. From Roadmap to Terminal
+
+The physician who understands the clinical failure is often separated from the team building the proposed solution by months of meetings, requirement documents, and vendor interpretation.
+
+Each handoff weakens the signal.
+
+When I built my sign-out-to-APSO pipeline, I did not commission a project and wait for a vendor to return with a prototype. I was the maternal-fetal medicine physician who knew what a useful note required, sitting in the terminal and encoding that judgment into a working tool.
+
+The feedback loop collapsed.
+
+I could move directly from "this assessment is clinically incomplete" to a revised module, then test the output against the work I actually do. The distance between clinical judgment and implementation fell from months to hours.
+
+That is the physician-developer advantage. Domain knowledge does not arrive as a specification. It remains present in the build.
+
+## IV. Documentation as Code
+
+A meeting note stored in someone's memory or buried in an email thread is dead as soon as the meeting ends.
+
+A structured clinical document stays alive.
+
+It can be parsed. It can trigger downstream actions. It can support an automated revenue-cycle workflow, populate an educational tool, or give a future agent enough context to review the chart without reconstructing the case from fragments.
+
+This is **documentation as code**: clinical intent expressed in a form that both a resident and a script can act on.
+
+The phrase does not mean that prose should disappear. Medicine still requires narrative, uncertainty, and judgment. It means that decisions should have enough structure to survive the person who first expressed them.
+
+Documentation stops being the receipt for a decision.
+
+It becomes part of the mechanism that carries the decision forward.
+
+## V. The Measure Is Clinical Distance
+
+None of this matters if it does not shorten the distance between evidence and patient benefit.
+
+A cervical-length screening tool that spends a year moving through committees delivers less clinical value during that year than a narrow tool built, tested, observed, and revised within a call schedule. Speed alone is not the standard. The tool must still be correct, auditable, and bounded by a human checkpoint.
+
+But delay is not neutral.
+
+The useful measure is **clinical distance**: the number of handoffs between noticing a gap in care and placing a reliable tool in front of the clinician who can close it.
+
+Physician-developers can reduce that distance because we occupy both ends of the problem. We see the missed screen. We understand the clinical consequence. We can inspect the workflow. Then we can build the module that carries the right intent forward.
+
+The hospital should not move at the speed of its slowest conversation. A decision made once should not require a physician to keep making it again.
+
