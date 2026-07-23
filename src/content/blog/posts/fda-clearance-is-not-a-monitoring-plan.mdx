@@ -1,0 +1,758 @@
+---
+title: "FDA Clearance Is Not a Monitoring Plan"
+description: "Clinical AI can fail without crashing. Physician-developers must build the monitoring, outcome linkage, and human checkpoints that keep cleared software safe after deployment."
+pubDate: "2026-07-23"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - "clinical-ai"
+  - "physician-developer"
+  - "model-monitoring"
+  - "fda"
+  - "patient-safety"
+  - "software-architecture"
+  - "doctors-who-code"
+draft: false
+featured: true
+featuredRank: 13000
+readingTime: 18
+image:
+  url: "/images/posts/fda-clearance-not-monitoring-plan-hero.jpeg"
+  alt: "Physician reviewing a clinical AI observability dashboard showing sensitivity drift, calibration curves, and subgroup performance alongside a diagnostic imaging panel"
+---
+
+import Callout from '../../../components/Callout.astro';
+
+The model still returns a number.
+
+There is no error message. No frozen screen. No smoke from the machine.
+
+The result looks exactly like it did yesterday.
+
+But the hospital replaced the scanner.
+
+In one published example, a retinal disease model moved from one optical coherence tomography scanner to another. Its error rate increased from 5.5 percent to 46.6 percent.
+
+The software did not crash.
+
+It became wrong.
+
+That distinction is the central problem in clinical AI oversight. Traditional software usually announces failure through an exception, an unavailable service, or an invalid response. A clinical model can fail while appearing fully operational. It can accept the input, complete the calculation, and return a confident answer.
+
+The interface stays green.
+
+The clinical reliability underneath it has changed.
+
+An editorial published in *NEJM AI* by Ank Agarwal, Alia Sajjadian, Kavita Patel, and Roxana Daneshjou makes the regulatory argument clearly: FDA clearance should mark the beginning of rigorous clinical AI evaluation, not the end.
+
+For physician-developers, the argument goes further.
+
+Clearance is not a monitoring plan. Validation is not observability. Deployment is not completion.
+
+If we build clinical software, we also inherit the obligation to know when it stops working.
+
+## I. The Clearance-to-Care Gap
+
+The FDA has cleared or authorized more than 1,000 artificial intelligence and machine-learning-enabled medical devices.
+
+That number is often presented as evidence of progress.
+
+It is also a count of systems that must continue performing after they leave the environment in which they were evaluated.
+
+The *NEJM AI* editorial describes the weakness in the present model. Clinical AI devices are frequently evaluated on retrospective datasets. The data may be curated. The study may come from a single site. Prospective testing is uncommon.
+
+Only 8.1 percent of FDA-authorized AI devices with reported studies were evaluated prospectively, according to evidence cited by the authors.
+
+Then the product enters a hospital.
+
+The patient population changes. Disease prevalence changes. Clinical practice changes. Hardware changes. Acquisition protocols change. Documentation patterns change. Referral patterns change. The model may remain identical while the environment around it becomes materially different.
+
+I call this the **clearance-to-care gap**.
+
+Clearance asks whether a device satisfied the evidence requirements for market access.
+
+Care asks whether the device is safe and useful for this patient, in this institution, using this equipment, inside this workflow, today.
+
+Those are not the same question.
+
+A physician-developer must understand the difference because most failures occur inside that gap. Not inside the source code. Not inside the regulatory submission. Inside the interaction between a model and the clinical environment that receives it.
+
+## II. Clinical AI Does Not Fail Like a Stethoscope
+
+A broken stethoscope is usually detectable.
+
+A severed tube does not transmit sound. A damaged diaphragm changes what the clinician hears. The failure is physically coupled to the tool.
+
+Clinical AI is different.
+
+A model is a statistical relationship between data and an outcome. It depends on the conditions under which that relationship was learned and tested. When those conditions change, the model can degrade without violating any software contract.
+
+The API returns `200 OK`.
+
+The JSON is valid.
+
+The prediction is unsafe.
+
+This is why ordinary application monitoring is necessary but insufficient. Server uptime, latency, memory use, exception rates, and queue depth tell us whether the software is operating. They do not tell us whether the clinical inference remains correct.
+
+We need two forms of observability:
+
+1. **Technical observability** asks whether the system is running.
+2. **Clinical observability** asks whether the system still deserves to influence care.
+
+Most software teams are prepared for the first.
+
+Very few clinical organizations have fully built the second.
+
+## III. The Evidence Is Not Reassuring
+
+The editorial assembles several findings that should matter to anyone who writes or deploys clinical software.
+
+A systematic review of 86 deep-learning algorithms found that 81 percent performed worse on external datasets.
+
+Forty-three percent of AI device recalls occurred within the first twelve months after clearance.
+
+Only 17 of 130 evaluated FDA-approved AI devices reported demographic subgroup performance.
+
+In a review of 1,012 AI/ML device decision summaries, only 1.8 percent disclosed the exact source of the training data. Less than half reported any performance metric.
+
+Another analysis found that only 3.6 percent of FDA-cleared devices reported the race or ethnicity of the study population.
+
+<Callout type="warning" title="The Number That Should Change Your Rollout Plan">
+Forty-three percent of AI device recalls happened within the first twelve months after clearance. If your monitoring plan does not exist by the time a model goes live, it is already behind the failure curve.
+</Callout>
+
+These are not obscure documentation defects.
+
+Training provenance tells a hospital whether its patients resemble the population used to develop the model. Device information tells a radiology department whether its hardware resembles the equipment used during validation. Subgroup performance tells a clinician whether acceptable average performance conceals a dangerous failure in a smaller population.
+
+Without those details, local implementation becomes an exercise in assumption.
+
+Assumption is not a safety architecture.
+
+## IV. The Physician-Developer Has a Different Job
+
+The physician on a software team is often asked to review clinical content.
+
+Is this label correct?
+
+Does this recommendation match the guideline?
+
+Does the interface use the right terminology?
+
+Those questions matter. They are not enough.
+
+The physician-developer must also translate clinical risk into system behavior.
+
+That means deciding which failure is clinically meaningful. It means knowing that a five-point drop in one metric may be tolerable while a small decline in sensitivity for a time-critical diagnosis is not. It means recognizing when a stable aggregate result hides a subgroup failure. It means understanding that a delayed outcome label can make a real-time dashboard look more certain than it is.
+
+This work sits between the clinic and the codebase.
+
+An engineer can detect that the input distribution changed.
+
+A clinician must help determine whether the change matters.
+
+An engineer can calculate sensitivity, specificity, calibration, and false-positive rates.
+
+A clinician must help decide which threshold protects patients in the intended workflow.
+
+An engineer can route an alert.
+
+A physician-developer must help define what the organization is obligated to do when that alert arrives.
+
+That is not advisory work.
+
+It is architecture.
+
+## V. The Production Safety Loop
+
+Every clinical model should enter production with a **production safety loop**.
+
+The loop has six parts:
+
+1. Registry
+2. Baseline
+3. Telemetry
+4. Outcome linkage
+5. Human checkpoint
+6. Corrective action
+
+If any part is missing, the organization does not have continuous oversight. It has a collection of monitoring activities.
+
+There is a meaningful difference.
+
+### 1. Registry
+
+You cannot monitor what you cannot identify.
+
+The organization needs a registry of every model that influences clinical work. Not merely FDA-regulated devices. Every model.
+
+The registry should include:
+
+- Model name and version
+- Vendor or internal owner
+- Intended use
+- Explicit exclusions
+- Deployment sites
+- Clinical service line
+- Input data sources
+- Hardware dependencies
+- Software dependencies
+- Reference population
+- Validation sites
+- Required preprocessing
+- Output destination
+- Clinical workflow affected
+- Named technical owner
+- Named clinical owner
+- Date of deployment
+- Current monitoring status
+- Retirement criteria
+
+A spreadsheet can begin this work.
+
+It should not remain a spreadsheet.
+
+The registry becomes load-bearing infrastructure once multiple versions, sites, devices, and monitoring rules exist. It should be queryable. It should preserve history. It should connect each alert to the exact model and deployment context that produced it.
+
+### 2. Baseline
+
+Monitoring requires a reference state.
+
+Before the model influences care, the team should document how it performs locally. This does not always require a large randomized trial. It does require evidence appropriate to the clinical risk.
+
+A local baseline can include:
+
+- Input distributions
+- Missing-data patterns
+- Disease prevalence
+- Score distributions
+- Sensitivity and specificity
+- Positive and negative predictive values
+- Calibration
+- False-positive and false-negative rates
+- Performance by relevant subgroup
+- Performance by device or acquisition protocol
+- Clinician override rate
+- Time from prediction to action
+- Downstream testing or intervention
+
+The baseline must match intended use.
+
+A model validated for outpatient screening is not automatically validated for an inpatient triage queue. A model tested on one ultrasound platform is not automatically valid on another. A model developed using finalized reports may not behave the same way when fed preliminary text.
+
+The model may be unchanged.
+
+The clinical question is not.
+
+### 3. Telemetry
+
+Telemetry captures what the model encountered and what it produced.
+
+At minimum, the system should record:
+
+- Timestamp
+- Model version
+- Site
+- Device or source system
+- Input schema version
+- Data-quality checks
+- Missingness
+- Prediction or score
+- Threshold applied
+- User or service receiving the output
+- Workflow action
+- Relevant patient subgroup attributes under approved governance
+
+The telemetry should be designed before deployment.
+
+Trying to reconstruct these fields after a safety signal is expensive. Sometimes it is impossible.
+
+This is where physicians who develop software have an advantage. We know which clinical variables alter interpretation. We know that gestational age is not a decorative metadata field in obstetrics. We know that prevalence changes predictive value. We know that an output viewed after a definitive diagnostic test has a different clinical role from the same output viewed before testing.
+
+Clinical context belongs in the event model.
+
+If it is absent from the data architecture, it will also be absent from the investigation.
+
+### 4. Outcome Linkage
+
+Data drift is not clinical failure.
+
+It is a signal.
+
+The editorial proposes a staged design. Low-cost checks can run on every case without waiting for an outcome label. These checks look for changes in input data or model score distributions. When a meaningful shift appears, the organization performs the more expensive work of linking predictions to clinical outcomes.
+
+This separation is correct.
+
+Label-free monitoring is fast. It is scalable. It can identify that something changed.
+
+It cannot prove that patient-relevant performance deteriorated.
+
+Outcome linkage answers the harder question. Did sensitivity fall? Did calibration worsen? Did a subgroup accumulate more false negatives? Did the model change downstream testing, consultation, treatment, or delay?
+
+The difficulty is that clinical outcomes arrive late.
+
+Some outcomes require pathology. Some require delivery. Some require readmission data. Some require manual adjudication. Some are never recorded in the same system that generated the model input.
+
+Physician-developers must design around that latency.
+
+A monitoring system should clearly distinguish:
+
+- Available outcomes
+- Pending outcomes
+- Proxy outcomes
+- Missing outcomes
+- Adjudicated outcomes
+
+Otherwise, the dashboard will confuse absence of evidence with evidence of stable performance.
+
+### 5. Human Checkpoint
+
+The human checkpoint is not where automation failed.
+
+It is where accountability enters the system.
+
+A statistical alert does not interpret itself. A change in score distribution may reflect a broken interface, a new patient population, a revised documentation template, a new scanner, a change in prevalence, or a true deterioration in model performance.
+
+The review team should include the people needed to distinguish among those causes:
+
+- Clinical owner
+- Engineering owner
+- Data science or biostatistics
+- Quality and safety
+- Operational leadership
+- Vendor representative when appropriate
+- Privacy, compliance, or regulatory expertise when required
+
+The alert should arrive with enough context to support a decision:
+
+- What changed?
+- When did it change?
+- Which sites are affected?
+- Which model version is involved?
+- Which patients or subgroups are affected?
+- How large is the signal?
+- What is the clinical exposure?
+- What outcome evidence is available?
+- What immediate containment is possible?
+
+A human checkpoint without prepared evidence becomes a meeting.
+
+A human checkpoint with prepared evidence becomes control.
+
+### 6. Corrective Action
+
+Monitoring that cannot change deployment is surveillance theater.
+
+Every alert class should map to an action ladder. The ladder may include:
+
+1. Continue with increased observation
+2. Investigate data quality
+3. Recalculate local performance
+4. Notify users
+5. Adjust workflow placement
+6. Restrict use to a validated subgroup, device, or site
+7. Revert to a previous version
+8. Suspend the model
+9. Retrain and revalidate
+10. Retire the model
+
+The action must have an owner and a deadline.
+
+The decision must be recorded.
+
+That record matters. It shows when the organization detected a problem, what evidence it reviewed, what it decided, and how quickly it acted. The editorial correctly notes that this history may become important when courts and regulators examine foreseeability and responsibility for AI-related harm.
+
+It is also how the next engineering team avoids repeating the same failure.
+
+## VI. What We Should Monitor
+
+"Monitor the model" is not a specification.
+
+The monitoring plan should be divided into five layers.
+
+### Layer 1: Data Integrity
+
+These checks are deterministic.
+
+- Required fields present
+- Values within allowed ranges
+- Units correct
+- Codes valid
+- Timestamps plausible
+- Image dimensions expected
+- Text encoding intact
+- Upstream schema unchanged
+- Device identifier recognized
+
+Data-integrity failures should usually stop processing or suppress the model output. A clinically invalid input should not proceed because the model can technically accept it.
+
+### Layer 2: Distribution Shift
+
+These checks compare current inputs with the reference population.
+
+- Age distribution
+- Race and ethnicity where appropriate and governed
+- Sex
+- Disease prevalence
+- Comorbidity burden
+- Site
+- Device type
+- Acquisition protocol
+- Missingness pattern
+- Input intensity or image characteristics
+
+The goal is not to panic every time the population changes.
+
+The goal is to know that it changed.
+
+### Layer 3: Model Behavior
+
+These checks examine the output.
+
+- Score distribution
+- Percentage above threshold
+- Confidence or uncertainty
+- Abstention rate
+- Calibration
+- Discordance with prior versions
+- Rate of technically valid but clinically implausible outputs
+
+A sudden increase in high-risk predictions may reflect true prevalence. It may also reflect an upstream mapping error.
+
+The system should not guess.
+
+It should escalate.
+
+### Layer 4: Clinical Performance
+
+These measures require reliable outcomes.
+
+- Sensitivity
+- Specificity
+- Positive predictive value
+- Negative predictive value
+- False-positive rate
+- False-negative rate
+- Calibration error
+- Time-to-event performance
+- Net benefit
+- Performance by subgroup
+- Performance by site and device
+
+No single metric is sufficient.
+
+Accuracy can look excellent in a low-prevalence condition while the model misses most affected patients. Area under the receiver operating characteristic curve can remain stable while calibration becomes clinically unusable. Aggregate performance can hide a serious disparity.
+
+Metric selection is a clinical decision.
+
+### Layer 5: Workflow Consequences
+
+A model can be statistically accurate and operationally harmful.
+
+Monitor what happens after the prediction:
+
+- Was the output seen?
+- Was it acted upon?
+- Was it overridden?
+- Did it create duplicate testing?
+- Did it delay definitive care?
+- Did it increase unnecessary consultation?
+- Did it change time to treatment?
+- Did clinicians develop automation bias?
+- Did alert burden shift to another team?
+
+Clinical software does not end at the prediction.
+
+It ends at the consequence.
+
+## VII. Thresholds Must Be Written Before the Incident
+
+The worst time to define acceptable performance is after performance falls.
+
+Thresholds should be specified before deployment. The authors recommend measures such as minimum sensitivity and specificity, maximum false-positive rates, and acceptable performance differences across demographic subgroups.
+
+The exact threshold depends on the clinical use.
+
+A model that prioritizes a worklist may tolerate a different false-positive rate from a model that suppresses further testing. A screening tool for a severe but treatable condition may place more weight on sensitivity. A model that triggers an invasive procedure requires a different safety margin from one that suggests chart review.
+
+The physician-developer should ask:
+
+- What harm follows a false negative?
+- What harm follows a false positive?
+- Can a clinician independently detect the error?
+- How quickly can the harm occur?
+- Is the model advisory, prioritizing, or determinative?
+- Does the model change access to a scarce resource?
+- Is there a validated fallback?
+- How many patients can be exposed before the signal becomes statistically visible?
+
+Thresholds should also account for sample size.
+
+A subgroup dashboard with six patients can produce dramatic percentages and almost no certainty. A monitoring interface must show denominators, confidence intervals, and outcome maturity. Otherwise, visual precision will exceed statistical precision.
+
+That is not clarity.
+
+It is decoration.
+
+## VIII. Deterministic First, AI Second
+
+The monitoring layer should not become another opaque model.
+
+Most of the safety loop can be deterministic:
+
+- Validate the schema
+- Confirm the model version
+- Check data ranges
+- Compare distributions
+- Calculate performance
+- Evaluate thresholds
+- Route alerts
+- Preserve the audit log
+
+These operations should be reproducible.
+
+Generative AI can assist with incident summaries, documentation retrieval, or comparison of known failure modes. It should not determine whether the model is clinically safe. It should not suppress an alert. It should not rewrite a threshold. It should not silently authorize a new deployment context.
+
+The pattern is simple:
+
+**Deterministic first. AI second. Human checkpoint before consequence.**
+
+That architecture preserves the usefulness of automation without outsourcing accountability.
+
+## IX. A Practical Architecture
+
+A small physician-developer team does not need to begin with a national surveillance network.
+
+It needs a coherent local system.
+
+The minimum architecture looks like this:
+
+```text
+Clinical source
+    |
+    v
+Input validation -----> Reject or quarantine invalid data
+    |
+    v
+Model inference
+    |
+    +-----> Prediction delivered to workflow
+    |
+    v
+Telemetry event
+    |
+    +-----> Data and score drift checks
+    |
+    +-----> Model registry and version history
+    |
+    +-----> Delayed outcome linkage
+    |
+    v
+Performance and subgroup evaluation
+    |
+    v
+Threshold evaluation
+    |
+    v
+Human checkpoint
+    |
+    v
+Maintain | Restrict | Correct | Suspend | Retire
+```
+
+The infrastructure can be modest.
+
+A relational database can hold the model registry and telemetry metadata. A scheduled job can calculate drift and performance metrics. A dashboard can display current status. An incident tracker can assign alerts. Version control can preserve monitoring specifications. A secure data pipeline can link predictions to outcomes.
+
+The sophistication should match the risk.
+
+But the loop must close.
+
+## X. Build the Failure Path First
+
+Most teams begin by designing the successful prediction path.
+
+Input enters. Model runs. Output appears.
+
+The physician-developer should begin with a different question:
+
+**What happens when we no longer trust the result?**
+
+Can the model be disabled without disabling the clinical workflow?
+
+Can the system revert to a previous version?
+
+Can users see that the model is suspended?
+
+Can affected cases be identified?
+
+Can the team determine which patients were exposed?
+
+Can the original input, model version, output, and threshold be reconstructed?
+
+Can the organization return to a safe manual process?
+
+This is the **failure-path test**.
+
+A clinical system is not production-ready until the failure path is as deliberate as the success path.
+
+## XI. The Procurement Meeting Is Part of the Build
+
+Physician-developers are often brought into procurement after the vendor has demonstrated the interface.
+
+That is too late.
+
+The important questions are not limited to feature lists and headline accuracy.
+
+Ask:
+
+### Evidence
+
+- How many external sites were used for validation?
+- Were any sites prospective?
+- What were the inclusion and exclusion criteria?
+- What was the reference standard?
+- Who created the labels?
+- What patient demographics were represented?
+- What subgroup performance was observed?
+
+### Technical fit
+
+- Which devices, scanners, protocols, EHR versions, and data formats were tested?
+- Which preprocessing steps are required?
+- How does the product handle missing or invalid data?
+- How are model and software versions identified?
+- Which changes fall within the Predetermined Change Control Plan?
+
+### Monitoring
+
+- Which production metrics are available?
+- Can the hospital export prediction-level telemetry?
+- Can performance be stratified locally?
+- How are drift signals defined?
+- How are outcomes linked?
+- What thresholds trigger vendor investigation?
+- What is the response time for a safety signal?
+
+### Control
+
+- Can the hospital restrict the product by site, device, population, or workflow?
+- Can a model version be rolled back?
+- Can the product be suspended without disrupting the underlying clinical process?
+- Who owns the data required for independent evaluation?
+- What evidence is provided after an update?
+
+### Exit
+
+- How are historical predictions retained?
+- Can the organization export the audit record?
+- What happens when the contract ends?
+- What is the safe fallback workflow?
+
+A vendor that cannot support monitoring is not selling a finished clinical product.
+
+It is transferring an observability problem to the hospital.
+
+## XII. Continuous Monitoring Is Not Continuous Retraining
+
+These concepts are often blurred.
+
+They should remain separate.
+
+Continuous monitoring observes the deployed system.
+
+Continuous retraining changes it.
+
+Automatic retraining can introduce new failure modes, alter subgroup performance, invalidate prior thresholds, and move the product outside an approved change-control boundary. More data do not automatically produce a safer model. Production data contain workflow artifacts, label errors, treatment effects, and historical inequities.
+
+The correct sequence is:
+
+1. Detect
+2. Investigate
+3. Determine clinical significance
+4. Select a mitigation
+5. Retrain only when justified
+6. Revalidate
+7. Approve
+8. Redeploy
+9. Continue monitoring
+
+Do not let the remediation loop become an unobserved source of model change.
+
+## XIII. Regulation Is the Floor
+
+The editorial proposes stronger FDA requirements: multisite external validation, demographic transparency, standardized data for independent review, continuous postmarket surveillance, and a federated evaluation network modeled after FDA Sentinel.
+
+These are sensible reforms.
+
+They will not remove the local obligation.
+
+The FDA cannot know every scanner replacement, interface modification, documentation change, referral shift, or workflow adaptation inside a hospital. A national network can coordinate evidence. A manufacturer can monitor product behavior. A regulator can establish thresholds and require corrective action.
+
+But the deployment site still owns the context in which the model is used.
+
+The physician-developer lives closest to that context.
+
+We know when the clinical pathway changes before the database reflects it. We know when a service begins receiving a different referral population. We know when a new documentation template changes the text sent to a model. We know when clinicians stop trusting an alert and begin routing around it.
+
+That knowledge must enter the software.
+
+Otherwise, the most important part of the safety system remains undocumented.
+
+## XIV. What Physicians Who Build Software Must Own
+
+We do not need to own every server.
+
+We do not need to write every monitoring function.
+
+We do need to own the translation between clinical risk and technical control.
+
+That includes:
+
+- The intended use
+- The meaningful failure
+- The relevant subgroup
+- The outcome that matters
+- The acceptable threshold
+- The human checkpoint
+- The escalation path
+- The safe fallback
+- The retirement decision
+
+These are not details to be added after engineering is complete.
+
+They define what complete means.
+
+Clinical AI oversight is often discussed as a regulatory problem. It is also a software design problem. The regulation can require monitoring. It cannot design the event schema, connect the outcome, choose the clinical threshold, assign the alert, or build the rollback path.
+
+Physicians who develop software can.
+
+And when a model influences care, we must.
+
+## The Obligation After Deployment
+
+The most dangerous clinical model is not always the one that crashes.
+
+It is the one that keeps running after it has stopped deserving our trust.
+
+Clearance opens the door. Monitoring determines whether the model should remain in the room.
+
+## Free Download: The After Clearance Executive Brief
+
+This post distills the physician-developer argument. It does not replace the source material.
+
+I built a companion executive brief for anyone who needs to hand this argument to a CMIO, a quality committee, or a procurement team without asking them to read fourteen pages of Roman-numeral sections first. It covers the central argument, a detailed knowledge map of the editorial's evidence, an agentic-AI risk analysis, the physician-developer implications, and a practical checklist of what to use now, test, build, research, and avoid.
+
+**[Download the After Clearance Executive Brief (PDF)](/downloads/lead-magnets/after-clearance-clinical-ai-oversight-executive-brief.pdf)**
+
+It is free. No form to fill out.
+
+Bring it into the next procurement meeting or monitoring review. That is where this argument earns its keep.
+
+---
+
+## Source
+
+Agarwal AA, Sajjadian AN, Patel K, Daneshjou R. After Clearance - Continuous Monitoring as the Foundation of Clinical AI Oversight. *NEJM AI*. Published July 20, 2026. [doi:10.1056/AIe2600807](https://doi.org/10.1056/AIe2600807).
