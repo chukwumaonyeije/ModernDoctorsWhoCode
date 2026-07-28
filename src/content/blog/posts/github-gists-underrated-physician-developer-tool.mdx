@@ -1,0 +1,127 @@
+---
+title: "GitHub Gists: The Most Underrated Tool Every Physician-Developer Should Be Using"
+description: "GitHub Gists look like scratch space for code snippets. Used correctly, they become a version-controlled clinical reference library that decks, apps, and blog posts can all cite from a single source."
+pubDate: "2026-07-28T09:00:00-04:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Development"
+tags:
+  - "github"
+  - "github-gists"
+  - "physician-developer"
+  - "openmfm"
+  - "clinical-reference"
+  - "version-control"
+  - "doctors-who-code"
+image:
+  url: "/images/posts/github-gists-hero.jpg"
+  alt: "A physician-developer in a white coat holding a glowing GitHub Gist icon, connected by streams of light to clinical diagrams, decision trees, and code panels around him"
+draft: false
+featured: true
+featuredRank: 14000
+readingTime: 9
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Editorial dark-navy illustration for a Doctors Who Code essay on GitHub Gists. A single glowing document node (representing one canonical clinical reference) at the center, with cyan version-control branch lines radiating out to a slide deck, a browser window, and a mobile screen. Git commit dots along each branch line. Clean, technical, no clutter, no text overlay. Wide landscape composition. */}
+
+I tried to publish a clinical reference page inside a GitHub Gist as an HTML file. GitHub rendered the raw markup instead of the page. Every tag, every div, every line of CSS, sitting there as plain text.
+
+That was not the plan.
+
+The plan was to give the OpenMFM Delivery Timing Master Table one home. One file I could cite from a slide deck, link from a blog post, and eventually query from an app, without three versions quietly drifting apart. HTML in a Gist could not do that. Markdown could.
+
+That failure is the whole argument for this post.
+
+## What a Gist Actually Is
+
+A GitHub Gist is a miniature Git repository built for one artifact instead of a full project. Markdown documentation. A Python script. A JSON dataset. A SQL query. A prompt template.
+
+Every Gist carries full version history. Every Gist has a permanent URL. Every Gist can be forked, embedded, and diffed against its previous state. What it does not carry is the overhead of a repository: no issue tracker, no branch strategy, no CI pipeline, no folder structure to maintain.
+
+Think of it as a digital index card with Git underneath it.
+
+Most developers use Gists to park a code snippet they will forget about in a week. That is a waste of the tool. For a physician-developer, a Gist is infrastructure.
+
+## The Distribution Problem, Solved Small
+
+Clinical guidance does not usually fail because it does not exist. ACOG and SMFM publish it. The failure happens between the guideline and the bedside, where the physician needs the answer in under a minute and the guideline lives in a forty-page PDF behind a login.
+
+That gap is the distribution problem. Most of my work on OpenMFM is an attempt to close it, one reference at a time.
+
+A Gist will not replace a society guideline. It organizes one into something a resident can pull up on a phone during rounds. That is a narrower job than most physician-developers assume a knowledge project needs to do, and it is exactly the job a Gist is built for.
+
+<Callout type="technical">
+A clinician should be able to answer a common question in under a minute. That constraint, not feature count, is what decides whether a clinical reference belongs in a Gist.
+</Callout>
+
+## Inside the OpenMFM Clinical Reference Library
+
+I am building a version-controlled maternal-fetal medicine reference library entirely on GitHub Gists. It lives at the [OpenMFM Clinical Reference Library gist](https://gist.github.com/chukwumaonyeije/e03e3f44a4509fc70eaa36b871daebd1), and it is organized around one principle: a central index, with every disease-specific reference as its own Gist underneath it.
+
+The library currently covers hypertensive disorders of pregnancy, fetal growth restriction, and the flagship reference: the SMFM/ACOG Delivery Timing Master Table, which summarizes evidence-based delivery windows across twelve maternal, fetal, and placental conditions in one table instead of twelve separate guideline documents.
+
+Every reference in the library follows the same template: clinical scope, diagnostic criteria, classification, initial evaluation, management, surveillance, delivery timing, escalation criteria, clinical pearls, developer notes, references, and revision history. A resident should be able to open any reference in the library and already know where to look.
+
+The planned list runs to gestational diabetes, cervical insufficiency, cerclage, antenatal surveillance, multiple gestation, PPROM, placenta accreta spectrum, placenta previa, vasa previa, cholestasis, Rh alloimmunization, and postpartum hypertension. Each one gets the same editorial framework. None of them get a new format invented from scratch.
+
+## One File Type Per Job
+
+The Fetal Growth Restriction reference is a multi-file Gist, and the file split is the part worth stealing.
+
+```
+README.md
+fgr_algorithm.md
+delivery_timing.json
+fgr_decision_tree.py
+fgr.svg
+```
+
+Markdown carries the narrative for the clinician reading at the bedside. JSON carries the same diagnostic criteria and delivery-timing thresholds in a structured form a script can parse. Python demonstrates the decision logic directly, instead of describing it in prose and hoping the reader implements it correctly. SVG carries the visual algorithm.
+
+Four formats, one Git history, one topic. Update the delivery threshold once and every file that depends on it is reviewable in the same commit.
+
+## The Decks Now Cite the Gist
+
+The [SMFM/ACOG Delivery Timing Master Table deck](https://openmfm.org/decks/delivery-timing-master-table/index.html#slide-1) on OpenMFM.org is the first place this architecture is visible to a reader instead of just to me. The deck presents the table. Underneath it sits a link: view the full source reference on GitHub Gist.
+
+The deck is the interface. The Gist is the source of truth. That split is now the standard for new OpenMFM references, not a one-off. When I publish the next delivery-timing deck, or the cerclage reference, or the antenatal surveillance table, the presentation will hold the visual and the pedagogy, and the Gist underneath it will hold the version-controlled clinical content. Update the Gist, and every deck, article, and future decision-support tool that links to it inherits the correction. No hunting through slide decks for the copy that fell out of sync.
+
+## What This Looks Like for Any Physician-Developer
+
+You do not need an open-source project to benefit from this. You need a folder of reusable clinical knowledge that currently lives nowhere in particular.
+
+An aspirin-eligibility algorithm. Preeclampsia diagnostic criteria. A cervical-length management table. An insulin-adjustment example for gestational diabetes. An ICD-10 lookup script. A FHIR API example. A SOAP-note prompt you have rewritten four times and can no longer find the current version of.
+
+Each of those is a reusable building block right now, buried in a note-taking app or a forgotten folder. Publish it as a Gist and it becomes a permanent, versioned, linkable artifact instead of something you reconstruct from memory the next time you need it.
+
+The same applies to AI prompt libraries. A dedicated Gist per purpose, SOAP generation, literature review, differential diagnosis, data extraction, means you can improve a prompt over time without losing the version that already worked.
+
+## Design Rules Worth Stealing
+
+Four rules carried the OpenMFM library from a folder of ideas to something maintainable.
+
+Keep each reference concise enough to answer a common question in under a minute. Link related references to each other instead of repeating the same table in three places. Separate the narrative for humans from the data for software, so each can change without breaking the other. Build in a version number, a review date, and a revision history from the first commit, not after the third correction.
+
+None of these are exotic. All four are usually skipped, which is why most clinical reference documents rot quietly instead of failing loudly.
+
+## When Not to Use a Gist
+
+A Gist is not a repository, and it should not try to be one.
+
+If the project needs multiple modules, unit tests, continuous integration, package management, or an issue tracker for collaborators, it belongs in a repository. A useful rule: if you find yourself wanting a folder structure, you already have a repository, whether you have created one yet or not.
+
+## Free Download: The OpenMFM Clinical Reference Library Executive Brief
+
+I wrote a companion brief for anyone who wants the architecture behind this without reverse-engineering it from a live Gist. It covers the vision, the platform architecture, the design philosophy, the completed and planned references, and the integration roadmap across OpenMFM.org and this blog.
+
+**[Download the OpenMFM Clinical Reference Library Executive Brief (PDF)](/downloads/lead-magnets/openmfm-clinical-reference-library-executive-brief.pdf)**
+
+It is free. No form to fill out.
+
+## The Point
+
+A Gist is small enough to write in the time it takes to finish a cup of coffee, and disciplined enough to hold up as a citation years later.
+
+One canonical reference, versioned and linked, beats three copies scattered across a deck, a blog post, and a slide nobody remembers updating.
