@@ -1,0 +1,398 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import LearningOutcomeList from '../../components/LearningOutcomeList.astro';
+import ProjectCallout from '../../components/ProjectCallout.astro';
+import { getCourseContext, getCourses } from '../../utils/learning';
+import { SITE_URL } from '../../consts';
+
+export async function getStaticPaths() {
+  const courses = await getCourses();
+  return courses.map((course) => ({ params: { slug: course.id }, props: { course } }));
+}
+
+interface Props {
+  course: CollectionEntry<'courses'>;
+}
+
+const { course } = Astro.props;
+const context = await getCourseContext(course.id);
+if (!context?.path) throw new Error(`Published course ${course.id} is missing its path.`);
+
+const { path, lessons, project, nextCourse } = context;
+const { Content } = await render(course);
+const courseUrl = `${SITE_URL}/courses/${course.id}/`;
+const courseSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: course.data.title,
+  description: course.data.description,
+  educationalLevel: course.data.difficulty,
+  timeRequired: `PT${course.data.estimatedMinutes}M`,
+  provider: { '@id': `${SITE_URL}/#organization` },
+  url: courseUrl,
+  hasCourseInstance: {
+    '@type': 'CourseInstance',
+    courseMode: 'online',
+    courseWorkload: `PT${course.data.estimatedMinutes}M`,
+  },
+};
+const syllabusSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `${course.data.title} syllabus`,
+  itemListElement: lessons.map((lesson, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: lesson.data.title,
+    url: `${SITE_URL}/blog/${lesson.data.article.id}/`,
+  })),
+};
+---
+
+<BaseLayout
+  title={course.data.title}
+  description={course.data.description}
+  canonical={courseUrl}
+  articleSchema={[courseSchema, syllabusSchema]}
+>
+  <div class="page-shell course-page">
+    <Breadcrumbs items={[
+      { label: 'Home', href: '/' },
+      { label: 'Courses', href: '/courses/' },
+      { label: course.data.title },
+    ]} />
+
+    <header class="course-hero">
+      <div>
+        <p class="label"><a href={`/paths/${path.id}/`}>{path.data.title}</a> / Course {course.data.order}</p>
+        <h1>{course.data.title}</h1>
+        <p class="lede-copy">{course.data.description}</p>
+        <div class="course-stats" aria-label="Course summary">
+          <span>{course.data.difficulty}</span>
+          <span>{course.data.estimatedMinutes} minutes</span>
+          <span>{lessons.length} {lessons.length === 1 ? 'lesson' : 'lessons'}</span>
+        </div>
+      </div>
+      <dl class="course-fit-card">
+        <div>
+          <dt>Who this is for</dt>
+          <dd>{path.data.audience}</dd>
+        </div>
+        <div>
+          <dt>Course outcome</dt>
+          <dd>{path.data.outcome}</dd>
+        </div>
+      </dl>
+    </header>
+
+    <section class="course-introduction" aria-label="Course introduction">
+      <Content />
+    </section>
+
+    <div class="course-preparation">
+      <LearningOutcomeList outcomes={course.data.outcomes} />
+      <section class="prerequisite-card" aria-labelledby="prerequisite-title">
+        <p class="label">Before You Begin</p>
+        <h2 id="prerequisite-title">Prerequisites</h2>
+        {course.data.prerequisites.length > 0 ? (
+          <ul>
+            {course.data.prerequisites.map((prerequisite) => <li>{prerequisite}</li>)}
+          </ul>
+        ) : (
+          <p>No technical prerequisite is required. Begin with a bounded problem and enough time to finish the first lesson.</p>
+        )}
+      </section>
+    </div>
+
+    <section class="course-syllabus" aria-labelledby="syllabus-title">
+      <div class="course-section-heading">
+        <div>
+          <p class="label">Ordered Syllabus</p>
+          <h2 id="syllabus-title">Complete the lessons in sequence.</h2>
+        </div>
+        <p>Each article remains at its original URL. Its position here supplies the learning context.</p>
+      </div>
+
+      <ol>
+        {lessons.map((lesson, index) => (
+          <li>
+            <a href={`/blog/${lesson.data.article.id}/`}>
+              <span class="syllabus-number">{String(index + 1).padStart(2, '0')}</span>
+              <span class="syllabus-copy">
+                <span class="syllabus-meta">Lesson {lesson.data.lessonNumber} / {lesson.data.difficulty} / {lesson.data.estimatedMinutes} min</span>
+                <strong>{lesson.data.title}</strong>
+                <small>{lesson.data.description}</small>
+                <span class="syllabus-objective">{lesson.data.learningObjectives[0]}</span>
+              </span>
+              <span class="syllabus-link">Read lesson <span aria-hidden="true">→</span></span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    {project && (
+      <section id="course-project" aria-label="Course project">
+        <ProjectCallout project={project} />
+      </section>
+    )}
+
+    <nav class="course-next" aria-label="Course next step">
+      <div>
+        <p class="label">Next Step</p>
+        <h2>{nextCourse ? `Continue with ${nextCourse.data.title}.` : 'Finish the build before adding another course.'}</h2>
+      </div>
+      {nextCourse ? (
+        <a href={`/courses/${nextCourse.id}/`} class="site-button site-button--primary">Next course</a>
+      ) : lessons[0] && (
+        <a href={`/blog/${lessons[0].data.article.id}/`} class="site-button site-button--primary">Begin lesson one</a>
+      )}
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .course-page {
+    display: grid;
+    gap: var(--space-section);
+  }
+
+  .course-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: start;
+  }
+
+  .course-hero .label,
+  .course-section-heading .label,
+  .prerequisite-card .label,
+  .course-next .label {
+    margin-bottom: 0.65rem;
+  }
+
+  .course-hero h1 {
+    max-width: 14ch;
+    margin-bottom: 1rem;
+    font-size: clamp(2.45rem, 1.65rem + 3vw, 4rem);
+  }
+
+  .course-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.4rem;
+  }
+
+  .course-stats span {
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 999px;
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: capitalize;
+  }
+
+  .course-fit-card {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--dwc-border);
+    border-radius: 1rem;
+    background: var(--dwc-card);
+  }
+
+  .course-fit-card div {
+    padding: 1.25rem;
+  }
+
+  .course-fit-card div + div {
+    border-top: 1px solid var(--dwc-border);
+  }
+
+  .course-fit-card dt {
+    margin-bottom: 0.4rem;
+    color: var(--dwc-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .course-fit-card dd {
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  .course-introduction {
+    max-width: 48rem;
+    padding-left: 1.2rem;
+    border-left: 3px solid var(--dwc-cyan);
+  }
+
+  .course-introduction :global(p) {
+    margin: 0;
+    color: var(--dwc-muted);
+  }
+
+  .course-preparation {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .prerequisite-card {
+    padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    border: 1px solid var(--dwc-border);
+    border-radius: 1rem;
+    background: var(--dwc-card);
+  }
+
+  .prerequisite-card h2 {
+    font-size: clamp(1.35rem, 1.15rem + 0.7vw, 1.65rem);
+  }
+
+  .prerequisite-card ul {
+    margin: 0;
+    padding-left: 1.15rem;
+    color: var(--dwc-muted);
+  }
+
+  .prerequisite-card p:not(.label) {
+    margin: 0;
+    color: var(--dwc-muted);
+  }
+
+  .course-section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .course-section-heading h2 {
+    margin: 0;
+  }
+
+  .course-section-heading > p {
+    max-width: 31rem;
+    margin: 0;
+    color: var(--dwc-muted);
+  }
+
+  .course-syllabus > ol {
+    display: grid;
+    gap: 0.7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .course-syllabus li > a {
+    display: grid;
+    grid-template-columns: 2.2rem minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: start;
+    padding: 1.1rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 0.8rem;
+    color: inherit;
+    background: var(--dwc-card);
+  }
+
+  .course-syllabus li > a:hover {
+    border-color: rgba(56, 189, 248, 0.5);
+    color: inherit;
+  }
+
+  .syllabus-number,
+  .syllabus-meta,
+  .syllabus-link {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .syllabus-number,
+  .syllabus-link {
+    color: var(--dwc-cyan);
+  }
+
+  .syllabus-copy {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .syllabus-meta {
+    color: var(--dwc-muted);
+    text-transform: capitalize;
+  }
+
+  .syllabus-copy strong {
+    color: var(--dwc-white);
+    font-family: var(--font-display);
+    font-size: 1rem;
+  }
+
+  .syllabus-copy small,
+  .syllabus-objective {
+    color: var(--dwc-muted);
+    line-height: 1.5;
+  }
+
+  .syllabus-objective {
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
+  }
+
+  .syllabus-link {
+    white-space: nowrap;
+  }
+
+  .course-next {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: clamp(1.4rem, 1rem + 1.5vw, 2.1rem);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 1rem;
+    background: var(--dwc-card);
+  }
+
+  .course-next h2 {
+    max-width: 22ch;
+    margin: 0;
+    font-size: clamp(1.35rem, 1.15rem + 0.8vw, 1.7rem);
+  }
+
+  .course-next .site-button {
+    flex: 0 0 auto;
+    width: auto;
+  }
+
+  @media (max-width: 820px) {
+    .course-hero,
+    .course-preparation {
+      grid-template-columns: 1fr;
+    }
+
+    .course-section-heading,
+    .course-next {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .course-syllabus li > a {
+      grid-template-columns: 1.8rem minmax(0, 1fr);
+    }
+
+    .syllabus-link {
+      grid-column: 2;
+    }
+  }
+</style>

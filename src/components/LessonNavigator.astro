@@ -1,0 +1,204 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  course: CollectionEntry<'courses'>;
+  lessons: CollectionEntry<'lessons'>[];
+  currentLesson: CollectionEntry<'lessons'>;
+}
+
+const { course, lessons, currentLesson } = Astro.props;
+const activeIndex = lessons.findIndex((lesson) => lesson.id === currentLesson.id);
+const previousLesson = activeIndex > 0 ? lessons[activeIndex - 1] : undefined;
+const nextLesson = activeIndex >= 0 ? lessons[activeIndex + 1] : undefined;
+---
+
+<nav class="lesson-navigator" aria-label="Course lesson navigation">
+  <div class="lesson-navigator-header">
+    <div>
+      <p class="label">Course Progress</p>
+      <h2>{course.data.title}</h2>
+    </div>
+    <p>Lesson {activeIndex + 1} of {lessons.length}</p>
+  </div>
+
+  <ol class="lesson-progress-list">
+    {lessons.map((lesson, index) => (
+      <li>
+        <a
+          href={`/blog/${lesson.data.article.id}/`}
+          class:list={{ 'is-current': lesson.id === currentLesson.id }}
+          aria-current={lesson.id === currentLesson.id ? 'page' : undefined}
+        >
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          <strong>{lesson.data.title}</strong>
+        </a>
+      </li>
+    ))}
+  </ol>
+
+  <div class="lesson-navigator-actions">
+    {previousLesson ? (
+      <a href={`/blog/${previousLesson.data.article.id}/`}>
+        <span>Previous lesson</span>
+        <strong>{previousLesson.data.title}</strong>
+      </a>
+    ) : (
+      <a href={`/courses/${course.id}/`}>
+        <span>Course overview</span>
+        <strong>Review the syllabus</strong>
+      </a>
+    )}
+
+    {nextLesson ? (
+      <a href={`/blog/${nextLesson.data.article.id}/`} class="is-next">
+        <span>Next lesson</span>
+        <strong>{nextLesson.data.title}</strong>
+      </a>
+    ) : (
+      <a href={`/courses/${course.id}/#course-project`} class="is-next">
+        <span>Course complete</span>
+        <strong>Build the project</strong>
+      </a>
+    )}
+  </div>
+</nav>
+
+<style>
+  .lesson-navigator {
+    margin-top: 2.75rem;
+    overflow: hidden;
+    border: 1px solid var(--dwc-border);
+    border-radius: 1rem;
+    background: var(--dwc-card);
+  }
+
+  .lesson-navigator-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--dwc-border);
+  }
+
+  .lesson-navigator-header .label {
+    margin-bottom: 0.45rem;
+  }
+
+  .lesson-navigator-header h2 {
+    margin: 0;
+    font-size: 1.15rem;
+  }
+
+  .lesson-navigator-header > p {
+    margin: 0;
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .lesson-progress-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    margin: 0;
+    padding: 1rem;
+    gap: 0.55rem;
+    list-style: none;
+  }
+
+  .lesson-progress-list a {
+    display: grid;
+    grid-template-columns: 1.6rem minmax(0, 1fr);
+    gap: 0.55rem;
+    height: 100%;
+    padding: 0.7rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 0.6rem;
+    color: inherit;
+  }
+
+  .lesson-progress-list a:hover,
+  .lesson-progress-list a.is-current {
+    border-color: rgba(56, 189, 248, 0.55);
+    color: inherit;
+  }
+
+  .lesson-progress-list a.is-current {
+    background: rgba(56, 189, 248, 0.07);
+  }
+
+  .lesson-progress-list span {
+    color: var(--dwc-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .lesson-progress-list strong {
+    color: var(--dwc-white);
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  .lesson-navigator-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--dwc-border);
+  }
+
+  .lesson-navigator-actions > a {
+    display: grid;
+    gap: 0.25rem;
+    min-height: 5.4rem;
+    padding: 1rem 1.25rem;
+    color: inherit;
+  }
+
+  .lesson-navigator-actions > a + a {
+    border-left: 1px solid var(--dwc-border);
+  }
+
+  .lesson-navigator-actions > a:hover {
+    color: inherit;
+    background: rgba(56, 189, 248, 0.05);
+  }
+
+  .lesson-navigator-actions .is-next {
+    text-align: right;
+  }
+
+  .lesson-navigator-actions span {
+    color: var(--dwc-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .lesson-navigator-actions strong {
+    color: var(--dwc-white);
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 620px) {
+    .lesson-navigator-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .lesson-progress-list,
+    .lesson-navigator-actions {
+      grid-template-columns: 1fr;
+    }
+
+    .lesson-navigator-actions > a + a {
+      border-top: 1px solid var(--dwc-border);
+      border-left: 0;
+    }
+
+    .lesson-navigator-actions .is-next {
+      text-align: left;
+    }
+  }
+</style>

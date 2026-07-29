@@ -1,66 +1,54 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PostCard from '../components/PostCard.astro';
+import LearningPathCard from '../components/LearningPathCard.astro';
 import NewsletterForm from '../components/NewsletterForm.astro';
+import PostCard from '../components/PostCard.astro';
 import { SITE_DESCRIPTION, SITE_URL } from '../consts';
 import { sortBlogPosts } from '../utils/blog';
+import { getCoursesForPath, getLearningPaths, getLessonsForCourse } from '../utils/learning';
+
+const paths = await getLearningPaths();
+const pathPrompts = {
+  'learn-to-code': 'I have not shipped code yet.',
+  'use-ai-in-medicine': 'I use AI, but I still coordinate every step.',
+  'build-medical-software': 'I am ready to build a clinical tool.',
+};
+const pathCards = await Promise.all(paths.map(async (path) => {
+  const courses = await getCoursesForPath(path.id);
+  const lessons = (await Promise.all(courses.map((course) => getLessonsForCourse(course.id)))).flat();
+  return {
+    path,
+    courseCount: courses.length,
+    lessonCount: lessons.length,
+    estimatedMinutes: courses.reduce((total, course) => total + course.data.estimatedMinutes, 0),
+  };
+}));
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
-const sortedPosts = sortBlogPosts(allPosts);
-const featuredPosts = sortedPosts.filter((post) => post.data.featured);
-const featuredPost = featuredPosts[0] ?? sortedPosts[0];
-const recentPosts = sortedPosts.filter((post) => post.id !== featuredPost?.id).slice(0, 5);
-
-const hexTerms = [
-  'Physician-Developer',
-  'AI in Medicine',
-  'Maternal-Fetal Medicine',
-  'Clinical Workflow',
-  'FHIR',
-  'Python',
-  'TypeScript',
-  'Clinical Documentation',
-  'Interoperability',
-  'Medical Billing',
-  'OpenMFM',
-  'Bedside Tools',
-];
-const uniqueTags = new Set(sortedPosts.flatMap((post) => post.data.tags.map((tag) => tag.toLowerCase())));
-const stats = [
-  { number: String(sortedPosts.length), label: 'Published Essays' },
-  { number: String(uniqueTags.size), label: 'Recurring Topics' },
-  { number: 'MFM', label: 'Clinical Specialty' },
-  { number: 'ATL', label: 'Clinical Base' },
-];
-const startHere = [
+const latestPosts = sortBlogPosts(allPosts).slice(0, 4);
+const projects = [
   {
-    label: 'Official Profile',
-    title: 'Start with Dr. Chukwuma Onyeije',
-    copy: 'See the clinical background, public identity, current projects, and the case for physician-built software.',
-    href: '/chukwuma-onyeije',
-    cta: 'Read the profile',
+    label: 'Clinical Decision Support',
+    title: 'FGRManager',
+    description: 'SMFM fetal growth restriction guidance translated into a bedside delivery-timing tool.',
+    href: 'https://openmfm.org/microsites/FGRManager/landing.html',
+    mark: 'FGR',
   },
   {
-    label: 'Core Argument',
-    title: 'Why physicians should build',
-    copy: 'Read the thesis behind Doctors Who Code: doctors should not only use medical technology. They should help author it.',
-    href: '/blog/ama-augmented-intelligence-physician-developer',
-    cta: 'Read the essay',
+    label: 'Open Medical Education',
+    title: 'OpenMFM',
+    description: 'Open-source maternal-fetal medicine education, clinical references, and physician-built tools.',
+    href: 'https://openmfm.org',
+    mark: 'MFM',
   },
   {
-    label: 'Builder Work',
-    title: 'See a real physician-built tool',
-    copy: 'Follow the path from clinical protocol to bedside software in a concrete build teardown.',
-    href: '/blog/how-i-built-fgrmanager-a-physician-developers-blueprint-for-turning-clinical-protocols-into-bedside-tools',
-    cta: 'See the build',
+    label: 'Clinical Workflow Systems',
+    title: 'CodeCraftMD',
+    description: 'Physician-led documentation, coding, and workflow architecture built from clinical practice.',
+    href: 'https://codecraftmd.com',
+    mark: 'CC',
   },
-];
-const topicLinks = [
-  { label: 'Physician-Developer', href: '/blog?q=physician-developer' },
-  { label: 'AI in Medicine', href: '/blog?q=AI' },
-  { label: 'FHIR and Interoperability', href: '/blog?q=FHIR' },
-  { label: 'Maternal-Fetal Medicine', href: '/blog?q=maternal-fetal%20medicine' },
 ];
 const homeSchema = {
   '@context': 'https://schema.org',
@@ -69,24 +57,20 @@ const homeSchema = {
       '@type': 'CollectionPage',
       '@id': `${SITE_URL}/#home`,
       url: SITE_URL,
-      name: 'Doctors Who Code | Official Site of Chukwuma Onyeije, MD, FACOG',
+      name: 'Doctors Who Code | Physician-Developer Learning Platform',
       description: SITE_DESCRIPTION,
-      mainEntity: {
-        '@id': `${SITE_URL}/about#person`,
-      },
-      isPartOf: {
-        '@id': `${SITE_URL}/#website`,
-      },
+      mainEntity: { '@id': `${SITE_URL}/chukwuma-onyeije#person` },
+      isPartOf: { '@id': `${SITE_URL}/#website` },
     },
     {
       '@type': 'ItemList',
-      '@id': `${SITE_URL}/#start-here`,
-      name: 'Start Here on Doctors Who Code',
-      itemListElement: startHere.map((item, index) => ({
+      '@id': `${SITE_URL}/#learning-paths`,
+      name: 'Doctors Who Code Learning Paths',
+      itemListElement: paths.map((path, index) => ({
         '@type': 'ListItem',
         position: index + 1,
-        url: `${SITE_URL}${item.href}`,
-        name: item.title,
+        url: `${SITE_URL}/paths/${path.id}/`,
+        name: path.data.title,
       })),
     },
   ],
@@ -94,138 +78,136 @@ const homeSchema = {
 ---
 
 <BaseLayout
-  title="Official Site of Chukwuma Onyeije, MD, FACOG"
+  title="Physician-Developer Learning Platform"
   description={SITE_DESCRIPTION}
   canonical={SITE_URL}
   articleSchema={homeSchema}
 >
-
-  <!-- Hero -->
-  <section class="home-hero page-shell">
-    <div>
-      <p class="label" style="margin-bottom: 1rem;">
-        <span class="live-dot" style="margin-right: 0.5rem;"></span>
-        Official Site · Physician-Developer Journal
+  <section class="home-hero site-shell">
+    <div class="home-hero-copy">
+      <p class="label">Physician-Developer Academy</p>
+      <h1>Medicine needs more physicians who can build.</h1>
+      <p class="lede-copy">
+        Doctors Who Code is a guided learning platform for physicians who want to understand software, use AI with judgment, and build clinical tools that survive contact with real practice.
       </p>
-      <h1 class="gradient-text home-hero-title">Doctors Who Code</h1>
-      <p class="home-hero-kicker">
-        The official site of Chukwuma Onyeije, MD, FACOG.
-      </p>
-      <p class="lede-copy home-hero-copy">
-        Doctors Who Code is where I write as an Atlanta maternal-fetal medicine specialist and
-        physician-developer building AI tools, clinical documentation systems, and physician-led
-        software.
-      </p>
-      <p class="home-hero-copy home-hero-copy--secondary">
-        If you searched for Chukwuma Onyeije MD, Doctors Who Code, or physician-builder essays on
-        AI in medicine, you are in the right place.
-      </p>
-      <form id="hero-search" class="home-search">
-        <input type="text" id="hero-q" placeholder="Search articles..."
-          class="site-input home-search-input" />
-        <button type="submit"
-          class="home-search-button">Search</button>
-      </form>
-      <div class="mobile-stack">
-        <a
-          href="/blog"
-          class="site-button site-button--primary home-action"
-        >Read the Blog</a>
-        <a
-          href="/chukwuma-onyeije"
-          class="site-button site-button--secondary home-action"
-        >Official Profile</a>
-        <a
-          href="/contact"
-          class="site-button site-button--secondary home-action"
-        >Subscribe</a>
+      <div class="home-hero-actions">
+        <a href="/start/" class="site-button site-button--primary">Find your starting point</a>
+        <a href="/blog/" class="site-button site-button--secondary">Browse the article archive</a>
       </div>
-      <div class="home-trust-grid">
-        <div class="home-trust-card">
-          <p class="label home-trust-label">Clinical Work</p>
-          <p class="home-trust-copy">Maternal-Fetal Medicine at Atlanta Perinatal Associates</p>
+      <dl class="home-provenance">
+        <div>
+          <dt>Written from</dt>
+          <dd>Maternal-Fetal Medicine practice</dd>
         </div>
-        <div class="home-trust-card">
-          <p class="label home-trust-label">Builder Focus</p>
-          <p class="home-trust-copy">AI, documentation, interoperability, and bedside tools</p>
+        <div>
+          <dt>Built by</dt>
+          <dd>Chukwuma Onyeije, MD, FACOG</dd>
         </div>
-      </div>
+      </dl>
     </div>
 
-    <div style="display: grid; gap: 1rem; align-content: start;">
-      {featuredPost && (
-        <a
-          href={`/blog/${featuredPost.id}`}
-          class="home-path-card"
-          style="padding: 0; overflow: hidden; gap: 0; text-decoration: none;"
-        >
-          {featuredPost.data.image && (
-            <img
-              src={featuredPost.data.image.url}
-              alt={featuredPost.data.image.alt}
-              style="width: 100%; height: 240px; object-fit: cover; display: block;"
-            />
-          )}
-          <div style="padding: 1.25rem;">
-            <p class="label" style="margin-bottom: 0.6rem;">Featured Now</p>
-            <h2 class="home-path-title" style="margin-bottom: 0.75rem;">{featuredPost.data.title}</h2>
-            <p class="home-path-copy" style="margin-bottom: 0.9rem;">{featuredPost.data.description}</p>
-            <span class="home-feature-cta">Read featured article &rarr;</span>
-          </div>
-        </a>
-      )}
-
-      <div class="home-hex-grid" style="justify-content: flex-start;">
-        {hexTerms.map((term, i) => (
-          <div class="home-hex-chip" style={`color: ${i % 3 === 0 ? 'var(--dwc-cyan)' : 'var(--dwc-muted)'}; opacity: ${0.5 + (i % 3) * 0.25};`}>{term}</div>
+    <aside class="home-orientation" aria-labelledby="orientation-title">
+      <p class="label">Choose by Current Work</p>
+      <h2 id="orientation-title">Where are you in the physician-developer journey?</h2>
+      <ol>
+        {pathCards.map(({ path, lessonCount }) => (
+          <li>
+            <a href={`/paths/${path.id}/`}>
+              <span>{String(path.data.order).padStart(2, '0')}</span>
+              <span>
+                <strong>{path.data.title}</strong>
+                <small>{pathPrompts[path.id as keyof typeof pathPrompts]}</small>
+              </span>
+              <span class="orientation-count">{lessonCount} lessons</span>
+            </a>
+          </li>
         ))}
-      </div>
-    </div>
+      </ol>
+      <a href="/start/" class="home-orientation-link">Compare the three paths <span aria-hidden="true">→</span></a>
+    </aside>
   </section>
 
-  <!-- Stats strip -->
-  <section class="site-shell home-stats-section">
-    <div class="home-stats-grid">
-      {stats.map(stat => (
-        <div class="home-stat-card">
-          <p class="gradient-text home-stat-number">{stat.number}</p>
-          <p class="home-stat-label">{stat.label}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <section class="site-shell home-section">
-    <div class="home-section-header">
+  <section class="home-section site-shell" aria-labelledby="paths-title">
+    <div class="home-section-heading">
       <div>
-        <p class="label">Start Here</p>
-        <h2 class="gradient-text home-subsection-title">Three ways into the site</h2>
+        <p class="label">Learning Paths</p>
+        <h2 id="paths-title">Begin with the gap you need to close.</h2>
       </div>
-      <p class="home-section-intro">
-        Start with the official profile, the core argument, or a real physician-built project.
+      <p>
+        The archive contains the full body of work. These paths give selected articles an instructional order and a project at the end.
       </p>
     </div>
     <div class="home-path-grid">
-      {startHere.map((item) => (
-        <a href={item.href} class="home-path-card">
-          <p class="label" style="margin-bottom: 0.75rem;">{item.label}</p>
-          <h3 class="home-path-title">{item.title}</h3>
-          <p class="home-path-copy">{item.copy}</p>
-          <span class="home-section-link">{item.cta} &rarr;</span>
+      {pathCards.map(({ path, courseCount, lessonCount, estimatedMinutes }) => (
+        <LearningPathCard
+          path={path}
+          courseCount={courseCount}
+          lessonCount={lessonCount}
+          estimatedMinutes={estimatedMinutes}
+        />
+      ))}
+    </div>
+  </section>
+
+  <section class="home-section site-shell home-start" aria-labelledby="start-guide-title">
+    <div class="home-start-copy">
+      <p class="label">Featured Start Here Guide</p>
+      <h2 id="start-guide-title">One path. One course. One finished build.</h2>
+      <p>
+        Do not begin by trying to understand the entire software landscape. Choose the path that matches your present work. Complete its first course in order. Build the project before adding another course.
+      </p>
+      <a href="/start/" class="site-button site-button--primary">Open Start Here</a>
+    </div>
+    <ol class="home-start-steps">
+      <li>
+        <span>01</span>
+        <div><strong>Locate the gap</strong><small>Code, AI workflow design, or medical software.</small></div>
+      </li>
+      <li>
+        <span>02</span>
+        <div><strong>Follow the sequence</strong><small>Lessons are ordered by dependency, not publication date.</small></div>
+      </li>
+      <li>
+        <span>03</span>
+        <div><strong>Produce the artifact</strong><small>A utility, workflow map, or tested calculator.</small></div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="home-section site-shell" aria-labelledby="projects-title">
+    <div class="home-section-heading">
+      <div>
+        <p class="label">Physician-Built Projects</p>
+        <h2 id="projects-title">The argument is visible in the systems.</h2>
+      </div>
+      <p>
+        The platform teaches from working examples built inside clinical practice, not from abstract product exercises.
+      </p>
+    </div>
+    <div class="home-project-grid">
+      {projects.map((project) => (
+        <a href={project.href} class="home-project-card" target="_blank" rel="noopener noreferrer">
+          <span class="home-project-mark" aria-hidden="true">{project.mark}</span>
+          <p class="label">{project.label}</p>
+          <h3>{project.title}</h3>
+          <p>{project.description}</p>
+          <span class="home-project-link">View project <span aria-hidden="true">↗</span></span>
         </a>
       ))}
     </div>
   </section>
 
-  <!-- Recent Posts -->
-  {recentPosts.length > 0 && (
-    <section class="site-shell home-section">
-      <div class="home-section-header">
-        <p class="label">Recent Posts</p>
-        <a href="/blog" class="home-section-link">All posts &rarr;</a>
+  {latestPosts.length > 0 && (
+    <section class="home-section site-shell" aria-labelledby="latest-title">
+      <div class="home-section-heading">
+        <div>
+          <p class="label">Latest from the Journal</p>
+          <h2 id="latest-title">The work continues between courses.</h2>
+        </div>
+        <a href="/blog/" class="home-heading-link">Browse all articles <span aria-hidden="true">→</span></a>
       </div>
       <div class="home-post-grid">
-        {recentPosts.map(post => (
+        {latestPosts.map((post) => (
           <PostCard
             title={post.data.title}
             description={post.data.description}
@@ -238,394 +220,384 @@ const homeSchema = {
             featured={post.data.featured}
           />
         ))}
-        <div class="home-more-card">
-          <a href="/blog" class="site-button site-button--primary home-more-link">Read the Blog &rarr;</a>
-        </div>
       </div>
     </section>
   )}
 
-  <section class="site-shell home-section">
-    <div class="home-section-header">
-      <div>
-        <p class="label">Explore</p>
-        <h2 class="gradient-text home-subsection-title">Follow the topics that define the work</h2>
-      </div>
-      <a href="/blog" class="home-section-link">Browse all writing &rarr;</a>
-    </div>
-    <div class="home-topic-row">
-      {topicLinks.map((topic) => (
-        <a href={topic.href} class="tag-pill home-topic-pill">{topic.label}</a>
-      ))}
-    </div>
-  </section>
-
-  <!-- About Strip -->
-  <section style="background-color: var(--dwc-card); border-top: 1px solid var(--dwc-border); border-bottom: 1px solid var(--dwc-border); margin-bottom: 4rem;">
-    <div class="site-shell home-about-grid">
-      <div>
-        <p class="label" style="margin-bottom: 1rem;">About the Author</p>
-        <h2 class="gradient-text home-about-title">Chukwuma Onyeije, MD, FACOG</h2>
-        <p class="home-about-copy" style="margin-bottom: 1rem;">
-          I am a maternal-fetal medicine specialist at Atlanta Perinatal Associates and a
-          physician-developer building AI-powered clinical tools because physicians with domain
-          expertise build better healthcare technology than distant vendors ever will.
-        </p>
-        <p class="home-about-copy">
-          I founded CodeCraftMD for physician-led AI documentation and billing systems, and
-          OpenMFM.org for open-source maternal-fetal medicine education.
-        </p>
-        <a href="/chukwuma-onyeije" class="home-section-link" style="display: inline-block; margin-top: 1.25rem;">About Chukwuma Onyeije, MD, FACOG &rarr;</a>
-      </div>
-      <div class="home-about-cards">
-        {[
-          { label: 'Official Site', value: 'DoctorsWhoCode.blog' },
-          { label: 'Specialty', value: 'MFM / High-Risk OB' },
-          { label: 'Credential', value: 'MD, FACOG' },
-          { label: 'Project', value: 'CodeCraftMD' },
-          { label: 'Project', value: 'OpenMFM.org' },
-        ].map(item => (
-          <div class="home-about-card">
-            <p class="label" style="margin-bottom: 0.25rem; font-size: 0.65rem;">{item.label}</p>
-            <p class="home-about-card-copy">{item.value}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Newsletter -->
-  <section id="newsletter" class="site-shell home-section home-newsletter-section">
+  <section class="home-section site-shell home-newsletter" id="newsletter" aria-label="Newsletter signup">
     <NewsletterForm />
   </section>
-
 </BaseLayout>
-
-<script>
-  document.getElementById('hero-search')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const q = (document.getElementById('hero-q') as HTMLInputElement)?.value.trim();
-    if (q) window.location.href = '/blog?q=' + encodeURIComponent(q);
-  });
-</script>
 
 <style>
   .home-hero {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(2rem, 1.25rem + 3vw, 4rem);
+    grid-template-columns: minmax(0, 1.08fr) minmax(23rem, 0.92fr);
+    gap: clamp(2.5rem, 1rem + 5vw, 6rem);
     align-items: center;
-    padding-top: clamp(3.5rem, 2.6rem + 3vw, 5rem);
-    padding-bottom: 4rem;
+    padding-top: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+    padding-bottom: clamp(4rem, 3rem + 4vw, 6.5rem);
   }
 
-  .home-hero-title {
-    font-size: clamp(2.4rem, 1.55rem + 3vw, 3.25rem);
-    line-height: 1.05;
-    margin-bottom: 0.65rem;
+  .home-hero-copy > .label,
+  .home-orientation > .label,
+  .home-section-heading .label,
+  .home-start .label,
+  .home-project-card .label {
+    margin-bottom: 0.75rem;
   }
 
-  .home-hero-kicker {
-    margin: 0 0 1rem;
-    font-family: var(--font-display);
-    font-size: clamp(1.08rem, 0.98rem + 0.45vw, 1.3rem);
-    line-height: 1.35;
-    color: var(--dwc-white);
+  .home-hero h1 {
+    max-width: 13ch;
+    margin-bottom: 1.25rem;
+    font-size: clamp(2.65rem, 1.65rem + 3.7vw, 4.8rem);
+    letter-spacing: -0.025em;
   }
 
-  .home-hero-copy {
-    margin-bottom: 1rem;
-    max-width: 32rem;
+  .home-hero .lede-copy {
+    max-width: 41rem;
   }
 
-  .home-hero-copy--secondary {
-    margin-bottom: 1.5rem;
-    color: var(--dwc-muted);
-  }
-
-  .home-search {
+  .home-hero-actions {
     display: flex;
-    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.75rem;
   }
 
-  .home-search-input {
-    flex: 1;
-    border-right: none;
-    border-radius: 8px 0 0 8px;
-  }
-
-  .home-search-button {
-    border: none;
-    border-radius: 0 8px 8px 0;
-    padding: 0.7rem 1.25rem;
-    background: var(--dwc-blue);
-    color: var(--dwc-white);
-    font-family: var(--font-mono);
-    font-size: var(--font-size-button);
-    cursor: pointer;
-  }
-
-  .home-action {
+  .home-hero-actions .site-button {
     width: auto;
   }
 
-  .home-trust-grid {
+  .home-provenance {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.85rem;
+    gap: 1rem;
     max-width: 42rem;
+    margin: 2rem 0 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--dwc-border);
   }
 
-  .home-trust-card,
-  .home-path-card {
-    background-color: var(--dwc-card);
-    border: 1px solid var(--dwc-border);
-    border-radius: 12px;
-  }
-
-  .home-trust-card {
-    padding: 1rem;
-  }
-
-  .home-trust-label {
-    margin-bottom: 0.35rem;
-  }
-
-  .home-trust-copy {
-    margin: 0;
+  .home-provenance dt {
+    margin-bottom: 0.25rem;
     color: var(--dwc-muted);
-    line-height: 1.55;
-  }
-
-  .home-hex-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .home-hex-chip {
     font-family: var(--font-mono);
-    font-size: clamp(0.82rem, 0.79rem + 0.15vw, 0.88rem);
-    font-weight: 500;
-    background-color: var(--dwc-card);
-    border: 1px solid var(--dwc-border);
-    padding: 0.55rem 1rem;
-    border-radius: 8px;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
 
-  .home-stats-section,
-  .home-section {
-    padding-bottom: 3rem;
-  }
-
-  .home-subsection-title {
-    margin: 0.4rem 0 0;
-    font-size: clamp(1.45rem, 1.22rem + 0.9vw, 1.8rem);
-  }
-
-  .home-section-intro {
+  .home-provenance dd {
     margin: 0;
-    max-width: 34rem;
-    color: var(--dwc-muted);
-    line-height: 1.6;
+    color: var(--dwc-white);
+    font-size: 0.88rem;
+    line-height: 1.5;
   }
 
-  .home-stats-grid {
+  .home-orientation {
+    overflow: hidden;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 1rem;
+    background:
+      radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 35%),
+      var(--dwc-card);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+  }
+
+  .home-orientation > .label,
+  .home-orientation > h2,
+  .home-orientation > .home-orientation-link {
+    margin-inline: 1.25rem;
+  }
+
+  .home-orientation > .label {
+    margin-top: 1.25rem;
+  }
+
+  .home-orientation h2 {
+    max-width: 18ch;
+    margin-bottom: 1.25rem;
+    font-size: clamp(1.35rem, 1.15rem + 0.8vw, 1.65rem);
+  }
+
+  .home-orientation ol {
+    margin: 0;
+    padding: 0;
+    border-block: 1px solid var(--dwc-border);
+    list-style: none;
+  }
+
+  .home-orientation li + li {
+    border-top: 1px solid var(--dwc-border);
+  }
+
+  .home-orientation li a {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-  }
-
-  .home-stat-card {
-    background: var(--dwc-card);
-    border: 1px solid var(--dwc-border);
-    border-radius: 12px;
-    padding: clamp(1rem, 0.8rem + 0.8vw, 1.5rem);
-    text-align: center;
-  }
-
-  .home-stat-number {
-    margin: 0 0 0.25rem;
-    font-family: var(--font-display);
-    font-size: clamp(1.6rem, 1.3rem + 1vw, 2rem);
-    font-weight: 800;
-    line-height: 1;
-  }
-
-  .home-stat-label,
-  .home-section-link,
-  .home-feature-cta {
-    font-family: var(--font-mono);
-    font-size: clamp(0.8rem, 0.77rem + 0.16vw, 0.85rem);
-    color: var(--dwc-cyan);
-  }
-
-  .home-feature-title {
-    font-size: clamp(1.5rem, 1.2rem + 1vw, 1.75rem);
-    margin-bottom: 0.5rem;
-  }
-
-  .home-feature-copy {
-    margin: 0;
-    font-size: clamp(0.98rem, 0.95rem + 0.16vw, 1rem);
-    line-height: 1.6;
-    color: var(--dwc-muted);
-    max-width: 52ch;
-  }
-
-  .home-section-header {
-    display: flex;
-    justify-content: space-between;
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    gap: 0.85rem;
     align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
+    min-height: 5.25rem;
+    padding: 0.9rem 1.25rem;
+    color: inherit;
+  }
+
+  .home-orientation li a:hover {
+    background: rgba(56, 189, 248, 0.05);
+    color: inherit;
+  }
+
+  .home-orientation li a > span:first-child,
+  .orientation-count {
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .home-orientation li a > span:nth-child(2) {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .home-orientation strong {
+    color: var(--dwc-white);
+    font-family: var(--font-display);
+    font-size: 0.96rem;
+  }
+
+  .home-orientation small {
+    color: var(--dwc-muted);
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .orientation-count {
+    white-space: nowrap;
+  }
+
+  .home-orientation-link,
+  .home-heading-link,
+  .home-project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
+  .home-orientation-link {
+    margin-block: 1.1rem;
+  }
+
+  .home-section {
+    padding-bottom: clamp(4rem, 3rem + 3vw, 6rem);
+  }
+
+  .home-section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
     margin-bottom: 1.5rem;
+  }
+
+  .home-section-heading h2 {
+    max-width: 19ch;
+    margin: 0;
+    font-size: clamp(1.7rem, 1.3rem + 1.5vw, 2.25rem);
+  }
+
+  .home-section-heading > p {
+    max-width: 34rem;
+    margin: 0;
+    color: var(--dwc-muted);
+  }
+
+  .home-path-grid,
+  .home-project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .home-start {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(22rem, 0.8fr);
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: center;
+    max-width: 1160px;
+    margin-bottom: clamp(4rem, 3rem + 3vw, 6rem);
+    padding: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 1rem;
+    background:
+      linear-gradient(110deg, rgba(168, 85, 247, 0.05), transparent 46%),
+      var(--dwc-card);
+  }
+
+  .home-start-copy h2 {
+    max-width: 15ch;
+    font-size: clamp(1.8rem, 1.35rem + 1.6vw, 2.4rem);
+  }
+
+  .home-start-copy p:not(.label) {
+    color: var(--dwc-muted);
+  }
+
+  .home-start-copy .site-button {
+    width: auto;
+  }
+
+  .home-start-steps {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .home-start-steps li {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--dwc-border);
+  }
+
+  .home-start-steps li:first-child { padding-top: 0; }
+  .home-start-steps li:last-child { padding-bottom: 0; border-bottom: 0; }
+
+  .home-start-steps li > span {
+    color: var(--dwc-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .home-start-steps div {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .home-start-steps strong {
+    color: var(--dwc-white);
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+  }
+
+  .home-start-steps small {
+    color: var(--dwc-muted);
+    line-height: 1.5;
+  }
+
+  .home-project-card {
+    display: block;
+    min-height: 18rem;
+    padding: 1.5rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 1rem;
+    color: inherit;
+    background: var(--dwc-card);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .home-project-card:hover {
+    border-color: rgba(56, 189, 248, 0.5);
+    color: inherit;
+    transform: translateY(-2px);
+  }
+
+  .home-project-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 0.75rem;
+    color: var(--dwc-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .home-project-card h3 {
+    margin-bottom: 0.6rem;
+  }
+
+  .home-project-card > p:not(.label) {
+    color: var(--dwc-muted);
+    font-size: 0.94rem;
+    line-height: 1.6;
   }
 
   .home-post-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .home-path-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.25rem;
-  }
-
-  .home-path-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    padding: 1.35rem;
-    text-decoration: none;
-    transition: transform 0.2s ease, border-color 0.2s ease;
-  }
-
-  .home-path-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--dwc-blue);
-  }
-
-  .home-path-title {
-    margin: 0;
-    font-size: clamp(1.08rem, 1rem + 0.36vw, 1.2rem);
-    color: var(--dwc-white);
-  }
-
-  .home-path-copy {
-    margin: 0;
-    color: var(--dwc-muted);
-    line-height: 1.65;
-  }
-
-  .home-more-card {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--dwc-card);
-    border: 1px solid var(--dwc-border);
-    border-radius: 12px;
-    padding: 2rem;
-    min-height: 180px;
-  }
-
-  .home-more-link {
-    width: auto;
-    padding-inline: 1.5rem;
-  }
-
-  .home-about-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: clamp(2rem, 1.25rem + 3vw, 4rem);
-    align-items: center;
-    padding-top: 4rem;
-    padding-bottom: 4rem;
-  }
-
-  .home-about-title {
-    font-size: clamp(1.5rem, 1.2rem + 1vw, 1.75rem);
-    margin-bottom: 1rem;
-  }
-
-  .home-about-copy {
-    color: var(--dwc-muted);
-    line-height: 1.72;
-  }
-
-  .home-about-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
   }
 
-  .home-about-card {
-    background-color: var(--dwc-navy);
-    border: 1px solid var(--dwc-border);
-    border-radius: 8px;
-    padding: 0.9rem;
+  .home-newsletter {
+    padding-bottom: 0;
   }
 
-  .home-about-card-copy {
-    margin: 0;
-    font-size: clamp(0.92rem, 0.89rem + 0.14vw, 0.96rem);
-    font-weight: 600;
-    color: var(--dwc-white);
-  }
-
-  .home-topic-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-
-  .home-topic-pill {
-    text-decoration: none;
-  }
-
-  .home-newsletter-section {
-    padding-top: 0;
-  }
-
-  @media (max-width: 900px) {
+  @media (max-width: 980px) {
     .home-hero,
-    .home-about-grid {
+    .home-start {
       grid-template-columns: 1fr;
     }
 
     .home-path-grid,
-    .home-stats-grid {
-      grid-template-columns: repeat(2, 1fr);
+    .home-project-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .home-orientation h2 {
+      max-width: 25ch;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .home-section-heading {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .home-post-grid {
+      grid-template-columns: 1fr;
     }
   }
 
   @media (max-width: 520px) {
-    .home-search {
+    .home-hero {
+      padding-top: 2.75rem;
+    }
+
+    .home-hero h1 {
+      max-width: none;
+      font-size: clamp(2.15rem, 9vw, 2.5rem);
+    }
+
+    .home-hero-actions {
       flex-direction: column;
-      gap: 0.75rem;
     }
 
-    .home-search-input {
-      border-right: 1px solid var(--dwc-border);
-      border-radius: 8px;
-    }
-
-    .home-search-button,
-    .home-action,
-    .home-more-link {
+    .home-hero-actions .site-button,
+    .home-start-copy .site-button {
       width: 100%;
-      border-radius: 8px;
     }
 
-    .home-trust-grid,
-    .home-about-cards,
-    .home-path-grid,
-    .home-stats-grid {
+    .home-provenance {
       grid-template-columns: 1fr;
+    }
+
+    .home-orientation li a {
+      grid-template-columns: 1.8rem minmax(0, 1fr);
+    }
+
+    .orientation-count {
+      grid-column: 2;
     }
   }
 </style>

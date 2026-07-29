@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ChannelCard from '../../components/ChannelCard.astro';
+import { getPublishedChannels } from '../../utils/learning';
+import { SITE_URL } from '../../consts';
+
+const channels = await getPublishedChannels();
+---
+
+<BaseLayout
+  title="Channels"
+  description="Curated Doctors Who Code channels covering physician-developer foundations, clinical AI, healthcare data, workflow automation, medical software, and physician ownership."
+  canonical={`${SITE_URL}/channels/`}
+>
+  <div class="page-shell channels-page">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Channels' }]} />
+
+    <header class="channels-header">
+      <p class="label">Channels</p>
+      <h1>Durable subjects. Curated entry points.</h1>
+      <p class="lede-copy">
+        Channels collect the strongest articles, courses, and projects around work that persists. They do not replace granular tags. They give those tags a smaller number of useful destinations.
+      </p>
+    </header>
+
+    <section class="channels-grid" aria-label="Published channels">
+      {channels.map((channel) => <ChannelCard channel={channel} />)}
+    </section>
+
+    <aside class="channels-search">
+      <div>
+        <p class="label">Looking for One Article?</p>
+        <h2>Search the complete publication.</h2>
+      </div>
+      <a href="/blog/#post-search" class="site-button site-button--primary">Search articles</a>
+    </aside>
+  </div>
+</BaseLayout>
+
+<style>
+  .channels-page {
+    display: grid;
+    gap: var(--space-section);
+  }
+
+  .channels-header {
+    max-width: 58rem;
+  }
+
+  .channels-header .label,
+  .channels-search .label {
+    margin-bottom: 0.7rem;
+  }
+
+  .channels-header h1 {
+    max-width: 15ch;
+    margin-bottom: 1rem;
+    font-size: clamp(2.3rem, 1.55rem + 2.8vw, 3.75rem);
+  }
+
+  .channels-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .channels-search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: clamp(1.4rem, 1rem + 1.5vw, 2.1rem);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 1rem;
+    background: var(--dwc-card);
+  }
+
+  .channels-search h2 {
+    margin: 0;
+    font-size: clamp(1.35rem, 1.15rem + 0.8vw, 1.7rem);
+  }
+
+  .channels-search .site-button {
+    flex: 0 0 auto;
+    width: auto;
+  }
+
+  @media (max-width: 850px) {
+    .channels-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .channels-search {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

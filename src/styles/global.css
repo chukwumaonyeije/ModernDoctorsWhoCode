@@ -1,4 +1,10 @@
 @import "tailwindcss";
+@import "@fontsource/dm-sans/400.css";
+@import "@fontsource/dm-sans/400-italic.css";
+@import "@fontsource/dm-sans/500.css";
+@import "@fontsource/dm-sans/600.css";
+@import "@fontsource/syne/700.css";
+@import "@fontsource/syne/800.css";
 
 :root {
   --dwc-navy:   #0a0d1a;
@@ -12,7 +18,7 @@
 
   --font-display: 'Syne', sans-serif;
   --font-body:    'DM Sans', sans-serif;
-  --font-mono:    'JetBrains Mono', monospace;
+  --font-mono:    ui-monospace, 'Cascadia Code', 'SFMono-Regular', Consolas, monospace;
 
   --gradient: linear-gradient(135deg, #a855f7 0%, #38bdf8 100%);
   --font-size-body: clamp(1rem, 0.97rem + 0.24vw, 1.0625rem);
@@ -67,6 +73,15 @@ p {
 
 a { color: var(--dwc-cyan); text-decoration: none; transition: color 0.2s ease; }
 a:hover { color: var(--dwc-blue); }
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid var(--dwc-cyan);
+  outline-offset: 3px;
+}
+
+main:focus {
+  outline: none;
+}
 
 strong, b { font-weight: 600; }
 
@@ -159,6 +174,7 @@ th {
 }
 .prose > :where(h2, h3, h4) {
   margin-top: clamp(2rem, 1.65rem + 1vw, 2.5rem);
+  scroll-margin-top: 6rem;
 }
 .prose > :where(p, ul, ol, blockquote, pre, table, figure) {
   margin-bottom: 1.35rem;
@@ -317,6 +333,37 @@ th {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 1000;
+  padding: 0.65rem 0.9rem;
+  border-radius: 0.5rem;
+  background: var(--dwc-cyan);
+  color: var(--dwc-navy);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  transform: translateY(-180%);
+}
+
+.skip-link:focus {
+  color: var(--dwc-navy);
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 @media (max-width: 900px) {

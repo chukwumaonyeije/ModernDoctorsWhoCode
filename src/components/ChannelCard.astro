@@ -1,0 +1,98 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  channel: CollectionEntry<'channels'>;
+}
+
+const { channel } = Astro.props;
+---
+
+<article class="channel-card">
+  <a href={`/channels/${channel.id}/`}>
+    <span class="channel-number">{String(channel.data.order).padStart(2, '0')}</span>
+    <div>
+      <p class="label">Channel</p>
+      <h2>{channel.data.title}</h2>
+      <p>{channel.data.description}</p>
+      <ul aria-label="Channel topics">
+        {channel.data.topics.slice(0, 4).map((topic) => <li>{topic}</li>)}
+      </ul>
+    </div>
+    <span class="channel-link">Open channel <span aria-hidden="true">→</span></span>
+  </a>
+</article>
+
+<style>
+  .channel-card > a {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    gap: 1rem;
+    height: 100%;
+    padding: clamp(1.2rem, 1rem + 0.8vw, 1.6rem);
+    border: 1px solid var(--dwc-border);
+    border-radius: 1rem;
+    color: inherit;
+    background: var(--dwc-card);
+  }
+
+  .channel-card > a:hover {
+    border-color: rgba(56, 189, 248, 0.5);
+    color: inherit;
+  }
+
+  .channel-number,
+  .channel-link {
+    color: var(--dwc-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .channel-card .label {
+    margin-bottom: 0.45rem;
+  }
+
+  .channel-card h2 {
+    margin-bottom: 0.55rem;
+    font-size: clamp(1.25rem, 1.1rem + 0.55vw, 1.5rem);
+  }
+
+  .channel-card p:not(.label) {
+    color: var(--dwc-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .channel-card ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .channel-card li {
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 999px;
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+  }
+
+  .channel-link {
+    align-self: end;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 620px) {
+    .channel-card > a {
+      grid-template-columns: 1.7rem minmax(0, 1fr);
+    }
+
+    .channel-link {
+      grid-column: 2;
+    }
+  }
+</style>

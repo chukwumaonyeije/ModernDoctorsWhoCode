@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CourseCard from '../../components/CourseCard.astro';
+import { getCourses, getLearningPaths, getLessonsForCourse } from '../../utils/learning';
+import { SITE_URL } from '../../consts';
+
+const [courses, paths] = await Promise.all([getCourses(), getLearningPaths()]);
+const pathMap = new Map(paths.map((path) => [path.id, path]));
+const courseCards = await Promise.all(courses.map(async (course) => ({
+  course,
+  path: pathMap.get(course.data.path.id),
+  lessonCount: (await getLessonsForCourse(course.id)).length,
+})));
+---
+
+<BaseLayout
+  title="Courses"
+  description="Ordered physician-developer courses in coding, clinical AI workflows, and medical software development."
+  canonical={`${SITE_URL}/courses/`}
+>
+  <div class="page-shell courses-page">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Courses' }]} />
+
+    <header class="courses-header">
+      <p class="label">Courses</p>
+      <h1>Sequence changes what an article can teach.</h1>
+      <p class="lede-copy">
+        Each course gives a small set of existing articles an explicit order, defined outcomes, and a project. Begin with the course inside your learning path.
+      </p>
+    </header>
+
+    <section class="courses-grid" aria-label="Published courses">
+      {courseCards.map(({ course, path, lessonCount }) => path && (
+        <CourseCard course={course} path={path} lessonCount={lessonCount} />
+      ))}
+    </section>
+
+    <aside class="courses-orientation">
+      <div>
+        <p class="label">Not Sure Where to Begin?</p>
+        <h2>Choose the work that describes you now.</h2>
+      </div>
+      <a href="/start/" class="site-button site-button--primary">Find your learning path</a>
+    </aside>
+  </div>
+</BaseLayout>
+
+<style>
+  .courses-page {
+    display: grid;
+    gap: var(--space-section);
+  }
+
+  .courses-header {
+    max-width: 57rem;
+  }
+
+  .courses-header .label,
+  .courses-orientation .label {
+    margin-bottom: 0.7rem;
+  }
+
+  .courses-header h1 {
+    max-width: 15ch;
+    margin-bottom: 1rem;
+    font-size: clamp(2.3rem, 1.55rem + 2.8vw, 3.75rem);
+  }
+
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .courses-orientation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 1rem;
+    background: var(--dwc-card);
+  }
+
+  .courses-orientation h2 {
+    max-width: 20ch;
+    margin: 0;
+    font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem);
+  }
+
+  .courses-orientation .site-button {
+    flex: 0 0 auto;
+    width: auto;
+  }
+
+  @media (max-width: 960px) {
+    .courses-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .courses-orientation {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

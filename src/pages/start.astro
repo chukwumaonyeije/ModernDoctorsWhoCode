@@ -1,0 +1,256 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import LearningPathCard from '../components/LearningPathCard.astro';
+import { getCoursesForPath, getLearningPaths, getLessonsForCourse } from '../utils/learning';
+import { SITE_URL } from '../consts';
+
+const paths = await getLearningPaths();
+const prompts = {
+  'learn-to-code': 'I have not shipped code yet.',
+  'use-ai-in-medicine': 'I use AI, but I still coordinate every step.',
+  'build-medical-software': 'I am ready to build a clinical tool.',
+};
+const pathCards = await Promise.all(paths.map(async (path) => {
+  const courses = await getCoursesForPath(path.id);
+  const lessons = (await Promise.all(courses.map((course) => getLessonsForCourse(course.id)))).flat();
+  return {
+    path,
+    courseCount: courses.length,
+    lessonCount: lessons.length,
+    estimatedMinutes: courses.reduce((total, course) => total + course.data.estimatedMinutes, 0),
+  };
+}));
+const startSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Start Here | Doctors Who Code',
+  description: 'Choose the Doctors Who Code learning path that matches where you are in your physician-developer journey.',
+  url: `${SITE_URL}/start/`,
+  isPartOf: { '@id': `${SITE_URL}/#website` },
+};
+---
+
+<BaseLayout
+  title="Start Here"
+  description="Choose the Doctors Who Code learning path that matches where you are in your physician-developer journey."
+  canonical={`${SITE_URL}/start/`}
+  articleSchema={startSchema}
+>
+  <div class="page-shell start-page">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Start Here' }]} />
+
+    <section class="start-hero" aria-labelledby="start-title">
+      <p class="label">Start Here</p>
+      <h1 id="start-title">Start with the work in front of you.</h1>
+      <p class="lede-copy">
+        Physicians enter software from different places. Choose the statement that describes your work now. Each path begins with one course and ends with something you can build.
+      </p>
+    </section>
+
+    <section aria-labelledby="choose-path-title">
+      <div class="section-heading">
+        <div>
+          <p class="label">Choose Your Path</p>
+          <h2 id="choose-path-title">Where are you in the journey?</h2>
+        </div>
+        <p>There is no placement test. Begin with the gap you need to close.</p>
+      </div>
+
+      <div class="path-grid">
+        {pathCards.map(({ path, courseCount, lessonCount, estimatedMinutes }) => (
+          <LearningPathCard
+            path={path}
+            courseCount={courseCount}
+            lessonCount={lessonCount}
+            estimatedMinutes={estimatedMinutes}
+            prompt={prompts[path.id as keyof typeof prompts]}
+          />
+        ))}
+      </div>
+    </section>
+
+    <section class="start-sequence" aria-labelledby="sequence-title">
+      <div>
+        <p class="label">The Sequence</p>
+        <h2 id="sequence-title">Learn. Apply. Build.</h2>
+        <p class="lede-copy">
+          The archive remains available. The paths give it order.
+        </p>
+      </div>
+      <ol>
+        <li>
+          <span>01</span>
+          <div>
+            <h3>Choose one path</h3>
+            <p>Start with your present constraint, not the most advanced topic.</p>
+          </div>
+        </li>
+        <li>
+          <span>02</span>
+          <div>
+            <h3>Complete one course</h3>
+            <p>Read in sequence. Each lesson earns the next.</p>
+          </div>
+        </li>
+        <li>
+          <span>03</span>
+          <div>
+            <h3>Build the project</h3>
+            <p>Knowledge becomes useful when it changes a workflow or produces a working system.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <aside class="start-fallback" aria-labelledby="fallback-title">
+      <div>
+        <p class="label">Not Sure Yet</p>
+        <h2 id="fallback-title">Begin with the smallest build.</h2>
+        <p>
+          If two paths appear to fit, start with Learn to Code. Version control, structured data, and a finished small project support everything that follows.
+        </p>
+      </div>
+      <a href="/paths/learn-to-code/" class="site-button site-button--secondary">Open Learn to Code</a>
+    </aside>
+  </div>
+</BaseLayout>
+
+<style>
+  .start-page {
+    display: grid;
+    gap: var(--space-section);
+  }
+
+  .start-hero {
+    max-width: 52rem;
+    padding-block: clamp(1rem, 0.5rem + 2vw, 2rem);
+  }
+
+  .start-hero .label,
+  .section-heading .label,
+  .start-sequence .label,
+  .start-fallback .label {
+    margin-bottom: 0.7rem;
+  }
+
+  .start-hero h1 {
+    max-width: 13ch;
+    margin-bottom: 1rem;
+    font-size: clamp(2.35rem, 1.55rem + 3vw, 4rem);
+  }
+
+  .section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-heading h2 {
+    margin: 0;
+  }
+
+  .section-heading > p {
+    max-width: 34rem;
+    margin: 0;
+    color: var(--dwc-muted);
+  }
+
+  .path-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .start-sequence {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    border: 1px solid var(--dwc-border);
+    border-radius: 1rem;
+    background: var(--dwc-card);
+  }
+
+  .start-sequence ol {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .start-sequence li {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--dwc-border);
+  }
+
+  .start-sequence li:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .start-sequence li > span {
+    color: var(--dwc-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
+  .start-sequence h3 {
+    margin-bottom: 0.3rem;
+    font-size: 1.05rem;
+  }
+
+  .start-sequence li p {
+    margin: 0;
+    color: var(--dwc-muted);
+    font-size: 0.94rem;
+  }
+
+  .start-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    border-left: 3px solid var(--dwc-cyan);
+    background: rgba(56, 189, 248, 0.06);
+  }
+
+  .start-fallback h2 {
+    font-size: 1.35rem;
+  }
+
+  .start-fallback p {
+    margin: 0;
+    color: var(--dwc-muted);
+  }
+
+  .start-fallback .site-button {
+    flex: 0 0 auto;
+    width: auto;
+  }
+
+  @media (max-width: 960px) {
+    .path-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .section-heading,
+    .start-fallback {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .start-sequence {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

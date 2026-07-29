@@ -1,0 +1,60 @@
+---
+interface Props {
+  outcomes: string[];
+  title?: string;
+}
+
+const { outcomes, title = 'What you will learn' } = Astro.props;
+---
+
+<section class="outcome-block" aria-labelledby="learning-outcomes-title">
+  <p class="label">Course Outcomes</p>
+  <h2 id="learning-outcomes-title">{title}</h2>
+  <ul>
+    {outcomes.map((outcome) => <li>{outcome}</li>)}
+  </ul>
+</section>
+
+<style>
+  .outcome-block {
+    padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    border: 1px solid var(--dwc-border);
+    border-radius: 1rem;
+    background: var(--dwc-card);
+  }
+
+  .outcome-block .label {
+    margin-bottom: 0.65rem;
+  }
+
+  .outcome-block h2 {
+    margin-bottom: 1rem;
+    font-size: clamp(1.35rem, 1.15rem + 0.7vw, 1.65rem);
+  }
+
+  .outcome-block ul {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .outcome-block li {
+    position: relative;
+    padding-left: 1.4rem;
+    color: var(--dwc-muted);
+    line-height: 1.6;
+  }
+
+  .outcome-block li::before {
+    content: '';
+    position: absolute;
+    top: 0.68em;
+    left: 0;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 999px;
+    background: var(--dwc-cyan);
+  }
+</style>

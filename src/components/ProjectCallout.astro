@@ -1,0 +1,130 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  headingLevel?: 'h2' | 'h3';
+  compact?: boolean;
+}
+
+const { project, headingLevel = 'h2', compact = false } = Astro.props;
+const Heading = headingLevel;
+---
+
+<aside class:list={['project-callout', { 'is-compact': compact }]} aria-labelledby={`project-${project.id}-title`}>
+  <div>
+    <p class="label">Build What You Learn</p>
+    <Heading id={`project-${project.id}-title`}><a href={`/projects/${project.id}/`}>{project.data.title}</a></Heading>
+    <p>{project.data.description}</p>
+  </div>
+  <div class="project-callout-details">
+    <dl>
+      {project.data.estimatedHours && (
+        <div>
+          <dt>Expected time</dt>
+          <dd>{project.data.estimatedHours} hours</dd>
+        </div>
+      )}
+      <div>
+        <dt>Difficulty</dt>
+        <dd>{project.data.difficulty}</dd>
+      </div>
+    </dl>
+    <ul aria-label="Project skills">
+      {project.data.skills.map((skill) => <li>{skill}</li>)}
+    </ul>
+  </div>
+</aside>
+
+<style>
+  .project-callout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
+    gap: clamp(1.5rem, 1rem + 2vw, 3rem);
+    padding: clamp(1.4rem, 1rem + 1.5vw, 2.25rem);
+    border: 1px solid rgba(56, 189, 248, 0.28);
+    border-radius: 1rem;
+    background:
+      radial-gradient(circle at right top, rgba(168, 85, 247, 0.1), transparent 38%),
+      var(--dwc-card);
+  }
+
+  .project-callout.is-compact {
+    margin-top: 2.5rem;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .project-callout .label {
+    margin-bottom: 0.6rem;
+  }
+
+  .project-callout h2,
+  .project-callout h3 {
+    margin-bottom: 0.65rem;
+  }
+
+  .project-callout :is(h2, h3) a {
+    color: inherit;
+  }
+
+  .project-callout :is(h2, h3) a:hover {
+    color: var(--dwc-cyan);
+  }
+
+  .project-callout > div > p:not(.label) {
+    margin: 0;
+    color: var(--dwc-muted);
+  }
+
+  .project-callout-details {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .project-callout dl {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin: 0;
+  }
+
+  .project-callout dt {
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .project-callout dd {
+    margin: 0.2rem 0 0;
+    color: var(--dwc-white);
+    font-size: 0.88rem;
+    text-transform: capitalize;
+  }
+
+  .project-callout ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .project-callout li {
+    padding: 0.25rem 0.55rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 999px;
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  @media (max-width: 760px) {
+    .project-callout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
