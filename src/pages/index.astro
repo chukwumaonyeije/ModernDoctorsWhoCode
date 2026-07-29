@@ -541,8 +541,26 @@ const homeSchema = {
     padding-bottom: 0;
   }
 
+  @media (max-width: 1180px) {
+    .home-hero {
+      grid-template-columns: 1fr;
+      gap: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    }
+
+    .home-hero h1 {
+      max-width: 14ch;
+    }
+
+    .home-orientation {
+      width: min(100%, 48rem);
+    }
+
+    .home-orientation h2 {
+      max-width: 25ch;
+    }
+  }
+
   @media (max-width: 980px) {
-    .home-hero,
     .home-start {
       grid-template-columns: 1fr;
     }
@@ -550,10 +568,6 @@ const homeSchema = {
     .home-path-grid,
     .home-project-grid {
       grid-template-columns: 1fr;
-    }
-
-    .home-orientation h2 {
-      max-width: 25ch;
     }
   }
 
