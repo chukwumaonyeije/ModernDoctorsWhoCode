@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import LearningPathCard from '../../components/LearningPathCard.astro';
+import { getCoursesForPath, getLearningPaths, getLessonsForCourse } from '../../utils/learning';
+import { SITE_URL } from '../../consts';
+
+const paths = await getLearningPaths();
+const pathCards = await Promise.all(paths.map(async (path) => {
+  const courses = await getCoursesForPath(path.id);
+  const lessons = (await Promise.all(courses.map((course) => getLessonsForCourse(course.id)))).flat();
+  return {
+    path,
+    courseCount: courses.length,
+    lessonCount: lessons.length,
+    estimatedMinutes: courses.reduce((total, course) => total + course.data.estimatedMinutes, 0),
+  };
+}));
+---
+
+<BaseLayout
+  title="Learning Paths"
+  description="Three guided learning paths for physicians who want to learn code, use AI in medicine, or build medical software."
+  canonical={`${SITE_URL}/paths/`}
+>
+  <div class="page-shell paths-page">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Learning Paths' }]} />
+
+    <header class="paths-header">
+      <p class="label">Learning Paths</p>
+      <h1>One destination. Three starting points.</h1>
+      <p class="lede-copy">
+        Every path develops the same identity: a physician who can inspect, build, and take responsibility for software. The sequence changes because the starting work is different.
+      </p>
+    </header>
+
+    <div class="paths-grid">
+      {pathCards.map(({ path, courseCount, lessonCount, estimatedMinutes }) => (
+        <LearningPathCard
+          path={path}
+          courseCount={courseCount}
+          lessonCount={lessonCount}
+          estimatedMinutes={estimatedMinutes}
+        />
+      ))}
+    </div>
+
+    <section class="paths-principle" aria-labelledby="principle-title">
+      <p class="label">The Governing Principle</p>
+      <h2 id="principle-title">Read toward a build.</h2>
+      <p>
+        Articles become lessons when they have a defined place in a sequence. Lessons become a course when they produce competence. The project is where that competence becomes visible.
+      </p>
+      <a href="/start/" class="site-button site-button--secondary">Help me choose a path</a>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .paths-page {
+    display: grid;
+    gap: var(--space-section);
+  }
+
+  .paths-header {
+    max-width: 55rem;
+  }
+
+  .paths-header .label,
+  .paths-principle .label {
+    margin-bottom: 0.75rem;
+  }
+
+  .paths-header h1 {
+    max-width: 15ch;
+    margin-bottom: 1rem;
+    font-size: clamp(2.35rem, 1.6rem + 2.8vw, 3.8rem);
+  }
+
+  .paths-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .paths-principle {
+    max-width: 52rem;
+    padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+    border: 1px solid var(--dwc-border);
+    border-radius: 1rem;
+    background: var(--dwc-card);
+  }
+
+  .paths-principle p:not(.label) {
+    color: var(--dwc-muted);
+  }
+
+  .paths-principle .site-button {
+    width: auto;
+  }
+
+  @media (max-width: 960px) {
+    .paths-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

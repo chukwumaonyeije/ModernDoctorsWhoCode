@@ -1,0 +1,122 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  course: CollectionEntry<'courses'>;
+  path: CollectionEntry<'paths'>;
+  lessonCount: number;
+}
+
+const { course, path, lessonCount } = Astro.props;
+---
+
+<article class="course-card">
+  <a href={`/courses/${course.id}/`} aria-label={`Open ${course.data.title}`}>
+    <div class="course-card-topline">
+      <span class="label">{path.data.title}</span>
+      <span class="course-order">Course {course.data.order}</span>
+    </div>
+    <h2>{course.data.title}</h2>
+    <p>{course.data.description}</p>
+    <div class="course-card-meta" aria-label="Course details">
+      <span>{course.data.difficulty}</span>
+      <span>{course.data.estimatedMinutes} min</span>
+      <span>{lessonCount} {lessonCount === 1 ? 'lesson' : 'lessons'}</span>
+    </div>
+    <div class="course-card-outcome">
+      <span>First outcome</span>
+      <strong>{course.data.outcomes[0]}</strong>
+    </div>
+    <span class="course-card-link">View course <span aria-hidden="true">→</span></span>
+  </a>
+</article>
+
+<style>
+  .course-card,
+  .course-card > a {
+    height: 100%;
+  }
+
+  .course-card > a {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.25rem, 1rem + 1vw, 1.65rem);
+    border: 1px solid var(--dwc-border);
+    border-radius: 1rem;
+    color: inherit;
+    background: var(--dwc-card);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .course-card > a:hover {
+    border-color: rgba(56, 189, 248, 0.5);
+    color: inherit;
+    transform: translateY(-2px);
+  }
+
+  .course-card-topline,
+  .course-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .course-card-topline {
+    justify-content: space-between;
+    margin-bottom: 0.85rem;
+  }
+
+  .course-order,
+  .course-card-meta span,
+  .course-card-outcome > span {
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .course-card h2 {
+    margin-bottom: 0.7rem;
+    font-size: clamp(1.35rem, 1.18rem + 0.65vw, 1.6rem);
+  }
+
+  .course-card > a > p {
+    color: var(--dwc-muted);
+    font-size: 0.94rem;
+    line-height: 1.65;
+  }
+
+  .course-card-meta span {
+    padding: 0.25rem 0.55rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 999px;
+    text-transform: capitalize;
+  }
+
+  .course-card-outcome {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 1.25rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--dwc-border);
+  }
+
+  .course-card-outcome > span {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .course-card-outcome strong {
+    color: var(--dwc-white);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .course-card-link {
+    margin-top: auto;
+    padding-top: 1.25rem;
+    color: var(--dwc-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+</style>

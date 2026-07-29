@@ -1,0 +1,134 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  lesson: CollectionEntry<'lessons'>;
+  course: CollectionEntry<'courses'>;
+  path: CollectionEntry<'paths'>;
+}
+
+const { lesson, course, path } = Astro.props;
+---
+
+<section class="lesson-context" aria-labelledby="lesson-context-title">
+  <div class="lesson-context-heading">
+    <div>
+      <p class="label">In This Lesson</p>
+      <h2 id="lesson-context-title">Read with a defined objective.</h2>
+    </div>
+    <a href={`/courses/${course.id}/`}>View the complete course</a>
+  </div>
+
+  <div class="lesson-context-grid">
+    <div>
+      <h3>Learning objectives</h3>
+      <ul>
+        {lesson.data.learningObjectives.map((objective) => <li>{objective}</li>)}
+      </ul>
+    </div>
+    <div>
+      <h3>Prerequisites</h3>
+      {lesson.data.prerequisites.length > 0 ? (
+        <ul>
+          {lesson.data.prerequisites.map((prerequisite) => <li>{prerequisite}</li>)}
+        </ul>
+      ) : (
+        <p>No prior lesson is required. Begin with the problem in front of you.</p>
+      )}
+    </div>
+  </div>
+
+  <p class="lesson-context-path">
+    <span>{path.data.title}</span>
+    <span aria-hidden="true">/</span>
+    <span>{course.data.title}</span>
+  </p>
+</section>
+
+<style>
+  .lesson-context {
+    margin-bottom: 2rem;
+    padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 1rem;
+    background:
+      linear-gradient(120deg, rgba(56, 189, 248, 0.06), transparent 55%),
+      var(--dwc-card);
+  }
+
+  .lesson-context-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .lesson-context-heading .label {
+    margin-bottom: 0.55rem;
+  }
+
+  .lesson-context-heading h2 {
+    margin: 0;
+    font-size: clamp(1.25rem, 1.08rem + 0.7vw, 1.55rem);
+  }
+
+  .lesson-context-heading > a {
+    flex: 0 0 auto;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+  }
+
+  .lesson-context-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--dwc-border);
+  }
+
+  .lesson-context h3 {
+    margin-bottom: 0.65rem;
+    font-size: 0.92rem;
+  }
+
+  .lesson-context ul {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0;
+    padding-left: 1.15rem;
+    color: var(--dwc-muted);
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  .lesson-context-grid p {
+    margin: 0;
+    color: var(--dwc-muted);
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  .lesson-context-path {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 1.25rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--dwc-border);
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  @media (max-width: 680px) {
+    .lesson-context-heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .lesson-context-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

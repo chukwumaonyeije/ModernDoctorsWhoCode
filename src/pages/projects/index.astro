@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getProjects } from '../../utils/learning';
+import { SITE_URL } from '../../consts';
+
+const projects = await getProjects();
+---
+
+<BaseLayout
+  title="Projects"
+  description="Applied physician-developer project briefs for coding, clinical AI workflows, and tested medical software."
+  canonical={`${SITE_URL}/projects/`}
+>
+  <div class="page-shell projects-page">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Projects' }]} />
+
+    <header class="projects-header">
+      <p class="label">Projects</p>
+      <h1>Competence becomes visible when something works.</h1>
+      <p class="lede-copy">
+        Each project closes a course with a bounded build. The goal is not scale. The goal is explicit behavior, a recoverable history, and evidence that the tool does what you claim.
+      </p>
+    </header>
+
+    <section class="projects-grid" aria-label="Project briefs">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </section>
+
+    <aside class="projects-principle">
+      <p class="label">The Build Rule</p>
+      <h2>Define the boundary before you choose the tool.</h2>
+      <p>A narrow input, a visible transformation, and an inspectable output are enough for the first version.</p>
+      <a href="/courses/" class="site-button site-button--secondary">Browse the courses</a>
+    </aside>
+  </div>
+</BaseLayout>
+
+<style>
+  .projects-page {
+    display: grid;
+    gap: var(--space-section);
+  }
+
+  .projects-header {
+    max-width: 57rem;
+  }
+
+  .projects-header .label,
+  .projects-principle .label {
+    margin-bottom: 0.7rem;
+  }
+
+  .projects-header h1 {
+    max-width: 16ch;
+    margin-bottom: 1rem;
+    font-size: clamp(2.3rem, 1.55rem + 2.8vw, 3.75rem);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .projects-principle {
+    max-width: 54rem;
+    padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+    border: 1px solid var(--dwc-border);
+    border-radius: 1rem;
+    background: var(--dwc-card);
+  }
+
+  .projects-principle h2 {
+    font-size: clamp(1.45rem, 1.2rem + 0.9vw, 1.8rem);
+  }
+
+  .projects-principle p:not(.label) {
+    color: var(--dwc-muted);
+  }
+
+  .projects-principle .site-button {
+    width: auto;
+  }
+
+  @media (max-width: 960px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

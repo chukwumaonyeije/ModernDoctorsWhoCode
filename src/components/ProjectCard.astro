@@ -1,0 +1,139 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+---
+
+<article class="project-card">
+  <a href={`/projects/${project.id}/`} aria-label={`Open project brief: ${project.data.title}`}>
+    <div class="project-card-topline">
+      <span class="label">Project Brief</span>
+      <span class="project-status">{project.data.status}</span>
+    </div>
+    <h2>{project.data.title}</h2>
+    <p>{project.data.description}</p>
+    <dl>
+      {project.data.estimatedHours && (
+        <div>
+          <dt>Time</dt>
+          <dd>{project.data.estimatedHours} hours</dd>
+        </div>
+      )}
+      <div>
+        <dt>Difficulty</dt>
+        <dd>{project.data.difficulty}</dd>
+      </div>
+    </dl>
+    <ul aria-label="Project skills">
+      {project.data.skills.slice(0, 4).map((skill) => <li>{skill}</li>)}
+    </ul>
+    <span class="project-card-link">Read the brief <span aria-hidden="true">→</span></span>
+  </a>
+</article>
+
+<style>
+  .project-card,
+  .project-card > a {
+    height: 100%;
+  }
+
+  .project-card > a {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.25rem, 1rem + 1vw, 1.65rem);
+    border: 1px solid var(--dwc-border);
+    border-radius: 1rem;
+    color: inherit;
+    background:
+      radial-gradient(circle at right top, rgba(56, 189, 248, 0.08), transparent 35%),
+      var(--dwc-card);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .project-card > a:hover {
+    border-color: rgba(56, 189, 248, 0.5);
+    color: inherit;
+    transform: translateY(-2px);
+  }
+
+  .project-card-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .project-status {
+    padding: 0.2rem 0.5rem;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 999px;
+    color: var(--dwc-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+  }
+
+  .project-card h2 {
+    margin-bottom: 0.65rem;
+    font-size: clamp(1.35rem, 1.17rem + 0.7vw, 1.65rem);
+  }
+
+  .project-card > a > p {
+    color: var(--dwc-muted);
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+
+  .project-card dl {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin: 0.25rem 0 1rem;
+  }
+
+  .project-card dt {
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .project-card dd {
+    margin: 0.15rem 0 0;
+    color: var(--dwc-white);
+    font-size: 0.85rem;
+    text-transform: capitalize;
+  }
+
+  .project-card ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .project-card li {
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 999px;
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+  }
+
+  .project-card-link {
+    margin-top: auto;
+    padding-top: 1.25rem;
+    color: var(--dwc-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+  }
+</style>

@@ -1,0 +1,328 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CourseCard from '../../components/CourseCard.astro';
+import { getLessonsForCourse, getProjectContext, getProjects } from '../../utils/learning';
+import { SITE_URL } from '../../consts';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const context = await getProjectContext(project.id);
+if (!context) throw new Error(`Project ${project.id} could not be resolved.`);
+const { paths, courses, lessons } = context;
+const { Content } = await render(project);
+const courseCards = await Promise.all(courses.map(async (course) => ({
+  course,
+  path: paths.find((path) => path?.id === course.data.path.id),
+  lessonCount: (await getLessonsForCourse(course.id)).length,
+})));
+const projectUrl = `${SITE_URL}/projects/${project.id}/`;
+const projectSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: project.data.title,
+  description: project.data.description,
+  totalTime: project.data.estimatedHours ? `PT${project.data.estimatedHours}H` : undefined,
+  supply: project.data.skills.map((skill) => ({ '@type': 'HowToSupply', name: skill })),
+  url: projectUrl,
+};
+---
+
+<BaseLayout
+  title={project.data.title}
+  description={project.data.description}
+  canonical={projectUrl}
+  articleSchema={projectSchema}
+>
+  <div class="page-shell project-page">
+    <Breadcrumbs items={[
+      { label: 'Home', href: '/' },
+      { label: 'Projects', href: '/projects/' },
+      { label: project.data.title },
+    ]} />
+
+    <header class="project-hero">
+      <div>
+        <p class="label">Applied Project / {project.data.status}</p>
+        <h1>{project.data.title}</h1>
+        <p class="lede-copy">{project.data.description}</p>
+        <div class="project-paths">
+          {paths.map((path) => path && <a href={`/paths/${path.id}/`}>{path.data.title}</a>)}
+        </div>
+      </div>
+      <dl class="project-specification">
+        {project.data.estimatedHours && (
+          <div>
+            <dt>Expected time</dt>
+            <dd>{project.data.estimatedHours} hours</dd>
+          </div>
+        )}
+        <div>
+          <dt>Difficulty</dt>
+          <dd>{project.data.difficulty}</dd>
+        </div>
+        <div>
+          <dt>Project state</dt>
+          <dd>{project.data.status}</dd>
+        </div>
+      </dl>
+    </header>
+
+    <section class="project-brief" aria-labelledby="brief-title">
+      <div>
+        <p class="label">The Brief</p>
+        <h2 id="brief-title">Build the smallest version that proves the behavior.</h2>
+      </div>
+      <div class="project-body"><Content /></div>
+    </section>
+
+    <section class="project-skills" aria-labelledby="skills-title">
+      <p class="label">Skills Under Load</p>
+      <h2 id="skills-title">What this project makes you practice</h2>
+      <ul>
+        {project.data.skills.map((skill) => <li>{skill}</li>)}
+      </ul>
+    </section>
+
+    {lessons.length > 0 && (
+      <section class="project-lessons" aria-labelledby="project-lessons-title">
+        <div class="project-section-heading">
+          <div>
+            <p class="label">Preparation</p>
+            <h2 id="project-lessons-title">Read before you build.</h2>
+          </div>
+          <p>The lessons define the vocabulary and constraints. The project tests whether you can use them together.</p>
+        </div>
+        <ol>
+          {lessons.map((lesson) => (
+            <li>
+              <a href={`/blog/${lesson.data.article.id}/`}>
+                <span>{String(lesson.data.lessonNumber).padStart(2, '0')}</span>
+                <strong>{lesson.data.title}</strong>
+                <small>{lesson.data.estimatedMinutes} min</small>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
+
+    {courseCards.length > 0 && (
+      <section class="project-courses" aria-labelledby="project-course-title">
+        <div class="project-section-heading">
+          <div>
+            <p class="label">Course Context</p>
+            <h2 id="project-course-title">The sequence behind the build</h2>
+          </div>
+        </div>
+        <div class="project-course-grid">
+          {courseCards.map(({ course, path, lessonCount }) => path && (
+            <CourseCard course={course} path={path} lessonCount={lessonCount} />
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .project-page {
+    display: grid;
+    gap: var(--space-section);
+  }
+
+  .project-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(16rem, 0.8fr);
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+  }
+
+  .project-hero .label,
+  .project-brief .label,
+  .project-skills .label,
+  .project-section-heading .label {
+    margin-bottom: 0.65rem;
+  }
+
+  .project-hero h1 {
+    max-width: 14ch;
+    margin-bottom: 1rem;
+    font-size: clamp(2.4rem, 1.6rem + 3vw, 3.9rem);
+  }
+
+  .project-paths {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.3rem;
+  }
+
+  .project-paths a {
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .project-specification {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--dwc-border);
+    border-radius: 1rem;
+    background: var(--dwc-card);
+  }
+
+  .project-specification div {
+    padding: 1.1rem 1.25rem;
+  }
+
+  .project-specification div + div {
+    border-top: 1px solid var(--dwc-border);
+  }
+
+  .project-specification dt {
+    color: var(--dwc-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .project-specification dd {
+    margin: 0.25rem 0 0;
+    text-transform: capitalize;
+  }
+
+  .project-brief {
+    display: grid;
+    grid-template-columns: minmax(15rem, 0.75fr) minmax(0, 1.25fr);
+    gap: clamp(1.5rem, 1rem + 3vw, 4rem);
+    padding: clamp(1.4rem, 1rem + 1.5vw, 2.25rem);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 1rem;
+    background: var(--dwc-card);
+  }
+
+  .project-brief h2 {
+    font-size: clamp(1.45rem, 1.2rem + 0.9vw, 1.8rem);
+  }
+
+  .project-body :global(p) {
+    color: var(--dwc-muted);
+  }
+
+  .project-body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .project-skills {
+    max-width: 54rem;
+  }
+
+  .project-skills ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .project-skills li {
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 999px;
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .project-section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .project-section-heading h2 {
+    margin: 0;
+  }
+
+  .project-section-heading > p {
+    max-width: 32rem;
+    margin: 0;
+    color: var(--dwc-muted);
+  }
+
+  .project-lessons ol {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 0.65rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .project-lessons a {
+    display: grid;
+    grid-template-columns: 1.8rem minmax(0, 1fr);
+    gap: 0.6rem;
+    height: 100%;
+    padding: 0.9rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 0.7rem;
+    color: inherit;
+    background: var(--dwc-card);
+  }
+
+  .project-lessons a:hover {
+    border-color: rgba(56, 189, 248, 0.5);
+    color: inherit;
+  }
+
+  .project-lessons a > span,
+  .project-lessons small {
+    color: var(--dwc-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .project-lessons strong {
+    color: var(--dwc-white);
+    font-size: 0.84rem;
+    line-height: 1.4;
+  }
+
+  .project-lessons small {
+    grid-column: 2;
+    color: var(--dwc-muted);
+  }
+
+  .project-course-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 28rem);
+  }
+
+  @media (max-width: 800px) {
+    .project-hero,
+    .project-brief {
+      grid-template-columns: 1fr;
+    }
+
+    .project-section-heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

@@ -2,19 +2,14 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/PostCard.astro';
-import { buildTagIndex, slugifyTag } from '../../utils/tags';
 import { sortBlogPosts } from '../../utils/blog';
+import { getLearningPaths } from '../../utils/learning';
+import { ARTICLE_FORMATS, CONTROLLED_TOPICS } from '../../data/taxonomy';
 import { SITE_URL } from '../../consts';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const sortedPosts = sortBlogPosts(allPosts);
-const initialQuery = Astro.url.searchParams.get('q')?.trim() ?? '';
-
-const tagIndex = buildTagIndex(sortedPosts.flatMap((post) => post.data.tags));
-const allTags = [...tagIndex.entries()]
-  .filter(([, value]) => value.count >= 3)
-  .sort((a, b) => b[1].count - a[1].count)
-  .map(([slug, value]) => ({ slug, label: value.label }));
+const paths = await getLearningPaths();
 const blogSchema = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -22,237 +17,412 @@ const blogSchema = {
       '@type': 'Blog',
       '@id': `${SITE_URL}/blog#blog`,
       url: `${SITE_URL}/blog`,
-      name: 'Doctors Who Code Blog',
+      name: 'Doctors Who Code Articles',
       description: 'Physician-developer writing on AI in medicine, clinical software, interoperability, and maternal-fetal medicine.',
-      publisher: {
-        '@id': `${SITE_URL}/#organization`,
-      },
-      author: {
-        '@id': `${SITE_URL}/about#person`,
-      },
+      publisher: { '@id': `${SITE_URL}/#organization` },
+      author: { '@id': `${SITE_URL}/chukwuma-onyeije#person` },
     },
     {
       '@type': 'CollectionPage',
       '@id': `${SITE_URL}/blog#webpage`,
       url: `${SITE_URL}/blog`,
-      name: 'Doctors Who Code Blog',
-      description: 'Browse all Doctors Who Code posts by Chukwuma Onyeije, MD, FACOG.',
-      mainEntity: {
-        '@id': `${SITE_URL}/blog#blog`,
-      },
-      isPartOf: {
-        '@id': `${SITE_URL}/#website`,
-      },
+      name: 'Doctors Who Code Articles',
+      description: 'Search and filter the complete Doctors Who Code publication.',
+      mainEntity: { '@id': `${SITE_URL}/blog#blog` },
+      isPartOf: { '@id': `${SITE_URL}/#website` },
     },
   ],
 };
 ---
 
 <BaseLayout
-  title="Physician-Developer Blog"
-  description="Physician-developer insights on AI in medicine, clinical software, MFM practice, and building tools that actually work at the bedside."
-  canonical="https://www.doctorswhocode.blog/blog"
+  title="Physician-Developer Articles"
+  description="Search Doctors Who Code articles by learning path, format, difficulty, durable topic, and publication date."
+  canonical={`${SITE_URL}/blog`}
   articleSchema={blogSchema}
 >
-  <div class="page-shell">
-
-    <!-- Header -->
-    <div class="blog-index-header">
+  <div class="page-shell article-index">
+    <header class="article-index-header">
       <div>
-        <p class="label" style="margin-bottom: 0.5rem;">All Posts</p>
-        <h1 class="gradient-text blog-index-title">The Blog</h1>
-        <p class="blog-index-intro">
-          Essays, build notes, and physician-developer arguments from Chukwuma Onyeije, MD, FACOG.
-          Search by idea, or filter by recurring topics.
+        <p class="label">Articles</p>
+        <h1>Search the complete publication.</h1>
+        <p class="lede-copy">
+          Courses provide sequence. Channels provide durable subjects. The archive preserves every published argument, build note, tutorial, and clinical analysis.
         </p>
       </div>
-      <input
-        type="search"
-        id="post-search"
-        placeholder="Search posts..."
-        class="site-input blog-index-search"
-        value={initialQuery}
-      />
-    </div>
+      <a href="/channels/" class="site-button site-button--secondary">Browse channels</a>
+    </header>
 
-    <!-- Tag filter — single scrollable row -->
-    <div class="blog-index-tags mobile-scroll">
-      <div class="blog-index-tags-row" id="tag-filters">
-        <button class="tag-btn blog-tag-button blog-tag-button--active" data-tag="all">All</button>
-        {allTags.map(tag => (
-          <button class="tag-btn blog-tag-button" data-tag={tag.slug}>{tag.label}</button>
+    <form class="article-discovery" id="article-discovery" role="search" aria-label="Search and filter articles">
+      <div class="article-search-field">
+        <label for="post-search">Search articles</label>
+        <input
+          type="search"
+          id="post-search"
+          name="q"
+          placeholder="Search titles, descriptions, and topics"
+          class="site-input"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="article-filters">
+        <label>
+          <span>Learning path</span>
+          <select name="path" class="site-input">
+            <option value="">All paths</option>
+            {paths.map((path) => <option value={path.id}>{path.data.title}</option>)}
+          </select>
+        </label>
+
+        <label>
+          <span>Format</span>
+          <select name="format" class="site-input">
+            <option value="">All formats</option>
+            {ARTICLE_FORMATS.map((format) => <option value={format.id}>{format.label}</option>)}
+          </select>
+        </label>
+
+        <label>
+          <span>Difficulty</span>
+          <select name="difficulty" class="site-input">
+            <option value="">All levels</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Topic</span>
+          <select name="topic" class="site-input">
+            <option value="">All topics</option>
+            {CONTROLLED_TOPICS.map((topic) => <option value={topic.id}>{topic.label}</option>)}
+          </select>
+        </label>
+
+        <label>
+          <span>Published</span>
+          <select name="recency" class="site-input">
+            <option value="">Any time</option>
+            <option value="90-days">Past 90 days</option>
+            <option value="this-year">This year</option>
+            <option value="earlier">Earlier years</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="article-discovery-footer">
+        <p id="article-result-count" role="status" aria-live="polite">{sortedPosts.length} articles</p>
+        <button type="reset" class="article-reset">Clear search and filters</button>
+      </div>
+    </form>
+
+    <section aria-label="Article results">
+      <div id="posts-grid" class="article-index-grid" aria-busy="false">
+        {sortedPosts.map((post) => (
+          <div class="post-item" data-post-id={post.id}>
+            <PostCard
+              title={post.data.title}
+              description={post.data.description}
+              pubDate={post.data.pubDate}
+              slug={post.id}
+              tags={post.data.tags}
+              category={post.data.category}
+              readingTime={post.data.readingTime}
+              image={post.data.image}
+              featured={post.data.featured}
+            />
+          </div>
         ))}
       </div>
-    </div>
 
-    <!-- Posts grid -->
-    <div id="posts-grid" class="blog-index-grid">
-      {sortedPosts.map(post => (
-        <div class="post-item" data-tags={post.data.tags.map(tag => slugifyTag(tag)).join(',')} data-title={post.data.title.toLowerCase()} data-description={post.data.description.toLowerCase()}>
-          <PostCard
-            title={post.data.title}
-            description={post.data.description}
-            pubDate={post.data.pubDate}
-            slug={post.id}
-            tags={post.data.tags}
-            category={post.data.category}
-            readingTime={post.data.readingTime}
-            image={post.data.image}
-            featured={post.data.featured}
-          />
-        </div>
-      ))}
-    </div>
-
-    <!-- Empty state -->
-    <div id="no-results" class="blog-index-empty">
-      <p class="eyebrow-copy">No posts match that filter.</p>
-    </div>
-
+      <div id="no-results" class="article-index-empty" hidden>
+        <p class="label">No Match</p>
+        <h2>The archive does not contain that combination.</h2>
+        <p>Remove one filter or search with a more specific clinical or technical term.</p>
+        <button type="button" class="site-button site-button--secondary" data-clear-discovery>Clear search and filters</button>
+      </div>
+    </section>
   </div>
 </BaseLayout>
 
 <script>
-  const tagBtns = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
-  const postItems = document.querySelectorAll<HTMLElement>('.post-item');
-  const searchInput = document.getElementById('post-search') as HTMLInputElement;
-  const noResults = document.getElementById('no-results')!;
-
-  let activeTag = 'all';
-  let searchQuery = searchInput?.value.toLowerCase().trim() ?? '';
-
-  function paintActiveTag() {
-    tagBtns.forEach((btn) => {
-      const isActive = (btn.dataset.tag ?? 'all') === activeTag;
-      btn.style.borderColor = isActive ? 'var(--dwc-cyan)' : 'var(--dwc-border)';
-      btn.style.color = isActive ? 'var(--dwc-navy)' : 'var(--dwc-muted)';
-      btn.style.backgroundColor = isActive ? 'var(--dwc-cyan)' : 'transparent';
-    });
+  interface SearchRecord {
+    id: string;
+    title: string;
+    description: string;
+    category: string;
+    topics: string[];
+    format: string;
+    path?: string;
+    difficulty?: string;
+    published: string;
+    year: number;
+    keywords: string[];
   }
 
-  function syncQueryParam() {
+  const form = document.getElementById('article-discovery') as HTMLFormElement;
+  const grid = document.getElementById('posts-grid') as HTMLElement;
+  const count = document.getElementById('article-result-count') as HTMLElement;
+  const empty = document.getElementById('no-results') as HTMLElement;
+  const items = new Map(
+    [...document.querySelectorAll<HTMLElement>('.post-item')].map((item) => [item.dataset.postId ?? '', item]),
+  );
+  let indexPromise: Promise<SearchRecord[]> | undefined;
+
+  function loadIndex() {
+    indexPromise ??= fetch('/search-index.json')
+      .then((response) => {
+        if (!response.ok) throw new Error('Search index unavailable');
+        return response.json() as Promise<SearchRecord[]>;
+      });
+    return indexPromise;
+  }
+
+  function getState() {
+    const data = new FormData(form);
+    return {
+      q: String(data.get('q') ?? '').trim().toLowerCase(),
+      path: String(data.get('path') ?? ''),
+      format: String(data.get('format') ?? ''),
+      difficulty: String(data.get('difficulty') ?? ''),
+      topic: String(data.get('topic') ?? ''),
+      recency: String(data.get('recency') ?? ''),
+    };
+  }
+
+  function syncUrl(state: ReturnType<typeof getState>) {
     const url = new URL(window.location.href);
-    if (searchQuery) {
-      url.searchParams.set('q', searchQuery);
-    } else {
-      url.searchParams.delete('q');
+    Object.entries(state).forEach(([key, value]) => {
+      if (value) url.searchParams.set(key, value);
+      else url.searchParams.delete(key);
+    });
+    window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
+  }
+
+  function restoreFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    ['q', 'path', 'format', 'difficulty', 'topic', 'recency'].forEach((name) => {
+      const field = form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement | null;
+      if (field) field.value = params.get(name) ?? '';
+    });
+  }
+
+  function matchesRecency(record: SearchRecord, recency: string) {
+    if (!recency) return true;
+    const now = new Date();
+    if (recency === 'this-year') return record.year === now.getUTCFullYear();
+    if (recency === 'earlier') return record.year < now.getUTCFullYear();
+    if (recency === '90-days') {
+      const cutoff = new Date(now);
+      cutoff.setUTCDate(cutoff.getUTCDate() - 90);
+      return new Date(record.published) >= cutoff;
     }
-    window.history.replaceState({}, '', `${url.pathname}${url.search}`);
+    return true;
   }
 
-  function filterPosts() {
-    let visible = 0;
-    postItems.forEach(item => {
-      const tags = item.dataset.tags ?? '';
-      const title = item.dataset.title ?? '';
-      const desc = item.dataset.description ?? '';
-      const matchesTag = activeTag === 'all' || tags.split(',').includes(activeTag);
-      const matchesSearch = !searchQuery || title.includes(searchQuery) || desc.includes(searchQuery);
-      if (matchesTag && matchesSearch) {
-        item.style.display = '';
-        visible++;
-      } else {
-        item.style.display = 'none';
-      }
-    });
-    noResults.style.display = visible === 0 ? 'block' : 'none';
+  async function applyDiscovery() {
+    const state = getState();
+    syncUrl(state);
+    grid.setAttribute('aria-busy', 'true');
+
+    try {
+      const records = await loadIndex();
+      let visible = 0;
+
+      records.forEach((record) => {
+        const haystack = [record.title, record.description, record.category, ...record.keywords].join(' ').toLowerCase();
+        const matches =
+          (!state.q || haystack.includes(state.q)) &&
+          (!state.path || record.path === state.path) &&
+          (!state.format || record.format === state.format) &&
+          (!state.difficulty || record.difficulty === state.difficulty) &&
+          (!state.topic || record.topics.includes(state.topic)) &&
+          matchesRecency(record, state.recency);
+        const item = items.get(record.id);
+        if (item) item.hidden = !matches;
+        if (matches) visible += 1;
+      });
+
+      count.textContent = `${visible} ${visible === 1 ? 'article' : 'articles'}`;
+      empty.hidden = visible !== 0;
+    } catch {
+      count.textContent = 'Search is temporarily unavailable. All articles remain visible.';
+      items.forEach((item) => { item.hidden = false; });
+      empty.hidden = true;
+    } finally {
+      grid.setAttribute('aria-busy', 'false');
+    }
   }
 
-  tagBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      activeTag = btn.dataset.tag ?? 'all';
-      paintActiveTag();
-      filterPosts();
-    });
-  });
+  function clearDiscovery() {
+    form.reset();
+    void applyDiscovery();
+    (form.elements.namedItem('q') as HTMLInputElement | null)?.focus();
+  }
 
-  searchInput.addEventListener('input', () => {
-    searchQuery = searchInput.value.toLowerCase().trim();
-    syncQueryParam();
-    filterPosts();
-  });
+  form.addEventListener('input', () => { void applyDiscovery(); });
+  form.addEventListener('change', () => { void applyDiscovery(); });
+  form.addEventListener('reset', () => { window.setTimeout(() => { void applyDiscovery(); }, 0); });
+  document.querySelector('[data-clear-discovery]')?.addEventListener('click', clearDiscovery);
 
-  paintActiveTag();
-  filterPosts();
+  restoreFromUrl();
+  if (window.location.search) void applyDiscovery();
 </script>
 
 <style>
-  .blog-index-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-  }
-
-  .blog-index-title {
-    margin: 0;
-    font-size: clamp(2rem, 1.45rem + 2vw, 2.5rem);
-  }
-
-  .blog-index-intro {
-    margin: 0.75rem 0 0;
-    max-width: 46rem;
-    color: var(--dwc-muted);
-    line-height: 1.7;
-  }
-
-  .blog-index-search {
-    width: min(100%, 320px);
-  }
-
-  .blog-index-tags {
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .blog-index-tags-row {
-    display: flex;
-    gap: 0.5rem;
-    min-width: max-content;
-  }
-
-  .blog-tag-button {
-    font-family: var(--font-mono);
-    font-size: clamp(0.72rem, 0.69rem + 0.12vw, 0.76rem);
-    padding: 0.4rem 0.8rem;
-    border-radius: 999px;
-    border: 1px solid var(--dwc-border);
-    color: var(--dwc-muted);
-    background-color: transparent;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    white-space: nowrap;
-  }
-
-  .blog-tag-button--active {
-    border-color: var(--dwc-cyan);
-    color: var(--dwc-navy);
-    background-color: var(--dwc-cyan);
-  }
-
-  .blog-index-grid {
+  .article-index {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
+    gap: 2rem;
   }
 
-  .blog-index-empty {
+  .article-index-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .article-index-header > div {
+    max-width: 57rem;
+  }
+
+  .article-index-header .label {
+    margin-bottom: 0.7rem;
+  }
+
+  .article-index-header h1 {
+    max-width: 15ch;
+    margin-bottom: 0.9rem;
+    font-size: clamp(2.2rem, 1.5rem + 2.6vw, 3.5rem);
+  }
+
+  .article-index-header .site-button {
+    flex: 0 0 auto;
+    width: auto;
+  }
+
+  .article-discovery {
+    padding: clamp(1.2rem, 1rem + 1vw, 1.75rem);
+    border: 1px solid var(--dwc-border);
+    border-radius: 1rem;
+    background: var(--dwc-card);
+  }
+
+  .article-search-field {
+    display: grid;
+    gap: 0.45rem;
+    margin-bottom: 1rem;
+  }
+
+  .article-search-field label,
+  .article-filters label > span {
+    color: var(--dwc-white);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .article-search-field .site-input {
+    width: 100%;
+  }
+
+  .article-filters {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .article-filters label {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .article-filters .site-input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .article-discovery-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--dwc-border);
+  }
+
+  .article-discovery-footer p {
+    margin: 0;
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .article-reset {
+    min-height: 2.75rem;
+    padding: 0.4rem 0;
+    border: 0;
+    color: var(--dwc-cyan);
+    background: transparent;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    cursor: pointer;
+  }
+
+  .article-index-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    gap: 1.25rem;
+  }
+
+  .post-item[hidden] {
     display: none;
-    text-align: center;
-    padding: 4rem 0;
   }
 
-  @media (max-width: 520px) {
-    .blog-index-grid {
+  .article-index-empty {
+    max-width: 40rem;
+    margin-inline: auto;
+    padding: 4rem 1rem;
+    text-align: center;
+  }
+
+  .article-index-empty .label {
+    margin-bottom: 0.6rem;
+  }
+
+  .article-index-empty p:not(.label) {
+    color: var(--dwc-muted);
+  }
+
+  .article-index-empty .site-button {
+    width: auto;
+  }
+
+  @media (max-width: 980px) {
+    .article-filters {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 680px) {
+    .article-index-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .article-filters {
       grid-template-columns: 1fr;
     }
 
-    .blog-index-search {
-      width: 100%;
+    .article-discovery-footer {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .article-index-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

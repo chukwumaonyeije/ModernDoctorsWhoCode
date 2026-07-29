@@ -6,6 +6,11 @@ import FormattedDate from '../components/FormattedDate.astro';
 import NewsletterForm from '../components/NewsletterForm.astro';
 import PostCard from '../components/PostCard.astro';
 import AudioPlayer from '../components/AudioPlayer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import LessonContext from '../components/LessonContext.astro';
+import LessonNavigator from '../components/LessonNavigator.astro';
+import ProjectCallout from '../components/ProjectCallout.astro';
+import ArticleToc from '../components/ArticleToc.astro';
 import {
   SITE_URL,
   SITE_TITLE,
@@ -22,6 +27,7 @@ import {
   ORGANIZATION_LOGO,
 } from '../consts';
 import { slugifyTag } from '../utils/tags';
+import { getLearningContextForArticle } from '../utils/learning';
 
 interface Props {
   title: string;
@@ -62,6 +68,9 @@ const {
   audioUrl,
   noIndex = false,
 } = Astro.props;
+
+const learningContext = await getLearningContextForArticle(postSlug);
+const lessonContext = learningContext?.course && learningContext.path ? learningContext : undefined;
 
 const articleSchema = {
   '@context': 'https://schema.org',
@@ -115,6 +124,35 @@ const articleSchema = {
   url: canonical,
 };
 
+const learningSchemas = lessonContext ? [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'LearningResource',
+    name: lessonContext.lesson.data.title,
+    description: lessonContext.lesson.data.description,
+    educationalLevel: lessonContext.lesson.data.difficulty,
+    timeRequired: `PT${lessonContext.lesson.data.estimatedMinutes}M`,
+    isPartOf: {
+      '@type': 'Course',
+      name: lessonContext.course.data.title,
+      url: `${SITE_URL}/courses/${lessonContext.course.id}/`,
+    },
+    url: canonical,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learning Paths', item: `${SITE_URL}/paths/` },
+      { '@type': 'ListItem', position: 3, name: lessonContext.path.data.title, item: `${SITE_URL}/paths/${lessonContext.path.id}/` },
+      { '@type': 'ListItem', position: 4, name: lessonContext.course.data.title, item: `${SITE_URL}/courses/${lessonContext.course.id}/` },
+      { '@type': 'ListItem', position: 5, name: lessonContext.lesson.data.title, item: canonical },
+    ],
+  },
+] : [];
+const pageSchemas = [articleSchema, ...learningSchemas];
+
 // Only show TOC if there are headings at depth 2 or 3
 const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
 
@@ -139,37 +177,53 @@ const relatedPosts = allPosts
   ogType="article"
   pubDate={pubDate}
   updatedDate={updatedDate}
-  articleSchema={articleSchema}
+  articleSchema={pageSchemas}
   noIndex={noIndex}
 >
   <div class="post-shell">
 
     <!-- Main post content -->
-    <article>
+    <article aria-labelledby="article-title">
+      {lessonContext && (
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: 'Learning Paths', href: '/paths/' },
+          { label: lessonContext.path.data.title, href: `/paths/${lessonContext.path.id}/` },
+          { label: lessonContext.course.data.title, href: `/courses/${lessonContext.course.id}/` },
+          { label: lessonContext.lesson.data.title },
+        ]} />
+      )}
+
       <!-- Category + reading time -->
       <div class="post-kicker-row">
-        <span class="label">{category}</span>
+        {lessonContext ? (
+          <>
+            <a class="label post-learning-link" href={`/paths/${lessonContext.path.id}/`}>{lessonContext.path.data.title}</a>
+            <a class="eyebrow-copy post-learning-link" href={`/courses/${lessonContext.course.id}/`}>{lessonContext.course.data.title}</a>
+            <span class="eyebrow-copy">Lesson {lessonContext.lesson.data.lessonNumber} of {lessonContext.courseLessons.length}</span>
+            <span class="difficulty-badge">{lessonContext.lesson.data.difficulty}</span>
+          </>
+        ) : (
+          <span class="label">{category}</span>
+        )}
         {readingTime && (
           <span class="eyebrow-copy">{readingTime} min read</span>
         )}
       </div>
 
       <!-- Title -->
-      <h1 class="gradient-text post-title">{title}</h1>
+      <h1 id="article-title" class="gradient-text post-title">{title}</h1>
 
       <!-- Description -->
       <p class="lede-copy post-description">{description}</p>
 
-      <!-- Enhanced author block -->
+      <!-- Compact article byline -->
       <div class="post-author-panel">
         <p class="post-author-name">
           By <a href="/chukwuma-onyeije" class="post-author-name-link">Dr. Chukwuma Onyeije, MD, FACOG</a>
         </p>
-        <p class="post-author-role">
-          Maternal-Fetal Medicine Specialist &amp; Medical Director, Atlanta Perinatal Associates
-        </p>
         <p class="post-author-meta">
-          <span>Founder, Doctors Who Code &middot; OpenMFM.org &middot; CodeCraftMD</span>
+          <span>Maternal-Fetal Medicine</span>
           <span class="post-author-sep">&middot;</span>
           <span><FormattedDate date={pubDate} /></span>
           {readingTime && (
@@ -181,6 +235,14 @@ const relatedPosts = allPosts
         </p>
       </div>
 
+      {lessonContext && (
+        <LessonContext
+          lesson={lessonContext.lesson}
+          course={lessonContext.course}
+          path={lessonContext.path}
+        />
+      )}
+
       <!-- Audio player -->
       {audioUrl && <AudioPlayer src={audioUrl} title={title} />}
 
@@ -190,17 +252,34 @@ const relatedPosts = allPosts
           src={image.url}
           alt={image.alt}
           class="post-feature-image"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
         />
       )}
+
+      {tocHeadings.length > 0 && <ArticleToc headings={tocHeadings} mobile />}
 
       <!-- Post body -->
       <div class="prose">
         <slot />
       </div>
 
+      {lessonContext?.project && (
+        <ProjectCallout project={lessonContext.project} headingLevel="h2" compact />
+      )}
+
+      {lessonContext && (
+        <LessonNavigator
+          course={lessonContext.course}
+          lessons={lessonContext.courseLessons}
+          currentLesson={lessonContext.lesson}
+        />
+      )}
+
       <!-- Tags -->
       {tags.length > 0 && (
-        <div class="post-tag-row">
+        <nav class="post-tag-row" aria-label="Article topics">
           {tags.map(tag => (
             <a
               href={`/tags/${slugifyTag(tag)}`}
@@ -209,11 +288,12 @@ const relatedPosts = allPosts
               {tag}
             </a>
           ))}
-        </div>
+        </nav>
       )}
 
       <!-- Share links -->
-      <div class="post-share-row">
+      <section class="post-share-row" aria-labelledby="share-heading">
+        <h2 id="share-heading" class="sr-only">Share this article</h2>
         <span class="label">Share</span>
         <a
           href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(canonical)}`}
@@ -238,20 +318,22 @@ const relatedPosts = allPosts
           data-url={canonical}
           class="post-share-link post-share-button"
         >Copy link</button>
-      </div>
+        <span id="copy-link-status" class="sr-only" aria-live="polite"></span>
+      </section>
 
       <!-- Newsletter -->
       <div style="margin-top: 3rem;">
         <NewsletterForm
-          title="Enjoyed this post?"
+          title="Continue building."
           subtitle="Get physician-developer insights delivered weekly. No hype. No filler."
+          compact
         />
       </div>
 
       <!-- Related posts -->
       {relatedPosts.length > 0 && (
-        <div class="post-section">
-          <p class="label" style="margin-bottom: 1.25rem;">Related Posts</p>
+        <section class="post-section" aria-labelledby="related-articles-heading">
+          <h2 id="related-articles-heading" class="post-section-title">Related articles</h2>
           <div class="post-related-grid">
             {relatedPosts.map(post => (
               <PostCard
@@ -267,7 +349,7 @@ const relatedPosts = allPosts
               />
             ))}
           </div>
-        </div>
+        </section>
       )}
 
       <!-- Author bio -->
@@ -279,23 +361,7 @@ const relatedPosts = allPosts
     <!-- Sidebar TOC -->
     <aside class="post-sidebar">
       {tocHeadings.length > 0 && (
-        <div class="post-toc-card">
-          <p class="label" style="margin-bottom: 1rem;">On this page</p>
-          <nav>
-            <ul class="post-toc-list">
-              {tocHeadings.map(h => (
-                <li class:list={['post-toc-item', { 'post-toc-item--nested': h.depth === 3 }]}>
-                  <a
-                    href={`#${h.slug}`}
-                    class="post-toc-link"
-                  >
-                    {h.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
+        <ArticleToc headings={tocHeadings} />
       )}
     </aside>
 
@@ -304,27 +370,32 @@ const relatedPosts = allPosts
 
 <script>
   const btn = document.getElementById('copy-link-btn');
+  const copyStatus = document.getElementById('copy-link-status');
   btn?.addEventListener('click', async () => {
     const url = btn.getAttribute('data-url') ?? window.location.href;
-    await navigator.clipboard.writeText(url);
-    btn.textContent = 'Copied!';
-    btn.style.color = 'var(--dwc-cyan)';
-    btn.style.borderColor = 'var(--dwc-cyan)';
-    setTimeout(() => {
-      btn.textContent = 'Copy link';
-      btn.style.color = '';
-      btn.style.borderColor = '';
-    }, 2000);
+    try {
+      await navigator.clipboard.writeText(url);
+      btn.textContent = 'Copied';
+      btn.setAttribute('data-copied', 'true');
+      if (copyStatus) copyStatus.textContent = 'Article link copied to clipboard.';
+      setTimeout(() => {
+        btn.textContent = 'Copy link';
+        btn.removeAttribute('data-copied');
+        if (copyStatus) copyStatus.textContent = '';
+      }, 2000);
+    } catch {
+      if (copyStatus) copyStatus.textContent = 'The link could not be copied. Copy it from the address bar.';
+    }
   });
 </script>
 
 <style>
   .post-shell {
-    max-width: 1200px;
+    max-width: 1160px;
     margin: 0 auto;
     padding: var(--space-page-y) var(--space-page-x);
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 280px;
+    grid-template-columns: minmax(0, 760px) minmax(220px, 260px);
     gap: clamp(2rem, 1.4rem + 3vw, 4rem);
     align-items: start;
   }
@@ -341,9 +412,24 @@ const relatedPosts = allPosts
     margin-bottom: 1.25rem;
   }
 
+  .post-learning-link:hover {
+    color: var(--dwc-white);
+  }
+
+  .difficulty-badge {
+    padding: 0.22rem 0.55rem;
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    border-radius: 999px;
+    color: var(--dwc-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: capitalize;
+  }
+
   .post-title {
     margin-bottom: 1rem;
-    font-size: clamp(2rem, 1.45rem + 2vw, 2.5rem);
+    max-width: 19ch;
+    font-size: clamp(2.15rem, 1.45rem + 2.4vw, 3.25rem);
   }
 
   .post-description {
@@ -352,17 +438,14 @@ const relatedPosts = allPosts
   }
 
   .post-author-panel {
-    margin-bottom: 2rem;
-    padding: clamp(1rem, 0.8rem + 0.8vw, 1.5rem);
-    background: var(--dwc-card);
-    border: 1px solid var(--dwc-border);
-    border-left: 3px solid;
-    border-image: linear-gradient(to bottom, #a855f7, #38bdf8) 1;
-    border-radius: 0 8px 8px 0;
+    margin-bottom: 1.75rem;
+    padding: 0.9rem 0;
+    border-top: 1px solid var(--dwc-border);
+    border-bottom: 1px solid var(--dwc-border);
   }
 
   .post-author-name {
-    margin: 0 0 0.25rem;
+    margin: 0 0 0.35rem;
     font-size: clamp(0.98rem, 0.94rem + 0.22vw, 1.02rem);
     font-weight: 600;
   }
@@ -370,13 +453,6 @@ const relatedPosts = allPosts
   .post-author-name-link {
     color: inherit;
     text-decoration: none;
-  }
-
-  .post-author-role {
-    margin: 0 0 0.6rem;
-    font-size: var(--font-size-meta);
-    line-height: 1.5;
-    color: var(--dwc-muted);
   }
 
   .post-author-meta {
@@ -441,8 +517,18 @@ const relatedPosts = allPosts
     cursor: pointer;
   }
 
+  .post-share-button[data-copied] {
+    color: var(--dwc-cyan);
+    border-color: var(--dwc-cyan);
+  }
+
   .post-section {
     margin-top: 3rem;
+  }
+
+  .post-section-title {
+    margin-bottom: 1.25rem;
+    font-size: clamp(1.35rem, 1.18rem + 0.7vw, 1.65rem);
   }
 
   .post-related-grid {
@@ -454,34 +540,6 @@ const relatedPosts = allPosts
   .post-sidebar {
     position: sticky;
     top: 84px;
-  }
-
-  .post-toc-card {
-    background-color: var(--dwc-card);
-    border: 1px solid var(--dwc-border);
-    border-radius: 12px;
-    padding: 1.5rem;
-  }
-
-  .post-toc-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .post-toc-item--nested {
-    padding-left: 1rem;
-  }
-
-  .post-toc-link {
-    display: block;
-    font-size: var(--font-size-meta);
-    line-height: 1.45;
-    color: var(--dwc-muted);
-    transition: color 0.2s;
   }
 
   @media (max-width: 900px) {

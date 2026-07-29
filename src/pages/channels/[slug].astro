@@ -1,0 +1,224 @@
+---
+import { getEntry, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CourseCard from '../../components/CourseCard.astro';
+import PostCard from '../../components/PostCard.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getChannelContext, getLessonsForCourse, getPublishedChannels } from '../../utils/learning';
+import { SITE_URL } from '../../consts';
+
+export async function getStaticPaths() {
+  const channels = await getPublishedChannels();
+  return channels.map((channel) => ({ params: { slug: channel.id }, props: { channel } }));
+}
+
+interface Props {
+  channel: CollectionEntry<'channels'>;
+}
+
+const { channel } = Astro.props;
+const context = await getChannelContext(channel.id);
+if (!context) throw new Error(`Published channel ${channel.id} could not be resolved.`);
+const { articles, courses, projects } = context;
+const courseCards = await Promise.all(courses.map(async (course) => ({
+  course,
+  path: await getEntry('paths', course.data.path.id),
+  lessonCount: (await getLessonsForCourse(course.id)).length,
+})));
+const channelUrl = `${SITE_URL}/channels/${channel.id}/`;
+const channelSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: channel.data.title,
+  description: channel.data.description,
+  url: channelUrl,
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: articles.map((article, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: article.data.title,
+      url: `${SITE_URL}/blog/${article.id}/`,
+    })),
+  },
+};
+---
+
+<BaseLayout
+  title={channel.data.title}
+  description={channel.data.description}
+  canonical={channelUrl}
+  articleSchema={channelSchema}
+>
+  <div class="page-shell channel-page">
+    <Breadcrumbs items={[
+      { label: 'Home', href: '/' },
+      { label: 'Channels', href: '/channels/' },
+      { label: channel.data.title },
+    ]} />
+
+    <header class="channel-hero">
+      <div>
+        <p class="label">Channel {String(channel.data.order).padStart(2, '0')}</p>
+        <h1>{channel.data.title}</h1>
+        <p class="lede-copy">{channel.data.description}</p>
+      </div>
+      <div class="channel-topic-card">
+        <p class="label">Controlled Topics</p>
+        <ul>
+          {channel.data.topics.map((topic) => <li>{topic}</li>)}
+        </ul>
+      </div>
+    </header>
+
+    {articles.length > 0 && (
+      <section aria-labelledby="channel-articles-title">
+        <div class="channel-section-heading">
+          <div>
+            <p class="label">Selected Articles</p>
+            <h2 id="channel-articles-title">Begin with the load-bearing arguments.</h2>
+          </div>
+          <p>These articles establish the channel. Publication order does not determine their importance.</p>
+        </div>
+        <div class="channel-article-grid">
+          {articles.map((article) => (
+            <PostCard
+              title={article.data.title}
+              description={article.data.description}
+              pubDate={article.data.pubDate}
+              slug={article.id}
+              tags={article.data.tags}
+              category={article.data.category}
+              readingTime={article.data.readingTime}
+              image={article.data.image}
+              featured={article.data.featured}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {courseCards.length > 0 && (
+      <section aria-labelledby="channel-courses-title">
+        <div class="channel-section-heading">
+          <div>
+            <p class="label">Guided Course</p>
+            <h2 id="channel-courses-title">Learn the subject in sequence.</h2>
+          </div>
+        </div>
+        <div class="channel-course-grid">
+          {courseCards.map(({ course, path, lessonCount }) => path && (
+            <CourseCard course={course} path={path} lessonCount={lessonCount} />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {projects.length > 0 && (
+      <section aria-labelledby="channel-projects-title">
+        <div class="channel-section-heading">
+          <div>
+            <p class="label">Applied Project</p>
+            <h2 id="channel-projects-title">Make the subject operational.</h2>
+          </div>
+        </div>
+        <div class="channel-project-grid">
+          {projects.map((project) => <ProjectCard project={project} />)}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .channel-page {
+    display: grid;
+    gap: var(--space-section);
+  }
+
+  .channel-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(17rem, 0.8fr);
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: start;
+  }
+
+  .channel-hero .label,
+  .channel-section-heading .label,
+  .channel-topic-card .label {
+    margin-bottom: 0.65rem;
+  }
+
+  .channel-hero h1 {
+    max-width: 15ch;
+    margin-bottom: 1rem;
+    font-size: clamp(2.4rem, 1.6rem + 3vw, 3.9rem);
+  }
+
+  .channel-topic-card {
+    padding: 1.25rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 1rem;
+    background: var(--dwc-card);
+  }
+
+  .channel-topic-card ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .channel-topic-card li {
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 999px;
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .channel-section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .channel-section-heading h2 {
+    margin: 0;
+  }
+
+  .channel-section-heading > p {
+    max-width: 31rem;
+    margin: 0;
+    color: var(--dwc-muted);
+  }
+
+  .channel-article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: 1rem;
+  }
+
+  .channel-course-grid,
+  .channel-project-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 30rem);
+  }
+
+  @media (max-width: 780px) {
+    .channel-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .channel-section-heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

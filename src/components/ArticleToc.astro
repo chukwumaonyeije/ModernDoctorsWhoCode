@@ -1,0 +1,129 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+  mobile?: boolean;
+}
+
+const { headings, mobile = false } = Astro.props;
+---
+
+{mobile ? (
+  <details class="article-toc article-toc--mobile">
+    <summary>
+      <span>On this page</span>
+      <span class="article-toc-count">{headings.length} sections</span>
+    </summary>
+    <nav aria-label="Article sections">
+      <ol class="article-toc-list">
+        {headings.map((heading) => (
+          <li class:list={['article-toc-item', { 'article-toc-item--nested': heading.depth === 3 }]}>
+            <a href={`#${heading.slug}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  </details>
+) : (
+  <div class="article-toc article-toc--desktop">
+    <p class="label article-toc-label">On this page</p>
+    <nav aria-label="Article sections">
+      <ol class="article-toc-list">
+        {headings.map((heading) => (
+          <li class:list={['article-toc-item', { 'article-toc-item--nested': heading.depth === 3 }]}>
+            <a href={`#${heading.slug}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  </div>
+)}
+
+<style>
+  .article-toc {
+    background: var(--dwc-card);
+    border: 1px solid var(--dwc-border);
+    border-radius: 12px;
+  }
+
+  .article-toc--desktop {
+    padding: 1.25rem;
+  }
+
+  .article-toc-label {
+    margin-bottom: 0.85rem;
+  }
+
+  .article-toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .article-toc-item--nested {
+    padding-left: 0.9rem;
+  }
+
+  .article-toc a {
+    display: block;
+    color: var(--dwc-muted);
+    font-size: var(--font-size-meta);
+    line-height: 1.45;
+  }
+
+  .article-toc a:hover {
+    color: var(--dwc-cyan);
+  }
+
+  .article-toc--mobile {
+    display: none;
+    margin: 0 0 2rem;
+    overflow: clip;
+  }
+
+  .article-toc--mobile summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 3rem;
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+    color: var(--dwc-white);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+  }
+
+  .article-toc--mobile summary::marker {
+    color: var(--dwc-cyan);
+  }
+
+  .article-toc--mobile[open] summary {
+    border-bottom: 1px solid var(--dwc-border);
+  }
+
+  .article-toc--mobile nav {
+    padding: 1rem;
+  }
+
+  .article-toc-count {
+    color: var(--dwc-muted);
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+
+  @media (max-width: 900px) {
+    .article-toc--mobile {
+      display: block;
+    }
+  }
+</style>

@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Header from '../components/Header.astro';
 import {
   SITE_TITLE,
   SITE_TAGLINE,
@@ -258,33 +259,14 @@ const combinedSchemas = [
     <!-- Vercel Analytics -->
     <script defer src="/_vercel/insights/script.js"></script>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
   </head>
 
   <body>
-    <!-- Navigation -->
-    <header class="site-header">
-      <nav class="site-shell site-nav">
-        <a href="/" class="site-nav-brand">
-          <span class="live-dot"></span>
-          Doctors Who Code
-        </a>
-        <div class="site-nav-links">
-          <a href="/blog" class="site-nav-link">Blog</a>
-          <a href="/about" class="site-nav-link">About</a>
-          <a href="/contact" class="site-button site-button--primary site-nav-cta">Subscribe</a>
-        </div>
-      </nav>
-    </header>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <Header />
 
     <!-- Page content -->
-    <main>
+    <main id="main-content" tabindex="-1">
       <slot />
     </main>
 
@@ -296,6 +278,17 @@ const combinedSchemas = [
           <p class="site-footer-copy">{SITE_TAGLINE}</p>
           <p class="site-footer-copy">Written by Chukwuma Onyeije, MD, FACOG</p>
           <p class="site-footer-copy">Official site: doctorswhocode.blog</p>
+        </div>
+        <div>
+          <p class="label" style="margin-bottom: 0.75rem;">Learn and build</p>
+          <ul class="site-footer-list">
+            <li><a href="/start/" class="site-footer-link">Start Here</a></li>
+            <li><a href="/paths/" class="site-footer-link">Learning Paths</a></li>
+            <li><a href="/courses/" class="site-footer-link">Courses</a></li>
+            <li><a href="/projects/" class="site-footer-link">Projects</a></li>
+            <li><a href="/channels/" class="site-footer-link">Channels</a></li>
+            <li><a href="/blog/" class="site-footer-link">Articles</a></li>
+          </ul>
         </div>
         <div>
           <p class="label" style="margin-bottom: 0.75rem;">Official projects</p>
@@ -331,55 +324,6 @@ const combinedSchemas = [
 </html>
 
 <style>
-  .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    border-bottom: 1px solid var(--dwc-border);
-    background-color: rgba(13, 27, 42, 0.95);
-    backdrop-filter: blur(8px);
-  }
-
-  .site-nav {
-    min-height: 4rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding-block: 0.7rem;
-  }
-
-  .site-nav-brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    font-family: var(--font-display);
-    font-size: clamp(1rem, 0.94rem + 0.4vw, 1.125rem);
-    font-weight: 800;
-    color: var(--dwc-white);
-    line-height: 1.1;
-  }
-
-  .site-nav-links {
-    display: flex;
-    align-items: center;
-    gap: clamp(0.75rem, 0.3rem + 1.8vw, 2rem);
-    flex-wrap: wrap;
-    justify-content: flex-end;
-  }
-
-  .site-nav-link {
-    font-size: clamp(0.92rem, 0.88rem + 0.16vw, 0.98rem);
-    color: var(--dwc-muted);
-    line-height: 1.3;
-  }
-
-  .site-nav-cta {
-    min-height: 2.4rem;
-    width: auto;
-    padding-inline: 0.95rem;
-  }
-
   .site-footer {
     border-top: 1px solid var(--dwc-border);
     margin-top: clamp(4rem, 3rem + 2vw, 5rem);
@@ -389,7 +333,7 @@ const combinedSchemas = [
 
   .site-footer-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: clamp(1.5rem, 1rem + 2vw, 3rem);
   }
 
@@ -434,15 +378,13 @@ const combinedSchemas = [
     line-height: 1.5;
   }
 
-  @media (max-width: 720px) {
-    .site-nav {
-      align-items: flex-start;
+  @media (max-width: 900px) {
+    .site-footer-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+  }
 
-    .site-nav-links {
-      gap: 0.75rem;
-    }
-
+  @media (max-width: 560px) {
     .site-footer-grid {
       grid-template-columns: 1fr;
     }
@@ -453,19 +395,4 @@ const combinedSchemas = [
     }
   }
 
-  @media (max-width: 520px) {
-    .site-nav {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    .site-nav-links {
-      width: 100%;
-      justify-content: space-between;
-    }
-
-    .site-nav-cta {
-      width: auto;
-    }
-  }
 </style>

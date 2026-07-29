@@ -12,7 +12,13 @@
     "preview": "astro preview",
     "astro": "astro",
     "indexnow:submit": "node scripts/submit-indexnow.mjs",
-    "validate:identity": "node scripts/validate-identity.mjs"
+    "validate:identity": "node scripts/validate-identity.mjs",
+    "validate:articles": "node scripts/validate-article-experience.mjs",
+    "baseline:routes": "node scripts/site-guardrails.mjs --write-baseline",
+    "validate:learning": "node scripts/validate-learning-graph.mjs",
+    "validate:routes": "node scripts/site-guardrails.mjs",
+    "validate:site": "npm run validate:identity && npm run validate:learning && npm run validate:articles && npm run validate:routes",
+    "check": "npm run build && npm run validate:site"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.1",
@@ -30,5 +36,8 @@
     "satori": "^0.25.0",
     "sharp": "^0.34.3",
     "tailwindcss": "^4.2.1"
+  },
+  "devDependencies": {
+    "js-yaml": "^4.3.0"
   }
 }

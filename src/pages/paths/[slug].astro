@@ -1,0 +1,482 @@
+---
+import { getEntry, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getCoursesForPath, getLearningPaths, getLessonsForCourse } from '../../utils/learning';
+import { SITE_URL } from '../../consts';
+
+export async function getStaticPaths() {
+  const paths = await getLearningPaths();
+  return paths.map((path) => ({ params: { slug: path.id }, props: { path } }));
+}
+
+interface Props {
+  path: CollectionEntry<'paths'>;
+}
+
+const { path } = Astro.props;
+const { Content } = await render(path);
+const courses = await getCoursesForPath(path.id);
+const courseSections = await Promise.all(courses.map(async (course) => {
+  const lessons = await getLessonsForCourse(course.id);
+  const project = course.data.project ? await getEntry('projects', course.data.project.id) : undefined;
+  return { course, lessons, project };
+}));
+const totalLessons = courseSections.reduce((total, section) => total + section.lessons.length, 0);
+const totalMinutes = courses.reduce((total, course) => total + course.data.estimatedMinutes, 0);
+const pathSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: path.data.title,
+  description: path.data.description,
+  provider: { '@id': `${SITE_URL}/#organization` },
+  url: `${SITE_URL}/paths/${path.id}/`,
+};
+---
+
+<BaseLayout
+  title={path.data.title}
+  description={path.data.description}
+  canonical={`${SITE_URL}/paths/${path.id}/`}
+  articleSchema={pathSchema}
+>
+  <div class="page-shell path-page">
+    <Breadcrumbs items={[
+      { label: 'Home', href: '/' },
+      { label: 'Learning Paths', href: '/paths/' },
+      { label: path.data.title },
+    ]} />
+
+    <header class="path-hero">
+      <div>
+        <p class="label">Learning Path {path.data.order}</p>
+        <h1>{path.data.title}</h1>
+        <p class="lede-copy">{path.data.description}</p>
+        <div class="path-stats" aria-label="Path summary">
+          <span>{courses.length} {courses.length === 1 ? 'course' : 'courses'}</span>
+          <span>{totalLessons} {totalLessons === 1 ? 'lesson' : 'lessons'}</span>
+          <span>{totalMinutes} minutes</span>
+        </div>
+      </div>
+      <dl class="path-fit-card">
+        <div>
+          <dt>Who this is for</dt>
+          <dd>{path.data.audience}</dd>
+        </div>
+        <div>
+          <dt>What you will leave with</dt>
+          <dd>{path.data.outcome}</dd>
+        </div>
+      </dl>
+    </header>
+
+    <section class="path-introduction" aria-label="Path introduction">
+      <Content />
+    </section>
+
+    <section class="path-courses" aria-labelledby="course-sequence-title">
+      <div class="path-section-heading">
+        <div>
+          <p class="label">Course Sequence</p>
+          <h2 id="course-sequence-title">Begin in order.</h2>
+        </div>
+        <p>The publication date does not determine the sequence. The learning dependency does.</p>
+      </div>
+
+      {courseSections.map(({ course, lessons, project }) => (
+        <article class="course-panel">
+          <header class="course-header">
+            <div>
+              <p class="label">Course {course.data.order}</p>
+              <h3><a href={`/courses/${course.id}/`}>{course.data.title}</a></h3>
+              <p>{course.data.description}</p>
+            </div>
+            <div class="course-badges" aria-label="Course details">
+              <span>{course.data.difficulty}</span>
+              <span>{course.data.estimatedMinutes} min</span>
+              <span>{lessons.length} lessons</span>
+            </div>
+          </header>
+
+          <div class="course-body-grid">
+            <div>
+              <h4>What you will learn</h4>
+              <ul class="outcome-list">
+                {course.data.outcomes.map((outcome) => <li>{outcome}</li>)}
+              </ul>
+              {course.data.prerequisites.length > 0 && (
+                <div class="prerequisite-block">
+                  <h4>Prerequisites</h4>
+                  <ul>
+                    {course.data.prerequisites.map((prerequisite) => <li>{prerequisite}</li>)}
+                  </ul>
+                </div>
+              )}
+            </div>
+
+            <ol class="lesson-list">
+              {lessons.map((lesson) => (
+                <li>
+                  <a href={`/blog/${lesson.data.article.id}/`}>
+                    <span class="lesson-number">{String(lesson.data.lessonNumber).padStart(2, '0')}</span>
+                    <span class="lesson-copy">
+                      <strong>{lesson.data.title}</strong>
+                      <small>{lesson.data.description}</small>
+                    </span>
+                    <span class="lesson-time">{lesson.data.estimatedMinutes} min</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          {project && (
+            <aside class="course-project">
+              <div>
+                <p class="label">Build Afterward</p>
+                <h4>{project.data.title}</h4>
+                <p>{project.data.description}</p>
+              </div>
+              <div class="project-meta">
+                <span>{project.data.estimatedHours} hours</span>
+                <span>{project.data.difficulty}</span>
+              </div>
+            </aside>
+          )}
+        </article>
+      ))}
+    </section>
+
+    <nav class="path-next" aria-label="Path next step">
+      <div>
+        <p class="label">Your Next Step</p>
+        <h2>Read the first lesson. Then make something.</h2>
+      </div>
+      {courseSections[0]?.lessons[0] && (
+        <a href={`/blog/${courseSections[0].lessons[0].data.article.id}/`} class="site-button site-button--primary">
+          Begin lesson one
+        </a>
+      )}
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .path-page {
+    display: grid;
+    gap: var(--space-section);
+  }
+
+  .path-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: start;
+  }
+
+  .path-hero .label,
+  .path-section-heading .label,
+  .path-next .label,
+  .course-header .label,
+  .course-project .label {
+    margin-bottom: 0.7rem;
+  }
+
+  .path-hero h1 {
+    max-width: 13ch;
+    margin-bottom: 1rem;
+    font-size: clamp(2.5rem, 1.7rem + 3vw, 4.1rem);
+  }
+
+  .path-stats,
+  .course-badges,
+  .project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .path-stats {
+    margin-top: 1.5rem;
+  }
+
+  .path-stats span,
+  .course-badges span,
+  .project-meta span {
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 999px;
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: capitalize;
+  }
+
+  .path-fit-card {
+    margin: 0;
+    border: 1px solid var(--dwc-border);
+    border-radius: 1rem;
+    background: var(--dwc-card);
+  }
+
+  .path-fit-card div {
+    padding: 1.25rem;
+  }
+
+  .path-fit-card div + div {
+    border-top: 1px solid var(--dwc-border);
+  }
+
+  .path-fit-card dt {
+    margin-bottom: 0.45rem;
+    color: var(--dwc-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .path-fit-card dd {
+    margin: 0;
+    color: var(--dwc-white);
+    line-height: 1.6;
+  }
+
+  .path-introduction {
+    max-width: 48rem;
+    padding-left: 1.25rem;
+    border-left: 3px solid var(--dwc-cyan);
+  }
+
+  .path-introduction :global(p) {
+    color: var(--dwc-muted);
+  }
+
+  .path-introduction :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .path-section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .path-section-heading h2 {
+    margin: 0;
+  }
+
+  .path-section-heading > p {
+    max-width: 31rem;
+    margin: 0;
+    color: var(--dwc-muted);
+  }
+
+  .course-panel {
+    overflow: hidden;
+    border: 1px solid var(--dwc-border);
+    border-radius: 1rem;
+    background: var(--dwc-card);
+  }
+
+  .course-panel + .course-panel {
+    margin-top: 1.25rem;
+  }
+
+  .course-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    border-bottom: 1px solid var(--dwc-border);
+  }
+
+  .course-header h3 {
+    font-size: clamp(1.45rem, 1.25rem + 0.8vw, 1.8rem);
+  }
+
+  .course-header h3 a {
+    color: inherit;
+  }
+
+  .course-header h3 a:hover {
+    color: var(--dwc-cyan);
+  }
+
+  .course-header p:not(.label) {
+    margin: 0;
+    color: var(--dwc-muted);
+  }
+
+  .course-badges {
+    align-content: flex-start;
+    justify-content: flex-end;
+    flex: 0 0 auto;
+  }
+
+  .course-body-grid {
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.75fr) minmax(0, 1.25fr);
+    gap: 2rem;
+    padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  }
+
+  .course-body-grid h4 {
+    font-size: 0.95rem;
+  }
+
+  .outcome-list,
+  .prerequisite-block ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: var(--dwc-muted);
+    font-size: 0.9rem;
+  }
+
+  .outcome-list li + li,
+  .prerequisite-block li + li {
+    margin-top: 0.5rem;
+  }
+
+  .prerequisite-block {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--dwc-border);
+  }
+
+  .lesson-list {
+    display: grid;
+    gap: 0.65rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lesson-list a {
+    display: grid;
+    grid-template-columns: 2.1rem minmax(0, 1fr) auto;
+    gap: 0.85rem;
+    align-items: start;
+    padding: 0.9rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 0.7rem;
+    color: inherit;
+    background: rgba(255, 255, 255, 0.015);
+  }
+
+  .lesson-list a:hover {
+    border-color: rgba(56, 189, 248, 0.5);
+    color: inherit;
+  }
+
+  .lesson-number,
+  .lesson-time {
+    color: var(--dwc-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .lesson-copy {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .lesson-copy strong {
+    color: var(--dwc-white);
+    font-family: var(--font-display);
+    font-size: 0.98rem;
+    line-height: 1.35;
+  }
+
+  .lesson-copy small {
+    color: var(--dwc-muted);
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .lesson-time {
+    color: var(--dwc-muted);
+    white-space: nowrap;
+  }
+
+  .course-project {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 1.25rem clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    border-top: 1px solid rgba(56, 189, 248, 0.2);
+    background: rgba(56, 189, 248, 0.05);
+  }
+
+  .course-project h4 {
+    margin-bottom: 0.35rem;
+  }
+
+  .course-project p:not(.label) {
+    margin: 0;
+    color: var(--dwc-muted);
+    font-size: 0.9rem;
+  }
+
+  .project-meta {
+    justify-content: flex-end;
+    flex: 0 0 auto;
+  }
+
+  .path-next {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 1rem;
+    background:
+      radial-gradient(circle at right, rgba(56, 189, 248, 0.12), transparent 38%),
+      var(--dwc-card);
+  }
+
+  .path-next h2 {
+    max-width: 19ch;
+    margin: 0;
+    font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem);
+  }
+
+  .path-next .site-button {
+    flex: 0 0 auto;
+    width: auto;
+  }
+
+  @media (max-width: 850px) {
+    .path-hero,
+    .course-body-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .course-header,
+    .course-project,
+    .path-next,
+    .path-section-heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .course-badges,
+    .project-meta {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .lesson-list a {
+      grid-template-columns: 1.8rem minmax(0, 1fr);
+    }
+
+    .lesson-time {
+      grid-column: 2;
+    }
+  }
+</style>
