@@ -29,15 +29,18 @@ try:
 except ImportError:
     pass
 
-API_KEY = os.getenv('OPENAI_API_KEY')
+API_KEY = os.getenv('FISH_API_KEY')
+REFERENCE_ID = (
+    os.getenv('FISH_REFERENCE_ID')
+    or 'bbc76fae4c964894b0f22204a25a4f80'
+)
 
 POSTS_DIR        = Path(__file__).parent.parent / 'src' / 'content' / 'blog' / 'posts'
 AUDIO_DIR        = Path(__file__).parent.parent / 'public' / 'audio'
 AUDIO_URL_PREFIX = '/audio'
 
-VOICE      = 'onyx'    # deep, professional male voice
-MODEL      = 'tts-1'   # tts-1-hd for higher quality (2x cost)
-CHUNK_SIZE = 4096      # OpenAI TTS limit per request
+MODEL = os.getenv('FISH_MODEL') or 's2.1-pro-free'
+CHUNK_SIZE = 4096      # conservative request size for predictable narration chunks
 DELAY_SEC  = 1         # pause between API calls
 
 
@@ -91,16 +94,23 @@ def chunk_text(text: str, size: int) -> list[str]:
     return chunks
 
 
+_fish_client = None
+
+
 def tts_chunk(text: str) -> bytes:
-    """Call OpenAI TTS for a single chunk. Returns MP3 bytes."""
-    from openai import OpenAI
-    client = OpenAI(api_key=API_KEY)
-    response = client.audio.speech.create(
+    """Generate one MP3 chunk using the configured Fish Audio voice."""
+    global _fish_client
+
+    if _fish_client is None:
+        from fishaudio import FishAudio
+        _fish_client = FishAudio(api_key=API_KEY)
+
+    return _fish_client.tts.convert(
+        text=text,
+        reference_id=REFERENCE_ID,
         model=MODEL,
-        voice=VOICE,
-        input=text,
+        format='mp3',
     )
-    return response.content
 
 
 def write_audio_url(post_path: Path, slug: str) -> None:

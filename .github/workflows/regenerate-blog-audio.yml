@@ -34,11 +34,13 @@ jobs:
           python-version: "3.11"
 
       - name: Install audio generation dependencies
-        run: pip install openai python-frontmatter python-dotenv
+        run: pip install fish-audio-sdk python-frontmatter python-dotenv
 
       - name: Regenerate selected audio files
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          FISH_API_KEY: ${{ secrets.FISH_API_KEY }}
+          FISH_REFERENCE_ID: ${{ vars.FISH_REFERENCE_ID }}
+          FISH_MODEL: ${{ vars.FISH_MODEL }}
           AUDIO_SLUGS: ${{ inputs.slugs }}
         run: |
           if [ -z "$(printf "%s" "$AUDIO_SLUGS" | tr -d '[:space:]')" ]; then
