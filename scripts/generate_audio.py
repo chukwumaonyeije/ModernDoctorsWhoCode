@@ -1,19 +1,21 @@
 """
-OpenAI TTS Audio Generation Script
+Fish Audio TTS Audio Generation Script
 ====================================
-Reads each MDX/MD post, strips markdown, calls OpenAI TTS API,
-saves MP3 to public/audio/{slug}.mp3, and updates post frontmatter
-with audioUrl field.
+Reads each MDX/MD post, strips markdown, calls the Fish Audio TTS API
+with Dr. Onyeije's cloned voice, saves MP3 to public/audio/{slug}.mp3,
+and updates post frontmatter with audioUrl field.
 
 Setup:
-  pip install openai python-frontmatter python-dotenv
+  pip install fish-audio-sdk python-frontmatter python-dotenv
 
 Usage:
   python scripts/generate_audio.py          # all posts
   python scripts/generate_audio.py --test   # one post only
 
 Environment variables (.env in project root):
-  OPENAI_API_KEY=sk-...
+  FISH_API_KEY=...
+  FISH_REFERENCE_ID=...   # defaults to Dr. Onyeije's cloned voice if unset
+  FISH_MODEL=...          # defaults to s2.1-pro-free if unset
 """
 
 import os
@@ -226,7 +228,7 @@ def select_posts(slugs: list[str] | None = None, missing_only: bool = False) -> 
 def main():
     args = parse_args()
     if not API_KEY:
-        print('ERROR: Set OPENAI_API_KEY in your .env file')
+        print('ERROR: Set FISH_API_KEY in your .env file')
         return
 
     AUDIO_DIR.mkdir(parents=True, exist_ok=True)
@@ -263,7 +265,7 @@ if __name__ == '__main__':
 
     if args.test:
         if not API_KEY:
-            print('ERROR: Set OPENAI_API_KEY in .env')
+            print('ERROR: Set FISH_API_KEY in .env')
         else:
             AUDIO_DIR.mkdir(parents=True, exist_ok=True)
             posts = select_posts(args.slugs, missing_only=args.missing)

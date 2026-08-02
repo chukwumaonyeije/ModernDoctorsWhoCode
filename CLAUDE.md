@@ -236,25 +236,29 @@ Every page must include:
 
 Every published post must have an audio version. This is a standing rule.
 
+**Voice:** Fish Audio, using Dr. Onyeije's own cloned voice (not a stock TTS voice).
+
 **Script:** `python -X utf8 scripts/generate_audio.py`
 - Skips posts that already have `audioUrl` in frontmatter
 - Safe to run after any new post — only processes new ones
 - MP3s saved to `public/audio/{slug}.mp3`
 - `audioUrl` frontmatter added automatically
 
-**Provider (set in `.env`):**
+**Config (set in `.env`):**
 ```
-AUDIO_PROVIDER=openai      # default — OpenAI tts-1, onyx voice, ~$0.06/post
-AUDIO_PROVIDER=elevenlabs  # Daniel voice (ZMK5OD2jmsdse3EKE4W5) — requires paid plan
-AUDIO_PROVIDER=custom      # reserved for own voice clone
+FISH_API_KEY=...        # required
+FISH_REFERENCE_ID=...   # defaults to Dr. Onyeije's cloned voice if unset
+FISH_MODEL=...          # defaults to s2.1-pro-free if unset
 ```
+
+**GitHub Actions:** `.github/workflows/regenerate-blog-audio.yml` runs automatically on push to `main` when post files or the script change, generating audio for any published post missing it. It can also be triggered manually (`workflow_dispatch`) with a newline-separated list of slugs to force-regenerate specific posts. Requires `FISH_API_KEY` as a repo secret and `FISH_REFERENCE_ID` / `FISH_MODEL` as repo variables.
 
 **Workflow for new posts:**
 1. Write and publish the post
-2. Run `python -X utf8 scripts/generate_audio.py`
+2. Run `python -X utf8 scripts/generate_audio.py` (or let the GitHub Action handle it on push)
 3. Commit the new MP3 and updated frontmatter together
 
-**To switch providers:** Change `AUDIO_PROVIDER` in `.env` — the script checks this before each run. Do NOT remove existing `audioUrl` fields unless regenerating intentionally.
+Do NOT remove existing `audioUrl` fields unless regenerating intentionally.
 
 ---
 
