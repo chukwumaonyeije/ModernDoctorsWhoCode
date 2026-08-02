@@ -1,0 +1,90 @@
+---
+title: "A Protocol Is a Memory System, Not a Patient"
+description: "Clinical protocols reduce avoidable variation, but software must preserve their population boundaries, exceptions, provenance, and judgment points."
+pubDate: 2026-09-03T12:00:00-04:00
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags:
+  - "clinical protocols"
+  - "clinical decision support"
+  - "evidence-based medicine"
+  - "physician-developer"
+  - "doctors-who-code"
+category: "Clinical Software"
+image:
+  url: "/images/posts/a-protocol-is-a-memory-system-not-a-patient-hero.png"
+  alt: "A precise clinical protocol grid bending around a complex patient silhouette without enclosing it"
+draft: false
+featured: false
+readingTime: 7
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Cinematic dark editorial illustration for Doctors Who Code. A precise luminous clinical protocol grid and clipboard occupy the left and center, with orderly cyan rows and branching rules. At the right edge, the rigid grid bends and opens around a complex human patient silhouette surrounded by subtle amber clinical variables, showing that the person exceeds the protocol. Dark navy background, cyan and teal structure with restrained amber exceptions, no readable text, no logos, no text overlay, wide landscape composition. */}
+
+The protocol PDF is open. The patient fits the first three criteria and misses the fourth by one detail that the summary table never anticipated.
+
+This is not a failure of evidence-based medicine. It is the reason clinical judgment exists.
+
+A protocol is a memory and safety system. It carries a professional organization's best current recommendation into a busy clinical environment. It reduces avoidable variation. It keeps a consequential threshold from depending on whether someone remembers the correct number at the end of a long call night.
+
+But a protocol is still a model of reality.
+
+## The Applicability Boundary
+
+Every protocol has an **applicability boundary**. Inside that boundary, the recommendation describes the intended population and clinical setting. Outside it, the same recommendation may become unsupported, incomplete, or wrong.
+
+The boundary is often distributed across the document:
+
+- inclusion and exclusion criteria;
+- footnotes beneath a table;
+- definitions from an earlier section;
+- exceptions described only in prose;
+- assumptions about local resources;
+- cautions that do not fit into the main algorithm.
+
+These details are easy to miss when a protocol is read quickly. They are even easier to erase when it is converted into software.
+
+<Callout type="warning">
+A protocol supports clinical judgment. It does not replace it. Software must expose the protocol's boundary rather than hide it behind a recommendation.
+</Callout>
+
+## Decompose the Protocol Before You Simplify It
+
+Do not begin by asking what the app should display. Begin by taking the protocol apart.
+
+Create a protocol map with six categories:
+
+1. **Inputs.** What patient facts does the recommendation require?
+2. **Decision points.** Which facts change the branch?
+3. **Outputs.** What action, interval, classification, or recommendation follows?
+4. **Exceptions.** Which conditions interrupt the ordinary sequence?
+5. **Sources.** Which guideline section supports each rule?
+6. **Judgment points.** Where must a clinician interpret, individualize, or decline the recommendation?
+
+The judgment points are not defects waiting to be automated. They are part of the design.
+
+## Protocols Need Provenance
+
+A protocol without a source is advice. A protocol without a date is a future liability.
+
+The software version should retain the sponsoring organization, document title, publication date, relevant section, local adaptation, and last clinical review date. If the institution modified the national recommendation, record that difference explicitly.
+
+I have argued elsewhere that a protocol assistant needs [retrieval, provenance, and source freshness](/blog/clinical-tool-becomes-infrastructure/). The same standard applies to a calculator or decision tree. The interface should never make a locally adapted rule look like universal evidence.
+
+## Conflicts Are Data
+
+Professional organizations sometimes disagree. A local protocol may differ from a national guideline. A recommendation may change while the older document remains in circulation.
+
+Do not resolve that conflict silently in code.
+
+Record which source governs the application and why. If more than one pathway is defensible, represent the disagreement or narrow the application's intended use. Hidden reconciliation creates false certainty.
+
+## Your Exercise
+
+Select one protocol that matters in your practice. Build its protocol map.
+
+Circle every exclusion. Mark every statement that requires interpretation. Add the source and review date beside every consequential threshold. Then write the sentence the eventual application must show when the patient falls outside the protocol.
+
+The protocol organizes the recommendation. It does not contain the patient.

@@ -1,0 +1,87 @@
+---
+title: "Evidence Is Not Yet a Clinical Instruction"
+description: "Clinical evidence describes populations. Physician-developers must preserve its limits before translating it into protocol logic or software."
+pubDate: 2026-09-01T12:00:00-04:00
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags:
+  - "evidence-based medicine"
+  - "clinical protocols"
+  - "clinical software"
+  - "physician-developer"
+  - "doctors-who-code"
+category: "Clinical Software"
+image:
+  url: "/images/posts/evidence-is-not-yet-a-clinical-instruction-hero.png"
+  alt: "Clinical research papers narrowing toward a bedside monitor while uncertainty remains visible around the patient"
+draft: false
+featured: false
+readingTime: 7
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Cinematic dark editorial illustration for Doctors Who Code. On the left, layered clinical research papers, forest plots, and study tables emerge from darkness. Their findings narrow into a clean cyan beam directed toward a bedside monitor on the right, but the beam stops before reaching a patient silhouette, leaving a visible field of uncertainty between population evidence and the individual. Dark navy background with restrained cyan and teal accents, realistic paper texture, no readable text, no logos, no text overlay, wide landscape composition. */}
+
+At 2 a.m., a growth-restricted fetus does not arrive as a forest plot.
+
+The patient arrives with a gestational age, an umbilical artery Doppler pattern, a blood pressure trend, prior growth measurements, local neonatal capability, and a family trying to understand what happens next. The evidence matters. It does not make the decision by itself.
+
+That distinction is the first boundary in clinical software.
+
+## Evidence Describes a Population
+
+A randomized trial estimates what happened across a defined group under defined conditions. A systematic review combines several such estimates. A guideline panel then interprets the strength, consistency, and applicability of those findings.
+
+Software begins farther downstream. By the time a physician-developer writes an `if` statement, uncertainty has already passed through several layers of interpretation.
+
+The code may look exact. The evidence beneath it is not always exact.
+
+<Callout type="clinical">
+Evidence describes populations. It does not automatically determine what should happen to an individual patient.
+</Callout>
+
+## The Evidence Card
+
+Before translating a recommendation, create an **evidence card**. This is the smallest useful record of what the recommendation rests on.
+
+Capture six things:
+
+1. The clinical question.
+2. The population studied.
+3. The intervention and comparator.
+4. The absolute effect, not only the relative effect.
+5. The certainty and major limitations.
+6. The date after which the evidence needs review.
+
+Relative risk is attractive because it compresses a result into one number. Software prefers that kind of cleanliness. Patients need the baseline risk as well. A 50 percent relative reduction means something different when the starting risk is 20 percent than when it is 2 percent.
+
+The absolute effect is not a statistical footnote. It changes the clinical conversation.
+
+## Evidence Has a Half-Life
+
+Some clinical knowledge is bedrock. Anatomy does not change every six months. Diagnostic thresholds, drug eligibility rules, surveillance intervals, and treatment recommendations can.
+
+I wrote about this problem in [Dead Weight](/blog/dead-weight-ebsteins-evidence/). The clinical question is not merely whether a source was authoritative when published. The question is whether it remains authoritative when the software executes.
+
+Every evidence card therefore needs a review date. Without one, the future application has no reliable way to distinguish durable logic from stale logic.
+
+## Separate Evidence From Recommendation
+
+Evidence and recommendations are related. They are not interchangeable.
+
+A study reports an association or treatment effect. A guideline decides how that evidence should influence care. That decision may incorporate feasibility, harms, values, equity, and resources that do not appear in the primary endpoint.
+
+When these layers are collapsed, the eventual software becomes difficult to audit. A developer cannot tell whether a threshold came directly from a study, from a professional society, from a local protocol, or from an undocumented assumption made during implementation.
+
+Preserve the chain.
+
+## Your Exercise
+
+Choose one recommendation you use often. Do not begin with code.
+
+Create its evidence card. Record the source, population, absolute effect, important exclusions, certainty, and review date. Then write one sentence describing what the evidence does not establish.
+
+If that sentence is difficult to write, the recommendation is not ready to become logic.
+
+Evidence is the first input. Its limits must travel with it.

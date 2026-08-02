@@ -1,0 +1,99 @@
+---
+title: "Build the Clinical Engine Before the Interface"
+description: "A reliable clinical application separates guideline logic from presentation, tests expected behavior, and carries provenance into every recommendation."
+pubDate: 2026-09-10T12:00:00-04:00
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags:
+  - "clinical software"
+  - "clinical decision support"
+  - "software testing"
+  - "ai coding"
+  - "physician-developer"
+category: "Clinical Software"
+image:
+  url: "/images/posts/build-the-clinical-engine-before-the-interface-hero.png"
+  alt: "A transparent clinical application showing a tested logic engine beneath a restrained interface"
+draft: false
+featured: false
+readingTime: 8
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Cinematic dark editorial cutaway illustration for Doctors Who Code. A restrained clinical application interface floats above a clearly separated logic engine beneath it. The engine contains cyan rule modules, test indicators, version tags, and source links, while the interface remains simple and calm. A thin teal connection shows inputs passing down and an attributed recommendation returning upward. Dark navy background, precise modern software architecture aesthetic, no readable text, no logos, no text overlay, wide landscape composition. */}
+
+FGRManager began with a clinical problem, not a framework decision.
+
+The problem was bounded: operationalize surveillance and delivery-timing recommendations for fetal growth restriction without asking a clinician to hold the entire decision tree in working memory. The useful question was not whether to use React, Python, or vanilla JavaScript. The useful question was whether the logic faithfully represented the source guideline.
+
+That ordering protects the application.
+
+## The Clinical Engine
+
+The **clinical engine** is the part of the application that accepts validated inputs and returns an output, a reason, a source, and a status. It should not depend on button colors, page layout, or which screen happens to collect the data.
+
+Separate it from the interface.
+
+When logic and presentation are mixed together, a redesign can alter behavior. Testing becomes harder. A mobile version and a web version can quietly produce different answers. The clinical rule becomes trapped inside event handlers and display code.
+
+<Callout type="technical">
+The interface collects and explains. The clinical engine decides what the encoded protocol returns. Keep those responsibilities separate.
+</Callout>
+
+## Return More Than an Answer
+
+A clinical engine should not return only `37 weeks` or `eligible`.
+
+Return structured output:
+
+```json
+{
+  "status": "recommendation",
+  "result": "example output",
+  "reason": "rule and patient inputs used",
+  "source": "guideline section and version",
+  "review": "clinical factors not evaluated by this tool"
+}
+```
+
+The exact fields will vary. The principle does not. An answer without provenance and scope encourages automation bias.
+
+## Use AI After the Logic Is Explicit
+
+An AI coding assistant can translate a logic sheet into functions, generate a form, propose tests, explain an unfamiliar error, and help deploy a prototype. This is useful leverage.
+
+It is not clinical validation.
+
+Give the system the inputs, units, branches, exceptions, expected outputs, and test cases. Ask it to preserve the clinical engine as a separate module. Then review the implementation rule by rule.
+
+AI can help write the code. The physician must validate the clinical logic.
+
+## Make Expected Behavior Executable
+
+Turn every boundary triplet into an automated test. Add tests for missing data, impossible values, excluded populations, conflicting conditions, and source-version metadata.
+
+The test suite is the executable form of the clinical agreement. It tells the next developer what must remain true after a refactor. It also tells the physician reviewer where the tool claims certainty.
+
+Do not ask only whether the page loads. Ask whether the encoded recommendation survives the edge cases.
+
+## Version the Evidence and the Software
+
+Store at least four dates:
+
+- source guideline publication;
+- local clinical review;
+- software release;
+- next evidence review.
+
+A software version without a guideline version is incomplete. When the evidence changes, the team needs to identify which rules changed, which tests must change, and which deployed versions remain in use.
+
+That is not maintenance after the clinical work. It is clinical work.
+
+## Your Exercise
+
+Build the smallest prototype that can execute the logic sheet from the prior lesson.
+
+Keep the engine separate from the interface. Return the result, reason, source, and review boundary. Run the boundary tests before improving the design. Then ask another clinician to compare the output against the source protocol without reading your code.
+
+Software delivers the logic. Testing proves what it delivered.

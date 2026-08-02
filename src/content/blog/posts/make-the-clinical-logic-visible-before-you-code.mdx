@@ -1,0 +1,105 @@
+---
+title: "Make the Clinical Logic Visible Before You Code"
+description: "Translate a clinical protocol into explicit inputs, branches, thresholds, exceptions, and failure states before choosing a programming language."
+pubDate: 2026-09-08T12:00:00-04:00
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags:
+  - "clinical algorithms"
+  - "decision trees"
+  - "clinical protocols"
+  - "physician-developer"
+  - "doctors-who-code"
+category: "Clinical Software"
+image:
+  url: "/images/posts/make-the-clinical-logic-visible-before-you-code-hero.png"
+  alt: "A clinical guideline unfolding into an inspectable decision tree with thresholds, branches, and exception paths"
+draft: false
+featured: false
+readingTime: 8
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Cinematic dark editorial illustration for Doctors Who Code. A folded clinical guideline sheet at the left unfolds across the frame into a transparent, inspectable decision tree of cyan nodes, threshold gates, branch lines, and visible amber exception paths. The logic ends in several distinct clinical outputs rather than one glowing answer. Dark navy background, precise technical drafting aesthetic, subtle paper texture, no readable text, no logos, no text overlay, wide landscape composition. */}
+
+An SMFM delivery-timing table can fit on one page. The logic inside it does not fit into one sentence.
+
+Gestational age matters. Doppler findings matter. Associated conditions matter. Missing information matters. The edge between two recommendations matters most because that is where an innocent comparison operator can change care.
+
+Before code, there must be an inspectable model of the clinical reasoning.
+
+## The Logic Sheet
+
+Use a **logic sheet** to turn prose into executable structure. It has five parts:
+
+1. Inputs.
+2. Normalized values and units.
+3. Decision rules.
+4. Outputs.
+5. Exceptions and failure states.
+
+This is the bridge between medicine and software. It is also the first artifact another clinician can review without reading code.
+
+<Callout type="technical">
+Before you write software, make the clinical logic visible.
+</Callout>
+
+## Inputs Are Clinical Claims
+
+An input field is not merely a box on a screen. It asserts that a specific patient fact is necessary, available, and sufficiently reliable to influence the output.
+
+Name the type and unit. Define allowed values. State whether the field is required. Decide what missing means.
+
+`gestationalAge = 32` is ambiguous. Thirty-two weeks is not the same as 32 days, 32 weeks and 0 days, or a string a browser cannot parse. Clinical software should not infer the unit from context when the consequence of inference is a recommendation.
+
+## Branches Need Plain Language First
+
+Write every rule as a clinical sentence before writing pseudocode.
+
+For example:
+
+> If the patient belongs to the intended population, all required information is present, and the threshold condition is met, return the associated recommendation and its source.
+
+Then make the structure visible:
+
+```text
+IF population_is_eligible is false
+  RETURN outside_protocol
+
+IF required_data_is_missing is true
+  RETURN insufficient_information
+
+IF threshold_condition is true
+  RETURN recommendation_with_source
+
+RETURN alternate_recommendation_with_source
+```
+
+The early exits matter. A tool that cannot say "outside protocol" or "insufficient information" will eventually produce an answer where it should produce a boundary.
+
+## Test the Edges on Paper
+
+The typical case proves very little. Most defective clinical calculators work for the example copied from the guideline.
+
+Test the point just below a threshold, the threshold itself, and the point just above it. Test a missing value. Test an impossible value. Test a patient excluded by the source protocol. Test two conditions that lead to competing branches.
+
+I call this the **boundary triplet**: below, at, and above. It is the smallest useful test of whether a threshold has been translated faithfully.
+
+This extends the [three-check standard](/blog/why-clinical-calculator-needs-tests/): test the ordinary behavior, the boundary, and the failure state.
+
+## Keep Exceptions Visible
+
+Exceptions should not disappear into a final `else` block.
+
+Name them. Give them their own output. Explain why the ordinary recommendation does not apply. If physician review is required, state what needs review rather than using a generic warning banner.
+
+Explainability begins before the interface. The logic itself must be explainable.
+
+## Your Exercise
+
+Take one section of the protocol map from the previous lesson. Create a logic sheet.
+
+List the inputs and units. Write each decision rule in plain clinical language. Convert the rules into pseudocode. Add the boundary triplet for every numerical threshold. Finish with at least two explicit non-answer states.
+
+If another physician cannot audit the logic sheet, a programmer should not compile it.

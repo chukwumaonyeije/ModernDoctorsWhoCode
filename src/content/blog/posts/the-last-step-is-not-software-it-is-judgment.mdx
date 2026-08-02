@@ -1,0 +1,95 @@
+---
+title: "The Last Step Is Not Software. It Is Judgment."
+description: "Clinical software can execute protocol logic perfectly and still be wrong for the patient. The physician checkpoint must remain part of the architecture."
+pubDate: 2026-09-15T12:00:00-04:00
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags:
+  - "clinical judgment"
+  - "clinical decision support"
+  - "automation bias"
+  - "shared decision making"
+  - "physician-developer"
+category: "Clinical Software"
+image:
+  url: "/images/posts/the-last-step-is-not-software-it-is-judgment-hero.png"
+  alt: "A physician and patient evaluating a translucent software recommendation together at the bedside"
+draft: false
+featured: false
+readingTime: 8
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Cinematic dark editorial illustration for Doctors Who Code. A physician and patient sit facing each other at the bedside, jointly examining a small translucent clinical recommendation panel suspended between them. The panel is precise cyan geometry, but complex amber patient-history threads extend beyond its edges and remain visible to both people. The physician is attentive rather than authoritative, the patient is an active participant. Dark navy clinical setting, restrained cyan, teal, and amber light, no readable text, no logos, no text overlay, wide landscape composition. */}
+
+The recommendation can be correct and still be wrong for the patient in front of you.
+
+The protocol may exclude a comorbidity the application never asked about. The patient may value one outcome differently than the guideline panel assumed. The local hospital may not have the resource required by the recommended pathway. A contraindication may sit in a part of the chart the tool cannot see.
+
+Perfect execution does not repair an applicability failure.
+
+## The Physician Checkpoint
+
+The **physician checkpoint** is the deliberate transition between what the software can establish and what the clinical decision requires.
+
+It asks five questions:
+
+1. Does this patient belong to the population represented by the protocol?
+2. Are the inputs complete and trustworthy?
+3. Is there a contraindication, comorbidity, or competing risk outside the algorithm?
+4. Does the recommendation fit local capability and the current clinical setting?
+5. Has the patient had the opportunity to understand and weigh the options?
+
+<Callout type="clinical">
+Software carries repetitive logic. Physicians carry clinical nuance. The checkpoint belongs in the architecture, not in a disclaimer beneath it.
+</Callout>
+
+## Test Three Patients, Not One
+
+Before trusting the prototype, create three fictional cases.
+
+**The clear fit.** Every required input is present. The patient belongs to the intended population. No major exception applies.
+
+**The clear exclusion.** One explicit criterion places the patient outside the protocol. The correct software behavior is to stop and explain the boundary.
+
+**The gray zone.** The patient technically fits, but a comorbidity, preference, local constraint, or uncertainty changes how the recommendation should be interpreted.
+
+This is the **three-patient test**. The first case tests implementation. The second tests restraint. The third tests whether the product preserves judgment.
+
+Many tools pass the first and fail the other two.
+
+## Design Against Automation Bias
+
+The interface should not make a protocol output look like an order.
+
+Show which inputs were used. Show the source and version. Show exclusions that were evaluated. State what the tool did not evaluate. Use a distinct status for insufficient information and outside-protocol cases. Require review before a consequential recommendation is copied, ordered, or documented.
+
+A warning that appears on every screen becomes wallpaper. A useful checkpoint is specific to the reason review is required.
+
+## Return to the Patient
+
+The full translation is:
+
+**Evidence → Protocol → Algorithm → Software → Physician → Patient**
+
+Each stage answers a different question.
+
+- Evidence: What do we know?
+- Protocol: What should we do for the defined population?
+- Algorithm: What is the explicit logic?
+- Software: How do we deliver and test that logic?
+- Physician: Is it appropriate here?
+- Patient: What decision fits this person's circumstances and preferences?
+
+The patient is not the endpoint of a data pipeline. The patient is a participant in the decision.
+
+## The Capstone Record
+
+Complete the course by turning one protocol into working software. Preserve the evidence card, protocol map, logic sheet, test suite, and physician checkpoint beside the code.
+
+Record the guideline version, application version, review date, evidence source, intended population, exclusions, and update plan. Run the three-patient test. Ask a second clinician to review both the encoded logic and the point where the application stops.
+
+Evidence discovers. Protocols organize. Algorithms structure. Software delivers. Physicians decide.
+
+The last step is not software. It is responsibility.
