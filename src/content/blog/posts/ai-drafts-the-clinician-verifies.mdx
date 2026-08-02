@@ -1,0 +1,53 @@
+---
+title: "AI Drafts. The Clinician Verifies. That Line Cannot Move."
+description: "Speech recognition misses words. Language models infer things that were never said. A disciplined review habit is what separates ambient AI from a liability."
+pubDate: 2026-08-15T12:00:00-04:00
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags:
+  - "ambient ai"
+  - "clinical documentation"
+  - "ai in medicine"
+  - "patient safety"
+  - "physician-developer"
+  - "doctors-who-code"
+category: "AI in Medicine"
+image:
+  url: "/images/posts/ai-drafts-the-clinician-verifies-hero.jpeg"
+  alt: "A physician's finger tracing a line of clinical text on a tablet, a pen resting nearby, close and deliberate"
+draft: false
+featured: false
+readingTime: 6
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Cinematic dark editorial illustration for a Doctors Who Code essay, close and deliberate. A physician's hand tracing a finger along a line of clinical text on a tablet screen, a pen resting nearby, dark navy background with a single warm desk light. Subtle red underline beneath one word on the screen, suggesting an error being caught. No text overlay. Tight, focused composition rather than wide. */}
+
+A medication dose in a generated note read correctly. It was wrong. The patient had described a different number entirely, and the model had quietly rounded it to something more common, more plausible, and completely inconsistent with what she actually said.
+
+I caught it because I read the whole note. That sentence should not be remarkable. In practice, it is the entire discipline this lesson is about.
+
+## Never Treat Generated Documentation as Automatically Correct
+
+Speech recognition can miss words. Speakers can be confused with one another. Numbers can be transcribed incorrectly. A language model can infer something that sounds clinically reasonable but was never actually established in the conversation. None of these failure modes are rare or exotic. They are the ordinary cost of a system built on probability rather than certainty.
+
+<Callout type="warning">
+AI drafts. The clinician verifies. That is not a suggestion. It is the boundary that makes ambient documentation safe to use at all.
+</Callout>
+
+## Where to Look First
+
+Some parts of a note carry more consequence than others if they are wrong. Review these first, every time: patient name and identifiers, medication names and doses, allergies, gestational ages and other dates or measurements, diagnoses, pertinent negatives, procedures, follow-up instructions, and the assessment and plan itself.
+
+Anywhere a wrong statement could change what happens to the patient next deserves a second look before it deserves a signature.
+
+## Proper Names Are the Weak Point
+
+Modern systems can be surprisingly good with specialized medical terminology and medication names. Proper names remain the most fragile part of the pipeline. A practical habit is to spell unusual patient names or uncommon terms during the pre-encounter setup, when the workflow allows it, rather than hoping the system infers the spelling correctly from context.
+
+## Design Your Review Around Consequence, Not Convenience
+
+Not every error deserves equal attention. A formatting quirk is annoying. A wrong allergy is dangerous. Your review process should be built around that distinction rather than around reading everything with the same level of urgency, which in practice usually means reading nothing with enough urgency.
+
+Ask yourself, before you sign the next ambient-generated note, which specific line in that note would be the most expensive to get wrong. Read that line twice. Then read the rest of the note once.

@@ -1,0 +1,53 @@
+---
+title: "Build an Ambient Documentation Lab Before You Buy One"
+description: "You can learn the entire ambient documentation pipeline with a phone, a fictional patient, and a general-purpose AI assistant, before spending a dollar on a clinical platform."
+pubDate: 2026-08-22T12:00:00-04:00
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags:
+  - "ambient ai"
+  - "clinical documentation"
+  - "ai in medicine"
+  - "physician-developer"
+  - "prompt engineering"
+  - "doctors-who-code"
+category: "AI in Medicine"
+image:
+  url: "/images/posts/build-an-ambient-documentation-lab-before-you-buy-one-hero.jpeg"
+  alt: "A phone recording a mock interview on a kitchen table, a laptop nearby showing a structured SOAP note being generated"
+draft: false
+featured: false
+readingTime: 7
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Cinematic dark editorial illustration for a Doctors Who Code essay. A smartphone recording on a plain table with a subtle glowing waveform rising from it, a laptop beside it displaying a clean structured SOAP note taking shape, two silhouetted figures having a conversation softly blurred in the background. Dark navy and cyan palette, calm domestic setting rather than a clinic. No text overlay. Wide landscape composition. */}
+
+You do not need a clinical ambient platform, an IT approval process, or a signed contract to learn how this technology actually behaves. You need five minutes, a phone, and someone willing to pretend to be a patient.
+
+I built my own version of this lab before I trusted any commercial platform with a real encounter. It is the single fastest way to understand what these systems do well and where they quietly fail.
+
+## The Five-Minute Experiment
+
+Use a fictional patient only. Ask a colleague, a friend, or a family member to play the part. Invent a simple mock clinical scenario. Record a five-minute interview using an ordinary phone recording or transcription feature. Save the transcript.
+
+Paste the fictional transcript into a general-purpose language model and ask it to produce a SOAP note or a history and physical. Then compare the generated note against what actually happened in the conversation. Mark every omission, every incorrect inference, every unnecessary statement, and every formatting problem you find. Revise your instructions and run it again.
+
+<Callout type="warning">
+Do not place real patient information into consumer recording, transcription, or general-purpose AI services for this exercise. Clinical use requires its own privacy, security, organizational, legal, and platform review. This lab is for learning the pipeline, not for documenting real encounters.
+</Callout>
+
+## A Prompt Worth Starting With
+
+For a fictional case, try something close to this instruction: convert this mock clinical interview into a structured SOAP note, do not invent facts, if information is absent either omit it or identify it as not provided, and separate the patient's reported history clearly from the clinical assessment.
+
+Watch what the model does with that instruction. It will usually organize information well. It will sometimes smooth over a gap in the story with something plausible sounding that nobody actually said. That gap between plausible and true is the entire reason this lab exists.
+
+## What to Actually Measure
+
+Look past whether the note reads well. Measure accuracy, organization, missing facts, invented facts, how long the editing takes, whether the assessment and plan are actually useful, and whether the patient's own story survives the transformation into clinical prose.
+
+Run this exercise once, honestly, and you will know more about how a language model handles a clinical conversation than most physicians who have already adopted a commercial platform without ever checking its failure modes directly.
+
+What did the model do surprisingly well in your test, and what required your clinical judgment to catch? Write both answers down before you run the next version of the experiment.

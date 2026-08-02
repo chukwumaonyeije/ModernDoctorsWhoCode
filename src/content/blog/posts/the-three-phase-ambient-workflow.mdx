@@ -1,0 +1,65 @@
+---
+title: "The Three-Phase Ambient Workflow Every Physician Should Build"
+description: "Pre-encounter, encounter, and post-encounter are not just note sections. They are the three places an ambient workflow can quietly go wrong."
+pubDate: 2026-08-11T12:00:00-04:00
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags:
+  - "ambient ai"
+  - "clinical documentation"
+  - "ai in medicine"
+  - "physician-developer"
+  - "clinical workflow"
+  - "doctors-who-code"
+category: "AI in Medicine"
+image:
+  url: "/images/posts/the-three-phase-ambient-workflow-hero.jpeg"
+  alt: "Three connected panels showing a physician reviewing a chart, speaking with a patient, and verifying a note on a tablet"
+draft: false
+featured: false
+readingTime: 8
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Cinematic dark editorial illustration for a Doctors Who Code essay, divided into three connected panels left to right. Panel one: a physician reviewing a chart alone at a desk before a visit. Panel two: the same physician facing a patient directly, no laptop between them, a subtle glowing waveform in the air above. Panel three: the physician alone again, reading a tablet closely with a pen in hand, verifying text. Consistent dark navy and cyan palette across all three panels. No text overlay. Wide landscape composition. */}
+
+I have watched physicians adopt ambient documentation and only change one thing: they stop typing during the visit. That is not a workflow. That is a partial habit change wearing a workflow's clothes.
+
+A real ambient workflow has three distinct phases, and each one carries its own discipline. Skip any of them and the tool will still generate a note. It just will not generate a note you should trust.
+
+## Phase One: Pre-Encounter
+
+Before seeing the patient, review the demographics and the reason for the visit. Review whatever prior information is relevant. Identify the major clinical questions you need this encounter to answer.
+
+When the workflow allows it, verbalize a short pre-encounter summary into the documentation system, and spell out names or unusual terms the system is likely to misinterpret. Confirm that appropriate patient notification and consent procedures are in place according to your organization's, your platform's, and applicable legal requirements.
+
+None of this is about generating a diagnosis before you meet the patient. It is about walking into the room prepared, the same way you would prepare for any consultation, except now the preparation itself becomes part of the record.
+
+## Phase Two: Encounter
+
+During the encounter, talk to the patient, not to the computer. Begin with open-ended questions and let the patient tell the story in their own words. Clarify important details as they come up, naturally, the way you would in any conversation. Verbalize clinically important transitions when it is useful to do so.
+
+Do not change the shape of the encounter to satisfy the software. If the system is doing its job, you should be able to forget it is there.
+
+## Phase Three: Post-Encounter
+
+Afterward, generate the draft and read the entire note, not the summary, not the first paragraph. Correct names and identifiers. Verify medications, doses, allergies, dates, and any number that could matter clinically. Confirm that the assessment reflects your actual reasoning, not a plausible-sounding approximation of it. Remove anything unsupported or invented. Finalize only when the note accurately represents the encounter that happened.
+
+<Callout type="clinical">
+Ambient AI can draft the note. It cannot assume the clinician's responsibility for the note.
+</Callout>
+
+## A Readiness Check for Each Phase
+
+Before you trust this workflow in real practice, you should be able to answer yes to each of the following.
+
+**Governance.** You understand your organization's policy on ambient documentation, the platform is approved for this clinical use, and you know what happens to recordings and transcripts after processing.
+
+**Pre-encounter.** You can rapidly review the reason for the visit, you have a strategy for unusual names, and you identify the important questions before entering the room.
+
+**Encounter.** You can explain the process to the patient when needed, you focus on the patient rather than the device, and you clarify rather than assume the system understood something correctly.
+
+**Post-encounter.** You read the entire note, verify names, medications, and consequential clinical statements, and you sign only after the note accurately represents what happened.
+
+Draw your current workflow on paper and mark where these three phases actually fall. If you cannot find a clear post-encounter verification step, you do not have an ambient workflow yet. You have an ambient habit, and the difference between the two is where errors live.
