@@ -1,0 +1,323 @@
+---
+title: "Why I Rebuilt Doctors Who Code"
+description: "Doctors Who Code began as a blog encouraging physicians to learn programming. It is now a learning platform for physicians who want to use AI with judgment and build clinical tools that improve care."
+pubDate: "2026-08-02"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician-Developer"
+tags:
+  - "doctors-who-code"
+  - "physician-developer"
+  - "medical-education"
+  - "learning-platform"
+  - "clinical-software"
+  - "ai-in-medicine"
+  - "openmfm"
+image:
+  url: "/images/posts/why-i-rebuilt-doctors-who-code-hero.jpeg"
+  alt: "Two physicians designing clinical software beside a patient, with interfaces for ambient documentation, evidence-based algorithms, and standardized patient care"
+draft: false
+featured: true
+featuredRank: 15000
+readingTime: 13
+---
+
+On July 29, 2026, I opened the Doctors Who Code repository and looked at 174 published articles.
+
+There were essays on clinical AI. Tutorials on Python, TypeScript, GitHub, and FHIR. Build notes from tools I had created inside maternal-fetal medicine practice. Arguments about documentation, clinical judgment, and the responsibility that follows when software enters patient care.
+
+The archive was substantial.
+
+But a physician arriving for the first time still had to answer one question alone.
+
+Where do I begin?
+
+Chronology could show what I had published most recently. Tags could group articles that shared a subject. Search could find a phrase the reader already knew to enter.
+
+None of those systems could tell a physician what to learn first, what to do next, or what to build after the reading was complete.
+
+That was not a content problem.
+
+It was an architecture problem.
+
+Doctors Who Code began as a blog. I rebuilt it as a learning platform because the mission had outgrown the archive.
+
+## I. The Original Vision Was Straightforward
+
+When I launched Doctors Who Code, I wanted to encourage physicians to learn software development.
+
+The conviction came from clinical practice.
+
+Too many clicks. Too many screens. Too much duplicated documentation. Too much time spent serving the computer instead of the patient.
+
+Physicians encountered the same technical friction every day, but we were usually positioned as end users. We could submit a ticket. Attend a committee meeting. Explain a workflow to someone else. Then we waited for a product team to decide whether the problem deserved attention.
+
+I believed physicians should not merely complain about software. We should help build it.
+
+That conviction became Doctors Who Code.
+
+The early premise was simple: physicians who understand programming, automation, data, and software architecture can participate more meaningfully in the systems that shape care.
+
+I still believe that.
+
+But I no longer believe technical literacy is the entire mission.
+
+Knowing how software works changes the conversation. Building software changes what is possible. Distributing a reliable clinical system changes care.
+
+The distance between those three things is where the new Doctors Who Code now lives.
+
+## II. OpenMFM Changed the Question
+
+My understanding changed as I built [OpenMFM](https://openmfm.org).
+
+What began as a collection of maternal-fetal medicine calculators became a larger experiment in clinical knowledge distribution. I was not only placing formulas on a screen. I was translating guidelines, thresholds, surveillance strategies, delivery-timing recommendations, and counseling language into tools another person could use at the point of care.
+
+That work exposed a pattern.
+
+Physicians repeat the same cognitive tasks thousands of times across a career.
+
+We explain diagnoses. We counsel patients. We estimate risk. We apply evidence-based algorithms. We determine surveillance intervals. We decide when delivery is safer than continued pregnancy. We document the reasoning that supports the plan.
+
+These activities require expertise. They also contain structure.
+
+The structure is often trapped inside memory, local habits, PDF guidelines, note templates, and the accumulated judgment of individual clinicians. Two physicians can encounter the same diagnosis and give different explanations, use different thresholds, or document different plans despite working from the same evidence.
+
+Some variation is clinical judgment. Some is patient preference. Some is the legitimate uncertainty of medicine.
+
+But some variation is a distribution failure.
+
+The knowledge exists. It simply does not arrive in a consistent form at the moment it is needed.
+
+OpenMFM taught me that physician-built software is not only about efficiency. It can make evidence easier to retrieve, clinical logic easier to inspect, and counseling easier to deliver consistently.
+
+That does not mean converting every guideline into an app.
+
+A guideline is not yet a clinical instruction. A protocol is not a patient. A calculator can produce a number without understanding whether the number makes sense for the person in front of you.
+
+The software must preserve the human checkpoint.
+
+But when it is designed well, software can carry the repeatable parts of excellence without pretending to replace the judgment that remains irreducibly clinical.
+
+That realization changed the question behind Doctors Who Code.
+
+The question was no longer only, “How do we help physicians learn to program?”
+
+It became, “How do we help physicians turn domain expertise into systems that other people can safely use?”
+
+## III. Then the Interface Changed
+
+The second turning point arrived with large language models.
+
+For most of the electronic medical record era, physicians adapted themselves to computers. We learned where to click. Which menu contained the order. Which field had to be completed before the note could close. Which combination of templates, macros, and workarounds could make an inflexible system tolerate the clinical day.
+
+The interface dictated the sequence.
+
+Large language models, ambient documentation, voice interfaces, and agentic systems began to reverse part of that relationship. Computers could accept ordinary language, interpret unstructured input, and coordinate work that previously required a physician to move information manually from one screen to another.
+
+That shift is consequential.
+
+It is also unsafe when handled casually.
+
+Large language models generate fluent errors. Ambient systems can omit the detail that changed the assessment. Agents can execute the wrong plan faster than a person can notice. A confident answer is not clinical judgment.
+
+The proper response is not dismissal. It is architecture.
+
+The physician-developer must know where deterministic software belongs, where a language model adds value, what gets logged, which data can leave the local environment, and where the physician must inspect the result before the workflow continues.
+
+I have described this distinction elsewhere: [a prompt completes a task, but clinical work is a workflow](/blog/you-are-still-prompting-you-should-be-building-agents/). The workflow includes inputs, decisions, handoffs, failure states, and accountability.
+
+The model is one component.
+
+The system is the work.
+
+Doctors Who Code needed to teach that difference.
+
+## IV. Technology Should Return Attention
+
+Every unnecessary click consumes attention.
+
+Every duplicated field interrupts clinical reasoning. Every search through the chart competes with the patient’s account of what is happening. Every poorly designed handoff leaves a physician carrying information the system should have carried.
+
+The cost is not measured only in minutes.
+
+It is measured in interrupted thought.
+
+The best clinical software does not demand that the physician admire it. It quietly removes friction from the parts of care that do not require a physician’s mind. It returns attention to listening, examining, explaining, deciding, and caring.
+
+This is why efficiency is an incomplete standard.
+
+A faster workflow can still be clinically worse. A shorter note can still omit the reasoning another physician needs. An automated recommendation can still narrow judgment if the system makes disagreement difficult.
+
+The proper question is whether the system returns attention without surrendering responsibility.
+
+That is the design standard beneath the new platform.
+
+## V. A Traditional Blog Was No Longer Enough
+
+A blog records ideas in publication order.
+
+That function still matters. Every existing Doctors Who Code article remains in the [complete publication archive](/blog/). The original URLs remain intact. New essays will continue to document real builds, clinical workflows, technical failures, and the reasoning behind them.
+
+The blog is the record.
+
+But a record is not a curriculum.
+
+Publication order answers, “What did the author write next?” Education must answer, “What should the learner understand next?”
+
+Those are different questions.
+
+A physician should not need to reconstruct a learning plan from dozens of tabs. A clinician who wants to understand AI should not have to decide alone whether to begin with prompting, workflow mapping, data boundaries, or model evaluation. A physician with a working calculator should not discover testing only after someone else depends on an incorrect result.
+
+Doctors Who Code needed orientation, sequence, and application.
+
+I call this the **Platform Test**.
+
+An educational platform must answer three questions:
+
+1. **Where should I start?**
+2. **What should I do next?**
+3. **What will I produce?**
+
+The first requires orientation. The second requires sequence. The third requires an applied project.
+
+If a site can only answer the first question, it is a directory. If it can answer the first two, it is a course catalog. When it can orient the learner, sequence the work, and carry that work into a reviewable artifact, it has begun to function as a platform.
+
+That is what I rebuilt.
+
+## VI. Three Paths, Chosen by Present Work
+
+The new [Start Here page](/start/) does not begin by asking what programming language a physician wants to learn.
+
+It begins with the work in front of them.
+
+### I Have Not Shipped Code Yet
+
+The [Learn to Code path](/paths/learn-to-code/) is for physicians with deep domain knowledge and little or no programming experience.
+
+It begins with a bounded problem. Then it introduces the habits that make a build durable: project structure, version control, GitHub, and structured data.
+
+The goal is not to imitate a computer science degree in miniature. It is to create, protect, and explain one useful project.
+
+### I Use AI, but I Still Coordinate Every Step
+
+The [Use AI in Medicine path](/paths/use-ai-in-medicine/) is for physicians who already use ChatGPT or another general-purpose AI tool but remain the manual connector between every step.
+
+That physician does not need another collection of prompts. The next skill is workflow design.
+
+The path moves from isolated tasks to observable clinical sequences. It makes the human checkpoint explicit. It treats logs, data quality, review, and infrastructure boundaries as part of the clinical design.
+
+The ambient clinical documentation course makes this concrete. The microphone is only the beginning. The real workflow includes capture, transformation, verification, correction, and signature. The physician remains responsible for the note that enters the chart.
+
+### I Am Ready to Build a Clinical Tool
+
+The [Build Medical Software path](/paths/build-medical-software/) begins where a prototype becomes consequential.
+
+A calculator used once by its author is a project. A calculator used repeatedly by a clinical team is infrastructure. Responsibility arrives when another person begins to rely on the output.
+
+This path addresses what follows: moving logic out of spreadsheets, writing tests, working with structured clinical data, using FHIR, defining a deployment boundary, and preserving the decisions that must remain outside the code.
+
+It also follows the full chain from evidence to software. Evidence must be interpreted. The clinical rule must be made explicit. The rule must be encoded. The implementation must be tested. The final decision still belongs to a physician caring for a particular patient.
+
+The three paths are not separate brands. They are entry points into the same discipline.
+
+## VII. Articles Now Have a Place in a Learning Graph
+
+I did not rebuild the site by copying the archive into a second content system.
+
+I added a typed learning graph above it.
+
+An article can remain an essay for the general reader while also serving as a lesson inside a course. When an article is mapped into the learning graph, its page now shows the course, lesson number, difficulty, learning objectives, prerequisites, related project, and the next lesson in the sequence.
+
+The body does not change. The canonical URL does not change. The article’s history does not disappear.
+
+Its context changes.
+
+This allows the same piece of writing to carry more than one role. [You Are Still Prompting. You Should Be Building Agents](/blog/you-are-still-prompting-you-should-be-building-agents/) remains an argument about workflow architecture. Inside a course, it becomes the first lesson in moving from isolated AI tasks to designed workflows.
+
+The article remains the unit of thought.
+
+The lesson gives that thought a place in a sequence.
+
+The current platform contains three learning paths, five courses, 28 mapped lessons, three applied projects, and seven editorial channels. The [channels](/channels/) gather durable subjects such as clinical AI, workflow automation, building and shipping, healthcare data and FHIR, and maternal-fetal medicine systems. The [article archive](/blog/) can now be filtered by path, format, difficulty, topic, and recency.
+
+Chronology remains available. It is simply no longer the only architecture.
+
+## VIII. Projects Are the Application Boundary
+
+Medical education has always understood that reading is not competence.
+
+You can read about fetal heart rate interpretation. That is not the same as recognizing a deteriorating pattern in real time. You can memorize the steps of amniocentesis. That is not the same as holding the needle while the fetus moves beneath the ultrasound probe.
+
+Technical education has the same boundary.
+
+Reading about Git does not prove that you can protect a working build. Reading about software tests does not prove that you can turn a clinical expectation into executable behavior. Reading about AI oversight does not prove that you can locate the human checkpoint in a real workflow.
+
+The [projects layer](/projects/) is where the learning becomes visible.
+
+Each path points toward a bounded artifact: a small physician utility, a clinical AI workflow map, or a tested clinical calculator. These are deliberately narrower than “build an app.” They define a problem, a scope, and evidence that the learner can produce.
+
+This is the **application boundary**: the point where understanding must become inspectable work.
+
+Healthcare has no shortage of informed opinions about technology. It has fewer clinicians who can translate a precise problem into a working, reviewable system.
+
+Expertise without distribution is incomplete.
+
+## IX. The Audience Is Broader, but the Center Holds
+
+Physicians remain at the center of Doctors Who Code because they understand the clinical encounter from inside it. They know which interruptions are merely irritating and which ones create risk. They know when variation reflects judgment and when it reflects a broken system.
+
+But physicians are not the only people affected by clinical software.
+
+Patients belong in this conversation. They live with the consequences of opaque algorithms, fragmented records, inconsistent counseling, and interfaces that consume the attention of the person caring for them.
+
+Medical directors, department leaders, and healthcare administrators belong here as well. They decide which systems are purchased, which workflows are redesigned, what gets measured, and whether a thoughtful pilot can become durable infrastructure.
+
+Developers and product teams also belong here when they are willing to learn the clinical logic beneath the feature request.
+
+The audience is broader because the system is broader.
+
+The center remains the same: software must serve the clinical work, not force the clinical work to serve the software.
+
+## X. The Care Return Test
+
+Every lesson, course, project, and tool on the new platform should answer one question:
+
+**What does this return to care?**
+
+I call this the **Care Return Test**.
+
+Does the work make care safer? Does it make the reasoning clearer? Does it reduce unnecessary variation? Does it return attention to the patient? Does it make reliable clinical knowledge available at the moment it is needed?
+
+The answer does not have to be dramatic.
+
+A small utility that prevents a repeated transcription error can pass the test. A documentation workflow that protects the patient conversation can pass it. A lesson that teaches a physician to test a calculator before deployment can pass it.
+
+A technically impressive system that adds cognitive burden, obscures responsibility, or makes review difficult does not pass.
+
+This is how Doctors Who Code will decide what belongs.
+
+## XI. What Did Not Change
+
+The redesign is additive.
+
+Doctors Who Code remains written from maternal-fetal medicine practice. It remains a public record of physician-built systems, clinical workflows, technical failures, and arguments about responsibility. It remains independent of vendor curricula. It does not teach a product and call that technical education.
+
+The clinical standard remains intact.
+
+A software lesson must survive contact with real practice. An AI workflow must account for verification. A clinical tool must make its logic inspectable. A project must be small enough to finish and serious enough to teach responsibility.
+
+The platform does not replace the blog.
+
+It gives the archive direction. It adds sequence where sequence matters. It adds projects where reading is insufficient. It makes the path from curiosity to competence visible.
+
+## XII. Why I Rebuilt Doctors Who Code
+
+The original site asked physicians to learn technology.
+
+The new platform asks something more demanding.
+
+Learn enough to identify the right problem. Understand enough to protect the clinical logic. Build enough to make the solution real. Test enough to know where it fails. Keep the human checkpoint where judgment belongs.
+
+Doctors Who Code is no longer only a place where I publish what I have learned.
+
+It is a system for helping physicians build what medicine still needs.
