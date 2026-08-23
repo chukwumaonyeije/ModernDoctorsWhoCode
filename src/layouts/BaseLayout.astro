@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Header from '../components/Header.astro';
+import SearchPalette from '../components/SearchPalette.astro';
 import {
   SITE_TITLE,
   SITE_TAGLINE,
@@ -264,6 +265,7 @@ const combinedSchemas = [
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
     <Header />
+    <SearchPalette />
 
     <!-- Page content -->
     <main id="main-content" tabindex="-1">

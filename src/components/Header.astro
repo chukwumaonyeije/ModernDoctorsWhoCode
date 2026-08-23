@@ -44,7 +44,10 @@ const links = [
       </div>
 
       <div class="site-nav-actions">
-        <a href="/blog/#post-search" class="site-nav-search">Search</a>
+        <button type="button" class="site-nav-search" data-search-open>
+          Search
+          <kbd class="site-nav-search-kbd" aria-hidden="true">&#8984;K</kbd>
+        </button>
         <a href="/contact/" class="site-button site-button--primary site-nav-cta">Subscribe</a>
       </div>
     </div>
@@ -192,7 +195,19 @@ const links = [
   }
 
   .site-nav-search {
+    gap: 0.4rem;
     padding-inline: 0.25rem;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .site-nav-search-kbd {
+    padding: 0.1rem 0.35rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.68rem;
   }
 
   .site-nav-cta {
@@ -288,6 +303,11 @@ const links = [
       min-height: 2.9rem;
       padding: 0.7rem 0.15rem;
       border-bottom: 1px solid var(--dwc-border);
+      justify-content: flex-start;
+    }
+
+    .site-nav-search-kbd {
+      display: none;
     }
 
     .site-nav-link.is-active::after {

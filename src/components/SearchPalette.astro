@@ -1,0 +1,436 @@
+<dialog id="search-palette" class="search-palette" aria-label="Search Doctors Who Code">
+  <div class="search-palette-panel">
+    <form role="search" class="search-palette-form" autocomplete="off">
+      <label for="search-palette-input" class="sr-only">Search articles, courses, paths, projects, and channels</label>
+      <span class="search-palette-icon" aria-hidden="true">&#8981;</span>
+      <input
+        type="search"
+        id="search-palette-input"
+        class="search-palette-input"
+        placeholder="Search everything&hellip;"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button type="button" class="search-palette-close" data-search-close>
+        <span aria-hidden="true">Esc</span>
+        <span class="sr-only">Close search</span>
+      </button>
+    </form>
+
+    <p id="search-palette-status" class="sr-only" role="status" aria-live="polite"></p>
+
+    <p id="search-palette-prompt" class="search-palette-prompt">
+      Start typing to search learning paths, courses, projects, channels, and articles.
+    </p>
+
+    <ul id="search-palette-results" class="search-palette-results" aria-label="Search results" hidden></ul>
+
+    <p id="search-palette-empty" class="search-palette-empty" hidden>
+      No matches. Try a different term.
+    </p>
+
+    <div class="search-palette-hint">
+      <span><kbd>&uarr;</kbd><kbd>&darr;</kbd> Navigate</span>
+      <span><kbd>Enter</kbd> Open</span>
+      <span><kbd>Esc</kbd> Close</span>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  import type { GlobalSearchRecord } from '../utils/search';
+
+  const TYPE_LABELS: Record<string, string> = {
+    path: 'Path',
+    course: 'Course',
+    project: 'Project',
+    channel: 'Channel',
+    article: 'Article',
+  };
+
+  const dialog = document.getElementById('search-palette') as HTMLDialogElement | null;
+  const input = document.getElementById('search-palette-input') as HTMLInputElement | null;
+  const results = document.getElementById('search-palette-results') as HTMLUListElement | null;
+  const empty = document.getElementById('search-palette-empty') as HTMLElement | null;
+  const prompt = document.getElementById('search-palette-prompt') as HTMLElement | null;
+  const status = document.getElementById('search-palette-status') as HTMLElement | null;
+
+  if (dialog && input && results && empty && prompt && status) {
+    let indexPromise: Promise<GlobalSearchRecord[]> | undefined;
+    let lastTrigger: HTMLElement | null = null;
+
+    function loadIndex() {
+      indexPromise ??= fetch('/search-all.json').then((response) => {
+        if (!response.ok) throw new Error('Search index unavailable');
+        return response.json() as Promise<GlobalSearchRecord[]>;
+      });
+      return indexPromise;
+    }
+
+    function score(record: GlobalSearchRecord, q: string) {
+      const title = record.title.toLowerCase();
+      if (title.startsWith(q)) return 0;
+      if (title.includes(q)) return 1;
+      return 2;
+    }
+
+    function highlightUrl(record: GlobalSearchRecord) {
+      return record.url;
+    }
+
+    // Astro's scoped CSS only reaches elements present in the static
+    // template — it tags them at build time with a data-astro-cid-* attribute
+    // and scopes selectors to match. Elements created here via innerHTML
+    // never get that attribute, so the component's <style> block would
+    // silently not apply to any of them. Reading the attribute off an
+    // existing templated element and stamping it onto every generated tag
+    // restores scoping for this dynamic content.
+    const scopeAttr = [...results.attributes].find((attr) => attr.name.startsWith('data-astro-cid-'))?.name;
+    const scopeAttrHtml = scopeAttr ? ` ${scopeAttr}` : '';
+
+    function renderResults(records: GlobalSearchRecord[]) {
+      results.innerHTML = records
+        .map(
+          (record) => `
+            <li class="search-palette-result"${scopeAttrHtml}>
+              <a href="${highlightUrl(record)}"${scopeAttrHtml}>
+                <span class="search-palette-result-type"${scopeAttrHtml}>${TYPE_LABELS[record.type] ?? record.type}</span>
+                <span class="search-palette-result-body"${scopeAttrHtml}>
+                  <span class="search-palette-result-title"${scopeAttrHtml}>${escapeHtml(record.title)}</span>
+                  <span class="search-palette-result-desc"${scopeAttrHtml}>${escapeHtml(record.description)}</span>
+                </span>
+                ${record.meta ? `<span class="search-palette-result-meta"${scopeAttrHtml}>${escapeHtml(record.meta)}</span>` : ''}
+              </a>
+            </li>`,
+        )
+        .join('');
+    }
+
+    function escapeHtml(value: string) {
+      return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    async function applySearch() {
+      const q = input.value.trim().toLowerCase();
+
+      if (!q) {
+        results.hidden = true;
+        empty.hidden = true;
+        prompt.hidden = false;
+        status.textContent = '';
+        return;
+      }
+
+      prompt.hidden = true;
+
+      try {
+        const records = await loadIndex();
+        const matches = records
+          .filter((record) => {
+            const haystack = `${record.title} ${record.description} ${record.meta ?? ''}`.toLowerCase();
+            return haystack.includes(q);
+          })
+          .sort((a, b) => score(a, q) - score(b, q))
+          .slice(0, 40);
+
+        renderResults(matches);
+        results.hidden = matches.length === 0;
+        empty.hidden = matches.length !== 0;
+        status.textContent = `${matches.length} ${matches.length === 1 ? 'result' : 'results'}`;
+      } catch {
+        results.hidden = true;
+        empty.hidden = false;
+        empty.textContent = 'Search is temporarily unavailable.';
+        status.textContent = 'Search is temporarily unavailable.';
+      }
+    }
+
+    function openPalette(trigger: HTMLElement | null) {
+      lastTrigger = trigger;
+      if (!dialog.open) dialog.showModal();
+      input.value = '';
+      void applySearch();
+      input.focus();
+      void loadIndex();
+    }
+
+    function closePalette() {
+      if (dialog.open) dialog.close();
+    }
+
+    // Any element marked data-search-open acts as a trigger, so the header
+    // (or any future entry point) doesn't need to import this component.
+    document.addEventListener('click', (event) => {
+      const trigger = (event.target as HTMLElement | null)?.closest('[data-search-open]');
+      if (trigger) {
+        event.preventDefault();
+        openPalette(trigger as HTMLElement);
+      }
+    });
+
+    document.getElementById('search-palette')?.querySelector('[data-search-close]')?.addEventListener('click', closePalette);
+
+    // Click on the dialog's own box (the ::backdrop area, since the panel is
+    // a nested element) closes the palette, matching standard modal behavior.
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) closePalette();
+    });
+
+    dialog.addEventListener('close', () => {
+      lastTrigger?.focus();
+    });
+
+    input.addEventListener('input', () => { void applySearch(); });
+
+    input.addEventListener('keydown', (event) => {
+      // input[type=search] has its own native Escape-to-clear behavior in
+      // some browsers, which can swallow the keypress before the dialog's
+      // native cancel-on-Escape handling runs. Close explicitly instead.
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closePalette();
+        return;
+      }
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        const first = results.querySelector('a');
+        first?.focus();
+      }
+    });
+
+    results.addEventListener('keydown', (event) => {
+      const target = event.target as HTMLElement;
+      if (target.tagName !== 'A') return;
+      const items = [...results.querySelectorAll('a')];
+      const currentIndex = items.indexOf(target as HTMLAnchorElement);
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        items[currentIndex + 1]?.focus();
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        if (currentIndex === 0) input.focus();
+        else items[currentIndex - 1]?.focus();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      const isShortcut = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k';
+      if (!isShortcut) return;
+      const active = document.activeElement;
+      const isTyping = active instanceof HTMLElement && ['INPUT', 'TEXTAREA', 'SELECT'].includes(active.tagName);
+      if (isTyping && active !== input) return;
+      event.preventDefault();
+      if (dialog.open) closePalette();
+      else openPalette(document.activeElement as HTMLElement);
+    });
+  }
+</script>
+
+<style>
+  .search-palette {
+    position: fixed;
+    inset-block-start: 8vh;
+    margin-inline: auto;
+    width: min(640px, calc(100vw - 2rem));
+    max-height: 78vh;
+    padding: 0;
+    border: 1px solid var(--dwc-border);
+    border-radius: var(--dwc-radius-lg);
+    background: var(--dwc-card);
+    color: var(--dwc-white);
+    box-shadow: var(--dwc-shadow-lg);
+    overflow: hidden;
+  }
+
+  .search-palette::backdrop {
+    background: rgba(10, 13, 26, 0.72);
+    backdrop-filter: blur(4px);
+  }
+
+  .search-palette-panel {
+    display: flex;
+    flex-direction: column;
+    max-height: 78vh;
+  }
+
+  .search-palette-form {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--dwc-border);
+    flex: 0 0 auto;
+  }
+
+  .search-palette-icon {
+    color: var(--dwc-muted);
+    font-size: 1.1rem;
+  }
+
+  .search-palette-input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    color: var(--dwc-white);
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+  }
+
+  .search-palette-input:focus {
+    outline: none;
+  }
+
+  .search-palette-close {
+    flex: 0 0 auto;
+    padding: 0.3rem 0.55rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: var(--dwc-radius-sm);
+    background: transparent;
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .search-palette-close:hover {
+    color: var(--dwc-white);
+    border-color: var(--dwc-blue);
+  }
+
+  .search-palette-prompt,
+  .search-palette-empty {
+    margin: 0;
+    padding: var(--space-8) var(--space-5);
+    color: var(--dwc-muted);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .search-palette-results {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-2);
+    overflow-y: auto;
+    flex: 1 1 auto;
+  }
+
+  .search-palette-result + .search-palette-result {
+    margin-top: 0.2rem;
+  }
+
+  .search-palette-result a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-3);
+    border-radius: var(--dwc-radius-md);
+    color: var(--dwc-white);
+    text-decoration: none;
+  }
+
+  .search-palette-result a:hover,
+  .search-palette-result a:focus-visible {
+    background: rgba(56, 189, 248, 0.1);
+    outline: none;
+  }
+
+  .search-palette-result-type {
+    flex: 0 0 auto;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: var(--dwc-radius-sm);
+    color: var(--dwc-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .search-palette-result-body {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .search-palette-result-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .search-palette-result-desc {
+    color: var(--dwc-muted);
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .search-palette-result-meta {
+    flex: 0 0 auto;
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    white-space: nowrap;
+  }
+
+  .search-palette-hint {
+    display: flex;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-5);
+    border-top: 1px solid var(--dwc-border);
+    color: var(--dwc-muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    flex: 0 0 auto;
+  }
+
+  .search-palette-hint kbd {
+    padding: 0.1rem 0.35rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 4px;
+    font-family: inherit;
+  }
+
+  @media (max-width: 640px) {
+    .search-palette {
+      inset: 0;
+      width: 100%;
+      max-width: none;
+      height: 100%;
+      max-height: none;
+      margin: 0;
+      border: 0;
+      border-radius: 0;
+    }
+
+    .search-palette-panel {
+      max-height: 100%;
+      height: 100%;
+    }
+
+    .search-palette-result-desc {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .search-palette {
+      animation: search-palette-in 0.15s ease;
+    }
+  }
+
+  @keyframes search-palette-in {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>

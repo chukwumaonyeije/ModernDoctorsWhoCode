@@ -1,6 +1,7 @@
 import { getCollection } from 'astro:content';
 import { classifyArticleFormat, classifyArticleTopics, normalizeCategory } from '../data/taxonomy';
 import { sortBlogPosts } from './blog';
+import { getCourses, getLearningPaths, getProjects, getPublishedChannels } from './learning';
 
 export interface ArticleSearchRecord {
   id: string;
@@ -51,4 +52,71 @@ export async function buildArticleSearchIndex(): Promise<ArticleSearchRecord[]> 
       keywords: [...post.data.tags, post.data.category, ...topics],
     };
   });
+}
+
+export type GlobalSearchType = 'article' | 'course' | 'path' | 'project' | 'channel';
+
+export interface GlobalSearchRecord {
+  type: GlobalSearchType;
+  title: string;
+  description: string;
+  url: string;
+  meta?: string;
+}
+
+/**
+ * Aggregates every browsable content type into one flat, typed index for the
+ * global search palette. Kept separate from buildArticleSearchIndex/
+ * search-index.json, which the /blog archive filter depends on unchanged.
+ */
+export async function buildGlobalSearchIndex(): Promise<GlobalSearchRecord[]> {
+  const [articles, courses, paths, projects, channels] = await Promise.all([
+    buildArticleSearchIndex(),
+    getCourses(),
+    getLearningPaths(),
+    getProjects(),
+    getPublishedChannels(),
+  ]);
+
+  const articleRecords: GlobalSearchRecord[] = articles.map((article) => ({
+    type: 'article',
+    title: article.title,
+    description: article.description,
+    url: article.url,
+    meta: article.category,
+  }));
+
+  const courseRecords: GlobalSearchRecord[] = courses.map((course) => ({
+    type: 'course',
+    title: course.data.title,
+    description: course.data.description,
+    url: `/courses/${course.id}/`,
+    meta: `${course.data.difficulty} · ${Math.round(course.data.estimatedMinutes / 60) || 1}h`,
+  }));
+
+  const pathRecords: GlobalSearchRecord[] = paths.map((path) => ({
+    type: 'path',
+    title: path.data.title,
+    description: path.data.description,
+    url: `/paths/${path.id}/`,
+    meta: path.data.audience,
+  }));
+
+  const projectRecords: GlobalSearchRecord[] = projects.map((project) => ({
+    type: 'project',
+    title: project.data.title,
+    description: project.data.description,
+    url: `/projects/${project.id}/`,
+    meta: project.data.difficulty,
+  }));
+
+  const channelRecords: GlobalSearchRecord[] = channels.map((channel) => ({
+    type: 'channel',
+    title: channel.data.title,
+    description: channel.data.description,
+    url: `/channels/${channel.id}/`,
+    meta: channel.data.topics.slice(0, 2).join(', '),
+  }));
+
+  return [...pathRecords, ...courseRecords, ...projectRecords, ...channelRecords, ...articleRecords];
 }
