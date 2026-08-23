@@ -281,7 +281,7 @@ const personSchema = {
       <p class="about-body-copy" style="margin-bottom: 1.25rem;">
         My work is not only clinical and technical, but it is all driven by the same
         habits of mind. I am a Seventh-day Adventist elder, a theologian writing at
-        <a href="https://substack.com/@chukwumatheology" target="_blank" rel="noopener noreferrer" style="color: var(--dwc-cyan);">Chukwuma Theology</a>
+        <a href="https://substack.com/@chukwumatheology" target="_blank" rel="noopener noreferrer" class="about-inline-link">Chukwuma Theology</a>
         on Substack, and an endurance athlete interested in metabolic performance,
         training load, and measurement. I also care deeply about Igbo heritage,
         systems thinking, and disciplined intellectual work.
@@ -363,7 +363,8 @@ const personSchema = {
     font-family: var(--font-mono);
     font-size: clamp(0.78rem, 0.75rem + 0.12vw, 0.82rem);
     color: var(--dwc-cyan);
-    white-space: nowrap;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 
   .about-card-copy {

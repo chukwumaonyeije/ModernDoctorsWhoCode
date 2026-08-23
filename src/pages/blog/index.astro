@@ -274,6 +274,7 @@ const blogSchema = {
 <style>
   .article-index {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 2rem;
   }
 
@@ -312,6 +313,7 @@ const blogSchema = {
 
   .article-search-field {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 0.45rem;
     margin-bottom: 1rem;
   }
@@ -412,8 +414,14 @@ const blogSchema = {
       flex-direction: column;
     }
 
+    .article-index-header h1 {
+      max-width: none;
+      text-wrap: wrap;
+      overflow-wrap: anywhere;
+    }
+
     .article-filters {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .article-discovery-footer {
@@ -422,7 +430,7 @@ const blogSchema = {
     }
 
     .article-index-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 </style>
