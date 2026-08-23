@@ -11,6 +11,7 @@ import LessonContext from '../components/LessonContext.astro';
 import LessonNavigator from '../components/LessonNavigator.astro';
 import ProjectCallout from '../components/ProjectCallout.astro';
 import ArticleToc from '../components/ArticleToc.astro';
+import ReadingProgress from '../components/ReadingProgress.astro';
 import {
   SITE_URL,
   SITE_TITLE,
@@ -180,6 +181,7 @@ const relatedPosts = allPosts
   articleSchema={pageSchemas}
   noIndex={noIndex}
 >
+  <ReadingProgress />
   <div class="post-shell">
 
     <!-- Main post content -->
