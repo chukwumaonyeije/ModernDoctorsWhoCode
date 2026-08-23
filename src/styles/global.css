@@ -31,6 +31,40 @@
   --space-page-y: clamp(2rem, 1.3rem + 3vw, 3rem);
   --space-section: clamp(2.5rem, 1.8rem + 3vw, 4rem);
   --measure-content: 70ch;
+
+  /* Discrete spacing scale, for component-internal gap/padding.
+     --space-page-*/--space-section above stay fluid (clamp) for
+     layout-level rhythm; this scale is for fixed component spacing. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  /* Radius scale. md/lg are the two sizes already in majority use
+     across the codebase; sm and full name the remaining real patterns
+     (chips/code vs. pills). See docs/design-system.md for the audit. */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-full: 999px;
+
+  /* Surface elevation. Named from the box-shadow values already used
+     for hero art and floating panels. */
+  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.18);
+  --shadow-md: 0 18px 54px rgba(0, 0, 0, 0.24);
+  --shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.24);
+  --shadow-glow-cyan: 0 0 18px rgba(56, 189, 248, 0.4);
+
+  /* Motion. 0.2s ease is the value already used almost everywhere;
+     --duration-fast names the one deliberate exception. */
+  --duration-fast: 140ms;
+  --duration-base: 0.2s;
+  --ease-standard: ease;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
