@@ -1,0 +1,414 @@
+---
+title: "The Physician Above the Loop: Preparing Medicine for Agentic AI"
+description: "Clinical intelligence is becoming abundant. Physicians must learn to delegate, verify, contextualize, and judge the work of increasingly autonomous clinical AI systems."
+pubDate: 2026-08-24
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - "agentic-ai"
+  - "clinical-ai"
+  - "autonomous-ai"
+  - "clinical-judgment"
+  - "medical-education"
+  - "ambient-documentation"
+  - "physician-developer"
+  - "doctors-who-code"
+image:
+  url: "/images/posts/physician-above-the-loop-agentic-ai-hero.png"
+  alt: "A physician supervises a clinical AI robot during a consultation with a pregnant patient"
+draft: false
+featured: true
+featuredRank: 15101
+readingTime: 14
+---
+
+I can often tell when a physician has started using ambient documentation.
+
+The note changes.
+
+It becomes more structured. The history is organized. The assessment arrives in a cleaner form. The physician is no longer creating every sentence from a blank page.
+
+The machine generates. The physician reviews, corrects, and signs.
+
+That looks like a documentation improvement. It is also an early lesson in a much larger change.
+
+The physician is moving from **generator** to **verifier**.
+
+From **worker** to **orchestrator**.
+
+A recent *JAMA* Perspective by Ezekiel Emanuel, Abe Baker-Butler, Neal Khosla, and Vinod Khosla asks whether autonomous AI may eventually provide better cognitive medical care than physicians alone or physicians aided by AI. Christian Pean, writing in *Techy Surgeon*, answered with an essay titled “The Commoditization of Clinical Intelligence.”
+
+Pean makes two claims that medicine needs to hold at the same time.
+
+First, much of the evidence for AI superiority comes from structured environments that resemble clinical examinations more than clinical care.
+
+Second, physicians should not mistake the limitations of AI in 2026 for permanent limits.
+
+Both are correct.
+
+The more important consequence of capable clinical AI may not be the disappearance of the physician. It may be a redefinition of the physician.
+
+The clinician of the agentic era will deploy systems, interrogate their findings, reconcile conflicting outputs, recognize failure, incorporate the patient's lived reality, and own the final judgment.
+
+The physician will not merely remain **in the loop**.
+
+The physician must learn to operate **above it**.
+
+## I. Access Is Not Collaboration
+
+The strongest evidence in this debate deserves precision.
+
+The Emanuel article is a Perspective, not a clinical trial. It builds its case from studies showing strong language-model performance on medical reasoning tasks.
+
+One of those studies was a [randomized clinical trial in *JAMA Network Open*](https://doi.org/10.1001/jamanetworkopen.2024.40969). Fifty physicians in internal medicine, family medicine, and emergency medicine worked through challenging diagnostic cases with either conventional resources or access to GPT-4.
+
+Access to the model did not significantly improve the physicians' diagnostic-reasoning scores. The median scores were 76% with GPT-4 and 74% with conventional resources.
+
+The model alone scored 92%.
+
+That result is uncomfortable. It is also easy to misread.
+
+The lesson is not simply that the model beat the doctors. The lesson is that giving a physician access to a capable model does not automatically create a capable physician-AI system.
+
+The interface matters.
+
+The workflow matters.
+
+Delegation and verification matter.
+
+A [systematic review and meta-analysis of 106 experiments](https://doi.org/10.1038/s41562-024-02024-1) reached a related conclusion. Human-AI combinations performed better than humans alone on average, but worse than the stronger of the human or AI working independently. The losses were concentrated in decision tasks.
+
+That is not evidence that humans should be removed from clinical decisions.
+
+It is evidence that **human-AI collaboration is a learned competency and a system-design problem**.
+
+We have spent enormous effort improving the models.
+
+We have spent far less effort preparing the people who must supervise them.
+
+## II. The Clinical Vignette Is Not the Patient
+
+Pean calls the structured benchmark a **vacuum of false veracity**.
+
+Physicians recognize the problem immediately.
+
+The patient in a clinical vignette remembers the relevant history. She tells it in the correct order. The necessary laboratory tests have already been performed. The incidental findings have been removed. There are no duplicated medications, missing outside records, or undocumented admissions in another health system.
+
+The chief complaint does not change fifteen minutes into the encounter.
+
+Real clinical work begins before the reasoning problem has been defined.
+
+We have to discover the problem.
+
+The [AgentClinic benchmark](https://doi.org/10.1038/s41746-026-02674-7) was designed around this distinction. Instead of presenting all relevant facts at once, it places a clinical agent in a simulated, sequential encounter. The agent must interact with a patient, collect information, order examinations, interpret multimodal data, and use tools.
+
+Performance drops sharply when a static question becomes a sequential clinical task.
+
+That is not surprising.
+
+Information acquisition is clinical reasoning.
+
+The clinician decides what to ask next. She decides whether the answer is reliable, whether a hesitation matters, whether a finding is incidental, and whether the original diagnostic frame is wrong.
+
+A board question has already decided which facts matter.
+
+The patient has not.
+
+## III. Current Limits Are Not a Professional Strategy
+
+The limitations of current systems are real.
+
+AI cannot perform a complete physical examination. It struggles with messy longitudinal records. It can miss social constraints, flatten uncertainty, and produce fluent language that exceeds the reliability of its reasoning. It does not carry responsibility for what happens after a recommendation enters the chart.
+
+These are reasons for disciplined design.
+
+They are not reasons for complacency.
+
+Medicine has a recurring habit of identifying what a technology cannot do today and converting that observation into a claim about what it will never do.
+
+That is not analysis. It is wishful extrapolation.
+
+The relevant question is not whether a model can replace a physician in August 2026.
+
+The relevant question is what happens after these systems gain better access to longitudinal records, voice, vision, sensors, clinical tools, and other agents while continuing to improve.
+
+No one knows where the boundary will sit in five or ten years.
+
+Medical education still has to prepare physicians to work at that boundary.
+
+## IV. Radiology Changed the Unit of Work
+
+Radiology offers a useful warning to both sides.
+
+In 2016, Geoffrey Hinton suggested that training radiologists might soon become unnecessary because machine vision would outperform them.
+
+Radiology did not disappear.
+
+Algorithms entered the workflow. The workflow remained complicated. Radiologists remained necessary.
+
+The wrong lesson is that physicians are protected.
+
+The more useful lesson is that technology changes the **unit of work** before it eliminates the profession performing that work.
+
+The radiologist's unit of work changes.
+
+The pathologist's changes.
+
+The primary-care physician's changes.
+
+The maternal-fetal medicine specialist's changes.
+
+Eventually, the skills that define excellence change as well.
+
+The physician who works effectively with AI may not be displaced by the machine.
+
+She may displace the physician who does not.
+
+## V. Ambient Documentation Is the First Delegation Lab
+
+Ambient documentation has already moved from demonstration to clinical workflow.
+
+The physician conducts the encounter. The system listens, structures the conversation, and drafts the note. The physician reviews the output, repairs omissions, restores nuance, and assumes responsibility for the final record.
+
+The workflow has changed from:
+
+**creator → editor**
+
+**generator → verifier**
+
+**worker → orchestrator**
+
+The evidence is encouraging but not complete. A [2026 randomized crossover trial](https://doi.org/10.1093/jamia/ocag018) of 160 outpatient clinicians found that two ambient scribe products improved workflow satisfaction and reduced personal and work-related burnout. One product reduced documentation time more than the other. Neither meaningfully reduced pajama time, and clinicians still reported omissions, over-summarization, and speaker-attribution problems that required careful editing.
+
+That combination matters.
+
+The tools can reduce burden.
+
+They still require supervision.
+
+We adopted ambient systems largely as a burnout intervention. Their more durable consequence may be educational.
+
+**Ambient documentation is medicine's first large-scale delegation lab.**
+
+Physicians are learning a new sequence:
+
+> Let the machine generate. I will review. I will correct. I will contextualize. I will decide whether the output is acceptable. I remain responsible.
+
+That is the beginning of orchestration.
+
+## VI. From One Scribe to Ten Agents
+
+Now extend that model beyond the note.
+
+During a consultation, one agent reconstructs the previous hospitalizations. Another reconciles medications. A third analyzes laboratory trends. A fourth compares imaging. A fifth searches current guidelines. A sixth evaluates drug interactions. A seventh checks insurance coverage. An eighth prepares prior authorization. A ninth identifies unresolved problems. A tenth audits the conclusions of the others.
+
+The physician is no longer performing every information-processing task.
+
+The physician is deciding:
+
+- which agents should be deployed,
+- what each agent is permitted to do,
+- which outputs require independent verification,
+- where agents disagree,
+- what information is missing,
+- when the machine-generated frame is wrong,
+- and what is appropriate for this patient.
+
+That is not simply AI assistance.
+
+That is **agentic care**.
+
+It also creates a new failure mode. Ten fluent agents can produce ten versions of the same error faster than one clinician can detect it.
+
+More intelligence does not remove the need for architecture.
+
+It increases it.
+
+## VII. The Five Duties Above the Loop
+
+Pean proposes four elements for an “above the loop” curriculum: delegate, verify, reserve, and judge.
+
+I would add contextualize.
+
+Together, these are the five duties above the loop.
+
+### 1. Delegate
+
+Decompose a clinical problem into tasks that can be assigned safely. Specify the objective, boundaries, escalation rules, and definition of success.
+
+An agent without constraints is not autonomy.
+
+It is unbounded delegation.
+
+### 2. Verify
+
+Demand provenance. Check dates. Trace recommendations to evidence. Use independent systems or human review for high-consequence conclusions.
+
+A fluent answer is not a verified answer.
+
+### 3. Preserve
+
+Protect deliberate opportunities for AI-free clinical reasoning.
+
+I prefer **preserve** to reserve because the purpose is explicit: preserve the bedrock knowledge required to recognize machine failure. A physician who can no longer reason without the tool may remain in the loop while losing the capacity to supervise it.
+
+### 4. Contextualize
+
+The generally correct answer is not always the clinically correct answer.
+
+A recommendation must be reconciled with comorbidities, values, goals, affordability, family circumstances, culture, risk tolerance, and uncertainty.
+
+The machine may answer, “What is usually done?”
+
+The clinician must answer, “What should we do for this person, now?”
+
+### 5. Judge
+
+Treat the machine's output as a consultation, not a verdict.
+
+Accept it. Reject it. Modify it. Escalate it.
+
+Then own the decision.
+
+These are not optional computer skills.
+
+They are becoming clinical skills.
+
+## VIII. Human in the Loop Is Too Weak
+
+Professional organizations are right to insist on physician involvement.
+
+But “human in the loop” can describe little more than a signature.
+
+Imagine a system generating hundreds of recommendations while a physician is expected to approve them quickly. The human is technically present. The oversight is fictional.
+
+Meaningful oversight requires authority, expertise, time, and enough system visibility to exercise judgment.
+
+The physician should not merely click **Approve**.
+
+The physician should understand the system being supervised.
+
+That is why observability matters. A clinical agent should expose what it did, which information it used, which tools it called, where uncertainty remains, and why it escalated or failed to escalate.
+
+A human checkpoint without observability is a ritual.
+
+## IX. Trust Is a Property of the Care System
+
+Patients may not want fully autonomous care.
+
+That objection deserves more than a survey headline.
+
+A [2026 qualitative study in *JAMA Network Open*](https://doi.org/10.1001/jamanetworkopen.2026.26916) found that public acceptance of AI in health care was conditional. Thirty-four participants emphasized three dimensions: relational engagement, structural safeguards, and performance reliability. The importance of each changed with the care setting.
+
+A patient may reject an unsolicited robotic call and welcome a system that answers a medication question at 2 AM, monitors blood-pressure trends, recognizes deterioration, explains results, and connects her with a clinician when the situation exceeds its authority.
+
+Those are different systems.
+
+Trust is not a property of the algorithm alone.
+
+It is a property of the relationship among the patient, the technology, the clinician, and the institution deploying it.
+
+Patients need to know when they are interacting with a machine, what it is allowed to do, how its performance is monitored, and where human responsibility resides.
+
+That is not a communication layer added after deployment.
+
+It is part of the clinical architecture.
+
+## X. Clinical Intelligence Is Becoming Abundant
+
+Medicine has historically derived part of its authority from scarce knowledge.
+
+Physicians knew things that took years to learn and were difficult to retrieve. That scarcity is disappearing.
+
+Literature synthesis is becoming abundant.
+
+Differential generation is becoming abundant.
+
+Guideline retrieval is becoming abundant.
+
+Pattern recognition is becoming increasingly automated.
+
+Medical knowledge is not becoming worthless. The possession of medical information is becoming less differentiating.
+
+The scarce resource is shifting toward judgment.
+
+Judgment asks which information matters. Which evidence applies. Which recommendation deserves trust. Which risk is acceptable. When the guideline should yield to the patient. When the machine should be ignored. When neither the machine nor the physician knows enough to proceed.
+
+This shift has economic consequences as well. A [2026 *JAMA* Perspective](https://doi.org/10.1001/jama.2026.5483) has already proposed a licensure framework for autonomous clinical AI: systems that may make care determinations without per-case physician review.
+
+The policy discussion is no longer hypothetical.
+
+But cheaper machine cognition does not automatically make health care cheaper or better. Under the wrong incentives, greater capacity can produce more encounters, more testing, and more billable activity.
+
+Software does not repair a broken operating model by entering it.
+
+System architecture still decides what the technology optimizes.
+
+## XI. The Doctors Who Code Obligation
+
+Physicians do not all need to become software engineers.
+
+They do need enough technical literacy to understand the systems changing clinical work.
+
+That means learning the practical language of agents, context, structured data, retrieval, APIs, evaluation, audit systems, model limitations, and human-machine interfaces.
+
+The purpose is not technical performance.
+
+It is clinical authority.
+
+If physicians cannot participate meaningfully in designing these systems, other groups will define the future of clinical work for us.
+
+Engineers will define the workflow.
+
+Administrators will define the productivity metric.
+
+Insurers will define the incentives.
+
+Regulators will define the boundaries.
+
+Vendors will define the interface.
+
+Physicians will receive the finished product and be asked to supervise what they were never trained to understand.
+
+That is an unsafe division of labor.
+
+Doctors should not remain the end users of the AI transformation.
+
+We should be among its architects.
+
+## XII. Above the Loop
+
+The future of medicine will contain human-led care, AI-augmented care, and AI-autonomous care. The proportions will vary by task, specialty, patient, risk, and technological capability.
+
+The boundaries will move.
+
+Predicting their exact location in 2031 matters less than preparing physicians to function wherever they settle.
+
+The age of agentic AI does not eliminate the need for physicians. It eliminates the assumption that the physician must personally generate every piece of intelligence used in a patient's care.
+
+Clinical intelligence is becoming abundant.
+
+Judgment is becoming scarce.
+
+The physician must learn to delegate, verify, preserve, contextualize, and judge.
+
+Stay above the loop. Keep responsibility attached to the decision.
+
+---
+
+## References and Further Reading
+
+1. Emanuel EJ, Baker-Butler A, Khosla N, Khosla V. [Will Autonomous AI Exceed AI-Aided Physicians as the Best Medical Care?](https://doi.org/10.1001/jama.2026.15380) *JAMA*. Published online August 17, 2026.
+2. Pean C. *The Commoditization of Clinical Intelligence.* *Techy Surgeon*. August 24, 2026.
+3. Goh E, Gallo R, Hom J, et al. [Large Language Model Influence on Diagnostic Reasoning: A Randomized Clinical Trial.](https://doi.org/10.1001/jamanetworkopen.2024.40969) *JAMA Network Open*. 2024;7(10):e2440969.
+4. Schmidgall S, Ziaei R, Harris C, et al. [AgentClinic: A Multimodal Benchmark for Tool-Using Clinical AI Agents.](https://doi.org/10.1038/s41746-026-02674-7) *npj Digital Medicine*. 2026;9:499.
+5. Vaccaro M, Almaatouq A, Malone T. [When Combinations of Humans and AI Are Useful: A Systematic Review and Meta-analysis.](https://doi.org/10.1038/s41562-024-02024-1) *Nature Human Behaviour*. 2024;8:2293-2303.
+6. Bergman A, Wachter RM, Emanuel EJ. [A Licensure Framework for Autonomous Clinical AI.](https://doi.org/10.1001/jama.2026.5483) *JAMA*. 2026;335(20):1751-1754.
+7. Lockey S, Gillespie N. [Public Acceptance of Artificial Intelligence in Health Care.](https://doi.org/10.1001/jamanetworkopen.2026.26843) *JAMA Network Open*. 2026;9(8):e2626843.
+8. Duong T, Plage S, Woods L, et al. [Consumer Perspectives on Trust in and Benefits of Artificial Intelligence in Health Care.](https://doi.org/10.1001/jamanetworkopen.2026.26916) *JAMA Network Open*. 2026;9(8):e2626916.
+9. Chowdhury A, et al. [Comparing Ambient Scribes: A Randomized Crossover Clinical Trial Addressing Ambient Scribe Technologies' Impact on Physician Burnout.](https://doi.org/10.1093/jamia/ocag018) *Journal of the American Medical Informatics Association*. 2026;33(5):990-999.
+
+---
+
+*This essay responds to the emerging debate over autonomous clinical AI and Christian Pean's “The Commoditization of Clinical Intelligence.” It reflects my perspective on how physicians should prepare for increasingly agentic clinical systems.*
