@@ -68,7 +68,12 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  /* Keeps the sticky header from covering a keyboard-focused element when
+     the browser scrolls it into view (WCAG 2.4.11 Focus Not Obscured). */
+  scroll-padding-top: 4.5rem;
+}
 
 body {
   background-color: var(--dwc-navy);
@@ -227,6 +232,10 @@ th {
 }
 .prose :where(code:not(pre code)) {
   font-size: 0.84em;
+}
+.prose :where(p, li, blockquote) a {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 /* Card base */

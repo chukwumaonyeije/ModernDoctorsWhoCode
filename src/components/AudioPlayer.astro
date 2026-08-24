@@ -143,29 +143,47 @@ const { src, title } = Astro.props;
     text-overflow: ellipsis;
   }
 
+  /*
+   * The interactive height is 24px (WCAG 2.5.8 Target Size minimum) even
+   * though the visual track is a thin 0.35rem line, by keeping the click/
+   * drag surface on the full-height <input> and drawing the thin line only
+   * on the track pseudo-elements. The thumb is likewise sized to 24px.
+   */
   .audio-progress-track {
     appearance: none;
     width: 100%;
+    height: 24px;
     margin-top: 0.6rem;
-    height: 0.35rem;
-    background: var(--dwc-border);
+    background: transparent;
     border: 0;
-    border-radius: 999px;
     cursor: pointer;
     accent-color: var(--dwc-cyan);
   }
 
+  .audio-progress-track::-webkit-slider-runnable-track {
+    height: 0.35rem;
+    background: var(--dwc-border);
+    border-radius: 999px;
+  }
+
+  .audio-progress-track::-moz-range-track {
+    height: 0.35rem;
+    background: var(--dwc-border);
+    border-radius: 999px;
+  }
+
   .audio-progress-track::-webkit-slider-thumb {
     appearance: none;
-    width: 1rem;
-    height: 1rem;
+    width: 24px;
+    height: 24px;
+    margin-top: calc((0.35rem - 24px) / 2);
     background: var(--dwc-cyan);
     border-radius: 50%;
   }
 
   .audio-progress-track::-moz-range-thumb {
-    width: 1rem;
-    height: 1rem;
+    width: 24px;
+    height: 24px;
     border: 0;
     background: var(--dwc-cyan);
     border-radius: 50%;
