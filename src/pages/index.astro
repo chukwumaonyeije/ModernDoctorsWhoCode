@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LearningPathCard from '../components/LearningPathCard.astro';
+import CourseCard from '../components/CourseCard.astro';
 import NewsletterForm from '../components/NewsletterForm.astro';
 import PostCard from '../components/PostCard.astro';
 import { SITE_DESCRIPTION, SITE_URL } from '../consts';
@@ -24,6 +25,16 @@ const pathCards = await Promise.all(paths.map(async (path) => {
     estimatedMinutes: courses.reduce((total, course) => total + course.data.estimatedMinutes, 0),
   };
 }));
+
+// One featured course per path (the first in its sequence), so the
+// homepage gives courses direct visibility instead of only reaching
+// them through a path page.
+const featuredCourses = (await Promise.all(paths.map(async (path) => {
+  const [firstCourse] = await getCoursesForPath(path.id);
+  if (!firstCourse) return undefined;
+  const lessonCount = (await getLessonsForCourse(firstCourse.id)).length;
+  return { course: firstCourse, path, lessonCount };
+}))).filter((entry) => entry !== undefined);
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const latestPosts = sortBlogPosts(allPosts).slice(0, 4);
@@ -173,6 +184,23 @@ const homeSchema = {
       </li>
     </ol>
   </section>
+
+  {featuredCourses.length > 0 && (
+    <section class="home-section site-shell" aria-labelledby="courses-title">
+      <div class="home-section-heading">
+        <div>
+          <p class="label">Featured Courses</p>
+          <h2 id="courses-title">Start the first course in each path.</h2>
+        </div>
+        <a href="/courses/" class="home-heading-link">Browse all courses <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="home-course-grid">
+        {featuredCourses.map(({ course, path, lessonCount }) => (
+          <CourseCard course={course} path={path} lessonCount={lessonCount} />
+        ))}
+      </div>
+    </section>
+  )}
 
   <section class="home-section site-shell" aria-labelledby="projects-title">
     <div class="home-section-heading">
@@ -414,7 +442,8 @@ const homeSchema = {
   }
 
   .home-path-grid,
-  .home-project-grid {
+  .home-project-grid,
+  .home-course-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
@@ -547,7 +576,8 @@ const homeSchema = {
     }
 
     .home-path-grid,
-    .home-project-grid {
+    .home-project-grid,
+    .home-course-grid {
       grid-template-columns: 1fr;
     }
   }
