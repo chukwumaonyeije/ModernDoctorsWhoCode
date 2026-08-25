@@ -1,0 +1,294 @@
+---
+title: "The Ambient Scribe Is Disappearing"
+description: "Ambient clinical AI is moving beyond note generation into an encounter layer that prepares orders, prescriptions, coding, and follow-up while keeping consequential decisions visible to the physician."
+pubDate: "2026-08-24T12:00:00-04:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - "ambient-ai"
+  - "clinical-documentation"
+  - "clinical-workflow"
+  - "physician-developer"
+  - "medical-billing"
+  - "clinical-software"
+  - "doctors-who-code"
+series: "Ambient Clinical Dictation in 2026"
+image:
+  url: "/images/posts/the-ambient-scribe-is-disappearing-hero.jpeg"
+  alt: "A physician reviewing an evidence-linked clinical workflow that turns a patient conversation into a note, orders, prescriptions, and coding actions"
+draft: false
+featured: false
+readingTime: 11
+---
+
+{/* heroImagePrompt: Cinematic dark editorial illustration for a Doctors Who Code essay. A physician stands at the center of a transparent clinical workflow during a patient encounter. On the left, a subtle cyan conversation waveform and longitudinal chart fragments enter the system. Across the center, the information becomes a structured clinical note. On the right, the note branches into distinct reviewable action cards representing a medication order, laboratory test, referral, follow-up plan, and billing code. Every branch stops at one clearly visible physician approval checkpoint, shown as a restrained warm amber gate rather than a green automation checkmark. Deep navy and graphite background, precise cyan and teal data lines, restrained amber accents, realistic hospital-grade atmosphere, evidence-linked and inspectable rather than futuristic or magical, no readable text, no logos, no robots, no holographic brain, no text overlay, wide 16:9 landscape composition. */}
+
+When I finish a maternal-fetal medicine consultation, I do not leave with one output.
+
+I leave with a clinical assessment, an APSO note, diagnoses, ultrasound recommendations, a surveillance schedule, patient instructions, follow-up timing, and documentation that must support the work performed.
+
+The note is only one object in that chain.
+
+For the past several years, ambient clinical AI has been sold as a better way to produce that object. The physician speaks with the patient. The software listens. A draft appears in the electronic medical record.
+
+That was a meaningful advance. It moved the keyboard away from the center of the encounter.
+
+But the note was never the endpoint.
+
+Ambient AI is beginning to prepare the work created by the conversation. It can assemble the record before the visit, draft documentation during it, and stage orders, prescriptions, coding, and follow-up afterward.
+
+The ambient scribe is disappearing.
+
+What is replacing it is an **intelligent action harness**.
+
+---
+
+## I. The Note Was the Beachhead
+
+Clinical documentation was the obvious entry point for generative AI in medicine.
+
+The problem was visible. It was repetitive. It consumed evenings and divided attention inside the exam room. Large language models were well suited to turning spoken language into organized prose.
+
+The first workflow was simple:
+
+> Patient conversation → transcript → clinical note
+
+That workflow created value. It also created a false boundary.
+
+A clinical encounter is not a conversation followed by a note. It is a sequence of decisions and actions. Before the encounter, the physician reconstructs the relevant history. During it, the physician interprets new information. After it, the plan must become orders, prescriptions, referrals, instructions, diagnoses, procedure codes, and follow-up.
+
+Once software can interpret a conversation well enough to draft the note, the next question is unavoidable:
+
+**Can it prepare the work the conversation creates?**
+
+The answer is now yes.
+
+Epic describes an outpatient workflow that summarizes the chart before the visit, drafts documentation during the conversation, and stages medication orders for clinician review. Athenahealth describes a shared architecture in which preparation informs documentation, documentation informs coding, and coding informs quality operations. First Databank has announced a prescribing agent that converts spoken medication intent into structured prescriptions queued for review.
+
+These are vendor descriptions, not independent proof of clinical benefit. But they reveal the same architectural direction.
+
+The note is becoming an intermediate object.
+
+---
+
+## II. From Documentation to Encounter Orchestration
+
+The emerging workflow follows the full arc of the visit.
+
+Before the patient enters the room, the system can synthesize prior notes, laboratory results, medication changes, hospitalizations, and unresolved plans into a focused briefing. The physician can ask what changed, whether a test was completed, or why a medication was stopped without searching through years of fragmented documentation.
+
+During the encounter, the same system can draft the note while identifying diagnoses, retrieving relevant chart data, and recognizing clinical intent. A discussion about starting medication can become a structured prescription prepared for review. A decision about imaging, laboratory testing, or referral can become a staged order.
+
+After the encounter, the clinical narrative can support patient instructions, follow-up intervals, quality measures, E&M selection, CPT coding, and claim preparation.
+
+The workflow becomes:
+
+> Patient record + clinical conversation → interpretation → documentation → proposed actions → physician review → execution
+
+That is not a scribe.
+
+It is a clinical operating layer.
+
+The distinction matters because every step after interpretation carries more consequence than prose alone. A poorly worded sentence can be corrected. A medication order, diagnosis, or claim can propagate into other systems.
+
+The architecture must change as the consequence changes.
+
+---
+
+## III. The Intelligent Action Harness
+
+The word *agent* now appears on almost every AI product page. It often means little more than a chatbot attached to a workflow.
+
+I prefer a narrower term: **intelligent action harness**.
+
+A harness connects tools. It constrains movement. It makes force usable without surrendering control.
+
+In clinical care, an intelligent action harness should capture physician intent and translate it into structured, reviewable actions. It should reduce the distance between a decision and the work required to carry that decision forward.
+
+Such a system can:
+
+- Summarize the clinically relevant record before the visit.
+- Draft an APSO or specialty-specific note.
+- Identify diagnoses supported by the encounter.
+- Link each diagnosis to the findings that support it.
+- Prepare medication orders and prescriptions.
+- Stage laboratory tests, imaging, referrals, and follow-up.
+- Generate patient-facing instructions.
+- Recommend E&M and procedure codes.
+- Identify missing documentation needed to support a code.
+- Present consequential actions for clinician confirmation.
+
+The important word is **prepare**.
+
+Preparation removes coordination work. Execution changes the patient record and may change patient care. Those are different permission levels and should remain different system states.
+
+A trustworthy harness makes that boundary visible.
+
+---
+
+## IV. Specialty Intelligence Is the Durable Layer
+
+The rise of the clinical operating layer changes the build-versus-buy decision for physician-developers.
+
+Building another general-purpose ambient scribe is unlikely to create a durable advantage. Major EHR vendors already control the longitudinal chart, identity, permissions, medication list, order entry, billing data, audit trail, and interface where clinicians finish their work. As ambient documentation becomes native infrastructure, standalone products will face increasing pressure.
+
+The more durable opportunity is specialty intelligence.
+
+A general EHR understands the broad structure of an office visit. It does not automatically understand the internal logic of a maternal-fetal medicine consultation. It does not know which ultrasound findings change surveillance, when fetal growth restriction requires Doppler follow-up, how glycemic control changes delivery planning, or which details support the complexity of a consultation.
+
+That knowledge does not live in the language model alone. It lives in guidelines, local protocols, structured clinical logic, workflow design, and the judgment of the specialist who knows where each rule breaks.
+
+For maternal-fetal medicine, an intelligent action harness could turn one consultation into:
+
+1. A problem-oriented APSO note.
+2. Diagnoses linked to history, laboratory data, and ultrasound findings.
+3. Guideline-concordant recommendations with visible sources.
+4. A proposed surveillance and follow-up schedule.
+5. Draft orders and referrals.
+6. Patient instructions written at an appropriate reading level.
+7. Documentation supporting defensible billing.
+8. An audit layer showing what the physician accepted, modified, or rejected.
+
+That is more valuable than a polished paragraph.
+
+It is also much harder to build.
+
+---
+
+## V. A Human in the Loop Is Not a Safety Architecture
+
+"The physician remains in the loop" has become the standard reassurance for clinical AI.
+
+It is necessary. It is not sufficient.
+
+A busy physician can become an ineffective safety layer. If a system produces ten plausible recommendations in rapid succession, the approval button can become another reflex. Automation bias does not disappear because a human clicked **confirm**.
+
+The review experience must therefore carry clinical information, not merely request permission.
+
+For every proposed action, the system should show:
+
+- What it is proposing.
+- Which part of the record or encounter supports it.
+- Which clinical rule, guideline, or data source it applied.
+- What information is missing or uncertain.
+- Whether the recommendation falls outside an expected range.
+- What changed from the physician's usual workflow.
+- Who accepted, modified, or rejected it.
+
+I call this **evidence-linked action**.
+
+An evidence-linked action is not merely an answer with a citation attached. It is a proposed clinical or administrative step whose inputs, rule, uncertainty, and reviewer remain inspectable after the encounter closes.
+
+This is the difference between producing an answer and supporting accountable reasoning.
+
+---
+
+## VI. The Regulatory Boundary Moves With Consequence
+
+As ambient AI moves from prose to action, it approaches a different regulatory boundary.
+
+Software that reformats a physician's words is not equivalent to software that recommends a diagnosis, constructs a prescription, interprets fetal testing, proposes delivery timing, or stages an order. The risk changes with the intended use and the consequence of error.
+
+In August 2026, the FDA published a discussion paper on generative-AI-enabled medical devices. The agency asked for feedback on risk assessment, premarket evaluation, and postmarket monitoring. It also made an important limitation explicit: the paper is not draft guidance and does not establish new regulatory expectations.
+
+That distinction should remain clear.
+
+The direction of travel is still important. Clinical AI will not be judged only by whether its prose sounds convincing. Systems that influence care will need defined tasks, clinically appropriate evaluation, monitoring across real-world use, and an architecture that exposes failure rather than hiding it.
+
+For physician-developers, regulation cannot be paperwork added after the product works. Intended use, clinical risk, human oversight, validation, and monitoring belong in the system design.
+
+---
+
+## VII. Documentation and Billing Are Becoming One System
+
+Ambient AI is also narrowing the distance between documentation and revenue cycle work.
+
+Traditionally, the physician wrote the note and selected diagnoses. A coder or billing team then interpreted the documentation and constructed the claim. The processes were related, but separated by people, systems, and time.
+
+New platforms can analyze the clinical narrative when the encounter closes, propose E&M and CPT codes, identify diagnosis gaps, and flag missing support.
+
+That can reduce manual work. It can also create a reinforcing error chain.
+
+A plausible but inaccurate phrase becomes a diagnosis. The diagnosis becomes a code. The code becomes a claim. One inference has now crossed four system boundaries while appearing to gain certainty at each step.
+
+The answer is not a longer note.
+
+The answer is traceability.
+
+Every diagnosis, code, modifier, and statement of medical necessity should point back to observable evidence in the encounter. The future belongs to evidence-linked documentation, not AI-generated verbosity.
+
+---
+
+## VIII. The Evidence Is Promising. The Marketing Is Louder.
+
+Studies of ambient AI have reported reductions in after-hours documentation, cognitive burden, and burnout. Other evaluations have found gains in visit volume or work relative value units.
+
+The results are encouraging. They are not uniform.
+
+Many studies are observational, vendor-associated, limited to early adopters, or dependent on self-reported outcomes. Small changes in documentation time can still matter. But the evidence does not justify assuming that an ambient tool will automatically produce dramatic productivity gains, eliminate denials, or repair practice economics.
+
+The larger value of an intelligent action harness may not be minutes removed from each note.
+
+It may be less fragmentation across the encounter: fewer forgotten orders, clearer follow-up, faster chart closure, more consistent documentation, better patient instructions, and a more defensible connection between the clinical story and the work billed.
+
+Those outcomes must be measured.
+
+They cannot be inferred from a polished demo.
+
+---
+
+## IX. Build the Smallest Useful Harness
+
+Physician-developers should stop treating ambient AI as a transcription project.
+
+Start with one high-value encounter. Map it from beginning to end.
+
+1. What information must be assembled before the visit?
+2. What decisions are made during the encounter?
+3. What documentation is required afterward?
+4. Which orders, prescriptions, referrals, and follow-up tasks are created?
+5. What evidence supports each diagnosis and code?
+6. Which steps can be safely prepared by software?
+7. Which steps require explicit clinician control?
+8. How will errors, overrides, and outcomes be measured?
+
+Then build the smallest useful harness around that sequence.
+
+Do not ask a model to manage the visit. Ask it to prepare one defined, reviewable output. Validate the output. Record the physician's corrections. Study the failure modes. Add the next action only after the first one is observable and trustworthy.
+
+This is slower than building a demonstration.
+
+It is how clinical software earns permission to do more.
+
+---
+
+## X. The Architecture of the Encounter
+
+The ambient scribe solved a real problem. It was also the first visible layer of a larger system.
+
+Clinical AI is moving from recording the encounter to organizing it. It is moving from generating prose to preparing action. It is connecting the patient's history, the physician's reasoning, the plan of care, and the administrative work required to carry that plan forward.
+
+Physicians cannot treat that architecture as a vendor decision.
+
+If we surrender it, we may get faster notes while losing visibility into how the rest of the encounter was assembled.
+
+The ambient scribe is disappearing.
+
+The physician's responsibility for what replaces it is not.
+
+---
+
+## Sources
+
+- [FDA: Considerations for the Regulation of Generative AI-Enabled Medical Devices](https://www.fda.gov/medical-devices/digital-health-center-excellence/considerations-regulation-generative-ai-enabled-medical-devices-discussion-paper-and-request)
+- [First Databank: Ambient Listening and the FDB Script Agent](https://www.fdbhealth.com/about-us/press-releases/2026-08-24-fdb-moves-ambient-listening-beyond-notes-with-ai-powered-prescribing-agent)
+- [Epic: Ochsner Health First to Use Ergo Visit](https://www.epic.com/epic/post/ochsner-health-first-to-use-epics-ergo-visit/)
+- [Athenahealth: Building an AI-Native Clinical Architecture](https://www.athenahealth.com/resources/blog/a-fully-ai-native-clinical-experience)
+- [Athenahealth: AI-Enabled Express Coding](https://www.athenahealth.com/resources/blog/introducing-express-coding-athenaone)
+- [JAMA Network Open: Ambient AI and Documentation Burden](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2849634)
+- [JAMA Network Open: Ambient AI and Physician Financial Productivity](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2843524)
+
+---
+
+*Chukwuma Onyeije, MD, FACOG is a Maternal-Fetal Medicine specialist, Medical Director at Atlanta Perinatal Associates, and the founder of CodeCraftMD and OpenMFM.org. He writes at DoctorsWhoCode.blog about building clinical tools at the intersection of medicine and software.*
