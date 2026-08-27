@@ -1,0 +1,273 @@
+---
+title: "Physicians Need to Learn the Harness, Not Just the Model"
+description: "DeepSeek Harness shows why physicians must understand the context, tools, permissions, logs, and human checkpoints that turn an AI model into a working system."
+pubDate: 2026-08-27
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - "ai-agents"
+  - "agent-harness"
+  - "deepseek-harness"
+  - "physician-developer"
+  - "agentic-engineering"
+  - "clinical-ai"
+  - "workflow-design"
+  - "responsible-ai"
+  - "doctors-who-code"
+image:
+  url: "/images/posts/physicians-need-to-learn-the-harness-not-just-the-model-hero.jpeg"
+  alt: "Dr. Chukwuma Onyeije supervising DeepSeek Harness across a multi-monitor physician-developer workspace"
+draft: false
+featured: true
+featuredRank: 15104
+readingTime: 11
+---
+
+Today I installed [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
+
+I connected a model, selected a workspace, and gave the system a non-clinical objective. It inspected the files, decided what it needed to do, used tools, and returned with changed artifacts for me to review.
+
+The pattern was familiar. I have worked this way in Claude Code, Google Antigravity, and OpenAI Codex.
+
+But DeepSeek Harness made one part of the system unusually visible.
+
+The model was not the working environment.
+
+The harness was.
+
+DeepSeek describes the architecture in four words: **everything is a plugin**. The model adapter is a plugin. The tool registry is a plugin. The session log is a plugin. Even the agent loop is a replaceable component.
+
+That may sound like an implementation detail.
+
+It is a literacy problem for medicine.
+
+We have spent several years teaching physicians how to talk to models. The next stage is learning how to supervise the systems that put those models to work.
+
+I call that **harness literacy**.
+
+## I. The Model Is Not the Working System
+
+Most public discussions about artificial intelligence still begin with the model.
+
+Which model reasons best?
+
+Which one has the largest context window?
+
+Which one writes the strongest code?
+
+Those questions matter. They do not describe the whole system.
+
+A model does not decide which files it can read. It does not independently choose whether it can run a command, search the internet, preserve a session, modify a repository, or ask for approval before a consequential action.
+
+The harness defines those conditions.
+
+The distinction is simple:
+
+- The **model** supplies reasoning.
+- The **harness** supplies context, tools, memory, permissions, and workflow.
+- The **human** supplies purpose, boundaries, judgment, and accountability.
+
+Remove the harness and the model is largely a conversational engine. Add a harness and the same model can inspect a codebase, edit multiple files, run tests, recover from an error, preserve state, and continue working toward an objective.
+
+This is why similar models can behave very differently inside different products. Intelligence matters. The operating environment around the intelligence determines what that intelligence can see and do.
+
+I made the adjacent argument in [You Are Still Prompting. You Should Be Building Agents.](/blog/you-are-still-prompting-you-should-be-building-agents). A prompt produces an output. An agent runs a workflow.
+
+The harness is the architecture that makes that workflow possible.
+
+## II. The Interface Has Changed
+
+The primary interface to AI is moving from **ask and answer** to **assign, observe, verify, and continue**.
+
+That is a different mode of work.
+
+A prompt is now often the opening instruction, not the entire interaction. The agent gathers context. It selects tools. It takes a step. It encounters an error. It revises the plan. It changes an artifact. It reports what happened.
+
+The user is no longer merely writing a better question.
+
+The user is supervising a process.
+
+This is especially important for physicians because action changes the risk.
+
+A text generator can produce an incorrect answer. An agent with tools can place that answer into a file, a calculation, a message, a workflow, or a downstream system. The value rises because the system can act. The consequence of a mistake rises for the same reason.
+
+The relevant question is no longer only, “Is the model accurate?”
+
+We must also ask, “What has the model been allowed to do with its answer?”
+
+## III. The Five Controls of Harness Literacy
+
+Physicians do not need to understand every internal function of an agent platform.
+
+We do need to understand its control surface.
+
+Harness literacy means being able to identify five controls before trusting the workflow.
+
+### 1. Scope
+
+What can the agent see?
+
+An agent should receive the smallest workspace required for the task. A writing agent does not need access to an entire drive. A research agent does not need credentials for unrelated services. A clinical-quality workflow should not quietly inherit access to every file available to the person who launched it.
+
+Scope is not an inconvenience.
+
+Scope is a safety mechanism.
+
+### 2. Capabilities
+
+What can the agent do?
+
+Reading a directory is different from editing it. Editing a file is different from running a command. Running a command is different from accessing a network, sending a message, or invoking another agent.
+
+A model's verbal confidence tells you nothing about the capabilities it has been granted.
+
+The tool list does.
+
+### 3. Approval
+
+Where must the agent stop?
+
+Low-risk, reversible work can tolerate more autonomy. Consequential or irreversible work requires tighter permissions and a deliberate human checkpoint.
+
+This is not a defect in the system. It is the design.
+
+The same principle appears in clinical software. I described it in [The Physician Above the Loop](/blog/physician-above-the-loop-agentic-ai): meaningful supervision requires authority, expertise, time, and enough visibility to exercise judgment.
+
+A button labeled **Approve** does not create oversight by itself.
+
+### 4. Record
+
+What did the agent actually do?
+
+DeepSeek Harness treats the session log as the source of the context the model sees. Tool calls, results, and durable session events become part of a reconstructable record.
+
+That architectural choice matters. A fluent explanation of what an agent claims to have done is not evidence that the work occurred as described.
+
+We need the record.
+
+Which files did it inspect? Which tools did it call? What changed? Where did it fail? What entered the model's context? What did the human approve?
+
+This extends the principle I described in [Logs Before Intelligence](/blog/logs-before-intelligence). Intelligence without a trustworthy record becomes difficult to evaluate and impossible to govern.
+
+### 5. Reversal
+
+Can the work be undone?
+
+Use version control. Keep backups. Restrict the workspace. Review the changes before they merge into anything consequential.
+
+Reversibility is not an admission that the system is unreliable.
+
+It is a condition of competent supervision.
+
+Scope. Capabilities. Approval. Record. Reversal.
+
+If you cannot describe all five, you do not yet understand the agent you are using.
+
+## IV. Physicians Already Understand the Logic
+
+A competent clinician does not act on a laboratory value in isolation.
+
+We ask who the patient is. Why the test was ordered. Whether the specimen was reliable. What changed from baseline. Which competing explanations remain. What action is permitted. What requires consultation. How the decision will be documented. When it will be reassessed.
+
+The number does not become clinically useful until it is situated inside a governed process.
+
+An AI model is no different in this respect.
+
+The harness situates its reasoning. It assembles context, grants capabilities, records events, defines checkpoints, and determines what happens after an output appears.
+
+The analogy is not perfect. A harness does not make a model clinically trustworthy. It does not repair weak evidence, eliminate hallucination, or transfer accountability to software.
+
+It makes the work inspectable.
+
+That is the beginning of governance, not the completion of it.
+
+## V. Why the Plugin Architecture Matters
+
+DeepSeek Harness exposes these ideas because its architecture is modular.
+
+According to its [architecture documentation](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/architecture.md), plugins contribute services, events, and reversible effects to a shared context. The model adapter, tools, persistence, sandbox policy, approvals, credentials, and telemetry can be composed as layers.
+
+For physician-developers, that matters for three reasons.
+
+First, the model becomes replaceable.
+
+Models will change. Prices will change. Institutional policies will change. A system built around a modular adapter can change models without pretending that the entire workflow has changed with it.
+
+Second, capabilities can be matched to the task.
+
+A literature workflow may need retrieval and citation checking but no terminal access. A writing workflow may need one repository and no clinical data. A quality-improvement workflow may need structured templates, narrow data access, and an audit trail.
+
+Different jobs should not inherit the same tools.
+
+Third, clinical knowledge can become architecture.
+
+A physician-developer can imagine bounded components for guideline retrieval, terminology normalization, de-identification, evidence tables, calculator validation, or specialty-specific documentation. The value is not the plugin itself. The value is the ability to state what the component does, what it can access, how it fails, and where human review occurs.
+
+Modularity does not guarantee safety. A poorly designed plugin can still disclose data, damage files, or expand access beyond what the user understands.
+
+But modularity gives us a place to define the boundary.
+
+It makes the architecture discussable.
+
+## VI. Non-Clinical Work Is the Correct Starting Point
+
+I am using DeepSeek Harness for non-clinical work.
+
+That is intentional.
+
+The project's own [safety notice](https://github.com/deepseek-ai/deepseek-harness/blob/master/SAFETY.md) is direct. DeepSeek Harness is experimental developer-preview software. It has not undergone a security audit and should not be treated as secure or production-ready. It can execute model-generated commands, load third-party plugins, and access the files, processes, credentials, and network resources made available to it.
+
+That boundary should govern how physicians approach it.
+
+Do not begin with identifiable patient information. Do not connect it to an electronic health record. Do not allow an early demonstration to become quiet clinical infrastructure.
+
+Begin where mistakes are visible and reversible:
+
+- organize a writing repository,
+- inspect an open-source project,
+- draft documentation,
+- summarize non-confidential notes,
+- run tests in a disposable workspace,
+- or build a small personal website component.
+
+These tasks teach the mechanics without borrowing clinical risk. You learn how to define a workspace, review a plan, grant a permission, inspect a tool call, examine a change, and recover when the agent moves in the wrong direction.
+
+Clinical deployment requires a different standard: approved data handling, access controls, appropriate contracts, auditability, validation, monitoring, explicit human checkpoints, and a clear account of who remains responsible.
+
+Learning on non-clinical work is not avoiding the real problem.
+
+It is sequencing the education correctly.
+
+## VII. The Physician-Developer's Advantage
+
+The physician-developer's advantage is not typing code faster than a software engineer.
+
+Often, we cannot.
+
+Our advantage is knowing where clinical meaning lives. We know where workflow friction accumulates. We know which omission changes the assessment. We know when a polished note is clinically thin. We know where an efficient system can become dangerous. We know which decision cannot be reduced to clerical assembly.
+
+A harness allows that knowledge to become architecture.
+
+We can define the context that matters. We can restrict the tool that should not be available. We can place a checkpoint where uncertainty becomes clinically meaningful. We can require that an output be traceable, reviewable, and correctable.
+
+That is more durable than a prompt trick.
+
+The leading model will change. The interface will change. DeepSeek Harness itself will change; its maintainers explicitly warn that compatibility-breaking changes should be expected during the developer preview.
+
+The obligation will remain.
+
+Physicians must understand the systems that act around the model, because medicine will eventually be asked to trust the workflows those systems create.
+
+Learn the model. Govern the harness.
+
+---
+
+## Sources and Further Reading
+
+- [DeepSeek Harness repository](https://github.com/deepseek-ai/deepseek-harness)
+- [DeepSeek Harness architecture](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/architecture.md)
+- [DeepSeek Harness safety notice](https://github.com/deepseek-ai/deepseek-harness/blob/master/SAFETY.md)
+- [You Are Still Prompting. You Should Be Building Agents.](/blog/you-are-still-prompting-you-should-be-building-agents)
+- [The Physician Above the Loop: Preparing Medicine for Agentic AI](/blog/physician-above-the-loop-agentic-ai)
+- [Logs Before Intelligence: Why Data Discipline Must Precede AI Insight](/blog/logs-before-intelligence)
