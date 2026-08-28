@@ -1,0 +1,280 @@
+---
+title: "The Prompt Is a Clinical Specification"
+description: "Clinical prompting is not a contest for better wording. It is the work of defining sources, context, objectives, prohibitions, and evaluation before a model generates anything."
+pubDate: 2026-08-28T09:00:00-04:00
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - "prompt engineering"
+  - "clinical ai"
+  - "physician-developer"
+  - "agentic ai"
+  - "clinical specification"
+  - "responsible ai"
+  - "workflow design"
+  - "doctors who code"
+image:
+  url: "/images/posts/the-prompt-is-a-clinical-specification-hero.png"
+  alt: "A physician-developer converting a clinical note into a bounded AI specification with visible source, constraint, and verification layers"
+draft: false
+featured: false
+readingTime: 12
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Cinematic dark editorial illustration for Doctors Who Code. A physician-developer at a desk converting one complex maternal-fetal medicine consultation into a precise five-part specification. On the left, a restrained paper clinical note and ultrasound report. Across the center, five distinct cyan and teal constraint cards with abstract symbols for source, context, objective, prohibition, and evaluation. On the right, a provisional AI-generated document stops at a warm amber physician review gate. Deep navy and graphite background, realistic hospital-grade atmosphere, no readable text, no logos, no text overlay, wide 16:9 landscape composition. */}
+
+The instruction looked adequate:
+
+> Using this de-identified MFM consultation, draft the assessment and plan.
+
+The output looked better. It preserved the diagnosis, organized the surveillance plan, and added delivery at 37 weeks.
+
+The source contained no delivery recommendation.
+
+Nothing in the instruction defined which sources the model could use, which facts it had to preserve, which inferences were prohibited, or how the output would be evaluated.
+
+The model produced fluent text.
+
+The prompt failed as a specification.
+
+That distinction matters. A clinical prompt is not merely a well-phrased request. It is a specification for what the system may use, what it must produce, what it must not infer, and how a human will decide whether the result is acceptable.
+
+Most prompting advice stops too early. It teaches physicians to add detail, assign a role, or request a format. Those techniques can improve an answer. They do not define a safe workflow.
+
+Clinical work requires a harder standard.
+
+## I. Better Wording Is Not the Same as Better Control
+
+Consider two prompts.
+
+The first says:
+
+> Write an assessment and plan for a patient with fetal growth restriction.
+
+The second says:
+
+> Using only the de-identified consultation transcript and ultrasound report supplied below, draft an assessment and plan for the documented pregnancy. Preserve the gestational age, estimated fetal weight percentile, abdominal circumference percentile, Doppler findings, maternal diagnoses, and surveillance plan exactly as stated. Do not add a diagnosis, medication, delivery date, or recommendation that is absent from the source. Mark missing required information as `NOT DOCUMENTED`. Return the output in the specified APSO schema. The physician will verify every clinical claim before the draft enters the medical record.
+
+The second prompt is longer. Length is not what makes it better.
+
+It defines evidence. It sets a boundary. It names high-risk facts. It provides a failure state. It tells the system what happens after generation.
+
+That is not prompt decoration.
+
+That is workflow design expressed in language.
+
+## II. The Prompt Has Five Jobs
+
+I use a simple framework for clinical prompting: **SCOPE**.
+
+- **Source:** What evidence may the system use?
+- **Context:** Which patient, encounter, task, and environment are in bounds?
+- **Objective:** What exact artifact or decision-support output should be produced?
+- **Prohibitions:** What must the system not infer, invent, retrieve, or execute?
+- **Evaluation:** What checks determine whether the output is acceptable?
+
+Each part closes a different failure path.
+
+### Source
+
+The source clause defines the evidence boundary.
+
+For a consultation note, that may be the transcript, ultrasound report, medication list, and a specific version of an SMFM guideline. For a patient letter, it may be the signed assessment and plan only. For a coding agent, it may be the repository, issue description, and existing tests.
+
+"Use the chart" is not a source definition.
+
+Which note? Which encounter? Which date? Which sections? Is copied-forward text permitted? May the system search external references? Which reference version controls when two sources disagree?
+
+A language model will not repair an evidence boundary that the physician never defined.
+
+### Context
+
+Context describes the frame around the task.
+
+The same blood pressure has a different meaning in a prenatal clinic, an emergency department, a postpartum readmission, and a de-identified teaching case. The same code change has a different consequence in a prototype and a production calculator.
+
+Context should identify the intended user, clinical setting, time point, relevant population, data sensitivity, and downstream destination.
+
+More context is not automatically safer. A 600-page chart can bury the decisive fact. The purpose of context design is not to show the model everything. It is to show the model what belongs in the frame.
+
+### Objective
+
+The objective names one inspectable deliverable.
+
+"Help with this patient" is not an objective.
+
+"Draft a problem-oriented assessment and plan for physician review" is closer. "Extract the documented diagnoses into a structured list without adding new diagnoses" is narrower still.
+
+The objective should make it possible to tell when the work is complete. If the request contains three distinct outputs, it usually contains three tasks.
+
+Agents can coordinate multiple tasks. Each task still needs a defined result.
+
+### Prohibitions
+
+Prohibitions identify the shortcuts the system is not allowed to take.
+
+Do not infer a diagnosis from a medication. Do not convert a discussion into a decision. Do not fill a missing dose from a common regimen. Do not use external clinical sources unless they are explicitly approved. Do not place an order. Do not send a message. Do not write to the medical record.
+
+Negative instructions are not sufficient by themselves. A model can still fail to follow them. But a prohibited action that was never named cannot be tested, logged, or enforced by the surrounding harness.
+
+The prompt states the boundary. The harness must make the boundary real.
+
+### Evaluation
+
+Evaluation defines what good means before generation begins.
+
+For an MFM note, that may include exact agreement on gestational age, medication dose, Doppler status, diagnosis, follow-up interval, and delivery recommendation. It may require every recommendation to point back to the transcript or an approved reference. It may prohibit any unsupported patient fact.
+
+"Review for accuracy" is not an evaluation plan.
+
+Who reviews? Which fields receive deterministic comparison? What gets highlighted? What causes the workflow to stop? What correction is recorded? What error rate is acceptable during a pilot?
+
+Evaluation is where preference becomes a standard.
+
+<Callout type="clinical" title="The SCOPE Prompt">
+A clinical prompt should define its source, context, objective, prohibitions, and evaluation before the model produces a word. If one of those elements is missing, the physician is leaving part of the workflow to inference.
+</Callout>
+
+## III. Structured Output Is a Clinical Control
+
+Free text is comfortable because medicine is full of narrative.
+
+It is also difficult to check.
+
+A polished paragraph can blend copied facts, transformed facts, and model inference into one grammatical surface. The reviewer sees fluency. The provenance disappears.
+
+Structured output creates seams.
+
+For example:
+
+```json
+{
+  "gestational_age": {
+    "value": "",
+    "source": "",
+    "status": "supported | conflicting | not_documented"
+  },
+  "fetal_growth": {
+    "efw_percentile": "",
+    "ac_percentile": "",
+    "source": "",
+    "status": "supported | conflicting | not_documented"
+  },
+  "recommendations": []
+}
+```
+
+This does not make the output correct.
+
+It makes important elements addressable. A deterministic process can compare gestational age against the ultrasound report. A verification step can require a source for each recommendation. The interface can display conflicts before it displays prose.
+
+The narrative note can be generated after the facts have passed through those checks.
+
+In clinical AI, structure is not an aesthetic choice. It is part of observability.
+
+## IV. Examples Teach the Boundary
+
+Few-shot prompting gives the model examples of acceptable input and output.
+
+The strongest examples do more than demonstrate style. They show how the system should behave at the boundary.
+
+Include a normal case. Include a case with missing information. Include contradictory source data. Include a statement that sounds clinically plausible but is not supported. Include a case where the correct output is abstention.
+
+If every example is clean, the prompt teaches the model that every case is clean.
+
+Medicine is not.
+
+One useful example might show an ultrasound report with an estimated fetal weight below the tenth percentile but no documented Doppler result. The desired output should preserve the growth finding and state that the Doppler status is not documented. It should not complete the pattern with "normal umbilical artery Dopplers."
+
+The example teaches a rule that prose alone often fails to establish:
+
+Missing is a valid state.
+
+## V. Ask the System to Abstain
+
+Physicians are trained to act under uncertainty. Models are trained to continue text.
+
+Those are different operating instincts.
+
+A clinical prompt should state when the system must stop, decline, or return an incomplete artifact. Common abstention conditions include:
+
+- the patient or encounter cannot be identified reliably;
+- required source material is missing;
+- two authoritative sources conflict;
+- a medication, dose, unit, date, or allergy cannot be reconciled;
+- the requested action exceeds the approved task;
+- the evidence does not support the requested conclusion; or
+- a tool required for verification is unavailable.
+
+Abstention is not a model failure.
+
+Unsupported completion is the failure.
+
+The interface should make abstention useful. "I cannot answer" is less useful than "The delivery recommendation cannot be drafted because the final Doppler interpretation is absent from the approved source set."
+
+The system should identify the missing requirement without inventing its replacement.
+
+## VI. A Prompt Cannot Enforce Its Own Rules
+
+The SCOPE framework improves the instruction. It does not convert the instruction into a safety control.
+
+A prompt can say "use only these files." The harness determines which files the model can actually read.
+
+A prompt can say "do not send the message." The harness determines whether a messaging tool is available.
+
+A prompt can say "ask before changing the chart." The harness determines whether approval is required before a write action.
+
+A prompt can request citations. The verification layer determines whether those citations exist and support the associated claims.
+
+This is the boundary between prompting and harness literacy.
+
+The prompt declares intent. The harness constrains capability.
+
+I described that surrounding architecture in [Physicians Need to Learn the Harness, Not Just the Model](/blog/physicians-need-to-learn-the-harness-not-just-the-model). The model matters. The environment around the model decides whether its instructions remain advisory or become operational.
+
+## VII. Rewrite One Prompt Before You Build an Agent
+
+Choose one recurring prompt you already use.
+
+Do not improve the adjectives. Do not ask the model to be more expert, careful, or thoughtful.
+
+Rewrite the work through SCOPE.
+
+1. List the exact sources the system may use.
+2. Define the patient, encounter, environment, and downstream destination.
+3. Name one inspectable output.
+4. List prohibited inferences and actions.
+5. Define the checks, reviewer, and stopping conditions.
+
+Then test the specification against three cases:
+
+- a complete case;
+- a case with one missing high-risk fact; and
+- a case with contradictory source data.
+
+Record what the system added, changed, and omitted. That is the [three-error check](/blog/anatomy-of-a-medical-ai-hallucination).
+
+The exercise is not designed to prove that the model is reliable.
+
+It is designed to expose what you failed to specify.
+
+## VIII. Prompting Is the First Layer of Governance
+
+Prompting still matters.
+
+It matters because instructions shape attention, define output, and make human intent visible. But the durable skill is not discovering a phrase that makes a model behave better today.
+
+The durable skill is converting clinical intent into a specification that another human, another model, and another system can inspect.
+
+That specification becomes the beginning of the agent. It becomes the basis for the tests. It becomes the checklist at the physician checkpoint. It becomes the record against which failure is judged.
+
+The model can complete a sentence you did not finish.
+
+It should not complete a clinical boundary you never defined.
+
+---
+
+*This article is for physician and physician-developer education. Do not place identifiable patient information into an AI system unless the system and workflow have been approved for that use. Clinical deployment requires local privacy, security, validation, governance, and regulatory review.*

@@ -1,0 +1,351 @@
+---
+title: "Build the Minimum Viable Clinical Harness"
+description: "A clinical AI workflow needs more than a model and a prompt. Build the smallest system that can scope, retrieve, generate, verify, challenge, approve, execute, and audit the work."
+pubDate: 2026-08-28T11:00:00-04:00
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - "clinical ai"
+  - "agent harness"
+  - "physician-developer"
+  - "ai governance"
+  - "workflow design"
+  - "human in the loop"
+  - "medical ai safety"
+  - "agentic ai"
+  - "doctors who code"
+image:
+  url: "/images/posts/build-the-minimum-viable-clinical-harness-hero.png"
+  alt: "An eight-stage clinical AI harness carrying evidence through verification and physician approval before a bounded clinical action"
+draft: false
+featured: false
+readingTime: 15
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Cinematic dark editorial architecture illustration for Doctors Who Code. A horizontal eight-stage clinical AI workflow moves from a bounded patient-context card through approved evidence retrieval, provisional generation, deterministic verification, adversarial challenge, a prominent warm amber physician approval gate, a narrowly permitted action, and an append-only audit trail. The physician stands above the sequence with clear visibility into every stage. Deep navy and graphite background, cyan and teal data paths, restrained amber checkpoint, realistic clinical systems aesthetic, no readable text, no logos, no text overlay, wide 16:9 landscape composition. */}
+
+The easiest clinical AI architecture to draw has three boxes.
+
+**Patient data → model → clinical output.**
+
+I have stopped drawing it.
+
+The diagram is too clean. It hides the source boundary. It hides retrieval. It hides the difference between a supported fact and a generated inference. It hides the physician checkpoint. It hides what happens after the model is wrong.
+
+A safe clinical workflow needs more boxes because the work has more responsibilities.
+
+The preceding lesson identified eight responsibilities that keep a plausible error from acquiring clinical reach:
+
+**Scope → Retrieve → Generate → Verify → Challenge → Approve → Execute → Audit**
+
+This article turns that sequence into a buildable system: the **minimum viable clinical harness**.
+
+It does not guarantee truth. It creates a system in which unsupported output can be detected, interrupted, corrected, and remembered before it acquires clinical reach.
+
+## I. Start With One Bounded Workflow
+
+Do not begin by building an AI assistant for the entire clinic.
+
+Choose one recurring, reviewable sequence.
+
+A good first workflow may draft a patient instruction from a signed plan, assemble a prior-authorization packet from approved documents, orient a physician to a long chart, generate a de-identified teaching summary, or prepare an MFM consultation note for review.
+
+The task should pass the [ARR test](/blog/you-are-still-prompting-you-should-be-building-agents): autonomous enough to justify automation, recurring enough to justify engineering, and reviewable enough to define acceptable output.
+
+The workflow must also have a visible consequence boundary.
+
+Drafting is different from sending. Recommending is different from ordering. Extracting is different from diagnosing. Preparing a note is different from signing it.
+
+The first build should stop before the highest-consequence action.
+
+That is not timidity.
+
+It is good architecture.
+
+## II. Scope: Define What Exists Inside the Frame
+
+The scope step identifies the patient, encounter, user, objective, allowed data, allowed actions, and excluded actions.
+
+For an MFM consultation-note workflow, scope might be:
+
+- one de-identified encounter;
+- the transcript and finalized ultrasound report from that encounter;
+- a draft assessment and plan for the consulting physician;
+- no new diagnosis beyond the source;
+- no orders, messages, billing submission, or chart write; and
+- mandatory physician review before any downstream use.
+
+Write the scope before writing the prompt.
+
+Then convert it into the [SCOPE specification](/blog/the-prompt-is-a-clinical-specification): source, context, objective, prohibitions, and evaluation.
+
+The scope should also exist as technical policy. If the workflow is limited to one folder, do not give it access to the entire drive. If it does not need the internet, do not provide network access. If it should draft but never send, do not mount the sending tool.
+
+The most reliable forbidden action is an unavailable action.
+
+## III. Retrieve: Bring Evidence Into the Workflow Deliberately
+
+Retrieval is not "let the model search."
+
+It is a defined process for obtaining the patient facts and external evidence permitted by the scope.
+
+For patient-specific data, retrieval should preserve identity, encounter, timestamp, source type, and version. For external evidence, it should preserve the issuing organization, document title, publication or revision date, applicable population, and the exact passage used.
+
+The workflow should know the difference between:
+
+- a signed ultrasound report and a preliminary measurement;
+- an active medication and a medication copied from history;
+- a society guideline and a blog summary of that guideline;
+- a current recommendation and an archived version; and
+- a source fact and a model-generated interpretation.
+
+Retrieval failure must be visible.
+
+If the final ultrasound interpretation is absent, the system should not proceed as though retrieval returned a normal result. If two notes disagree about the medication dose, both values should remain available for reconciliation.
+
+RAG is not the safety layer.
+
+Provenance, versioning, and conflict handling are the safety layer around retrieval.
+
+## IV. Generate: Produce a Candidate, Not a Clinical Fact
+
+Generation should create a provisional artifact.
+
+That artifact may be a structured extraction, draft note, evidence table, proposed patient message, code change, or recommendation for physician consideration.
+
+The interface should label it accordingly.
+
+Do not allow generated text to arrive in the same visual state as signed documentation. Do not blend source statements and inference without marking the difference. Do not let a draft inherit authority from the screen on which it appears.
+
+A useful generation stage preserves support beside the claim:
+
+| Candidate claim | Source | Support status |
+| --- | --- | --- |
+| Gestational age | Ultrasound report, dated encounter | Supported |
+| Fetal growth restriction | Consultation assessment | Supported |
+| Delivery at 37 weeks | No approved source located | Unsupported |
+
+The model can still be wrong.
+
+But the output is now shaped for inspection rather than acceptance.
+
+## V. Verify: Use Deterministic Checks Where the Fact Is Deterministic
+
+Language models are useful when the input is unstructured and the output requires synthesis.
+
+They are not the best tool for every check.
+
+Gestational age calculations, medication-dose equality, unit conversion, date comparison, required-field coverage, schema validation, valid ICD-10 format, and numerical thresholds can often be checked with ordinary code.
+
+Use it.
+
+If a calculation can be reproduced deterministically, do not ask a second model whether the first model's arithmetic "looks right."
+
+The verification stage should compare high-risk fields against the approved source set. At minimum, consider:
+
+- patient and encounter identity;
+- gestational age and dates;
+- medications, allergies, doses, routes, and frequencies;
+- laboratory values and units;
+- imaging findings and percentiles;
+- diagnoses and negations;
+- follow-up intervals;
+- delivery recommendations;
+- pending results; and
+- required documentation elements.
+
+Verification produces evidence. It does not produce final approval.
+
+<Callout type="technical" title="Deterministic First">
+When a clinical claim can be compared, calculated, validated, or reconciled with ordinary software, use ordinary software. Reserve model judgment for the parts of the workflow that actually require language interpretation.
+</Callout>
+
+## VI. Challenge: Look for the Failure the First Pass Missed
+
+Verification asks whether specified facts agree.
+
+Challenge asks what the workflow failed to notice.
+
+This stage applies the [three-error check](/blog/anatomy-of-a-medical-ai-hallucination):
+
+- What did the system add?
+- What did it change?
+- What did it leave out?
+
+The challenger should look for unsupported claims, contradictions, omission of high-risk facts, wrong-patient contamination, unit mismatch, temporal error, population mismatch, invalid citation, and recommendations that exceed the evidence.
+
+The challenge process should be independent enough to add value.
+
+Sending the same prompt to the same model twice is weak redundancy. Better options include deterministic comparison, a separately instructed review step, a different retrieval query, an explicit checklist, or a human reviewer shown the underlying evidence.
+
+The challenger should be allowed to stop the workflow.
+
+An auditor that can only leave a comment after execution is not a control.
+
+## VII. Approve: Build a Real Physician Checkpoint
+
+Human-in-the-loop is often treated as a placement decision.
+
+Put a physician at the end. Add an approve button. Call the system supervised.
+
+That is not enough.
+
+A meaningful checkpoint requires four things:
+
+1. **Evidence:** The physician can see the source behind consequential claims.
+2. **Time:** The review task fits the clinical environment in which it occurs.
+3. **Interface:** The system directs review toward discrepancies, uncertainty, additions, changes, and omissions.
+4. **Authority:** The physician can revise, reject, or stop the workflow without penalty.
+
+If the system presents a polished six-page note and asks the physician to find one invented dose, it has not created a review workflow. It has transferred quality control to vigilance.
+
+If the system highlights the changed dose, links it to the medication list, identifies the conflicting source, and prevents submission until reconciliation, the physician has a real task to perform.
+
+The physician checkpoint is not a signature location.
+
+It is an information design problem.
+
+<Callout type="clinical" title="A Meaningful Physician Checkpoint">
+A physician can supervise an AI workflow only when the checkpoint provides evidence, time, an interface designed for review, and the authority to interrupt the system.
+</Callout>
+
+## VIII. Execute: Grant the Narrowest Action That Completes the Work
+
+Execution is where a candidate output changes something outside the harness.
+
+It may save a draft, populate a review queue, send an approved message, create a pull request, update a dashboard, or place a proposed order into a staging area.
+
+Each action needs its own authority.
+
+The fact that a system can read a chart does not mean it should write to the chart. The fact that it can draft a patient message does not mean it should send one. The fact that it can propose an order does not mean it should place or sign the order.
+
+Use least privilege.
+
+Separate read tools from write tools. Separate staging from production. Require stronger approval as consequences increase. Make the authorized action explicit and single-use when possible.
+
+The execution step should also be idempotent where practical. A retry should not send the same message twice, create duplicate orders, or append the same note repeatedly.
+
+Failure after partial execution must have a defined response.
+
+What can be rolled back? What cannot? Who is alerted? What state remains visible?
+
+"The agent will try again" is not a recovery plan.
+
+## IX. Audit: Preserve Enough Truth to Learn From Failure
+
+The audit record should make the workflow reconstructable.
+
+At minimum, preserve:
+
+- workflow and prompt version;
+- model and relevant configuration;
+- patient and encounter identifiers appropriate to the approved system;
+- input-source identities and versions;
+- retrieved passages or structured facts;
+- tool calls and results;
+- generated artifact;
+- verification and challenge results;
+- physician corrections, rejection, or approval;
+- executed action; and
+- timestamps and final disposition.
+
+Do not log sensitive data merely because logging is useful. The audit design must follow the same privacy, retention, access, and security requirements as the workflow itself.
+
+The purpose is not surveillance.
+
+It is learning.
+
+When a physician repeatedly corrects the same omission, the system should expose a pattern. When performance changes after a model update, the record should show when the change began. When a near miss occurs, the team should be able to identify whether the failure entered through input, retrieval, generation, verification, interface, approval, or execution.
+
+An unlogged AI workflow can repeat a mistake without becoming wiser.
+
+## X. Build the Harness Before You Add Autonomy
+
+The first version can be simple.
+
+It may use de-identified sample data in a local repository. Retrieval may be a versioned folder rather than a vector database. Verification may be a Python script. Challenge may be a structured checklist. Approval may be a side-by-side diff. Execution may save a draft file rather than touch a clinical system. Audit may be an append-only JSON record with no patient identifiers.
+
+That is enough to test the architecture.
+
+Do not begin with autonomous chart access. Do not begin with production credentials. Do not begin with an agent that can browse, write, send, and deploy because those capabilities were easy to enable.
+
+Begin with the smallest system that exposes its own behavior.
+
+Then add authority only after the workflow earns it.
+
+## XI. The Capstone: Map One Clinical Harness
+
+Choose one workflow and produce seven artifacts.
+
+### 1. Workflow statement
+
+Name the recurring clinical problem, intended user, beginning, endpoint, and consequence boundary.
+
+### 2. SCOPE specification
+
+Define source, context, objective, prohibitions, and evaluation.
+
+### 3. Harness Card
+
+Document context, tools, memory, permissions, observability, execution boundary, and failure behavior.
+
+### 4. Evidence map
+
+List each high-risk output field and the authoritative source that supports it.
+
+### 5. Verification plan
+
+Separate deterministic checks from model-assisted review. Include the three-error check.
+
+### 6. Physician checkpoint
+
+Show what evidence the physician receives, how much review time the workflow requires, how the interface exposes uncertainty and discrepancy, and what authority the physician retains.
+
+### 7. Audit and rollback plan
+
+Specify what is recorded, what is monitored, which changes are reversible, and how a failed run is contained.
+
+Test the harness with at least five de-identified or synthetic cases:
+
+- one complete case;
+- one case with a missing required fact;
+- one case with contradictory sources;
+- one case with a tempting but unsupported clinical inference; and
+- one case outside the intended population.
+
+The capstone is complete when the workflow fails visibly.
+
+A demonstration that handles only the clean case proves very little.
+
+## XII. The Harness Is the Clinical Work
+
+The model will remain the most visible component.
+
+It produces the language. It creates the demonstration. It receives the product name.
+
+But clinical reliability is assembled elsewhere.
+
+It is assembled in the source boundary, retrieval rules, structured output, deterministic checks, challenge process, physician interface, permission system, execution limit, and audit record.
+
+Those components are not support infrastructure around the clinical work.
+
+They are the clinical work.
+
+The model can generate the draft. The harness must govern its reach. The physician remains responsible for where it lands.
+
+---
+
+## Related Reading
+
+- [You Are Still Prompting. You Should Be Building Agents.](/blog/you-are-still-prompting-you-should-be-building-agents)
+- [The Prompt Is a Clinical Specification](/blog/the-prompt-is-a-clinical-specification)
+- [Physicians Need to Learn the Harness, Not Just the Model](/blog/physicians-need-to-learn-the-harness-not-just-the-model)
+- [Same Model, Different System](/blog/same-model-different-system)
+- [The Anatomy of a Medical AI Hallucination](/blog/anatomy-of-a-medical-ai-hallucination)
+
+---
+
+*This article is for physician and physician-developer education. Build and test with synthetic or properly de-identified data unless the environment has been explicitly approved for protected health information. Clinical deployment requires local validation, privacy and security review, institutional governance, and appropriate legal and regulatory assessment.*

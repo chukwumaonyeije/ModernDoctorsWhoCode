@@ -1,0 +1,271 @@
+---
+title: "Same Model, Different System"
+description: "Claude Code, Google Antigravity, OpenAI Codex, and DeepSeek Harness expose the architecture around an AI model. Physicians should compare that architecture before comparing model rankings."
+pubDate: 2026-08-28T10:00:00-04:00
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - "agent harness"
+  - "claude code"
+  - "google antigravity"
+  - "openai codex"
+  - "deepseek harness"
+  - "clinical ai"
+  - "physician-developer"
+  - "ai governance"
+  - "doctors who code"
+image:
+  url: "/images/posts/same-model-different-system-hero.png"
+  alt: "Four distinct agent workspaces surrounding the same language model, each with different tools, permissions, memory, and review artifacts"
+draft: false
+featured: false
+readingTime: 13
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Cinematic dark editorial systems illustration for Doctors Who Code. One luminous abstract language-model core sits at the center. Four visually distinct workspaces surround it: a terminal with approval gates, an editor with project memory, a browser-enabled agent workspace with review artifacts, and a modular plugin tree with an append-only event trail. Thin cyan connections lead from the same central model into each environment, but each path passes through different tools, permissions, memory, and audit controls. Deep navy and graphite palette with restrained teal and amber accents, no readable text, no brand logos, no text overlay, wide 16:9 landscape composition. */}
+
+I have used Claude Code, Google Antigravity, OpenAI Codex, and DeepSeek Harness to do variations of the same work.
+
+Read the repository. Understand the request. Change the files. Run the checks. Return something I can review.
+
+The model is important in each system.
+
+But the experience of supervision is different.
+
+One system foregrounds the terminal. Another makes artifacts and parallel work visible. Another organizes behavior through project instructions and permissions. DeepSeek Harness exposes the underlying components as replaceable plugins.
+
+The difference is not cosmetic.
+
+The harness determines what context enters the model, which tools it can call, what authority it receives, what evidence remains after the work, and where the human can interrupt it.
+
+Physicians should learn to compare that system before comparing model rankings.
+
+## I. A Model Ranking Does Not Describe a Workflow
+
+The public conversation still asks which model is best.
+
+That question is understandable. Models differ in reasoning, coding, language, multimodal capability, context handling, latency, and cost.
+
+But a benchmark score does not tell me whether an agent can read the wrong folder. It does not tell me whether a command requires approval. It does not tell me what the model will remember tomorrow, whether an external tool can reach the internet, or whether the system preserves a reconstructable record of what happened.
+
+Two products can expose the same model and create different operational risk.
+
+Two products can expose different models and still share the same important architecture: bounded context, narrow tools, explicit permissions, reviewable artifacts, and human approval before consequential action.
+
+The model answers, "How capable is the reasoning component?"
+
+The harness answers, "Under what conditions does that capability operate?"
+
+Clinical AI literacy requires both questions.
+
+## II. The Seven Questions on the Harness Card
+
+I use a vendor-neutral comparison called the **Harness Card**.
+
+The [Five Controls](/blog/physicians-need-to-learn-the-harness-not-just-the-model) establish the governance model: scope, capabilities, approval, record, and reversal. The Harness Card is their operational extension.
+
+Context and execution boundary define scope. Tools and memory expose capabilities. Permissions define approval. Observability creates the record. Failure behavior tests whether the system can stop, recover, or reverse course.
+
+This is not a second framework.
+
+It is the inspection surface for the first.
+
+It contains seven questions:
+
+1. **Context:** What can the system see, and how is that context assembled?
+2. **Tools:** What can it call, query, change, or execute?
+3. **Memory:** What persists across turns, sessions, and projects?
+4. **Permissions:** Which actions are allowed, denied, or sent for approval?
+5. **Observability:** What plans, diffs, logs, citations, and artifacts can the human inspect?
+6. **Execution boundary:** Where does the work run, and which files, credentials, networks, or external systems are reachable?
+7. **Failure behavior:** What happens when a tool fails, evidence conflicts, the model reaches uncertainty, or the reviewer says no?
+
+These questions apply to a coding agent, ambient scribe, literature assistant, prior-authorization workflow, or clinical decision-support system.
+
+The answers will change.
+
+The questions should not.
+
+<Callout type="technical" title="The Harness Card">
+Do not ask only which model powers a system. Record its context, tools, memory, permissions, observability, execution boundary, and failure behavior. That is the operating environment the model actually inhabits.
+</Callout>
+
+## III. Claude Code: Instructions and Permissioned Tools
+
+Claude Code makes project instruction and tool permission visible parts of the development environment.
+
+Project memory can be expressed through files such as `CLAUDE.md`. Permissions can allow, ask about, or deny specific tool behavior. Custom subagents can receive their own prompts, tool sets, permission modes, memory, hooks, and isolation settings.
+
+The architectural lesson is not that one configuration file is superior to another.
+
+The lesson is that instructions have scope.
+
+A global preference is different from a project rule. A project rule is different from a task-specific instruction. A subagent with read-only access is different from one that can edit files or invoke external services.
+
+Medicine already understands scoped authority.
+
+A medical student, resident, fellow, attending, pharmacist, and nurse may all interact with the same patient record. They do not receive identical roles, permissions, or responsibility. The system should not treat every AI process as one undifferentiated user either.
+
+Claude Code also shows why extensibility increases governance burden. Hooks and external tool connections can make a workflow more capable. They can also move activity outside the surface the physician thinks they are supervising.
+
+Every new capability creates a new question: what can this component see, what can it change, and what record does it leave?
+
+## IV. OpenAI Codex: Workspace Boundaries and Approval Policy
+
+OpenAI Codex makes the relationship between sandboxing and approval explicit.
+
+The workspace boundary defines where the agent can operate. The sandbox limits filesystem and network access. Approval policy determines when work can proceed automatically and when the system must stop for authorization. Repository-level `AGENTS.md` files add durable instructions that can vary by directory scope.
+
+This creates two distinct controls.
+
+The sandbox defines capability.
+
+Approval defines consent.
+
+Those controls are related, but they are not interchangeable. Asking a human to approve a command does not make the command safe. Confining a command to a sandbox does not establish that it is clinically appropriate.
+
+The distinction matters for physician-developers.
+
+A coding agent may be allowed to edit a de-identified prototype repository while being technically unable to reach production credentials. It may run tests automatically but require approval before installing a dependency or using the network. It may inherit clinical calculation rules from an `AGENTS.md` file inside one directory without applying those rules to unrelated work.
+
+That is a more useful discussion than whether the model wrote clean code on the first attempt.
+
+The real question is whether authority was narrow, visible, and reversible.
+
+## V. Google Antigravity: Artifacts and Parallel Supervision
+
+Google Antigravity places agents across the editor, terminal, and browser. It supports asynchronous and parallel work, while using plans, diffs, diagrams, screenshots, and browser recordings as reviewable artifacts.
+
+The architectural lesson is visibility across a longer task.
+
+When one agent works for thirty seconds, a final response may be enough to understand what happened. When several agents work across multiple workspaces, browser sessions, and repositories, a conversational summary is not enough.
+
+The supervising human needs intermediate artifacts.
+
+What was the plan? Which workspace was touched? What changed? What did the browser agent see? Which result came from a test, and which came from the model's interpretation? Where did the agent require permission?
+
+Parallelism increases throughput. It also increases the physician's review surface.
+
+Medicine has already learned this lesson through handoffs. More workers do not automatically produce more reliable care. Reliability depends on shared state, explicit ownership, visible decisions, and a record that lets the next person reconstruct what occurred.
+
+An agent manager without inspectable artifacts is a handoff problem disguised as productivity.
+
+## VI. DeepSeek Harness: The Components Become Visible
+
+DeepSeek Harness makes the architecture unusually explicit because its design treats the model adapter, tool registry, session log, agent loop, persistence, sandbox policy, approvals, credentials, and telemetry as composable parts.
+
+Its documentation describes an "everything is a plugin" model. The session event log is durable. Prompt sections and tool schemas are assembled through services. Tool calls pass through a guarded execution pipeline. Profiles combine ordered bundles and configuration layers.
+
+That modularity is useful for learning because the harness stops looking like one opaque product.
+
+It becomes a set of decisions.
+
+Which model adapter is mounted? Which tools are registered? Which policy intercepts a tool call? Which events survive a reload? Which profile is active? Which plugin has access to the host process?
+
+The same modularity creates risk. DeepSeek's own safety notice identifies the project as experimental developer-preview software, warns that it has not undergone a security audit, and states that it can execute model-generated commands, load third-party plugins, and access whatever files, processes, credentials, and network resources are made available to it.
+
+This is not a clinical deployment surface.
+
+It is a clear demonstration of a broader principle: a plugin is not merely a feature. It is a capability provider operating inside a trust boundary.
+
+Physicians evaluating clinical AI should ask the same question of every integration, even when the product hides the word *plugin*.
+
+## VII. Four Systems, Four Useful Lessons
+
+The products will change. Their interfaces will change. Their model menus will change.
+
+The current architectures still teach durable lessons.
+
+| System | Architectural emphasis | Durable lesson for clinical AI |
+| --- | --- | --- |
+| **Claude Code** | Layered instructions, tool permissions, extensibility, scoped subagents | Authority and context should be assigned by role and task |
+| **OpenAI Codex** | Workspace scope, sandboxing, approvals, repository instructions | Capability limits and human authorization are separate controls |
+| **Google Antigravity** | Parallel agents, browser and editor surfaces, review artifacts | Longer and parallel work requires inspectable intermediate evidence |
+| **DeepSeek Harness** | Composable plugins, session events, replaceable services | Every harness component is a design choice and a trust decision |
+
+This table is an August 2026 snapshot, not a ranking.
+
+None of these systems is presented here as a clinical product. None should receive identifiable patient information or access to clinical systems merely because its architecture is instructive.
+
+Their value is educational.
+
+They make visible what health care software often compresses into one button labeled "AI."
+
+## VIII. Apply the Harness Card to an Ambient Scribe
+
+An ambient documentation product may advertise the model that generates the note.
+
+The Harness Card asks different questions.
+
+### Context
+
+Does the system receive only the current encounter audio, or does it also retrieve prior notes, medications, laboratory results, and problem-list data? How does it prevent wrong-patient or wrong-encounter contamination?
+
+### Tools
+
+Can it only draft text? Can it query the chart? Can it propose diagnoses, populate billing codes, place orders, route messages, or write directly into the record?
+
+### Memory
+
+Does it preserve physician preferences? Does it retain patient information across sessions? Can the organization inspect or delete that state?
+
+### Permissions
+
+Which actions occur automatically? Which require physician approval? Can administrators grant broad authority that individual clinicians cannot see?
+
+### Observability
+
+Can the physician trace a sentence to the transcript? Are uncertain audio, unsupported claims, changed quantities, and omitted required elements visible? Is there a correction history?
+
+### Execution boundary
+
+Where are audio, transcripts, drafts, and logs processed and stored? Which vendors, subprocessors, networks, and credentials are involved?
+
+### Failure behavior
+
+What happens when the audio is incomplete, speakers are confused, source data conflict, the model invents a plan, or the chart connection fails halfway through a write?
+
+The model name answers none of these questions.
+
+The harness does.
+
+## IX. The Clinical Comparison That Matters
+
+Physicians do not need another leaderboard.
+
+We need the ability to inspect the operating environment around a model and decide whether its authority matches the clinical task.
+
+For a de-identified teaching exercise, a conversational assistant may be enough. For note drafting, the system needs evidence preservation and meaningful review. For an order proposal, it needs narrower permissions and stronger verification. For any action that can reach the chart, a generic approval button is not a governance plan.
+
+This is the progression:
+
+**Answer → Artifact → Workflow → Action**
+
+As the output moves closer to action, the harness must become more explicit.
+
+Context must narrow. Evidence must become visible. Permissions must tighten. Failure must stop safely. The physician checkpoint must occur before the system acquires clinical reach.
+
+The model determines what the system can propose.
+
+The harness determines what the proposal can become.
+
+---
+
+## Sources and Further Reading
+
+- [Claude Code: Configure permissions](https://code.claude.com/docs/en/permissions)
+- [Claude Code: How Claude remembers your project](https://code.claude.com/docs/en/memory)
+- [Claude Code: Create custom subagents](https://code.claude.com/docs/en/sub-agents)
+- [OpenAI Codex: Agent approvals and security](https://developers.openai.com/codex/security)
+- [OpenAI Codex: Custom instructions with AGENTS.md](https://developers.openai.com/codex/guides/agents-md)
+- [Google Antigravity IDE overview](https://antigravity.google/docs/ide/overview/)
+- [DeepSeek Harness architecture](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/architecture.md)
+- [DeepSeek Harness safety notice](https://github.com/deepseek-ai/deepseek-harness/blob/master/SAFETY.md)
+- [Physicians Need to Learn the Harness, Not Just the Model](/blog/physicians-need-to-learn-the-harness-not-just-the-model)
+
+---
+
+*Product capabilities and policies change. This article describes a physician-developer learning exercise, not an endorsement or a clinical deployment recommendation. Verify current vendor documentation and complete local privacy, security, legal, regulatory, and clinical validation before using any AI system in a patient-care workflow.*
