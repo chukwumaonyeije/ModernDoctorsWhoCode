@@ -1,0 +1,378 @@
+---
+title: "The Anatomy of a Medical AI Hallucination"
+description: "Medical AI hallucinations become dangerous when plausible invention enters a clinical workflow. A physician-developer's guide to grounding, verification, harnesses, and human accountability."
+pubDate: 2026-08-28
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - "medical-ai"
+  - "ai hallucinations"
+  - "clinical-ai"
+  - "ambient ai"
+  - "agent-harness"
+  - "patient safety"
+  - "automation bias"
+  - "responsible-ai"
+  - "physician-developer"
+  - "doctors-who-code"
+image:
+  url: "/images/posts/anatomy-of-a-medical-ai-hallucination-hero.jpeg"
+  alt: "Dr. Chukwuma Onyeije surrounded by a clinical AI verification workflow showing grounded facts and fabricated outputs"
+draft: false
+featured: true
+featuredRank: 15105
+readingTime: 14
+---
+
+The sentence looked ordinary.
+
+> The patient completed intravenous therapy and will transition to oral antibiotics at discharge.
+
+It was also unsupported.
+
+The patient had completed seven days of intravenous antibiotics. No additional antibiotics were planned. Somewhere between the room, the transcript, and the generated summary, the word *no* disappeared. The model completed a familiar clinical pattern and produced a plan that no clinician had made.
+
+This is a synthetic example. It is not a real patient.
+
+But the failure is real enough to name.
+
+A medical AI hallucination is not merely a wrong answer. It is an unsupported claim presented with enough fluency, specificity, and confidence to be mistaken for clinical fact.
+
+The danger does not begin when the model is wrong.
+
+The danger begins when the surrounding system allows unsupported language to acquire authority.
+
+In [Physicians Need to Learn the Harness, Not Just the Model](/blog/physicians-need-to-learn-the-harness-not-just-the-model), I argued that the model is only one component of the working system. The harness determines what the model can see, which tools it can use, what it may change, when it must stop, and how its work is reviewed.
+
+Hallucinations make that distinction clinical.
+
+The model generates the sentence. The workflow determines whether that sentence is grounded, challenged, contained, or allowed to become part of the patient's history.
+
+## I. Hallucination Is Only One Kind of Failure
+
+The word *hallucination* is imperfect. In medicine, it describes a human perceptual experience. A language model does not perceive a nonexistent voice or image, and it does not hold a belief about the truth of its output.
+
+The National Institute of Standards and Technology uses the more precise term **confabulation** for generated content that is confidently presented but false, erroneous, inconsistent with the input, or internally contradictory. In ordinary AI conversation, *hallucination* and *fabrication* remain the familiar terms. ([NIST Generative AI Profile](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf))
+
+Clinical systems require a more useful distinction:
+
+| Failure mode | What happened | Clinical example |
+| --- | --- | --- |
+| **Hallucination** | The system added a claim with no support in the available source | A discharge summary invents a recommendation for suppressive antibiotics |
+| **Inaccuracy** | The source contained the relevant fact, but the system stated it incorrectly | A note changes a completed seven-day course into a five-day course |
+| **Omission** | The source contained an important fact, but the system left it out | A summary excludes a pending culture or a severe medication allergy |
+
+The distinction is operational.
+
+Grounding can reduce unsupported additions. Deterministic comparison can detect changed doses, dates, and laboratory values. Coverage checks and structured templates can reduce omissions.
+
+An AI system can produce no hallucinations and still be unsafe if it repeatedly omits the one fact that should change management.
+
+I call this the **three-error check**: addition, alteration, and absence.
+
+Every clinical AI review should ask all three questions.
+
+What did the system add? What did it change? What did it leave out?
+
+## II. Medicine Had Plausible Falsehoods Before Generative AI
+
+Artificial intelligence did not introduce confident error into medicine.
+
+Clinicians can anchor on an early diagnosis, close a differential prematurely, misremember a guideline, overlook an abnormal result, or allow a provisional label to harden into chart truth. Human clinical reasoning and machine text generation are not the same process.
+
+The family resemblance is still important.
+
+Incomplete evidence becomes a coherent story. The story sounds plausible. The next person treats it as established fact.
+
+The National Academies concluded in 2015 that most people will experience at least one diagnostic error during their lifetime. Its analysis located error not only in individual cognition, but also in communication, teamwork, technology, feedback, and work-system design. ([Improving Diagnosis in Health Care](https://nap.nationalacademies.org/resource/21794/DiagnosticError_ReportBrief.pdf))
+
+The electronic medical record created another propagation mechanism.
+
+In a study of 104,456,653 clinical notes, 50.1% of the words were duplicated from prior documentation. Repeated text can obscure provenance and allow an error to travel through the chart long after its origin is forgotten. ([JAMA Network Open](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2796664))
+
+The chart could already contain a finding that was autopopulated but never examined, a diagnosis copied from a prior encounter, or a history repeated so often that no one remembered who first established it.
+
+Medicine has always needed provenance, reconciliation, second looks, and accountable sign-off.
+
+Generative AI increases the urgency because it produces plausible language faster, at greater scale, and with less visible friction than the older mechanisms of error.
+
+## III. How a Medical Hallucination Is Made
+
+The unsupported antibiotic plan did not appear from a single isolated defect. It emerged from a chain.
+
+### 1. The input is incomplete, distorted, or contaminated
+
+The system may begin with poor audio, a missing laboratory result, a note written before the final event of the day, the wrong patient-context window, or an error already copied into the record.
+
+Hallucinations do not always begin inside the language model. They can begin upstream.
+
+Speech recognition matters for ambient systems. In the *Careless Whisper* study, roughly 1% of evaluated transcriptions contained complete phrases or sentences that were absent from the underlying audio. These hallucinations occurred disproportionately in audio with longer periods without speech. ([Koenecke and colleagues](https://arxiv.org/abs/2402.08021))
+
+### 2. The model predicts a plausible continuation
+
+A language model generates tokens from statistical relationships in its training data and the context it receives. Its native operation is continuation, not independent verification.
+
+If the preceding text resembles a common pattern—intravenous treatment followed by oral treatment—the model may complete that pattern even when the patient-specific evidence does not support it.
+
+The model did not decide to lie.
+
+Linguistic probability and clinical truth are different objectives.
+
+### 3. Grounding is missing or weak
+
+The generated claim may not be linked to the transcript, medication administration record, allergy list, final culture, or authoritative guideline.
+
+Without grounding, there is no enforced relationship between the sentence and the evidence that should justify it.
+
+Retrieval-augmented generation helps by bringing patient-specific or external sources into context. It is not a truth machine. Retrieval can return the wrong passage, omit the decisive source, surface outdated guidance, or place correct evidence into a conversation that the model still interprets incorrectly.
+
+A 2026 experiment tested the same clinical question repeatedly as conversational history accumulated. The reported hallucination rate rose from 5% with no prior history to 40% after ten preceding exchanges. The failure was associated with retrieval drift as the longer conversation changed what the system considered relevant. ([npj Health Systems](https://www.nature.com/articles/s44401-026-00115-x))
+
+RAG must be tested as a workflow, not praised as an acronym.
+
+### 4. Fluency conceals the boundary between evidence and inference
+
+Supported facts and inferred claims appear in the same font, tone, and grammatical structure. The interface may not show which words came from the encounter, which were reorganized, and which were supplied by the model.
+
+Fluency is useful for communication.
+
+It is dangerous when the user mistakes it for fidelity.
+
+### 5. Verification becomes a request for vigilance
+
+The physician receives a long polished note without source links, highlighted changes, uncertainty markers, or a focused display of high-risk fields.
+
+The interface says, “Please review.”
+
+That is not a verification system. It is a request for vigilance.
+
+### 6. Automation bias converts suggestion into acceptance
+
+A busy clinician may assume that a polished draft is probably correct, particularly after the system has performed well across prior encounters. Reliability creates trust. Trust can become deference.
+
+A human approval button is not enough if the interface trains the human to become a reflexive approver.
+
+### 7. The error gains reach
+
+The unsupported statement is signed into the chart, copied into a discharge summary, included in a handoff, converted into an order, used by another model, or repeated at the next encounter.
+
+At that point, generated language has become apparent clinical history.
+
+The model produced the text. The workflow gave it reach.
+
+## IV. The Failure Changes Shape With the Task
+
+The underlying problem is consistent. Its clinical expression is not.
+
+### Fabricated literature
+
+A model may generate the title of a nonexistent randomized trial, combine the authors of one paper with the findings of another, or construct a DOI that has the correct format but resolves to nothing. Studies of model-generated medical literature searches have repeatedly documented fabricated or inaccurate references. ([Journal of Medical Internet Research](https://www.jmir.org/2024/1/e53164/))
+
+Academic formatting looks like provenance.
+
+A citation is not evidence until the source exists and supports the claim.
+
+### Ambient documentation
+
+An ambient system may invent a symptom, reverse a negation, assign a statement to the wrong speaker, alter temporality, or turn a discussion into a decision. It may also omit the most important part of the encounter.
+
+A 2025 evaluation of 12,999 clinician-annotated summary sentences reported a 1.47% hallucination rate and a 3.45% omission rate. Hallucinations were less frequent, but 44% were classified as major errors that could affect diagnosis or management if left uncorrected. ([npj Digital Medicine](https://www.nature.com/articles/s41746-025-01670-7))
+
+A 2026 prospective pilot of an agentic hospital-course-summary workflow found hallucinations in 2% of the 100 summaries receiving detailed physician feedback. Omissions appeared in 25%, and inaccuracies in 20%. The workflow used staged generation, refinement, source cross-checking, and physician review rather than a single prompt. ([JAMA Network Open](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2848785))
+
+The lesson is not that ambient AI is unsafe.
+
+The lesson is that safety must be measured across the full error profile, in the actual clinical setting, with the actual users and patients.
+
+### Diagnostic and therapeutic recommendations
+
+A model may propose a contraindicated medication, infer a diagnosis that the data do not establish, overlook a comorbidity, use the wrong unit, or apply a guideline outside its intended population.
+
+Here, a plausible sentence can directly influence care.
+
+The FDA's 2026 clinical decision support guidance emphasizes that clinicians should be able to independently review the basis for a recommendation. That review includes the relevant inputs, underlying logic and sources, patient-specific information, and important knowns and unknowns. ([FDA](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/clinical-decision-support-software))
+
+### Medical imaging
+
+With generative reconstruction, enhancement, or synthetic imaging, hallucination can become spatial rather than textual. A system may create a realistic feature that was not present or suppress a true abnormality as if it were noise.
+
+The image does not need to look artificial to be false.
+
+### Physician-built software
+
+Coding models hallucinate too. They may call a nonexistent library function, misread a clinical specification, silently change units, use an obsolete dependency, or implement the common case while failing at the boundary where the patient becomes high risk.
+
+The code may compile. The interface may look polished. The demonstration may work.
+
+None of those facts establishes clinical correctness.
+
+## V. The Harness Is Where Safety Becomes Operational
+
+Claude Code, OpenAI Codex, Google Antigravity, and DeepSeek Harness are not clinical products. They are useful examples because they make the operating environment around a model visible.
+
+Permissions can restrict tool use. Approval policies can stop consequential actions. Sandboxes can limit execution. Logs and reviewable artifacts can preserve what occurred. Modular tools can separate one capability from another.
+
+None of this eliminates hallucination.
+
+A harness with broad permissions and weak supervision can amplify an error. The value of the harness is that it creates places where safety controls can exist.
+
+A clinical harness should be able to:
+
+- restrict the model to the correct patient, encounter, and task;
+- retrieve from approved, current, and versioned sources;
+- distinguish source text from model inference;
+- require support for high-risk claims;
+- compare medications, allergies, doses, units, dates, and negations against structured data;
+- expose missing or conflicting information;
+- permit abstention when required evidence is unavailable;
+- send a draft through an independent verification step;
+- require meaningful physician review before clinical execution;
+- record inputs, retrieved evidence, model version, tool activity, corrections, approvals, and final disposition;
+- stop safely when a check fails; and
+- support rollback, incident review, and ongoing monitoring.
+
+The harness does not make the model know more.
+
+It makes unsupported behavior easier to detect, constrain, and investigate.
+
+## VI. A Safer Pattern for Ambient Documentation
+
+An ambient scribe is not a microphone connected directly to a note generator. It is a chain of systems. Each link has a distinct failure mode.
+
+**Audio → speaker attribution → transcription → fact extraction → note generation → verification → physician attestation → chart**
+
+A safer implementation preserves evidence across that chain.
+
+The physician should be able to inspect the transcript behind a questionable sentence. High-risk fields—medications, allergies, doses, diagnoses, follow-up intervals, pending results, and procedural consent—should receive structured checks. Negations and temporal terms should be tested explicitly.
+
+Unsupported additions should be highlighted, not blended into the prose. Low-confidence audio should remain visibly uncertain rather than being silently repaired by the model.
+
+The interface must direct attention to the places where review matters.
+
+Asking a physician to reread every word of a long polished note invites approval fatigue. Showing the physician unsupported claims, changed quantities, conflicting facts, and omitted required elements creates a genuine review task.
+
+Human-in-the-loop safety is not achieved by placing a person at the end of the conveyor belt.
+
+The human must receive the evidence, time, interface, and authority needed to interrupt it.
+
+## VII. A Safer Pattern for Physician-Built Software
+
+The same discipline applies when physicians use coding agents to build clinical tools.
+
+Begin with a clinical specification written before code generation. Define the intended population, exclusions, units, thresholds, source guideline and version, failure states, and the exact points where physician judgment remains necessary.
+
+Then make the harness test the implementation rather than merely explain it:
+
+1. **Ground the logic.** Link each rule to an authoritative, versioned source.
+2. **Generate in a bounded workspace.** Use narrow permissions, de-identified test data, and no production credentials.
+3. **Test the boundaries.** Include missing values, contradictory inputs, unit mismatches, extreme values, and patients outside the intended population.
+4. **Use independent checks.** Run unit tests, schema validation, static analysis, security scans, and deterministic recalculation where possible.
+5. **Review the change.** Inspect the code and clinical logic, not only the agent's summary.
+6. **Preserve reversibility.** Use version control, staged deployment, monitoring, and rollback.
+7. **Require clinical validation.** Passing software tests does not establish safety, effectiveness, usability, or regulatory compliance.
+
+An agent can write an insulin calculator quickly.
+
+Only a governed development process can establish that it uses the intended insulin type, timing, units, thresholds, rounding rules, and escalation logic for the correct patient population.
+
+## VIII. The Minimum Viable Clinical Harness
+
+For physician-developers, the starting architecture can be stated in eight verbs:
+
+**Scope → Retrieve → Generate → Verify → Challenge → Approve → Execute → Audit**
+
+### Scope
+
+Define the patient, encounter, task, intended user, and allowed action. Exclude everything not required.
+
+### Retrieve
+
+Obtain current patient facts and approved external evidence. Preserve source identity and version.
+
+### Generate
+
+Create a draft, summary, recommendation, or code change. Treat it as provisional.
+
+### Verify
+
+Check every high-risk claim against the source. Use deterministic rules when the fact is deterministic.
+
+### Challenge
+
+Use a separate process to look for contradictions, omissions, unsupported claims, incorrect units, temporal errors, and patient-population mismatch.
+
+### Approve
+
+Present the evidence and discrepancies to the responsible clinician. Make review active rather than ceremonial.
+
+### Execute
+
+Permit only the action that was explicitly authorized. Higher-consequence actions require tighter boundaries.
+
+### Audit
+
+Record what the system saw, produced, checked, changed, and who approved it. Monitor corrections, overrides, near misses, and drift.
+
+This is the **clinical harness sequence**.
+
+It does not guarantee truth. It changes the failure from invisible and unbounded to visible, interruptible, and learnable.
+
+## IX. What We Should Measure
+
+Health systems should not evaluate medical AI only by asking whether clinicians like it or whether it saves time.
+
+At minimum, evaluation should measure:
+
+- unsupported additions;
+- factual inaccuracies;
+- clinically important omissions;
+- negation and temporality errors;
+- medication, allergy, dose, and unit errors;
+- wrong-patient or wrong-encounter contamination;
+- citation validity and whether the source supports the claim;
+- performance across accents, languages, specialties, environments, and patient groups;
+- correction and override rates;
+- severity and likelihood of potential harm;
+- automation bias and approval behavior;
+- performance after model, prompt, retrieval, or workflow changes; and
+- the ability to abstain and fail safely.
+
+The most important denominator is not the number of words generated.
+
+It is the number of clinically consequential claims the workflow allowed to pass without adequate support.
+
+## X. The Model Generates. The System Governs.
+
+Models will improve. Error rates will fall. Some failure modes will become less common.
+
+Medicine should not build its safety strategy around the hope that a future model will never be wrong. We do not use that standard for clinicians, laboratories, medications, imaging systems, or conventional software. We build checks, redundancy, escalation, monitoring, and accountability around fallible components.
+
+We should do the same for generative AI.
+
+The model produces a candidate output. The surrounding system determines whether that output is grounded, challenged, approved, acted upon, and remembered.
+
+That surrounding system is the harness.
+
+Clinical trust does not begin with fluent language. It begins with a system capable of showing its work and stopping before unsupported language becomes patient care.
+
+---
+
+## Sources and Further Reading
+
+- [NIST AI 600-1: Artificial Intelligence Risk Management Framework—Generative AI Profile](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf)
+- [National Academies: Improving Diagnosis in Health Care](https://nap.nationalacademies.org/resource/21794/DiagnosticError_ReportBrief.pdf)
+- [Prevalence and Sources of Duplicate Information in the Electronic Medical Record](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2796664)
+- [Careless Whisper: Speech-to-Text Hallucination Harms](https://arxiv.org/abs/2402.08021)
+- [A Framework to Assess Clinical Safety and Hallucination Rates of LLMs for Medical Text Summarisation](https://www.nature.com/articles/s41746-025-01670-7)
+- [Physician-Reported Safety Outcomes of AI-Generated Hospital Course Summaries](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2848785)
+- [RAG in Clinical Practice: A Cautionary Tale of AI “Truthfulness”](https://www.nature.com/articles/s44401-026-00115-x)
+- [Hallucination Rates and Reference Accuracy of ChatGPT and Bard for Systematic Reviews](https://www.jmir.org/2024/1/e53164/)
+- [FDA: Clinical Decision Support Software Guidance](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/clinical-decision-support-software)
+- [WHO: Ethics and Governance of Artificial Intelligence for Health](https://www.who.int/publications/i/item/9789240029200)
+- [Physicians Need to Learn the Harness, Not Just the Model](/blog/physicians-need-to-learn-the-harness-not-just-the-model)
+- [AI Drafts. The Clinician Verifies. That Line Cannot Move.](/blog/ai-drafts-the-clinician-verifies)
+
+---
+
+*This article is for physician and physician-developer education. Product capabilities, policies, and regulatory interpretations change. Clinical deployment requires local validation, privacy and security review, institutional governance, and appropriate legal and regulatory assessment.*
