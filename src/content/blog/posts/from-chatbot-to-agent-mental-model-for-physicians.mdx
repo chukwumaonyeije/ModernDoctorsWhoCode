@@ -1,0 +1,220 @@
+---
+title: "From Chatbot to Agent: The Mental Model Every Physician Needs"
+description: "AI agents do more than answer questions. This physician-developer guide explains the agent loop, levels of autonomy, and the checkpoints that keep humans accountable."
+pubDate: "2026-09-03T09:00:00-04:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI Tools"
+tags:
+  - "AI Agents"
+  - "Agentic Workflows"
+  - "Physician Developer"
+  - "Clinical AI"
+  - "AI Literacy"
+  - "Human in the Loop"
+image:
+  url: "/images/posts/from-chatbot-to-agent-mental-model-for-physicians.png"
+  alt: "A physician-developer supervising a visible loop between an AI model, tools, observations, and a human approval checkpoint"
+draft: false
+featured: false
+readingTime: 10
+---
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Cinematic dark editorial illustration for Doctors Who Code, viewed from slightly above a physician-developer's desk at night. A central laptop shows an abstract luminous loop moving through five distinct stages represented by simple geometric nodes: goal, context, action, observation, and a warm amber human checkpoint. A stethoscope rests beside the keyboard, while a restrained cyan data path connects the screen to a small set of tools without implying uncontrolled autonomy. Deep navy and graphite palette, cyan and teal system details, one amber approval point, realistic premium clinical-technical atmosphere, no readable text, no logos, no text overlay, wide 16:9 landscape composition. */}
+
+In November 2025, I sat down with Claude Code and gave an AI model access to a real software project.
+
+The cursor moved through files I had not pasted into a chat window. It inspected the repository. It proposed a plan. It edited code. It ran commands. When something failed, it read the error and tried again.
+
+I was still directing the work. But I was no longer carrying every step between the request and the result.
+
+That was the distinction.
+
+For several years, I had used artificial intelligence as a conversation. I asked a question. The model produced an answer. If the answer was incomplete, I revised the prompt and tried again.
+
+Useful work happened inside the chat. The rest of the workflow remained mine.
+
+An agent changes where the work happens.
+
+## The Chat Window Leaves You Holding the Workflow
+
+Suppose you want to turn a public clinical guideline into an educational calculator.
+
+A chatbot can explain the formula. It can draft a function. It can suggest an interface. It can even write test cases.
+
+You still have to create the project, find the right files, place the code, install what it needs, run the tests, inspect the failures, correct the implementation, and decide whether the result matches the source.
+
+The model completed tasks. You coordinated the workflow.
+
+I have called this remaining coordination the **low-value tax**. It is the series of small transfers, repeated instructions, file movements, and status checks that consume attention without requiring the judgment you trained for.
+
+An agent can assume some of that coordination because it operates inside a working environment. It can see approved context. It can use tools. It can observe the result of an action. It can choose the next step.
+
+This is why an agent is not merely a chatbot with a longer prompt.
+
+The chatbot answers.
+
+The agent acts inside a loop.
+
+## The Agent Loop
+
+An AI agent is a model inside a system that gives it a goal, context, tools, permissions, and a way to continue through multiple steps.
+
+The simplest agent loop has six moves:
+
+1. Receive a goal.
+2. Inspect the available context.
+3. Form or revise a plan.
+4. Use a tool.
+5. Observe what happened.
+6. Continue, ask for guidance, or stop.
+
+That final move matters. A useful agent does not merely know how to continue. It knows when the next action belongs to a human.
+
+Anthropic described the distinction between fixed workflows and agents in its December 2024 essay, [Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents). OpenAI released agent-building tools in March 2025, then introduced the Codex cloud software-engineering agent in [May 2025](https://openai.com/index/introducing-codex/). Claude Code became generally available that same month. GitHub's coding agent began taking issues and returning draft pull requests. Google introduced Antigravity in November as an agent-first development platform.
+
+Agents existed before 2025. The practical change was convergence.
+
+Models became better at sustained instructions. Tool access became more reliable. Sandboxes constrained execution. Repositories supplied durable context. Tests provided feedback. Approval controls made consequential actions visible.
+
+By the end of 2025, many developers were no longer asking whether a model could suggest code. We were asking whether an agent could accept a bounded assignment and move it toward a verifiable result.
+
+## The Model Is Only One Organ
+
+Beginners often evaluate an agent by asking which model it uses.
+
+That is like evaluating an operating room by asking which surgeon is present while ignoring the team, equipment, protocol, sterile field, monitoring, and escalation plan.
+
+The model matters. The system around it determines what the model can safely accomplish.
+
+The essential parts are straightforward:
+
+- **Model:** the reasoning and language engine.
+- **Instructions:** the goal, process, constraints, and stopping conditions.
+- **Context:** the files, history, specifications, and facts available for the assignment.
+- **Tools:** the terminal, browser, repository, database, or connected application the agent may use.
+- **Harness:** the workplace that connects the model to its context and tools and manages the work loop.
+- **Permissions:** what the agent may read, change, send, publish, or delete.
+- **Memory or skills:** reusable procedures and domain knowledge carried across assignments.
+- **Evaluation:** the tests and review criteria that determine whether the result is acceptable.
+- **Human checkpoint:** the point where a person approves, corrects, redirects, or stops the work.
+
+Claude Code, Codex, Antigravity, Hermes, and OpenClaw can feel different even when their underlying models have similar capabilities. Their harnesses expose different tools, preserve different context, and place control in different locations.
+
+The agent is not the model alone.
+
+The agent is the model plus the conditions under which it works.
+
+<Callout type="technical" title="The Durable Mental Model">
+  A chatbot returns an output. An agent pursues a goal through a visible sequence of actions. The physician-developer's responsibility is to define the boundary, inspect the evidence, and retain control of consequential decisions.
+</Callout>
+
+## Autonomy Is a Dose
+
+The word *agent* often creates the wrong picture. It suggests a system that is either autonomous or not autonomous.
+
+Real systems occupy a spectrum.
+
+At **Level 0**, the physician performs the work manually.
+
+At **Level 1**, AI suggests an answer and the physician accepts, rejects, or edits it.
+
+At **Level 2**, the agent proposes actions but requires confirmation before it takes them.
+
+At **Level 3**, the agent executes a bounded assignment inside a sandbox, then returns the work and evidence for review.
+
+At **Level 4**, the agent runs a defined workflow and escalates exceptions while a human performs final sign-off.
+
+At **Level 5**, the system takes consequential action with human intervention occurring mainly by exception.
+
+The goal is not to move every workflow toward Level 5.
+
+The correct level is the lowest level of autonomy that produces worthwhile benefit at acceptable risk.
+
+I may allow an agent to reorganize public educational files in a sandbox and return a clean change set for review. I would not give the same latitude to a system handling protected health information, communicating with a patient, or influencing treatment.
+
+Capability does not create permission.
+
+## The Clinical Analogy Has a Limit
+
+Physicians understand graduated supervision. We give trainees more responsibility as competence becomes visible. We observe performance. We review plans. We escalate when the situation exceeds the setting.
+
+This analogy is useful, but it has a boundary.
+
+An AI agent is not a resident. It has no professional duty, clinical licensure, moral agency, or accountable relationship with the patient. Fluent language does not give it those things.
+
+The agent is a powerful automation system.
+
+Accountability remains human.
+
+That principle becomes more important as the output becomes more polished. A completed task can create false reassurance. Software that runs can still encode the wrong gestational-age boundary. A clean note can still omit the finding that changes management. A cited answer can still rely on a source that does not support the claim.
+
+Execution is not validation.
+
+## Start With SCOPE
+
+This learning path will use one framework repeatedly: **SCOPE**.
+
+**Specify the goal.** Name the problem, intended user, deliverable, and source of truth.
+
+**Control context and access.** Provide what the agent needs and no more than it needs. Define what it may read and change.
+
+**Observe the work.** Make the plan, actions, uncertainty, and failures visible.
+
+**Prove the result.** Use tests, source comparison, edge cases, and structured human review.
+
+**Escalate or end.** Define when the agent must pause, ask, or stop.
+
+SCOPE converts skepticism into architecture.
+
+It does not ask whether an agent seems intelligent. It asks whether the assignment is bounded, the work is observable, and the result is provable.
+
+## Exercise: Map One Weekly Task
+
+Choose one task you perform most weeks. Keep it nonclinical, public, or synthetic for this exercise.
+
+Examples include preparing a teaching outline, updating a public resource page, organizing a reading list, or checking a small software project for outdated documentation.
+
+Write each step in order. Then label it with one or more of these functions:
+
+- **Retrieve:** find information or open the right source.
+- **Judge:** interpret ambiguity or decide what is appropriate.
+- **Act:** change a file, create an artifact, or move the workflow forward.
+- **Verify:** compare the result with a test or source of truth.
+- **Approve:** authorize a consequential action or final release.
+
+Now mark the steps that require your professional judgment.
+
+Those steps are not the first targets for autonomy. The coordination around them may be.
+
+Apply SCOPE to one bounded portion of the workflow:
+
+- What exact result should the agent produce?
+- What context does it need?
+- What may it change?
+- What evidence would prove the work is correct?
+- What event should make it stop and return to you?
+
+If those questions do not have clear answers, the task is not ready for delegation.
+
+## Knowledge Check
+
+**What separates an agent from a chatbot?**  
+An agent can use tools and observations inside a multi-step loop to pursue a goal.
+
+**Does an agent have to be fully autonomous?**  
+No. Autonomy is a design choice that should match the risk and the quality of available supervision.
+
+**What is the physician-developer's central responsibility?**  
+To define reality correctly, constrain the work, and remain accountable for verifying consequential outputs.
+
+## The Next Mental Shift
+
+Once you understand the loop, the next question is not which model is smartest.
+
+It is where the work takes place.
+
+Article 2 will examine the harness: the terminal, repository, sandbox, browser, permissions, and review surface that turn model capability into supervised work.
+
+The agent may carry the workflow. The physician still defines its edges.
