@@ -1,0 +1,268 @@
+---
+title: "The Harness Is the Workplace: Choosing Where an AI Agent Works"
+description: "Claude Code, Codex, Antigravity, OpenClaw, Hermes, and Omarchy illustrate a durable lesson for physicians: choose the agent's workplace before delegating the work."
+pubDate: "2026-09-03T12:00:00-04:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI Tools"
+tags:
+  - "AI Agents"
+  - "Agent Harness"
+  - "Claude Code"
+  - "OpenAI Codex"
+  - "Google Antigravity"
+  - "OpenClaw"
+  - "Hermes Agent"
+  - "Omarchy"
+  - "Physician Developer"
+  - "Human in the Loop"
+image:
+  url: "/images/posts/the-harness-is-the-workplace.png"
+  alt: "A physician-developer choosing among a terminal, an agent-first editor, a cloud workspace, and a persistent messaging agent"
+draft: false
+featured: false
+readingTime: 12
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Cinematic wide editorial cutaway for Doctors Who Code showing one physician-developer moving through four connected but clearly bounded work environments: a close terminal and code repository, an editor with a browser preview, an isolated cloud workspace returning a reviewable change set, and a small persistent agent gateway connected to a phone. A dedicated Linux laptop sits at the edge as the laboratory hosting the tools. Each environment has a visible boundary and a warm amber human approval gate. Deep navy and graphite palette, restrained cyan and teal system paths, subtle clinical details, realistic premium atmosphere, no readable text, no product logos, no text overlay, wide 16:9 landscape composition. */}
+
+In November 2025, I began using Claude Code inside a software repository.
+
+The terminal mattered.
+
+The agent could see the files, inspect the project structure, run commands, and return the changes for review. It was not simply a better conversation. It was a model placed inside a workplace.
+
+I later used Codex and Google Antigravity for variations of the same work. In 2026, I experimented with OpenClaw, then Hermes, as persistent agents that could meet me through a messaging interface. I installed Omarchy on a dedicated laptop and treated the entire machine as a physician-developer laboratory.
+
+The products were different. The deeper lesson was stable.
+
+Changing the model did not fully explain why the work felt different.
+
+Changing the harness did.
+
+## The Model Does Not Work in Empty Space
+
+In [Article 1](/blog/from-chatbot-to-agent-mental-model-for-physicians), we defined an agent as a model operating inside a loop. It receives a goal, inspects context, uses a tool, observes the result, and decides whether to continue or return to a human.
+
+The harness makes that loop possible.
+
+It determines where the agent runs, what it can see, which tools it can use, how long it can continue, what requires approval, and what evidence remains after the work.
+
+This makes the harness more than an interface.
+
+It is the agent's workplace.
+
+A terminal-first harness places the agent close to the repository and operating system. An agent-first editor combines code, plans, terminal actions, browser previews, and review artifacts. A cloud harness can continue on remote infrastructure after you close your laptop. A persistent gateway can connect the agent to messaging channels, scheduled work, memory, and tools across sessions.
+
+These are not cosmetic differences.
+
+They change the assignment an agent can accept and the supervision it requires.
+
+<Callout type="technical" title="The Durable Mental Model">
+  The model supplies capability. The harness supplies working conditions. Evaluate the system created by both.
+</Callout>
+
+## My Progression Was Not a Leaderboard
+
+It is tempting to arrange agent products from least advanced to most advanced. That is the wrong comparison.
+
+I do not ask whether an operating room is better than an outpatient procedure room in the abstract. I ask whether the environment matches the work, whether the necessary equipment is present, and whether the escalation path is appropriate.
+
+Agent environments deserve the same discipline.
+
+The following examples describe how I understand these platforms in September 2026. They are dated examples, not endorsements. Product features will change. The categories should remain useful.
+
+### Claude Code: close to the project
+
+Claude Code taught me the value of a terminal-based agent working directly inside a repository.
+
+The project files supply context. Repository instructions can preserve local conventions. The terminal allows the agent to run tests and observe failures. Permission controls determine which actions proceed automatically and which return to the user.
+
+Claude Code now spans terminal, desktop, IDE, web, and remote-control surfaces. Its [official architecture guide](https://code.claude.com/docs/en/how-claude-code-works) makes the important distinction between local execution on the user's machine and cloud execution in an isolated virtual machine.
+
+The durable category is not one application window. It is **an agent working close to the project with visible tools and permissions**.
+
+### Codex: supervision across local and cloud work
+
+Codex expanded my sense of an agent workspace from one terminal session to a control surface for multiple assignments.
+
+A local task can work in a repository on my computer. A cloud task can run in an isolated environment and return a change set. Worktrees can separate parallel assignments so that one agent does not overwrite another agent's work.
+
+OpenAI describes the [Codex app](https://openai.com/index/introducing-the-codex-app/) as a place to manage multiple agents, review their work, and use skills and automations. The important lesson is not the number of agents. It is that parallel work requires isolation, persistent task state, and a clear review queue.
+
+The durable category is **a command center for delegated work**.
+
+### Antigravity: the editor becomes an agent environment
+
+Google Antigravity made another distinction visible.
+
+Some work benefits from synchronous collaboration inside an editor. Other work benefits from sending multiple agents into the editor, terminal, and browser, then reviewing the artifacts they return.
+
+Google introduced Antigravity with an Editor View for direct work and a Manager Surface for asynchronous agents. Its agents can use the editor, terminal, and browser and return plans, screenshots, code differences, and recordings as [reviewable artifacts](https://developers.googleblog.com/build-with-google-antigravity-our-new-agentic-development-platform/).
+
+The durable category is **an agent-first development environment with evidence built into the review surface**.
+
+### OpenClaw and Hermes: the workplace persists beyond the desk
+
+OpenClaw shifted my attention from a coding session to a persistent gateway.
+
+Its gateway connects agents, sessions, tools, and messaging channels. The workspace is the agent's default home, but the [OpenClaw documentation](https://docs.openclaw.ai/agent-workspace) is explicit that a workspace is not itself a hard security boundary. Sandboxing must be configured separately.
+
+That distinction matters. A folder organizes work. A sandbox constrains capability. They are not synonyms.
+
+Hermes extended the pattern for me. It combines a personal agent runtime with reusable skills, memory, tool access, and messaging. The [Hermes project](https://github.com/hermes-agent-org/hermes) can operate as a persistent assistant rather than a coding session that begins and ends at a desk.
+
+This is useful because the interface changes when and where delegation can begin. It also raises the governance burden. Persistent memory, credentials, messaging, and scheduled work create more places where an error can travel.
+
+The durable category is **a persistent agent service with channels, memory, and tools**.
+
+### Omarchy: the machine becomes the laboratory
+
+Omarchy is not an agent model or a single agent harness. It is an opinionated Linux environment that can host several development tools and coding agents.
+
+On my dedicated Omarchy laptop, the operating system became part of the working design. Projects lived in a deliberate place. Terminal agents were first-class tools. Workspaces separated contexts. The machine itself provided a bright boundary between experimentation and the systems I depend on for clinical work.
+
+The current [Omarchy AI manual](https://omarchy.org/manual/ai/) includes first-class launchers and shared skills for coding agents. The durable category is **a dedicated agent laboratory where the operating environment is part of the control strategy**.
+
+## Choose the Working Pattern Before the Product
+
+Before choosing a tool, make four decisions about the work.
+
+### Synchronous or asynchronous?
+
+In synchronous work, you remain present. You see the plan, answer questions, and review changes as the agent proceeds.
+
+This is appropriate when the problem is still being defined, the agent is entering an unfamiliar project, or decisions depend on rapid human judgment.
+
+In asynchronous work, you define the assignment, allow it to continue elsewhere, and review the returned result later.
+
+This is appropriate when the task is bounded, the acceptance criteria are explicit, and failure remains contained.
+
+Asynchronous does not mean unsupervised. It means supervision has moved from continuous observation to designed checkpoints.
+
+### Local or cloud?
+
+Local execution keeps the work on a machine you control. It can reach local files and tools, depending on the permissions you grant.
+
+Cloud execution places the task in remote infrastructure. It can offer isolation, persistence, and convenient parallel work, but the environment must be configured with the correct repository, dependencies, secrets, and network access.
+
+There is also a hybrid pattern: a browser or phone controls an agent that still executes on your own machine.
+
+The interface does not reveal the execution boundary. You must verify it.
+
+### Interactive collaboration or background delegation?
+
+An interactive agent is useful when the work itself teaches you something. You can inspect the repository together, challenge the proposed plan, and redirect early.
+
+A background agent is useful when you already know what acceptable completion looks like. It can update documentation, investigate a test failure, or prepare a bounded change while you work elsewhere.
+
+Do not delegate ambiguity and call it efficiency.
+
+### Session or service?
+
+A coding session usually has a narrow life: open the project, complete the assignment, review the change, close the session.
+
+A persistent agent service may retain memory, receive messages, run schedules, or access tools over time.
+
+Persistence reduces repeated setup. It also increases the importance of credential management, audit trails, revocation, and memory hygiene.
+
+## Local Does Not Mean Safe
+
+Physician-developers often feel more comfortable when an agent runs locally.
+
+That instinct is understandable but incomplete.
+
+A local agent may still read the wrong folder, expose a credential through a command, modify a file you did not intend to change, or send information through a network-enabled tool. A cloud sandbox may be tightly isolated, while an unrestricted local process may have broad access to the machine.
+
+Location is one control.
+
+It is not the entire safety model.
+
+For early learning, use public information, synthetic data, and repositories created for experimentation. Do not place protected health information, institutional credentials, or patient-facing actions inside a personal agent environment merely because it runs on your own hardware.
+
+The relevant question is not, "Is this local?"
+
+It is, "What can this process actually reach and do?"
+
+## Apply SCOPE to the Workplace
+
+The SCOPE framework from Article 1 becomes concrete when choosing a harness.
+
+**Specify the goal.** Decide whether the assignment needs live collaboration, independent execution, or persistent service.
+
+**Control context and access.** Choose the machine or cloud environment, repository, files, network, tools, credentials, and sandbox boundary.
+
+**Observe the work.** Require a visible plan, action history, logs, diffs, screenshots, or other artifacts appropriate to the task.
+
+**Prove the result.** Decide what tests, source comparisons, previews, or human review will establish completion.
+
+**Escalate or end.** Define the actions that require approval and the conditions that should stop the agent.
+
+A powerful model cannot compensate for an environment that hides its actions, grants excessive access, or provides no reliable way to inspect the result.
+
+## Exercise: Build a Workplace Map
+
+Choose one small project using only public or synthetic information. Examples include updating a public teaching page, improving documentation in a test repository, or building a simple calculator from a published formula.
+
+Complete this map before choosing an agent product:
+
+| Workplace question | Your answer |
+| --- | --- |
+| What exact artifact should return? | |
+| Does the work require live collaboration or can it run asynchronously? | |
+| Should execution occur locally, in a cloud sandbox, or on a remote machine you control? | |
+| Which files and folders may the agent read? | |
+| Which files may it change? | |
+| Which tools and network destinations does it need? | |
+| Which actions require approval? | |
+| What evidence must it return: plan, diff, tests, screenshots, logs, or citations? | |
+| What information must never enter this environment? | |
+| What event should make the agent stop? | |
+
+Now compare two available harnesses against the completed map.
+
+Do not ask which product is more intelligent. Ask which environment provides the needed capabilities with the smallest reasonable boundary and the clearest review surface.
+
+If neither one fits, revise the assignment or keep the work manual.
+
+## Knowledge Check
+
+**What is an agent harness?**
+
+The working system that connects a model to context, tools, permissions, memory, execution, and human review.
+
+**Does a local agent automatically provide a safe environment?**
+
+No. Safety depends on its actual file, credential, process, network, and tool access, along with sandboxing and approval controls.
+
+**When is asynchronous delegation appropriate?**
+
+When the assignment is bounded, the acceptance criteria are explicit, failure is contained, and the agent can return adequate evidence for review.
+
+**What should you compare before model rankings?**
+
+Execution location, available context, tool access, permissions, persistence, failure behavior, and the review surface.
+
+## The Next Assignment
+
+The first article established the agent loop.
+
+This article established where that loop operates.
+
+Article 3 will combine them in a first agentic workflow: one bounded assignment, one controlled workspace, one visible plan, and one result that must prove itself before acceptance.
+
+A model supplies capability. The harness decides where that capability can act.
+
+Choose the workplace before you delegate the work.
+
+## Sources and Further Reading
+
+- [Claude Code: How Claude Code works](https://code.claude.com/docs/en/how-claude-code-works)
+- [OpenAI: Introducing the Codex app](https://openai.com/index/introducing-the-codex-app/)
+- [Google Developers Blog: Build with Google Antigravity](https://developers.googleblog.com/build-with-google-antigravity-our-new-agentic-development-platform/)
+- [OpenClaw: Agent workspace](https://docs.openclaw.ai/agent-workspace)
+- [Hermes Agent repository](https://github.com/hermes-agent-org/hermes)
+- [Omarchy Manual: AI](https://omarchy.org/manual/ai/)
+- [Physicians Need to Learn the Harness, Not Just the Model](/blog/physicians-need-to-learn-the-harness-not-just-the-model)

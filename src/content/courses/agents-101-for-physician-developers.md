@@ -11,7 +11,7 @@ outcomes:
   - "Match agent autonomy to privacy, verification, governance, and clinical risk."
 prerequisites:
   - "Routine use of at least one general-purpose AI assistant; no coding experience is required for the first lesson."
-estimatedMinutes: 10
+estimatedMinutes: 22
 order: 4
 status: "published"
 ---
