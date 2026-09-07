@@ -1,0 +1,140 @@
+---
+title: "I Had a Clinical Presumption. I Built Tools to Examine It."
+description: "A question about glucose monitoring became an evidence review, two presentations, and a lesson in why clinical responsibility includes the interface."
+pubDate: 2026-09-07
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Technology"
+tags:
+  - Physician Development
+  - Evidence-Based Medicine
+  - Clinical Research
+  - AI-Assisted Development
+  - Patient Education
+  - OpenMFM
+image:
+  url: "/images/posts/clinical-presumption-cgm.jpeg"
+  alt: "Physician reviewing glucose-monitoring educational materials beside the title: I Had a Clinical Presumption. I Built Tools to Examine It."
+draft: false
+featured: false
+readingTime: 6
+---
+
+I began reviewing continuous glucose monitoring in gestational diabetes with a clinical presumption: seeing more of a patient's glucose patterns should help us make better decisions. The reasoning was plausible. The evidence needed to establish where it held, which outcomes improved, and what remained unresolved.
+
+That question became an evidence review, two educational presentations, and printable tools for patients and clinicians. As I built them, I had to make the boundaries of the evidence as usable as the findings themselves.
+
+The work changed both the claim I could defend and what I considered a finished clinical literature review.
+
+## I. The presumption needed separate questions
+
+I suspected that continuous glucose monitoring represented an emerging shift in how we understand glucose exposure during pregnancy.
+
+Continuous glucose monitoring, or CGM, measures glucose in fluid under the skin. Self-monitoring of blood glucose, or SMBG, uses a meter and a small blood sample obtained by finger stick. A sensor can reveal patterns between scheduled checks: overnight changes, the duration of excursions, and the direction glucose is moving.
+
+The additional information seemed valuable. I needed to examine what that value established.
+
+Does the device measure reliably? Does the additional information help guide care? Does acting on it improve pregnancy outcomes? Which findings should trigger treatment?
+
+Those questions require different evidence.
+
+| Question | Evidence needed |
+| --- | --- |
+| Does the sensor measure reliably? | Device-validation studies, including performance when readings disagree. |
+| Does the monitoring strategy improve care? | Trials that examine outcomes within a defined care pathway. |
+| Which patterns should change treatment? | Evidence supporting actionable targets in the population being treated. |
+
+A device-validation study does not establish a neonatal benefit. An association between a glucose metric and an outcome does not establish that treating to that metric improves the outcome.
+
+**Measurement, clinical utility, and treatment targets are separate claims.**
+
+That distinction gave the review its structure. It also gave me a way to challenge my starting assumption without discarding the value of continuous data.
+
+## II. The research narrowed the claim
+
+I examined sensor accuracy, discordant readings, patient burden, access, and the evidence supporting changes in management.
+
+The randomized trials did not produce a uniform answer.
+
+[GRACE](https://pubmed.ncbi.nlm.nih.gov/41308662/) found fewer large-for-gestational-age births with CGM. Its authors also identified a higher-than-expected overall prevalence of small-for-gestational-age infants that warranted further investigation.
+
+[DipGluMo](https://pubmed.ncbi.nlm.nih.gov/40441173/) found no significant improvement in its composite perinatal endpoint. [Steady Sugar](https://pmc.ncbi.nlm.nih.gov/articles/PMC12673445/) reported favorable secondary outcomes despite a nonsignificant primary time-in-range result. [Valent and colleagues](https://pubmed.ncbi.nlm.nih.gov/40730104/) demonstrated improved glucose time in range; that result did not, by itself, establish a definitive neonatal benefit.
+
+Even the glucose ranges used to calculate time in range differed between studies. The label alone was insufficient. I had to examine what each trial actually measured.
+
+The populations also mattered. Gestational diabetes, preexisting type 1 diabetes, and preexisting type 2 diabetes cannot be treated as interchangeable evidence categories. The [ADA's 2026 pregnancy guidance](https://doi.org/10.2337/dc26-S015) distinguishes established CGM percentage goals for type 1 diabetes in pregnancy from percentage targets that remain undefined for gestational and type 2 diabetes.
+
+My presumption survived in a narrower form:
+
+> CGM expands what we can see. Research must establish how best to act on that information.
+
+That conclusion leaves room for individualized monitoring decisions, including finger-stick monitoring as a reasonable plan. It also keeps a promising technology from carrying claims the evidence has not earned.
+
+## III. Two audiences required two designs
+
+A patient choosing a monitoring approach has different questions from a physician appraising a trial.
+
+The patient needs to understand what each method involves. Why can readings differ? When might a meter check be needed? Who reviews the data? What will the supplies cost?
+
+The clinician needs primary endpoints, denominators, comparator care, confidence intervals, funding, and limits of extrapolation.
+
+I built two resources around those decisions.
+
+The [patient presentation](https://openmfm.org/decks/cgm-gdm-patient-guide/index.html) contains 12 slides. It explains the monitoring methods in plain language and includes questions for the care team. Its [two-page discussion guide](https://openmfm.org/decks/cgm-gdm-patient-guide/patient-discussion-guide.pdf) provides space for an individualized monitoring and contact plan.
+
+The [clinician presentation](https://openmfm.org/decks/cgm-gdm-evidence-review/index.html) contains 23 slides. It compares the major trials, separates population-specific guidance, and uses illustrative cases to examine interpretation. Its [two-page evidence brief](https://openmfm.org/decks/cgm-gdm-evidence-review/clinician-evidence-brief.pdf) makes the central findings available in a compact format.
+
+Both presentations include references and downloadable full-deck PDFs.
+
+The patient resource supports a conversation. The clinician resource supports appraisal. The evidence remains consistent; the organization follows the reader's decision.
+
+That is a development requirement. Audience determines what belongs on the screen, what needs explanation, and what must remain available for closer inspection.
+
+## IV. The human checkpoint includes the interface
+
+I used AI-assisted development to organize the material, produce the HTML, and prepare the printable documents. I still had to decide what the evidence supported and how the resources should communicate it.
+
+On slide 3 of the patient presentation, the sensor and meter illustrations were paired with the wrong explanations. I caught the reversal during review. We corrected the pairings, checked that they held when the columns stacked on a phone, and updated the PDF.
+
+A review of the text alone would have missed the error. Each definition was correct. The association between the picture and the explanation was wrong.
+
+The **human checkpoint** must examine the complete artifact: language, image placement, reading order, mobile layout, and printed output. A reader encounters those elements together.
+
+The same obligation applies to evidence displays. A favorable secondary outcome placed more prominently than a null primary outcome can distort interpretation without changing a number. A population label that disappears into a footnote can invite an unsupported extrapolation.
+
+The interface participates in the clinical argument.
+
+That makes rendered review part of evidence review. The question is both whether the content is accurate and whether its presentation preserves its meaning.
+
+## V. Research needs a distribution plan
+
+A careful literature review can remain on one person's computer. The reasoning exists, but the patient and the next clinician cannot use it.
+
+This is the **distribution problem** in concrete form: how does an examined clinical question become something another person can use?
+
+For this project, HTML made the material available in a browser, supported navigation, and placed references near the claims they supported. PDF companions served printing, sharing, and use away from the presentation.
+
+The files went into the OpenMFM repository and through a production deployment. Browser checks covered navigation and mobile layouts. Print review checked page counts, legibility, and clipping.
+
+Those steps belong to the same workflow as the literature review. A reference needs to be reachable. A patient explanation needs to remain readable on a phone. A printed guide needs enough space to record a plan.
+
+Semantic HTML, version control, responsive layouts, and PDF inspection have direct consequences for how clinical knowledge reaches its audience.
+
+The maintenance obligation follows publication. A resource can outlive the evidence that supported it. A dated review makes its age visible. A maintained repository makes correction possible.
+
+## VI. A workflow physicians who code should understand
+
+This project gave one clinical question several usable forms. The clinician can inspect the evidence. The patient can understand the choice. Both can return to the sources.
+
+The workflow is learnable:
+
+1. **State the presumption.** Make it precise enough to challenge.
+2. **Test it against the literature.** Look for evidence that supports and contradicts it.
+3. **Separate the claims.** Distinguish measurement performance, clinical outcomes, and treatment recommendations.
+4. **Design for the decision.** Organize each resource around what its audience needs to understand or do.
+5. **Inspect the rendered artifact.** Review the clinical content, visual associations, mobile behavior, and printed output.
+6. **Publish for correction.** Include references, revision dates, and a way to maintain the material.
+
+My original presumption became a more precise argument. Building the resources gave that argument a usable form.
+
+We are responsible for the interpretation we publish, including the interface through which someone else learns it.
