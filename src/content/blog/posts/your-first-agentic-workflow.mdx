@@ -1,0 +1,343 @@
+---
+audioUrl: /audio/your-first-agentic-workflow.mp3
+title: "Your First Agentic Workflow: Delegate a Small, Verifiable Project"
+description: "A physician-developer's practical guide to giving an AI agent one bounded software assignment and requiring a plan, tests, review evidence, and a stopping condition."
+pubDate: "2026-09-07T09:00:00-04:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI Tools"
+tags:
+  - "AI Agents"
+  - "Agentic Workflows"
+  - "Physician Developer"
+  - "AI Coding"
+  - "Software Testing"
+  - "Human in the Loop"
+  - "Workflow Design"
+  - "Clinical Software"
+  - "AI Literacy"
+draft: false
+featured: false
+readingTime: 13
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Cinematic dark editorial illustration for Doctors Who Code, overhead three-quarter view of a physician-developer's controlled workbench arranged like a procedural tray. At the center is one abstract assignment card feeding into four clearly separated evidence panels: a short plan, a small code diff, a test matrix with green indicators, and a limitations note. A restrained cyan path connects the sequence and stops at one warm amber human approval control beneath the physician's hand. A closed patient chart sits outside the illuminated workspace boundary, emphasizing no patient data. Deep navy and graphite palette, cyan and teal system details, subtle stethoscope, realistic premium clinical-technical atmosphere, no readable text, no logos, no text overlay, wide 16:9 landscape composition. */}
+
+The first file in this project is not `index.html`.
+
+It is `ASSIGNMENT.md`.
+
+Before an agent writes a line of code, that file defines the problem, the intended user, the source of truth, the permitted files, the tests, the approval points, and the condition that ends the work.
+
+This feels slower than typing, "Build me an app."
+
+It is faster than reviewing an impressive application that solves the wrong problem.
+
+The physician-developer's first agentic workflow should be small enough to understand completely and structured enough to verify without trusting the agent's confidence.
+
+That is the assignment.
+
+## The Prompt Is Not the Assignment
+
+In [Article 1](/blog/from-chatbot-to-agent-mental-model-for-physicians), we defined the agent loop. In [Article 2](/blog/the-harness-is-the-workplace), we chose the environment where that loop would operate.
+
+Now the agent needs useful work.
+
+A prompt can express intent. An assignment defines completion.
+
+"Build a gestational-age tool" is a prompt. It leaves the agent to decide which user matters, which calculation is correct, which files it may change, what invalid input means, and whether a polished screen is enough.
+
+Those are not implementation details.
+
+They are the project.
+
+The more capable the agent becomes, the more expensive vague delegation becomes. A chatbot with an ambiguous request may return an unhelpful answer. An agent with the same ambiguity may create files, install dependencies, introduce assumptions, and deliver a result that looks finished.
+
+Visible effort can conceal undefined success.
+
+## Use a Clinically Adjacent Project
+
+The first project should feel familiar without carrying clinical consequence.
+
+For this exercise, build a small educational gestational-age unit converter using synthetic inputs. It accepts weeks and days, converts them to total days, and returns the normalized weeks-and-days form.
+
+The source of truth is simple arithmetic:
+
+- One week equals seven days.
+- The day remainder must be between zero and six.
+- The project accepts weeks from zero through 45 for this educational exercise.
+- No patient information is stored, transmitted, or requested.
+
+This is not a due-date calculator. It does not recommend care. It does not interpret viability, delivery timing, or fetal development.
+
+That limitation is a feature.
+
+The project is clinically recognizable, deterministic, and easy to test. It lets the reader practice supervision without pretending that a first agentic build is ready for patient care.
+
+## The Nine-Part Assignment Brief
+
+An agentic assignment needs nine elements.
+
+### 1. The problem
+
+Describe the friction in one or two sentences.
+
+For this exercise: learners sometimes need to move between gestational age expressed as weeks plus days and the same interval expressed as total days. Manual conversion is simple but repetitive.
+
+Do not begin with the interface. Begin with the problem.
+
+### 2. The intended user
+
+Name one person, not a population.
+
+The user is a physician, resident, nurse, or medical student using synthetic examples during education. The user is not a patient, and the tool is not part of a clinical record.
+
+### 3. The source of truth
+
+State the rule the software must implement.
+
+Here, the calculation is arithmetic. Total days equals weeks multiplied by seven, plus the remaining days. Normalization divides total days by seven and preserves the remainder.
+
+If the source of truth is a guideline, formula, or institutional protocol, identify the exact version. The agent should not choose clinical truth by searching until something looks plausible.
+
+### 4. The files in scope
+
+Tell the agent where it may work.
+
+For a beginner project, use a new repository containing only:
+
+- `ASSIGNMENT.md`
+- `index.html`
+- `tests.js`
+- `README.md`
+
+The agent may create or change those four files. It may not inspect unrelated folders on the computer.
+
+### 5. The deliverable
+
+Describe what should exist when the assignment is complete.
+
+The deliverable is a single browser page with labeled inputs for weeks and days, a calculate button, a clear result, validation messages, and a visible educational-use limitation. The README explains how to open the tool and run the tests.
+
+### 6. The constraints
+
+Constraints remove unhelpful options.
+
+This project uses plain HTML, CSS, and JavaScript. It requires no external packages, no database, no analytics, no network requests, and no persistence. It must work from local files and remain usable by keyboard.
+
+The agent should not add a framework because it prefers one.
+
+### 7. The acceptance criteria
+
+Write expected behavior before implementation.
+
+For this project:
+
+| Input | Expected result |
+| --- | --- |
+| 0 weeks, 0 days | 0 total days; 0 weeks, 0 days |
+| 12 weeks, 3 days | 87 total days; 12 weeks, 3 days |
+| 40 weeks, 0 days | 280 total days; 40 weeks, 0 days |
+| Day value of 7 | Rejected with a clear validation message |
+| Negative, empty, or nonnumeric input | Rejected without calculation |
+| Keyboard-only use | Labels, controls, result, and errors remain accessible |
+
+These criteria are the beginning of the test suite.
+
+### 8. The approval points
+
+Name the actions that return to the human.
+
+The agent must ask before adding a dependency, enabling network access, changing a file outside the four-file scope, deleting anything, or publishing the project.
+
+It must also show its plan before implementation begins.
+
+### 9. The stopping condition
+
+Define failure before failure arrives.
+
+The agent must stop if the assignment conflicts with the source of truth, if it cannot run the tests, if a requested capability requires patient data, or if the same test remains unresolved after two focused repair attempts.
+
+Stopping is not failure.
+
+Unbounded continuation is.
+
+<Callout type="technical" title="The Assignment Rule">
+  Do not delegate a task until you can describe what the agent may change, what must remain true, what evidence proves completion, and what condition returns the work to you.
+</Callout>
+
+## Put the Brief in the Repository
+
+Create `ASSIGNMENT.md` and place the following structure inside it:
+
+```markdown
+# Assignment
+
+## Problem
+What friction are we removing?
+
+## Intended user
+Who will use the result, and in what setting?
+
+## Source of truth
+Which formula, guideline, specification, or rule governs the work?
+
+## Scope
+Which files and systems may the agent read or change?
+
+## Deliverable
+What exact artifact should exist when the work is complete?
+
+## Constraints
+Which technologies, data, actions, and assumptions are prohibited?
+
+## Acceptance criteria
+Which normal, edge, and invalid cases must pass?
+
+## Approval required
+Which actions require human authorization?
+
+## Stop when
+Which uncertainty, failure, or scope change ends autonomous work?
+```
+
+A repository-level brief has an advantage over a long chat message. It travels with the project. The physician can revise it. The agent can reread it. The final change can be compared against it.
+
+The brief becomes part of the evidence.
+
+## Ask for a Plan Before Code
+
+The first instruction to the agent should not authorize implementation.
+
+Use this:
+
+```text
+Read ASSIGNMENT.md and inspect only the files in this repository.
+Do not edit anything yet.
+
+Return:
+1. Your understanding of the requested result.
+2. A plan of no more than seven steps.
+3. The files you expect to create or change.
+4. The tests you will run.
+5. Any ambiguity, assumption, or requested action that requires approval.
+
+Wait for approval before implementation.
+```
+
+This creates the first human checkpoint.
+
+Review the plan for scope drift. Did the agent introduce a framework? Did it add a database? Did it reinterpret the arithmetic? Did it omit invalid inputs? Did it propose deployment even though deployment was excluded?
+
+Correct the plan before the agent creates the problem in code.
+
+Then authorize only the approved plan.
+
+## Supervise the Loop With SCOPE
+
+SCOPE now becomes an operating sequence.
+
+**Specify the goal.** The assignment brief defines the user, deliverable, source of truth, and acceptance criteria.
+
+**Control context and access.** The agent receives a new repository, four permitted files, synthetic inputs, no network, and no credentials.
+
+**Observe the work.** The agent returns a plan before editing and reports the files changed, commands run, failures encountered, and assumptions made.
+
+**Prove the result.** Automated tests cover normal, boundary, and invalid inputs. The physician manually opens the page, uses the controls, and compares the behavior with the assignment.
+
+**Escalate or end.** The agent pauses for dependencies, scope changes, unresolved tests, or anything involving patient data or publication.
+
+This is Level 2 autonomy during planning and Level 3 autonomy during bounded implementation.
+
+Autonomy changes within one workflow. It does not need to be one permanent setting.
+
+## Require a Proof Packet
+
+When the agent says the work is complete, require five artifacts.
+
+I call this the **proof packet**.
+
+1. **Plan:** what the agent intended to do.
+2. **Diff:** the exact files and lines it changed.
+3. **Test report:** what ran, which cases passed, and any failure that remains.
+4. **Manual review instructions:** how a human can inspect the result directly.
+5. **Limitations:** what the software does not establish, handle, or authorize.
+
+The proof packet separates a demonstration from a result.
+
+A demonstration says, "The page works."
+
+A result shows the implementation, the passing cases, the rejected inputs, and the boundary around its use.
+
+This is why [clinical calculators need tests](/blog/why-clinical-calculator-needs-tests). Software can produce a precise answer while implementing the wrong rule. The polished interface does not rescue the incorrect specification.
+
+## Review in the Right Order
+
+Do not begin by admiring the interface.
+
+Review the work in this order:
+
+1. Compare the final result with `ASSIGNMENT.md`.
+2. Inspect the changed-file list for anything outside scope.
+3. Read the calculation logic.
+4. Review the tests and their expected results.
+5. Run the tests yourself.
+6. Open the page and try the normal, boundary, and invalid cases.
+7. Confirm that no network request, storage, analytics, or hidden dependency was added.
+8. Read the limitations as carefully as the features.
+
+This order matters.
+
+Interface polish is the easiest evidence to see and the weakest evidence of correctness.
+
+## Practical Exercise: Complete One Bounded Build
+
+Create a new folder for the gestational-age unit converter. Use no patient data.
+
+Then:
+
+1. Write the nine-part assignment brief.
+2. Save it as `ASSIGNMENT.md`.
+3. Open the folder in the agent harness you mapped in Article 2.
+4. Ask for a plan only.
+5. Review and approve or revise the plan.
+6. Authorize implementation within the four-file scope.
+7. Require the proof packet.
+8. Run the tests and inspect the page yourself.
+9. Record one place where the assignment prevented scope drift.
+
+If the agent cannot show what changed or cannot run the tests, the exercise is not complete.
+
+The objective is not to ship a clinical product.
+
+It is to practice accountable delegation.
+
+## Knowledge Check
+
+**Why is "build me an app" not an adequate agent assignment?**
+
+It does not define the user, source of truth, scope, constraints, evidence, approval points, or stopping condition.
+
+**Why ask for a plan before allowing edits?**
+
+The plan exposes assumptions and scope drift while correction is still inexpensive.
+
+**What belongs in the proof packet?**
+
+The plan, exact change set, test report, manual review instructions, and limitations.
+
+**What proves that the work is complete?**
+
+Agreement with the assignment brief, reproducible tests, direct inspection, and human acceptance. The agent's statement of confidence is not evidence.
+
+## The Next Responsibility
+
+A bounded assignment teaches the mechanics of delegation.
+
+Article 4 will address the larger responsibility: translating a real clinical workflow into a software specification while the physician retains ownership of definitions, exceptions, and clinical validation.
+
+The agent may implement the assignment.
+
+The physician must define what completion means.
