@@ -1,4 +1,5 @@
 ---
+audioUrl: /audio/delivery-date-ai-and-the-meaning-of-a-due-date.mp3
 title: "Delivery Date AI and the Meaning of a Due Date"
 description: "What ultrasound-based delivery prediction means for clinical care, and how physician-developers can preserve its meaning in the medical record."
 pubDate: "2026-09-10T11:00:00-04:00"
