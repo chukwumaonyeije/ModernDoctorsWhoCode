@@ -1,0 +1,224 @@
+---
+title: "The Middle Path, Part I: Doomers, Dismissers, and the Physician Between Them"
+description: "Assess AI claims through evidence, system design, and accountability. The first lesson in The Middle Path, with a clinical case and self-assessment."
+pubDate: 2026-09-11
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - "ai-safety"
+  - "clinical-ai"
+  - "ai-governance"
+  - "physician-developer"
+  - "responsible-ai"
+  - "the-middle-path"
+image:
+  url: "/images/posts/the-middle-path-part-1-hero.png"
+  alt: "A physician reviews a clinical AI workflow between dissolving documents and server towers, with an amber human approval checkpoint"
+draft: false
+featured: false
+readingTime: 12
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Approved physician-centered editorial image with fragmented records, server towers, cyan verification stages, and an amber human approval checkpoint. */}
+
+
+In the same week, I heard both sermons.
+
+In the physicians' lounge: “AI is dumb. It just makes things up. I do not trust any of it.”
+
+On my timeline: warnings that the same technology could become powerful enough to threaten human survival.
+
+I deal with physicians who are concerned about artificial intelligence, and many begin with the first position. They have watched a model invent a fact. They have concluded that serious clinical work should keep its distance.
+
+The concern is earned. The conclusion requires more work.
+
+This is the first installment of **The Middle Path**, a course for physicians who need to evaluate AI without outsourcing their judgment to enthusiasm, dismissal, or fear. The task is to examine each claim, identify the system in which it matters, and decide what responsibility follows.
+
+## Listen to the Companion Podcast
+
+Listen to the discussion accompanying Part I of The Middle Path.
+
+<audio controls preload="metadata" aria-label="The Middle Path Part I companion podcast" style="width: 100%; margin: 1rem 0;">
+  <source src="/audio/the-middle-path-part-1-podcast.mp3" type="audio/mpeg" />
+  <a href="/audio/the-middle-path-part-1-podcast.mp3">Download the companion podcast</a>.
+</audio>
+
+## What You Will Be Able to Do
+
+Allow about **25 minutes** for the reading, case, and written assessment. No coding is required.
+
+- Separate an observed failure or capability from a forecast about what happens next.
+- Explain what dismissal, catastrophic-risk concern, and acceleration each recognize and each leave unresolved.
+- Apply the three-error check: addition, alteration, and absence.
+- Assess a proposed workflow through evidence, system controls, and named accountability.
+
+The lesson ends with five questions and a short deployment-review worksheet. Keep the completed worksheet. Later parts will revisit the same decision as the evidence and governance requirements become more demanding.
+
+## I. The Dismissers: “AI Is Dumb”
+
+The dismissers are holding real evidence.
+
+In [The Anatomy of a Medical AI Hallucination](/blog/anatomy-of-a-medical-ai-hallucination/), I described a synthetic discharge example in which an AI-generated summary turned a plan for no further antibiotics into a plan for oral antibiotics. A fluent sentence changed the intended care.
+
+A 2025 study evaluated 450 generated clinical notes. Among 12,999 note sentences, 191 contained hallucinations, a rate of 1.47%. Reviewers classified 84 of those hallucinations, or 44%, as major because they could affect diagnosis or management if uncorrected. The omission rate was 3.45% of 49,590 source-transcript sentences. Those percentages use different denominators. They describe this evaluation, not a universal error rate for clinical AI. ([Original study](https://www.nature.com/articles/s41746-025-01670-7))
+
+The portable response is the **three-error check**:
+
+- **Addition:** What did the system invent?
+- **Alteration:** What did it change?
+- **Absence:** What did it leave out?
+
+Each question requires comparison with the source. Reading the generated note alone cannot establish what disappeared.
+
+The error in blanket dismissal is the leap from fallibility to uselessness. A tool can fail and still earn a bounded role, provided its benefits and failure controls withstand evaluation. It can also fail that evaluation. Some proposed uses should be rejected.
+
+Physician participation makes that distinction possible. Someone must define which errors matter, what review requires, and when the workflow should stop. Refusing every engagement leaves those decisions to people farther from the consequences.
+
+## II. The Doomers: “AI Is an Extinction Risk”
+
+“Doomer” is shorthand used in this debate. It is too coarse to describe everyone who studies catastrophic risk. Concern about a powerful system is compatible with careful engineering and practical governance.
+
+Recent reporting described researcher Jacob Coxon's departure from Anthropic and his concerns about competitive pressure at frontier AI companies. His experience makes the warning relevant testimony. It does not turn a forecast into an observed outcome. ([Associated Press](https://apnews.com/article/2ed549e07f2f941600a135070487d83d))
+
+There is also evidence that deserves assessment on its own terms. Google DeepMind reports that AlphaEvolve improved algorithms used in computing infrastructure and AI training. That is evidence of AI-assisted improvement within an engineered process. It does not, by itself, establish unrestricted recursive self-improvement. ([DeepMind's account](https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/))
+
+In its September 2026 threat-intelligence report, Anthropic described five cases of model use that could support biological weapons development. The report documents concerning activity observed by the provider, along with its investigation and interventions. It also describes uncertainty about intent. These are serious misuse signals. They do not establish that a biological weapon was produced or quantify the probability of human extinction. ([Anthropic report](https://www.anthropic.com/threat-intelligence-report-september-2026))
+
+That distinction matters to the course. **Observed misuse, demonstrated capability, and projected catastrophe are different claims.** Each requires its own evidence.
+
+The failure comes when concern becomes paralysis, or when an alarming forecast replaces analysis of the decision actually before us. A physician reviewing a documentation tool still needs to know its data access, error profile, permissions, and stopping conditions.
+
+Local controls cannot settle every frontier-risk question. Research policy, security, and oversight remain necessary at other levels. A clinical harness does not make those obligations disappear.
+
+## III. The Accelerationists: “If We Slow Down, Someone Worse Wins”
+
+The strongest acceleration argument begins with competition. A cautious organization cannot assume that every competitor will accept the same limits. Delaying a useful capability can also have costs.
+
+That is a strategic concern worth examining. It is insufficient as a deployment criterion.
+
+In a health system, “another hospital already uses it” tells us little about whether this workflow works for our patients, staffing, records, or review capacity. A competitor's launch cannot establish our acceptance threshold.
+
+The physician-developer must translate urgency into a testable proposal: a defined task, a bounded pilot, explicit measures of benefit and harm, and a way to halt use. Where those conditions cannot be met, speed has not earned priority.
+
+## IV. The System Around the Model
+
+These positions can all narrow attention to the model: its errors, its trajectory, or its competitive advantage. The clinical decision requires a wider view.
+
+**What system surrounds this model, and who is accountable when it fails?**
+
+A draft stored for review and a message sent directly to a patient can contain identical text. Their consequences differ because their permissions and checkpoints differ.
+
+<Callout type="clinical" title="The Middle Path principle">
+  Evaluate the complete workflow: the evidence it receives, the output it generates, the actions it can take, the checks that can stop it, and the people responsible for correction. Governance must be demonstrated in operation.
+</Callout>
+
+The clinical harness is the surrounding structure that constrains and observes the model's work. A useful design sequence is:
+
+**Scope → retrieve → generate → verify → challenge → approve → execute → audit.**
+
+For a documentation assistant, that means defining the permitted task, supplying the relevant record, generating a provisional draft, comparing it with sources, checking contradictions and omissions, obtaining meaningful approval, releasing only the approved result, and retaining enough provenance to investigate failure.
+
+A “please review” button proves very little. Review requires source access, time, authority to reject, and a usable correction process. The checks themselves need evaluation. A second model can repeat the first model's mistake.
+
+## V. Three Questions for Every Part of This Course
+
+### 1. What is the evidence, and how strong is it?
+
+Identify the source and the exact claim it supports. Distinguish a measured result from provider testimony, an extrapolation, and a forecast. Ask what population, task, denominator, and comparison produced the number.
+
+A benchmark result may justify further testing. It does not automatically establish benefit in a local clinical workflow.
+
+### 2. What system surrounds the model?
+
+Specify the source data, verification steps, permissions, monitoring, and points where a person can interrupt the sequence. Trace the output all the way to its destination.
+
+If a model can send a message, place an order, or modify a record, name the control that authorizes that action. Do not assume that a review screen prevents execution.
+
+### 3. Who is accountable when it fails?
+
+Name who reviews individual outputs, who owns the deployment, and who investigates incidents. These may be different people. Give each the authority and information required to act.
+
+“The physician remains responsible” does not excuse unsafe institutional design. A reviewer cannot compensate indefinitely for missing sources, hidden actions, or an unmanageable queue.
+
+## VI. Case Assessment: The Discharge Draft
+
+**This is a fictional workflow exercise. The source plan is supplied for comparison, not as treatment guidance.**
+
+A hospital is considering an AI discharge-summary assistant. It drafts from a supplied record but can also send discharge instructions to the patient portal. The proposal includes a generic review reminder. It does not identify a required approval gate or an incident owner.
+
+The source record states:
+
+> Intravenous antibiotic course completed. No further antibiotics planned. Medication reconciliation remains incomplete. Follow-up appointment has not yet been scheduled.
+
+The generated draft states:
+
+> Antibiotic course completed. Continue oral antibiotics at home. Medication reconciliation completed. Follow-up scheduled for next week.
+
+During the review meeting, one physician says that this proves all AI is useless. Another cites catastrophic-risk forecasts and recommends abandoning the discussion. The project sponsor says that competing hospitals are already deploying similar tools.
+
+### Questions
+
+Write your answers before opening the explanations. Score one point per question using the criteria below. This is a formative self-assessment, not a validated competency examination.
+
+1. **Error review:** Identify one addition, one alteration, and one absence in the generated draft. Explain why some defects can fit more than one category.
+2. **Evidence:** Which conclusion does this case support: all AI is useless; this workflow has demonstrated failures requiring investigation; or the system has proved a catastrophic-risk forecast? Explain your choice.
+3. **Permissions:** What must change before this draft can reach the portal? Name both an execution control and a review requirement.
+4. **Accountability:** Name the operational roles needed to review the output and to stop and investigate the deployment. Why is a generic reminder insufficient?
+5. **Decision:** Choose reject, revise and retest, or proceed. State what evidence would justify reconsidering your decision. Multiple choices can be defensible; proceeding unchanged cannot earn the point in this case.
+
+<details>
+<summary>Open the answer explanations and scoring criteria</summary>
+
+**1. Error review — one point for all three categories and an overlap explanation.** The oral-antibiotic instruction adds a plan unsupported by the source and alters the explicit plan for no further antibiotics. The statement that reconciliation is complete changes its documented status. The unresolved follow-up and reconciliation tasks are absent as outstanding work. A fabricated appointment is also an addition. The categories guide inspection; they need not be mutually exclusive.
+
+**2. Evidence — one point for selecting the demonstrated workflow failures and limiting the inference.** This example establishes errors in this draft and unresolved controls in this proposal. It cannot estimate population-wide performance, prove that every use fails, or establish a catastrophic forecast.
+
+**3. Permissions — one point for both requirements.** Disable direct portal release or enforce a gate that blocks release until the authorized reviewer approves the exact content to be sent. Give that reviewer the source record and require correction of additions, alterations, and omissions before approval. A reminder alone does not enforce the boundary.
+
+**4. Accountability — one point for review and deployment ownership with stop authority.** Assign an authorized clinical reviewer, a deployment owner empowered to suspend use, and an incident-review process with access to the relevant source, output, approval, and action history. One person may hold more than one role, but the duties must be explicit. The generic reminder supplies neither ownership nor evidence that review occurred.
+
+**5. Decision — one point for a defensible decision and reconsideration criteria.** Revise and retest is reasonable if permissions can be constrained and source-based review is feasible. Reject is reasonable if those conditions cannot be achieved. Reconsideration requires representative testing, severity-aware error review, tested approval controls, measurable benefit, and an assigned owner. Correcting this single draft is insufficient evidence to proceed.
+
+**Interpretation:** Five points means you have addressed each element of this exercise. Three or four means revisit the missed controls and revise the worksheet. Zero to two means repeat the case using the three questions. No score authorizes clinical deployment.
+
+</details>
+
+## VII. Your First Middle Path Review
+
+Choose a proposed AI workflow from your work. Use a fictional example if you do not have one. Keep patient-identifiable information out of the worksheet.
+
+| Review field | Your written response |
+| --- | --- |
+| Task and boundary | What may the system do, and where must it stop? |
+| Evidence | What claim is supported, by which source, and with what limitations? |
+| Failure check | Give one possible addition, alteration, and absence. |
+| Verification | What source will the reviewer inspect? |
+| Execution | What prevents an unapproved output from being acted upon? |
+| Accountability | Who reviews, who can stop use, and who investigates? |
+| Decision | Reject, revise and retest, or proceed under specified conditions? |
+| Reassessment | What new evidence or failure would change the decision? |
+
+Completion means every row contains an answer that another physician could inspect. “Human in the loop” is incomplete until you identify the person, the evidence available to them, and the action they can prevent.
+
+## VIII. Where the Course Goes Next
+
+This first lesson establishes the assessment framework. The remaining parts are planned:
+
+- **Part II: The recursive self-improvement evidence, graded.** Separate demonstrated research assistance from claims about autonomous improvement. Extend the worksheet with an evidence record.
+- **Part III: Evaluations, pacing, and the governance gap.** Define acceptance thresholds, monitoring, and stopping rules. Examine what local institutions can control and what requires broader oversight.
+- **Part IV: The clinical harness in practice.** Assemble a bounded workflow and test whether its controls catch the failures they claim to prevent.
+
+Each part will add to the same review. The final artifact will be a reasoned assessment of one proposed use, including the conditions under which it should not proceed.
+
+## Continue the Review
+
+- [The Anatomy of a Medical AI Hallucination](/blog/anatomy-of-a-medical-ai-hallucination/) develops the three-error check.
+- [The Harness Is the Workplace](/blog/the-harness-is-the-workplace/) examines the environment around the model.
+- [The Optimization Trap with Folded Hands](/blog/the-optimization-trap-with-folded-hands/) examines the consequences of optimizing an incomplete objective.
+
+
+
+The model generates. The system governs. The physician must be able to inspect, interrupt, and answer for the decision.
