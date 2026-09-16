@@ -2,6 +2,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import { load } from 'js-yaml';
+import { slug } from 'github-slugger';
 
 const root = process.cwd();
 const contentRoot = path.resolve(root, 'src', 'content');
@@ -25,7 +26,10 @@ async function readCollection(name) {
     }
 
     try {
-      entries.set(id, load(match[1]) ?? {});
+      const data = load(match[1]) ?? {};
+      const entryId = data.slug ?? slug(id);
+      if (entries.has(entryId)) errors.push(`${name}/${file.name}: duplicate ID "${entryId}"`);
+      entries.set(entryId, data);
     } catch (error) {
       errors.push(`${name}/${file.name}: invalid YAML (${error.message})`);
     }
@@ -87,11 +91,11 @@ for (const [id, lesson] of lessons) {
   const owner = `lessons/${id}`;
   assertReference(owner, 'article', lesson.article, blog);
   assertReference(owner, 'course', lesson.course, courses);
-  assertReference(owner, 'path', lesson.path, paths);
+  if (lesson.path) assertReference(owner, 'path', lesson.path, paths);
   if (lesson.relatedProject) assertReference(owner, 'relatedProject', lesson.relatedProject, projects);
 
   const course = courses.get(lesson.course);
-  if (course && course.path !== lesson.path) {
+  if (course && lesson.path && course.path !== lesson.path) {
     errors.push(`${owner}: path "${lesson.path}" does not match course path "${course.path}"`);
   }
 
@@ -111,25 +115,20 @@ for (const [courseId, course] of courses) {
     .sort((a, b) => a.lessonNumber - b.lessonNumber);
 
   if (courseLessons.length === 0) {
-    errors.push(`courses/${courseId}: course has no lessons`);
+    if (course.status === 'published') errors.push(`courses/${courseId}: course has no lessons`);
     continue;
   }
 
-  courseLessons.forEach((lesson, index) => {
-    const expected = index + 1;
-    if (lesson.lessonNumber !== expected) {
-      errors.push(`lessons/${lesson.id}: expected lessonNumber ${expected}, received ${lesson.lessonNumber}`);
-    }
-  });
-
-  const totalMinutes = courseLessons.reduce((total, lesson) => total + lesson.estimatedMinutes, 0);
-  if (totalMinutes !== course.estimatedMinutes) {
-    errors.push(`courses/${courseId}: estimatedMinutes is ${course.estimatedMinutes}, lesson total is ${totalMinutes}`);
+  const numbers = new Set();
+  for (const lesson of courseLessons) {
+    if (!Number.isInteger(lesson.lessonNumber) || lesson.lessonNumber < 1 || numbers.has(lesson.lessonNumber)) errors.push(`lessons/${lesson.id}: invalid or duplicate lessonNumber ${lesson.lessonNumber}`);
+    numbers.add(lesson.lessonNumber);
   }
+
 }
 
-for (const pathId of paths.keys()) {
-  if (![...courses.values()].some((course) => course.path === pathId)) {
+for (const [pathId, entry] of paths) {
+  if (entry.status === 'published' && ![...courses.values()].some((course) => course.path === pathId)) {
     errors.push(`paths/${pathId}: path has no course`);
   }
 }
@@ -139,6 +138,52 @@ for (const [id, channel] of channels) {
   assertReferences(owner, 'featuredArticles', channel.featuredArticles, blog);
   assertReferences(owner, 'featuredCourses', channel.featuredCourses, courses);
   assertReferences(owner, 'featuredProjects', channel.featuredProjects, projects);
+}
+
+/** Public records cannot advertise unpublished dependencies. */
+function assertPublic(owner, field, id, targets, article = false) {
+  const target = targets.get(id);
+  if (target && (article ? target.draft === true : target.status !== 'published')) {
+    errors.push(`${owner}: ${field} references unpublished entry "${id}"`);
+  }
+}
+
+/** Draft planning records do not count toward the public sequence. */
+function assertPublicSequence(entries, field, owner) {
+  entries.sort((a, b) => a[1][field] - b[1][field]);
+  entries.forEach(([id, data], index) => {
+    if (data[field] !== index + 1) errors.push(`${owner}/${id}: public ${field} must be ${index + 1}`);
+  });
+}
+
+for (const [id, course] of courses) {
+  if (course.status !== 'published') continue;
+  assertPublic(`courses/${id}`, 'path', course.path, paths);
+  const publicLessons = [...lessons].filter(([, lesson]) => lesson.course === id && lesson.status === 'published');
+  if (!publicLessons.length) errors.push(`courses/${id}: published course has no published lessons`);
+  assertPublicSequence(publicLessons, 'lessonNumber', 'lessons');
+  if (course.project && !projects.get(course.project)?.paths?.includes(course.path)) errors.push(`courses/${id}: project does not include course path`);
+}
+for (const [id, lesson] of lessons) {
+  if (!Number.isInteger(lesson.estimatedMinutes) || lesson.estimatedMinutes <= 0) errors.push(`lessons/${id}: estimatedMinutes must be a positive integer`);
+  if (lesson.status !== 'published') continue;
+  assertPublic(`lessons/${id}`, 'course', lesson.course, courses);
+  assertPublic(`lessons/${id}`, 'article', lesson.article, blog, true);
+  const course = courses.get(lesson.course);
+  if (course) assertPublic(`lessons/${id}`, 'course path', course.path, paths);
+  if (lesson.relatedProject && course && !projects.get(lesson.relatedProject)?.paths?.includes(course.path)) errors.push(`lessons/${id}: relatedProject does not include course path`);
+}
+for (const [id, entry] of paths) {
+  if (entry.status !== 'published') continue;
+  const publicCourses = [...courses].filter(([, course]) => course.path === id && course.status === 'published');
+  if (!publicCourses.length) errors.push(`paths/${id}: published path has no published courses`);
+  assertPublicSequence(publicCourses, 'order', 'courses');
+}
+assertPublicSequence([...paths].filter(([, entry]) => entry.status === 'published'), 'order', 'paths');
+for (const [id, channel] of channels) {
+  if (channel.status !== 'published') continue;
+  for (const article of channel.featuredArticles ?? []) assertPublic(`channels/${id}`, 'featuredArticles', article, blog, true);
+  for (const course of channel.featuredCourses ?? []) assertPublic(`channels/${id}`, 'featuredCourses', course, courses);
 }
 
 if (errors.length > 0) {

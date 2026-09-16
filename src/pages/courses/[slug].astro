@@ -20,7 +20,7 @@ const { course } = Astro.props;
 const context = await getCourseContext(course.id);
 if (!context?.path) throw new Error(`Published course ${course.id} is missing its path.`);
 
-const { path, lessons, project, nextCourse } = context;
+const { path, lessons, project, nextCourse, estimatedMinutes } = context;
 const { Content } = await render(course);
 const courseUrl = `${SITE_URL}/courses/${course.id}/`;
 const courseSchema = {
@@ -29,13 +29,13 @@ const courseSchema = {
   name: course.data.title,
   description: course.data.description,
   educationalLevel: course.data.difficulty,
-  timeRequired: `PT${course.data.estimatedMinutes}M`,
+  timeRequired: `PT${estimatedMinutes}M`,
   provider: { '@id': `${SITE_URL}/#organization` },
   url: courseUrl,
   hasCourseInstance: {
     '@type': 'CourseInstance',
     courseMode: 'online',
-    courseWorkload: `PT${course.data.estimatedMinutes}M`,
+    courseWorkload: `PT${estimatedMinutes}M`,
   },
 };
 const syllabusSchema = {
@@ -71,7 +71,7 @@ const syllabusSchema = {
         <p class="lede-copy">{course.data.description}</p>
         <div class="course-stats" aria-label="Course summary">
           <span>{course.data.difficulty}</span>
-          <span>{course.data.estimatedMinutes} minutes</span>
+          <span>{estimatedMinutes} minutes</span>
           <span>{lessons.length} {lessons.length === 1 ? 'lesson' : 'lessons'}</span>
         </div>
       </div>
@@ -156,6 +156,7 @@ const syllabusSchema = {
 <style>
   .course-page {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-section);
   }
 
@@ -304,7 +305,7 @@ const syllabusSchema = {
   }
 
   .course-syllabus li > a:hover {
-    border-color: rgba(56, 189, 248, 0.5);
+    border-color: rgba(var(--color-accent-rgb), 0.5);
     color: inherit;
   }
 
@@ -357,7 +358,7 @@ const syllabusSchema = {
     justify-content: space-between;
     gap: 2rem;
     padding: clamp(1.4rem, 1rem + 1.5vw, 2.1rem);
-    border: 1px solid rgba(56, 189, 248, 0.25);
+    border: 1px solid rgba(var(--color-accent-rgb), 0.25);
     border-radius: 1rem;
     background: var(--dwc-card);
   }
@@ -376,7 +377,7 @@ const syllabusSchema = {
   @media (max-width: 820px) {
     .course-hero,
     .course-preparation {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .course-section-heading,

@@ -49,10 +49,10 @@ const { lesson, course, path } = Astro.props;
   .lesson-context {
     margin-bottom: 2rem;
     padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
-    border: 1px solid rgba(56, 189, 248, 0.25);
+    border: 1px solid rgba(var(--color-accent-rgb), 0.25);
     border-radius: 1rem;
     background:
-      linear-gradient(120deg, rgba(56, 189, 248, 0.06), transparent 55%),
+      linear-gradient(120deg, rgba(var(--color-accent-rgb), 0.06), transparent 55%),
       var(--dwc-card);
   }
 

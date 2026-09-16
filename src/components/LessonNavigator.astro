@@ -5,9 +5,10 @@ interface Props {
   course: CollectionEntry<'courses'>;
   lessons: CollectionEntry<'lessons'>[];
   currentLesson: CollectionEntry<'lessons'>;
+  terminalAction: { href: string; label: string };
 }
 
-const { course, lessons, currentLesson } = Astro.props;
+const { course, lessons, currentLesson, terminalAction } = Astro.props;
 const activeIndex = lessons.findIndex((lesson) => lesson.id === currentLesson.id);
 const previousLesson = activeIndex > 0 ? lessons[activeIndex - 1] : undefined;
 const nextLesson = activeIndex >= 0 ? lessons[activeIndex + 1] : undefined;
@@ -56,9 +57,9 @@ const nextLesson = activeIndex >= 0 ? lessons[activeIndex + 1] : undefined;
         <strong>{nextLesson.data.title}</strong>
       </a>
     ) : (
-      <a href={`/courses/${course.id}/#course-project`} class="is-next">
-        <span>Course complete</span>
-        <strong>Build the project</strong>
+      <a href={terminalAction.href} class="is-next">
+        <span>End of course</span>
+        <strong>{terminalAction.label}</strong>
       </a>
     )}
   </div>
@@ -120,12 +121,12 @@ const nextLesson = activeIndex >= 0 ? lessons[activeIndex + 1] : undefined;
 
   .lesson-progress-list a:hover,
   .lesson-progress-list a.is-current {
-    border-color: rgba(56, 189, 248, 0.55);
+    border-color: rgba(var(--color-accent-rgb), 0.55);
     color: inherit;
   }
 
   .lesson-progress-list a.is-current {
-    background: rgba(56, 189, 248, 0.07);
+    background: rgba(var(--color-accent-rgb), 0.07);
   }
 
   .lesson-progress-list span {
@@ -160,7 +161,7 @@ const nextLesson = activeIndex >= 0 ? lessons[activeIndex + 1] : undefined;
 
   .lesson-navigator-actions > a:hover {
     color: inherit;
-    background: rgba(56, 189, 248, 0.05);
+    background: rgba(var(--color-accent-rgb), 0.05);
   }
 
   .lesson-navigator-actions .is-next {

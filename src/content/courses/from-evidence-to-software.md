@@ -12,7 +12,6 @@ outcomes:
 prerequisites:
   - "Basic familiarity with version control, structured data, and software testing."
   - "A bounded clinical protocol or guideline section suitable for translation."
-estimatedMinutes: 38
 project: "tested-clinical-calculator"
 order: 2
 status: "published"

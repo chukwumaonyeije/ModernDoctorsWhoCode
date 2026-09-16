@@ -1,0 +1,300 @@
+[
+  {
+    "path": "/",
+    "width": 375,
+    "fallback": {
+      "heading": {
+        "x": 16,
+        "y": 136.703125,
+        "width": 343,
+        "height": 115.59375
+      },
+      "bodyFont": "\"DM Sans\", sans-serif",
+      "headingFont": "Syne, sans-serif",
+      "overflow": false,
+      "shifts": 0
+    },
+    "loaded": {
+      "heading": {
+        "x": 16,
+        "y": 136.703125,
+        "width": 343,
+        "height": 192.65625
+      },
+      "bodyFont": "\"DM Sans\", sans-serif",
+      "headingFont": "Syne, sans-serif",
+      "overflow": false,
+      "shifts": 0.06886990000000001
+    },
+    "fontSwapShift": 0.06886990000000001,
+    "fonts": [
+      "/_astro/syne-latin-800-normal.EehdNYzx.woff2",
+      "/_astro/dm-sans-latin-400-normal.CW0RaeGs.woff2",
+      "/_astro/syne-latin-700-normal.AF3Rs61n.woff2"
+    ],
+    "resources": [
+      {
+        "url": "/_astro/syne-latin-800-normal.EehdNYzx.woff2",
+        "bytes": 13684
+      },
+      {
+        "url": "/_astro/dm-sans-latin-400-normal.CW0RaeGs.woff2",
+        "bytes": 14200
+      },
+      {
+        "url": "/_astro/syne-latin-700-normal.AF3Rs61n.woff2",
+        "bytes": 14072
+      }
+    ]
+  },
+  {
+    "path": "/courses/clinical-ai-literacy/",
+    "width": 375,
+    "fallback": {
+      "heading": {
+        "x": 16,
+        "y": 241.671875,
+        "width": 343,
+        "height": 219.53125
+      },
+      "bodyFont": "\"DM Sans\", sans-serif",
+      "headingFont": "Syne, sans-serif",
+      "overflow": false,
+      "shifts": 0
+    },
+    "loaded": {
+      "heading": {
+        "x": 16,
+        "y": 241.671875,
+        "width": 343,
+        "height": 263.4375
+      },
+      "bodyFont": "\"DM Sans\", sans-serif",
+      "headingFont": "Syne, sans-serif",
+      "overflow": false,
+      "shifts": 0.032314855452674894
+    },
+    "fontSwapShift": 0.032314855452674894,
+    "fonts": [
+      "/_astro/syne-latin-800-normal.EehdNYzx.woff2",
+      "/_astro/dm-sans-latin-400-normal.CW0RaeGs.woff2",
+      "/_astro/syne-latin-700-normal.AF3Rs61n.woff2"
+    ],
+    "resources": [
+      {
+        "url": "/_astro/syne-latin-800-normal.EehdNYzx.woff2",
+        "bytes": 13684
+      },
+      {
+        "url": "/_astro/dm-sans-latin-400-normal.CW0RaeGs.woff2",
+        "bytes": 14200
+      },
+      {
+        "url": "/_astro/syne-latin-700-normal.AF3Rs61n.woff2",
+        "bytes": 14072
+      }
+    ]
+  },
+  {
+    "path": "/blog/physician-developer-stack-mdx/",
+    "width": 375,
+    "fallback": {
+      "heading": {
+        "x": 16,
+        "y": 136.140625,
+        "width": 343,
+        "height": 115.59375
+      },
+      "bodyFont": "\"DM Sans\", sans-serif",
+      "headingFont": "Syne, sans-serif",
+      "overflow": false,
+      "shifts": 0
+    },
+    "loaded": {
+      "heading": {
+        "x": 16,
+        "y": 136.140625,
+        "width": 343,
+        "height": 154.125
+      },
+      "bodyFont": "\"DM Sans\", sans-serif",
+      "headingFont": "Syne, sans-serif",
+      "overflow": false,
+      "shifts": 0.03352275833333333
+    },
+    "fontSwapShift": 0.03352275833333333,
+    "fonts": [
+      "/_astro/syne-latin-800-normal.EehdNYzx.woff2",
+      "/_astro/dm-sans-latin-400-normal.CW0RaeGs.woff2",
+      "/_astro/dm-sans-latin-600-normal.Aqo67rzb.woff2",
+      "/_astro/syne-latin-700-normal.AF3Rs61n.woff2"
+    ],
+    "resources": [
+      {
+        "url": "/_astro/syne-latin-800-normal.EehdNYzx.woff2",
+        "bytes": 13684
+      },
+      {
+        "url": "/_astro/dm-sans-latin-400-normal.CW0RaeGs.woff2",
+        "bytes": 14200
+      },
+      {
+        "url": "/_astro/dm-sans-latin-600-normal.Aqo67rzb.woff2",
+        "bytes": 14144
+      },
+      {
+        "url": "/_astro/syne-latin-700-normal.AF3Rs61n.woff2",
+        "bytes": 14072
+      }
+    ]
+  },
+  {
+    "path": "/",
+    "width": 1440,
+    "fallback": {
+      "heading": {
+        "x": 144,
+        "y": 193.84375,
+        "width": 640.3125,
+        "height": 215.015625
+      },
+      "bodyFont": "\"DM Sans\", sans-serif",
+      "headingFont": "Syne, sans-serif",
+      "overflow": false,
+      "shifts": 0.000894655128761574
+    },
+    "loaded": {
+      "heading": {
+        "x": 144,
+        "y": 193.84375,
+        "width": 1023.359375,
+        "height": 215.015625
+      },
+      "bodyFont": "\"DM Sans\", sans-serif",
+      "headingFont": "Syne, sans-serif",
+      "overflow": false,
+      "shifts": 0.07827468643502444
+    },
+    "fontSwapShift": 0.07738003130626286,
+    "fonts": [
+      "/_astro/syne-latin-800-normal.EehdNYzx.woff2",
+      "/_astro/syne-latin-700-normal.AF3Rs61n.woff2",
+      "/_astro/dm-sans-latin-400-normal.CW0RaeGs.woff2"
+    ],
+    "resources": [
+      {
+        "url": "/_astro/syne-latin-800-normal.EehdNYzx.woff2",
+        "bytes": 13684
+      },
+      {
+        "url": "/_astro/syne-latin-700-normal.AF3Rs61n.woff2",
+        "bytes": 14072
+      },
+      {
+        "url": "/_astro/dm-sans-latin-400-normal.CW0RaeGs.woff2",
+        "bytes": 14200
+      }
+    ]
+  },
+  {
+    "path": "/courses/clinical-ai-literacy/",
+    "width": 1440,
+    "fallback": {
+      "heading": {
+        "x": 144,
+        "y": 249.703125,
+        "width": 597.625,
+        "height": 358.359375
+      },
+      "bodyFont": "\"DM Sans\", sans-serif",
+      "headingFont": "Syne, sans-serif",
+      "overflow": false,
+      "shifts": 0.000894655128761574
+    },
+    "loaded": {
+      "heading": {
+        "x": 144,
+        "y": 249.703125,
+        "width": 647.03125,
+        "height": 430.03125
+      },
+      "bodyFont": "\"DM Sans\", sans-serif",
+      "headingFont": "Syne, sans-serif",
+      "overflow": false,
+      "shifts": 0.020548647321954838
+    },
+    "fontSwapShift": 0.019653992193193262,
+    "fonts": [
+      "/_astro/syne-latin-800-normal.EehdNYzx.woff2",
+      "/_astro/dm-sans-latin-400-normal.CW0RaeGs.woff2",
+      "/_astro/syne-latin-700-normal.AF3Rs61n.woff2"
+    ],
+    "resources": [
+      {
+        "url": "/_astro/syne-latin-800-normal.EehdNYzx.woff2",
+        "bytes": 13684
+      },
+      {
+        "url": "/_astro/dm-sans-latin-400-normal.CW0RaeGs.woff2",
+        "bytes": 14200
+      },
+      {
+        "url": "/_astro/syne-latin-700-normal.AF3Rs61n.woff2",
+        "bytes": 14072
+      }
+    ]
+  },
+  {
+    "path": "/blog/physician-developer-stack-mdx/",
+    "width": 1440,
+    "fallback": {
+      "heading": {
+        "x": 164,
+        "y": 158.25,
+        "width": 658.984375,
+        "height": 116.46875
+      },
+      "bodyFont": "\"DM Sans\", sans-serif",
+      "headingFont": "Syne, sans-serif",
+      "overflow": false,
+      "shifts": 0.000894655128761574
+    },
+    "loaded": {
+      "heading": {
+        "x": 164,
+        "y": 158.25,
+        "width": 760,
+        "height": 174.703125
+      },
+      "bodyFont": "\"DM Sans\", sans-serif",
+      "headingFont": "Syne, sans-serif",
+      "overflow": false,
+      "shifts": 0.032961784624432014
+    },
+    "fontSwapShift": 0.03206712949567044,
+    "fonts": [
+      "/_astro/syne-latin-800-normal.EehdNYzx.woff2",
+      "/_astro/dm-sans-latin-400-normal.CW0RaeGs.woff2",
+      "/_astro/dm-sans-latin-600-normal.Aqo67rzb.woff2",
+      "/_astro/syne-latin-700-normal.AF3Rs61n.woff2"
+    ],
+    "resources": [
+      {
+        "url": "/_astro/syne-latin-800-normal.EehdNYzx.woff2",
+        "bytes": 13684
+      },
+      {
+        "url": "/_astro/dm-sans-latin-400-normal.CW0RaeGs.woff2",
+        "bytes": 14200
+      },
+      {
+        "url": "/_astro/dm-sans-latin-600-normal.Aqo67rzb.woff2",
+        "bytes": 14144
+      },
+      {
+        "url": "/_astro/syne-latin-700-normal.AF3Rs61n.woff2",
+        "bytes": 14072
+      }
+    ]
+  }
+]

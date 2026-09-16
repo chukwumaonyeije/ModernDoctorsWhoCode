@@ -10,7 +10,6 @@ outcomes:
   - "Write a reasoned decision with explicit reconsideration conditions."
 prerequisites:
   - "Familiarity with clinical documentation and routine use of an AI assistant; no coding required."
-estimatedMinutes: 25
 order: 5
 status: "published"
 ---

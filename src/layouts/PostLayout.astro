@@ -1,4 +1,5 @@
 ---
+import { getReadingMetadata } from '../utils/blog';
 import { getCollection } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
 import AuthorBio from '../components/AuthorBio.astro';
@@ -274,6 +275,7 @@ const relatedPosts = allPosts
           course={lessonContext.course}
           lessons={lessonContext.courseLessons}
           currentLesson={lessonContext.lesson}
+          terminalAction={lessonContext.terminalAction}
         />
       )}
 
@@ -343,7 +345,7 @@ const relatedPosts = allPosts
                 slug={post.id}
                 tags={post.data.tags}
                 category={post.data.category}
-                readingTime={post.data.readingTime}
+                readingTime={getReadingMetadata(post).readingTime}
                 image={post.data.image}
                 featured={post.data.featured}
               />
@@ -418,7 +420,7 @@ const relatedPosts = allPosts
 
   .difficulty-badge {
     padding: 0.22rem 0.55rem;
-    border: 1px solid rgba(56, 189, 248, 0.35);
+    border: 1px solid rgba(var(--color-accent-rgb), 0.35);
     border-radius: 999px;
     color: var(--dwc-cyan);
     font-family: var(--font-mono);

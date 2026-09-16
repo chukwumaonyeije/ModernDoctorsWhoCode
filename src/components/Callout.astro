@@ -7,10 +7,10 @@ interface Props {
 const { type, title } = Astro.props;
 
 const styles: Record<string, { border: string; label: string; bg: string }> = {
-  clinical:  { border: '#2dd4bf', label: 'Clinical Note',  bg: 'rgba(45, 212, 191, 0.06)' },
-  technical: { border: '#1a6fc4', label: 'Technical Note', bg: 'rgba(26, 111, 196, 0.06)' },
-  warning:   { border: '#f59e0b', label: 'Warning',        bg: 'rgba(245, 158, 11, 0.06)' },
-  note:      { border: '#94a3b8', label: 'Note',           bg: 'rgba(148, 163, 184, 0.06)' },
+  clinical:  { border: 'var(--color-success)', label: 'Clinical Note',  bg: 'rgba(45, 212, 191, 0.06)' },
+  technical: { border: 'var(--color-accent)', label: 'Technical Note', bg: 'rgba(26, 111, 196, 0.06)' },
+  warning:   { border: 'var(--color-warning)', label: 'Warning',        bg: 'rgba(245, 158, 11, 0.06)' },
+  note:      { border: 'var(--color-muted)', label: 'Note',           bg: 'rgba(148, 163, 184, 0.06)' },
 };
 
 const s = styles[type];

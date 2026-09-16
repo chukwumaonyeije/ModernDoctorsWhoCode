@@ -1,0 +1,295 @@
+# AGENTS.md — ModernDoctorsWhoCode
+
+This file configures Codex's behavior for this project. Last updated: March 2026
+
+## CURRENT REPOSITORY OVERRIDE (September 15, 2026)
+
+This section supersedes outdated stack, structure and redesign assumptions below. The repository is an existing learning platform, not a greenfield rebuild.
+
+- Current stack: Astro 7.3.2, MDX 8.0.1, Tailwind 4.3.3 through Vite, static Vercel output. The isolated upgrade retains the unified Markdown processor and explicit HTML compression. See `docs/ASTRO-7-UPGRADE.md` for upgrade evidence and `docs/BROWSER-VERIFICATION.md` for the subsequent browser checks.
+- Content schemas live in `src/content.config.ts`; articles live in `src/content/blog/posts/`. Paths, courses, lessons, projects and channels already exist. Lessons reference articles at their current `/blog/` URLs.
+- Curriculum relationships and summaries belong in `src/utils/curriculum.ts` with Astro loading through `src/utils/learning.ts`. Derive lesson paths from courses and aggregate minutes from visible lessons. Do not reintroduce authored course totals. Preserve stable lesson IDs and use the shared reading metadata helper for article cards.
+- Active layouts are BaseLayout and PostLayout; ArticleToc is the current TOC. Primary fonts are locally bundled Syne and DM Sans, with system monospace.
+- Theme palettes live in `src/styles/theme.css`; shared colors use semantic tokens with `--dwc-*` compatibility aliases. `src/scripts/theme.js` applies system/light/dark preferences before paint, with the native ThemePicker in Header. Representative browser checks are documented in `docs/BROWSER-VERIFICATION.md`; manual screen-reader/zoom acceptance and Astro Fonts evaluation remain open. Preserve existing Fontsource delivery meanwhile.
+- Preserve article bodies, canonical URLs, slugs, narration, original assets, public routes and redirects. Do not migrate or duplicate articles.
+- Use `npm ci`, `npm test`, `npm run build`, and `npm run check`. The build runs graph validation first; check runs the complete preservation suite. CI runs check on pull requests and main pushes.
+- `baseline/protected-routes.json` must remain intact. Normal checks never write baselines. `npm run baseline:preservation` creates review candidates only; intentional content/metadata changes require a narrowly reviewed manifest diff.
+- The 2027 PRD governs future system/light/dark themes and WCAG 2.2 AA acceptance. Current dark-only styling is a baseline, not a prohibition on the planned theme work. Do not start redesigning the shell during preservation or upgrade tasks.
+- No new client framework without a demonstrated interaction need. Retain the existing React carousel until a separate replacement is reviewed.
+- Read `docs/ARCHITECTURE.md`, `docs/CONTENT-MODEL.md`, `docs/DESIGN-SYSTEM.md`, and `docs/PRESERVATION-CHECKS.md` for current contracts and command limits. See `docs/IMPLEMENTATION-PLAN.md` for phase boundaries.
+
+The historical guidance below remains applicable where it does not conflict with this current section or the user's task.
+
+---
+
+## WHO I AM
+
+I am Chukwuma Onyeije, MD, FACOG — a Maternal-Fetal Medicine specialist, physician-developer, theologian, and endurance athlete.
+
+Do not repeat my background back to me. Treat every session as a continuation of long-term collaboration. Skip re-introductions.
+
+---
+
+## THIS PROJECT
+
+**What it is:** A ground-up rebuild of DoctorsWhoCode.blog as a modern static site, replacing a headless WordPress + Next.js setup.
+
+**Live domain:** https://www.doctorswhocode.blog
+**Old stack:** Headless WordPress (Hostinger) + Next.js — being decommissioned
+**New stack:** Astro 4.x + MDX + Tailwind CSS + Vercel
+**Repo:** ModernDoctorsWhoCode
+
+**Why the rebuild:** Eliminate CMS/plugin complexity, improve performance, SEO, LLM discoverability, and developer experience. Physician-built, physician-controlled.
+
+---
+
+## TECH STACK
+
+| Layer | Technology |
+|---|---|
+| Framework | Astro 4.x |
+| Content | MDX (Markdown + JSX) |
+| Styling | Tailwind CSS |
+| Components | Astro components + React where needed |
+| Deployment | Vercel |
+| Version control | GitHub |
+| Fonts | Syne (display) + DM Sans (body) + JetBrains Mono (code/labels) |
+
+**My broader stack (other projects):**
+- Python (primary), TypeScript/JavaScript
+- FastAPI, n8n (workflow automation)
+- Anthropic Codex API (primary AI), OpenAI (secondary)
+- PostgreSQL (production), Notion (personal data)
+- Hostinger VPS, Azure Static Web Apps, GitHub Actions
+
+---
+
+## DESIGN SYSTEM
+
+### Color Tokens
+```css
+--dwc-navy:   #0d1b2a   /* primary background */
+--dwc-blue:   #1a6fc4   /* primary action/link */
+--dwc-cyan:   #38bdf8   /* accent, labels, highlights */
+--dwc-white:  #f8fafc   /* primary text */
+--dwc-muted:  #94a3b8   /* secondary text */
+--dwc-border: #1e293b   /* card/section borders */
+--dwc-card:   #111827   /* card backgrounds */
+```
+
+### Typography
+```css
+--font-display: 'Syne', sans-serif        /* headings, hero */
+--font-body:    'DM Sans', sans-serif     /* body, UI */
+--font-mono:    'JetBrains Mono', mono    /* code, labels, tags */
+```
+
+### Design Aesthetic
+- Dark navy theme throughout
+- Cyan accent on interactive elements and labels
+- Cards with subtle borders that glow blue on hover
+- Monospace font for all metadata (dates, tags, labels, category)
+- Generous whitespace, clean grid layouts
+- Animated pulsing dot for "live" indicators
+- Hover: `translateY(-2px)` + border color shift on all cards
+
+---
+
+## PROJECT STRUCTURE
+
+```
+ModernDoctorsWhoCode/
+├── src/
+│   ├── content/
+│   │   ├── config.ts              ← Content collection schema
+│   │   └── posts/                 ← All blog posts as .mdx files
+│   │       └── _template.mdx      ← Post template
+│   ├── pages/
+│   │   ├── index.astro            ← Homepage
+│   │   ├── about.astro            ← About Dr. Onyeije
+│   │   ├── contact.astro          ← Contact / newsletter
+│   │   ├── blog/
+│   │   │   ├── index.astro        ← Blog index with tag filtering
+│   │   │   └── [slug].astro       ← Individual post page
+│   │   └── tags/
+│   │       └── [tag].astro        ← Posts by tag
+│   ├── components/
+│   │   ├── Header.astro
+│   │   ├── Footer.astro
+│   │   ├── PostCard.astro
+│   │   ├── AuthorBio.astro
+│   │   ├── Callout.astro
+│   │   ├── TableOfContents.astro
+│   │   └── NewsletterForm.astro   ← Beehiiv embed
+│   └── layouts/
+│       ├── BaseLayout.astro       ← HTML shell, head, nav, footer
+│       └── PostLayout.astro       ← Blog post layout with TOC sidebar
+├── public/
+│   ├── llms.txt                   ← AI discovery file
+│   ├── ai.txt                     ← AI permissions file
+│   ├── robots.txt
+│   └── images/
+│       ├── og-default.jpg
+│       └── posts/
+├── astro.config.mjs
+├── tailwind.config.mjs
+├── tsconfig.json
+└── package.json
+```
+
+---
+
+## CONTENT SCHEMA
+
+Every post frontmatter must include:
+
+```typescript
+title: z.string()
+description: z.string()
+pubDate: z.coerce.date()
+updatedDate: z.coerce.date().optional()
+author: z.string().default('Chukwuma Onyeije, MD, FACOG')
+authorUrl: z.string().default('https://www.linkedin.com/in/chukwumaonyeije')
+tags: z.array(z.string()).default([])
+category: z.string().default('Technology')
+image: z.object({ url, alt }).optional()
+draft: z.boolean().default(false)
+featured: z.boolean().default(false)
+readingTime: z.number().optional()
+canonical: z.string().optional()
+```
+
+---
+
+## SEO REQUIREMENTS
+
+Every page must include:
+- `<title>{title} | Doctors Who Code</title>`
+- `<meta name="description">`, `<meta name="author">`
+- `<link rel="canonical">`
+- Open Graph: `og:title`, `og:description`, `og:image`, `og:url`, `og:type`
+- Twitter Card: `summary_large_image`, `@chukwumaonyeije`
+- JSON-LD Article schema on every post (author: Chukwuma Onyeije, MD, FACOG)
+
+**LLM/AI optimization:**
+- `/public/llms.txt` — brand identity and content summary for AI crawlers
+- `/public/ai.txt` — AI crawler permissions
+- `/public/robots.txt` — standard + AI bot rules
+- FAQ sections in posts target LLM retrieval
+- Link to ACOG, SMFM, PubMed in every clinical post
+
+---
+
+## AUTHOR IDENTITY (use in all schema)
+
+```json
+{
+  "@type": "Person",
+  "name": "Chukwuma Onyeije, MD, FACOG",
+  "jobTitle": "Maternal-Fetal Medicine Specialist",
+  "honorificPrefix": "Dr.",
+  "honorificSuffix": "MD, FACOG",
+  "worksFor": "Atlanta Perinatal Associates",
+  "knowsAbout": ["Maternal-Fetal Medicine", "AI in Healthcare", "Physician-Developer Tools"],
+  "url": "https://www.linkedin.com/in/chukwumaonyeije"
+}
+```
+
+---
+
+## COMPONENT SPECS
+
+- **Callout.astro** — `type`: 'clinical' | 'technical' | 'warning' | 'note'. Clinical = teal border, Technical = blue border.
+- **AuthorBio.astro** — No props. Always renders Dr. Onyeije bio with photo, credentials, LinkedIn link.
+- **TableOfContents.astro** — Props: `headings` from Astro's `getHeadings()`. Sticky sidebar on desktop, collapsible on mobile.
+- **NewsletterForm.astro** — Beehiiv embed. Replace `BEEHIIV_EMBED_URL` with actual embed URL.
+
+---
+
+## CODE STYLE
+
+- Modular, readable over clever
+- Always include error handling
+- Add docstrings/JSDoc to functions
+- Environment variables for all secrets — never hardcode
+- Prefer explicit typing in TypeScript
+- Comment the "why," not just the "what"
+- HIPAA considerations must be called out explicitly in any patient-data code (not relevant to this project but applies across all my work)
+
+---
+
+## WRITING VOICE (enforce in all content files)
+
+- No em-dashes (—) anywhere
+- No AI filler phrases: "delve," "certainly," "absolutely," "it's worth noting," "in the realm of," "leverage," "utilize," "great question"
+- No excessive hedging — I am a physician and researcher; direct claims are fine
+- First-person active voice
+- Short paragraphs (2-4 sentences max)
+- Direct declarative statements
+- Authentic human-sounding tone
+- Flag any draft that sounds AI-generated
+- SEO-optimized with E-E-A-T signals: Experience, Expertise, Authoritativeness, Trustworthiness
+
+---
+
+## WORDPRESS MIGRATION (when ready)
+
+- Export via: WordPress → Tools → Export → All Content → XML
+- Convert with: `npx wordpress-export-to-markdown`
+- After conversion: rename `.md` to `.mdx`, add missing frontmatter, clean WordPress shortcodes
+- Do NOT migrate content until the site shell is fully working locally
+
+---
+
+## DEPLOYMENT
+
+- GitHub → Vercel (Astro framework preset)
+- Build command: `npm run build` / Output: `dist`
+- Custom domain: doctorswhocode.blog → Vercel nameservers
+- `vercel.json` redirects to preserve SEO equity from old WordPress URLs
+
+---
+
+## AUDIO NARRATION
+
+Every published post must have an audio version. This is a standing rule.
+
+**Voice:** Fish Audio, using Dr. Onyeije's own cloned voice (not a stock TTS voice).
+
+**Script:** `python -X utf8 scripts/generate_audio.py`
+- Skips posts that already have `audioUrl` in frontmatter
+- Safe to run after any new post — only processes new ones
+- MP3s saved to `public/audio/{slug}.mp3`
+- `audioUrl` frontmatter added automatically
+
+**Config (set in `.env`):**
+```
+FISH_API_KEY=...        # required
+FISH_REFERENCE_ID=...   # defaults to Dr. Onyeije's cloned voice if unset
+FISH_MODEL=...          # defaults to s2.1-pro-free if unset
+```
+
+**GitHub Actions:** `.github/workflows/regenerate-blog-audio.yml` runs automatically on push to `main` when post files or the script change, generating audio for any published post missing it. It can also be triggered manually (`workflow_dispatch`) with a newline-separated list of slugs to force-regenerate specific posts. Requires `FISH_API_KEY` as a repo secret and `FISH_REFERENCE_ID` / `FISH_MODEL` as repo variables.
+
+**Workflow for new posts:**
+1. Write and publish the post
+2. Run `python -X utf8 scripts/generate_audio.py` (or let the GitHub Action handle it on push)
+3. Commit the new MP3 and updated frontmatter together
+
+Do NOT remove existing `audioUrl` fields unless regenerating intentionally.
+
+---
+
+## WHAT I DO NOT WANT
+
+- Do not summarize my background at the start of sessions
+- Do not over-explain clinical concepts I already know
+- Do not use em-dashes
+- Do not produce content that sounds AI-generated
+- Do not add unnecessary caveats to health content — I am a physician
+- Do not suggest vendor AI tools when physician-built alternatives exist
+- Do not proceed to content migration until the site shell works locally
+
+---
+
+*This AGENTS.md governs all Codex sessions in this project. Update it as the project evolves.*

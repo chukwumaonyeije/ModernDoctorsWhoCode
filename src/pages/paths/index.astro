@@ -2,20 +2,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import LearningPathCard from '../../components/LearningPathCard.astro';
-import { getCoursesForPath, getLearningPaths, getLessonsForCourse } from '../../utils/learning';
+import { getPathSummaries } from '../../utils/learning';
 import { SITE_URL } from '../../consts';
 
-const paths = await getLearningPaths();
-const pathCards = await Promise.all(paths.map(async (path) => {
-  const courses = await getCoursesForPath(path.id);
-  const lessons = (await Promise.all(courses.map((course) => getLessonsForCourse(course.id)))).flat();
-  return {
-    path,
-    courseCount: courses.length,
-    lessonCount: lessons.length,
-    estimatedMinutes: courses.reduce((total, course) => total + course.data.estimatedMinutes, 0),
-  };
-}));
+const pathCards = await getPathSummaries();
 ---
 
 <BaseLayout

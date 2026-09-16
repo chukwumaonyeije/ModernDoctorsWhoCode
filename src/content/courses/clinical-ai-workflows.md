@@ -10,7 +10,6 @@ outcomes:
   - "Choose an infrastructure boundary that matches the data and use case."
 prerequisites:
   - "Routine use of at least one general-purpose AI assistant."
-estimatedMinutes: 46
 project: "clinical-ai-workflow-map"
 order: 1
 status: "published"

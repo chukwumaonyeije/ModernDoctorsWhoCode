@@ -1,6 +1,7 @@
 import { getCollection } from 'astro:content';
 import { classifyArticleFormat, classifyArticleTopics, normalizeCategory } from '../data/taxonomy';
 import { sortBlogPosts } from './blog';
+import { getCurriculum } from './learning';
 
 export interface ArticleSearchRecord {
   id: string;
@@ -19,14 +20,14 @@ export interface ArticleSearchRecord {
 }
 
 export async function buildArticleSearchIndex(): Promise<ArticleSearchRecord[]> {
-  const [posts, lessons] = await Promise.all([
+  const [posts, graph] = await Promise.all([
     getCollection('blog', ({ data }) => !data.draft),
-    getCollection('lessons', ({ data }) => data.status === 'published'),
+    getCurriculum(),
   ]);
-  const lessonByArticle = new Map(lessons.map((lesson) => [lesson.data.article.id, lesson]));
 
   return sortBlogPosts(posts).map((post) => {
-    const lesson = lessonByArticle.get(post.id);
+    const context = graph.articleContext(post.id);
+    const lesson = context?.lesson;
     const input = {
       title: post.data.title,
       description: post.data.description,
@@ -43,7 +44,7 @@ export async function buildArticleSearchIndex(): Promise<ArticleSearchRecord[]> 
       category: normalizeCategory(post.data.category),
       topics,
       format: classifyArticleFormat(input),
-      path: lesson?.data.path.id,
+      path: context?.path.id,
       course: lesson?.data.course.id,
       difficulty: lesson?.data.difficulty,
       published: post.data.pubDate.toISOString(),

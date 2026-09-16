@@ -9,7 +9,6 @@ outcomes:
   - "Create a repository with a useful README and meaningful commits."
   - "Read and write the basic JSON structures used by APIs."
 prerequisites: []
-estimatedMinutes: 27
 project: "first-physician-utility"
 order: 1
 status: "published"

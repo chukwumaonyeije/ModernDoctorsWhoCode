@@ -25,3 +25,10 @@ pnpm-debug.log*
 
 .vercel
 .env*.local
+
+# Review candidates are not approved preservation baselines.
+baseline/*.candidate.json
+
+# Local browser verification artifacts.
+test-results/
+playwright-report/

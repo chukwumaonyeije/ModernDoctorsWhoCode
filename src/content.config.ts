@@ -77,7 +77,8 @@ const courses = defineCollection({
     difficulty,
     outcomes: z.array(z.string()).min(1),
     prerequisites: z.array(z.string()).default([]),
-    estimatedMinutes: z.number().int().positive(),
+    // Legacy totals are accepted for compatibility but never used by queries.
+    estimatedMinutes: z.number().int().positive().optional(),
     project: reference('projects').optional(),
     order: z.number().int().positive(),
     status: publicationStatus.default('draft'),
@@ -91,7 +92,8 @@ const lessons = defineCollection({
     description: z.string(),
     article: reference('blog'),
     course: reference('courses'),
-    path: reference('paths'),
+    // Transitional assertion only; effective path comes from the course.
+    path: reference('paths').optional(),
     lessonNumber: z.number().int().positive(),
     difficulty,
     estimatedMinutes: z.number().int().positive(),

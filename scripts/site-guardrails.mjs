@@ -206,6 +206,9 @@ const htmlFiles = allFiles.filter((file) => file.endsWith('.html'));
 const brokenLinks = await findBrokenInternalLinks(htmlFiles);
 
 if (writeBaseline) {
+  if (await fileExists(baselinePath)) {
+    throw new Error('Refusing to overwrite the protected route baseline. Use npm run baseline:preservation to produce an additive review candidate.');
+  }
   snapshot.knownBrokenLinks = brokenLinks;
   await writeFile(baselinePath, `${JSON.stringify(snapshot, null, 2)}\n`, 'utf8');
   console.log(`Wrote ${snapshot.pageCount} protected pages to ${path.relative(root, baselinePath)}.`);

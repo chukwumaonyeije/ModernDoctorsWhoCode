@@ -164,7 +164,7 @@ const articleSchema = {
 
           <p>Here is a direct comparison of the common PDF parsing tools physician developers reach for and how they perform on clinically relevant document types.</p>
 
-          <table class="compare-table">
+          <table class="compare-table" tabindex="0">
             <thead>
               <tr>
                 <th>Library</th>
@@ -233,7 +233,7 @@ const articleSchema = {
               <span class="code-lang">bash</span>
               <span class="code-title">terminal</span>
             </div>
-            <pre><code><span class="cm"># Create and activate a virtual environment</span>
+            <pre tabindex="0"><code><span class="cm"># Create and activate a virtual environment</span>
 python3 -m venv venv
 source venv/bin/activate
 
@@ -251,7 +251,7 @@ pip install docling[gpu]</code></pre>
               <span class="code-lang">python</span>
               <span class="code-title">basic_parse.py</span>
             </div>
-            <pre><code><span class="kw">from</span> <span class="imp">docling.document_converter</span> <span class="kw">import</span> <span class="cls">DocumentConverter</span>
+            <pre tabindex="0"><code><span class="kw">from</span> <span class="imp">docling.document_converter</span> <span class="kw">import</span> <span class="cls">DocumentConverter</span>
 
 <span class="cm"># Initialize the converter</span>
 converter = <span class="cls">DocumentConverter</span>()
@@ -277,7 +277,7 @@ json_output = result.document.export_to_dict()
               <span class="code-lang">python</span>
               <span class="code-title">inspect_output.py</span>
             </div>
-            <pre><code><span class="kw">from</span> <span class="imp">docling.document_converter</span> <span class="kw">import</span> <span class="cls">DocumentConverter</span>
+            <pre tabindex="0"><code><span class="kw">from</span> <span class="imp">docling.document_converter</span> <span class="kw">import</span> <span class="cls">DocumentConverter</span>
 
 converter = <span class="cls">DocumentConverter</span>()
 result = converter.convert(<span class="str">"smfm_consult_periviability.pdf"</span>)
@@ -311,7 +311,7 @@ doc = result.document
               <span class="code-lang">bash</span>
               <span class="code-title">terminal</span>
             </div>
-            <pre><code>pip install langchain-docling langchain-core langchain langchain-openai chromadb</code></pre>
+            <pre tabindex="0"><code>pip install langchain-docling langchain-core langchain langchain-openai chromadb</code></pre>
           </div>
 
           <h3>Step 1: Load and chunk your clinical PDFs</h3>
@@ -323,7 +323,7 @@ doc = result.document
               <span class="code-lang">python</span>
               <span class="code-title">load_documents.py</span>
             </div>
-            <pre><code><span class="kw">from</span> <span class="imp">langchain_docling</span> <span class="kw">import</span> <span class="cls">DoclingLoader</span>
+            <pre tabindex="0"><code><span class="kw">from</span> <span class="imp">langchain_docling</span> <span class="kw">import</span> <span class="cls">DoclingLoader</span>
 <span class="kw">from</span> <span class="imp">langchain_docling.loader</span> <span class="kw">import</span> <span class="cls">ExportType</span>
 
 <span class="cm"># Your clinical document library</span>
@@ -356,7 +356,7 @@ docs = loader.load()
               <span class="code-lang">python</span>
               <span class="code-title">vectorstore.py</span>
             </div>
-            <pre><code><span class="kw">from</span> <span class="imp">langchain_openai</span> <span class="kw">import</span> <span class="cls">OpenAIEmbeddings</span>
+            <pre tabindex="0"><code><span class="kw">from</span> <span class="imp">langchain_openai</span> <span class="kw">import</span> <span class="cls">OpenAIEmbeddings</span>
 <span class="kw">from</span> <span class="imp">langchain_community.vectorstores</span> <span class="kw">import</span> <span class="cls">Chroma</span>
 
 <span class="cm"># Using OpenAI embeddings — swap for a local model if needed</span>
@@ -381,7 +381,7 @@ vectorstore = <span class="cls">Chroma</span>.from_documents(
               <span class="code-lang">python</span>
               <span class="code-title">rag_chain.py</span>
             </div>
-            <pre><code><span class="kw">from</span> <span class="imp">langchain_openai</span> <span class="kw">import</span> <span class="cls">ChatOpenAI</span>
+            <pre tabindex="0"><code><span class="kw">from</span> <span class="imp">langchain_openai</span> <span class="kw">import</span> <span class="cls">ChatOpenAI</span>
 <span class="kw">from</span> <span class="imp">langchain_core.prompts</span> <span class="kw">import</span> <span class="cls">PromptTemplate</span>
 <span class="kw">from</span> <span class="imp">langchain_core.runnables</span> <span class="kw">import</span> <span class="cls">RunnablePassthrough</span>
 <span class="kw">from</span> <span class="imp">langchain_core.output_parsers</span> <span class="kw">import</span> <span class="cls">StrOutputParser</span>
@@ -445,7 +445,7 @@ answer = chain.invoke(question)
               <span class="code-lang">bash</span>
               <span class="code-title">terminal</span>
             </div>
-            <pre><code>pip install llama-index-core llama-index-readers-docling llama-index-node-parser-docling</code></pre>
+            <pre tabindex="0"><code>pip install llama-index-core llama-index-readers-docling llama-index-node-parser-docling</code></pre>
           </div>
 
           <div class="code-block">
@@ -453,7 +453,7 @@ answer = chain.invoke(question)
               <span class="code-lang">python</span>
               <span class="code-title">llamaindex_rag.py</span>
             </div>
-            <pre><code><span class="kw">from</span> <span class="imp">llama_index.core</span> <span class="kw">import</span> <span class="cls">VectorStoreIndex</span>
+            <pre tabindex="0"><code><span class="kw">from</span> <span class="imp">llama_index.core</span> <span class="kw">import</span> <span class="cls">VectorStoreIndex</span>
 <span class="kw">from</span> <span class="imp">llama_index.readers.docling</span> <span class="kw">import</span> <span class="cls">DoclingReader</span>
 <span class="kw">from</span> <span class="imp">llama_index.node_parser.docling</span> <span class="kw">import</span> <span class="cls">DoclingNodeParser</span>
 
@@ -504,7 +504,7 @@ response = query_engine.query(
               <span class="code-lang">python</span>
               <span class="code-title">scanned_doc_pipeline.py</span>
             </div>
-            <pre><code><span class="kw">from</span> <span class="imp">docling.document_converter</span> <span class="kw">import</span> <span class="cls">DocumentConverter</span>
+            <pre tabindex="0"><code><span class="kw">from</span> <span class="imp">docling.document_converter</span> <span class="kw">import</span> <span class="cls">DocumentConverter</span>
 <span class="kw">from</span> <span class="imp">docling.datamodel.pipeline_options</span> <span class="kw">import</span> <span class="cls">PdfPipelineOptions</span>
 
 <span class="cm"># Enable full OCR pipeline for scanned documents</span>
@@ -577,7 +577,7 @@ markdown = result.document.export_to_markdown()
               <span class="code-lang">python</span>
               <span class="code-title">local_rag_stack.py</span>
             </div>
-            <pre><code><span class="cm"># Fully local stack: Docling + Chroma + Ollama</span>
+            <pre tabindex="0"><code><span class="cm"># Fully local stack: Docling + Chroma + Ollama</span>
 <span class="cm"># pip install docling chromadb langchain-community</span>
 
 <span class="kw">from</span> <span class="imp">langchain_docling</span> <span class="kw">import</span> <span class="cls">DoclingLoader</span>

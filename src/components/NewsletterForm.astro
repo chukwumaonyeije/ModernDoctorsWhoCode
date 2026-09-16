@@ -260,9 +260,9 @@ const instanceId = `newsletter-${Math.random().toString(36).slice(2, 10)}`;
     align-items: start;
     gap: clamp(1.5rem, 1rem + 1vw, 2.25rem);
     background:
-      radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 34%),
-      linear-gradient(180deg, rgba(15, 18, 25, 0.96), rgba(10, 13, 26, 0.98));
-    border: 1px solid rgba(56, 189, 248, 0.12);
+      radial-gradient(circle at top right, rgba(var(--color-accent-rgb), 0.12), transparent 34%),
+      linear-gradient(180deg, rgba(var(--color-surface-rgb), 0.96), rgba(var(--color-background-rgb), 0.98));
+    border: 1px solid rgba(var(--color-accent-rgb), 0.12);
     border-radius: 18px;
     padding: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
     box-shadow: 0 18px 54px rgba(0, 0, 0, 0.24);
@@ -279,7 +279,6 @@ const instanceId = `newsletter-${Math.random().toString(36).slice(2, 10)}`;
 
   .newsletter-eyebrow {
     margin-bottom: 0.75rem;
-    white-space: nowrap;
   }
 
   .newsletter-title {
@@ -310,7 +309,7 @@ const instanceId = `newsletter-${Math.random().toString(36).slice(2, 10)}`;
   .newsletter-embed-shell {
     border: 1px solid var(--dwc-border);
     border-radius: 14px;
-    background: rgba(10, 13, 26, 0.72);
+    background: rgba(var(--color-background-rgb), 0.72);
   }
 
   .newsletter-interest-panel {
@@ -338,13 +337,14 @@ const instanceId = `newsletter-${Math.random().toString(36).slice(2, 10)}`;
 
   .newsletter-interest-item {
     display: flex;
+    min-width: 0;
     align-items: center;
     gap: 0.75rem;
     min-height: 3rem;
     padding: 0.8rem 0.95rem;
     border-radius: 10px;
-    background: rgba(56, 189, 248, 0.07);
-    border: 1px solid rgba(56, 189, 248, 0.14);
+    background: rgba(var(--color-accent-rgb), 0.07);
+    border: 1px solid rgba(var(--color-accent-rgb), 0.14);
     color: var(--dwc-white);
     font-size: clamp(0.94rem, 0.92rem + 0.14vw, 0.98rem);
     line-height: 1.45;
@@ -357,7 +357,7 @@ const instanceId = `newsletter-${Math.random().toString(36).slice(2, 10)}`;
     border-radius: 999px;
     background: var(--dwc-cyan);
     flex: 0 0 auto;
-    box-shadow: 0 0 18px rgba(56, 189, 248, 0.4);
+    box-shadow: 0 0 18px rgba(var(--color-accent-rgb), 0.4);
   }
 
   .newsletter-note {
@@ -376,8 +376,8 @@ const instanceId = `newsletter-${Math.random().toString(36).slice(2, 10)}`;
 
   .newsletter-embed-frame {
     border-radius: 12px;
-    border: 1px dashed rgba(56, 189, 248, 0.22);
-    background: rgba(15, 18, 25, 0.92);
+    border: 1px dashed rgba(var(--color-accent-rgb), 0.22);
+    background: rgba(var(--color-surface-rgb), 0.92);
     padding: 1rem;
   }
 
@@ -401,9 +401,9 @@ const instanceId = `newsletter-${Math.random().toString(36).slice(2, 10)}`;
 
   .newsletter-success-panel {
     margin-top: 1rem;
-    border: 1px solid rgba(56, 189, 248, 0.14);
+    border: 1px solid rgba(var(--color-accent-rgb), 0.14);
     border-radius: 12px;
-    background: rgba(56, 189, 248, 0.07);
+    background: rgba(var(--color-accent-rgb), 0.07);
     padding: 1rem;
   }
 
@@ -443,6 +443,7 @@ const instanceId = `newsletter-${Math.random().toString(36).slice(2, 10)}`;
   :global(.beehiiv-embed select),
   :global(.beehiiv-embed textarea) {
     width: 100%;
+    min-width: 0;
     min-height: 2.9rem;
     padding: 0.8rem 0.95rem;
     border-radius: 10px;

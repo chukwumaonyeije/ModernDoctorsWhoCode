@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "npm run validate:learning",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -17,27 +18,37 @@
     "baseline:routes": "node scripts/site-guardrails.mjs --write-baseline",
     "validate:learning": "node scripts/validate-learning-graph.mjs",
     "validate:routes": "node scripts/site-guardrails.mjs",
-    "validate:site": "npm run validate:identity && npm run validate:learning && npm run validate:articles && npm run validate:routes",
-    "check": "npm run build && npm run validate:site"
+    "validate:preservation": "node scripts/validate-preservation.mjs",
+    "baseline:preservation": "node scripts/validate-preservation.mjs --candidate",
+    "test": "node --experimental-strip-types --test tests/preservation.test.mjs tests/learning-guardrails.test.mjs tests/curriculum.test.mjs tests/theme.test.mjs",
+    "validate:site": "npm run validate:identity && npm run validate:learning && npm run validate:articles && npm run validate:routes && npm run validate:preservation",
+    "check": "npm test && npm run build && npm run validate:site",
+    "test:browser": "playwright test",
+    "test:browser:review": "node tests/browser/theme-review.mjs"
   },
   "dependencies": {
-    "@astrojs/mdx": "^5.0.1",
-    "@astrojs/react": "^5.0.0",
-    "@astrojs/rss": "^4.0.17",
-    "@astrojs/sitemap": "^3.7.1",
+    "@astrojs/markdown-remark": "7.3.1",
+    "@astrojs/mdx": "8.0.1",
+    "@astrojs/react": "6.0.5",
+    "@astrojs/rss": "4.0.19",
+    "@astrojs/sitemap": "3.7.4",
     "@fontsource/dm-sans": "^5.2.8",
     "@fontsource/syne": "^5.2.7",
-    "@tailwindcss/vite": "^4.2.1",
+    "@tailwindcss/vite": "4.3.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "astro": "^6.0.5",
+    "astro": "7.3.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "satori": "^0.25.0",
     "sharp": "^0.34.3",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "4.3.3"
   },
   "devDependencies": {
-    "js-yaml": "^4.3.0"
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0",
+    "github-slugger": "2.0.0",
+    "js-yaml": "^4.3.0",
+    "parse5": "7.3.0"
   }
 }

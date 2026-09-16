@@ -1,146 +1,65 @@
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection, getEntry } from "astro:content";
+import { createCurriculum, type QueryOptions } from "./curriculum";
 
-type PublicationStatus = 'draft' | 'published';
-type WithStatus = { data: { status: PublicationStatus } };
-
-interface QueryOptions {
-  includeDrafts?: boolean;
+/** Load a fresh content snapshot so development edits never encounter a stale module cache. */
+export async function getCurriculum(options: QueryOptions = {}) {
+  const [paths, courses, lessons, articles, projects] = await Promise.all([
+    getCollection("paths"), getCollection("courses"), getCollection("lessons"), getCollection("blog"), getCollection("projects"),
+  ]);
+  return createCurriculum({ paths, courses, lessons, articles, projects }, options);
 }
-
-function isVisible<T extends WithStatus>(entry: T, includeDrafts: boolean) {
-  return includeDrafts || entry.data.status === 'published';
+/** Public paths in editorial order. */
+export async function getLearningPaths(options: QueryOptions = {}) { return (await getCurriculum(options)).paths; }
+/** Public courses whose parent paths are public. */
+export async function getCourses(options: QueryOptions = {}) { return (await getCurriculum(options)).courses; }
+/** Course order is owned by the course records. */
+export async function getCoursesForPath(id: string, options: QueryOptions = {}) { return (await getCurriculum(options)).coursesForPath(id); }
+/** Public lessons must also have public parents and articles. */
+export async function getLessonsForCourse(id: string, options: QueryOptions = {}) { return (await getCurriculum(options)).lessonsForCourse(id); }
+/** Shared syllabus, duration, neighbors and final destination. */
+export async function getCourseContext(id: string, options: QueryOptions = {}) { return (await getCurriculum(options)).courseContext(id); }
+/** Shared path counts and duration. */
+export async function getPathContext(id: string, options: QueryOptions = {}) { return (await getCurriculum(options)).pathContext(id); }
+/** All path cards use the same aggregation. */
+export async function getPathSummaries(options: QueryOptions = {}) {
+  const graph = await getCurriculum(options);
+  return graph.paths.map(path => graph.pathContext(path.id)!);
 }
-
-export async function getLearningPaths(options: QueryOptions = {}) {
-  const { includeDrafts = false } = options;
-  const paths = await getCollection('paths');
-
-  return paths
-    .filter((path) => isVisible(path, includeDrafts))
-    .sort((a, b) => a.data.order - b.data.order);
+/** All course cards use the same aggregation. */
+export async function getCourseSummaries(options: QueryOptions = {}) {
+  const graph = await getCurriculum(options);
+  return graph.courses.map(course => graph.courseContext(course.id)!);
 }
-
-export async function getCourses(options: QueryOptions = {}) {
-  const { includeDrafts = false } = options;
-  const courses = await getCollection('courses');
-
-  return courses
-    .filter((course) => isVisible(course, includeDrafts))
-    .sort((a, b) => a.data.path.id.localeCompare(b.data.path.id) || a.data.order - b.data.order);
-}
-
-export async function getCoursesForPath(pathId: string, options: QueryOptions = {}) {
-  const { includeDrafts = false } = options;
-  const courses = await getCollection('courses');
-
-  return courses
-    .filter((course) => course.data.path.id === pathId && isVisible(course, includeDrafts))
-    .sort((a, b) => a.data.order - b.data.order);
-}
-
-export async function getLessonsForCourse(courseId: string, options: QueryOptions = {}) {
-  const { includeDrafts = false } = options;
-  const lessons = await getCollection('lessons');
-
-  return lessons
-    .filter((lesson) => lesson.data.course.id === courseId && isVisible(lesson, includeDrafts))
-    .sort((a, b) => a.data.lessonNumber - b.data.lessonNumber);
-}
-
-export async function getCourseContext(courseId: string, options: QueryOptions = {}) {
-  const course = await getEntry('courses', courseId);
-  if (!course || !isVisible(course, options.includeDrafts ?? false)) return undefined;
-
-  const path = await getEntry('paths', course.data.path.id);
-  const lessons = await getLessonsForCourse(course.id, options);
-  const project = course.data.project
-    ? await getEntry('projects', course.data.project.id)
-    : undefined;
-  const pathCourses = await getCoursesForPath(course.data.path.id, options);
-  const courseIndex = pathCourses.findIndex((entry) => entry.id === course.id);
-
-  return {
-    course,
-    path,
-    lessons,
-    project,
-    previousCourse: courseIndex > 0 ? pathCourses[courseIndex - 1] : undefined,
-    nextCourse: courseIndex >= 0 ? pathCourses[courseIndex + 1] : undefined,
-  };
-}
-
-export async function getLearningContextForArticle(articleId: string, options: QueryOptions = {}) {
-  const { includeDrafts = false } = options;
-  const lessons = await getCollection('lessons');
-  const lesson = lessons.find(
-    (entry) => entry.data.article.id === articleId && isVisible(entry, includeDrafts),
-  );
-
-  if (!lesson) return undefined;
-
-  const course = await getEntry('courses', lesson.data.course.id);
-  const path = await getEntry('paths', lesson.data.path.id);
-  const project = lesson.data.relatedProject
-    ? await getEntry('projects', lesson.data.relatedProject.id)
-    : undefined;
-  const courseLessons = await getLessonsForCourse(lesson.data.course.id, options);
-  const lessonIndex = courseLessons.findIndex((entry) => entry.id === lesson.id);
-
-  return {
-    lesson,
-    course,
-    path,
-    project,
-    previousLesson: lessonIndex > 0 ? courseLessons[lessonIndex - 1] : undefined,
-    nextLesson: lessonIndex >= 0 ? courseLessons[lessonIndex + 1] : undefined,
-    courseLessons,
-  };
-}
-
+/** Lesson context always derives path ownership from the course. */
+export async function getLearningContextForArticle(id: string, options: QueryOptions = {}) { return (await getCurriculum(options)).articleContext(id); }
+/** Channels have an independent publication status. */
 export async function getPublishedChannels() {
-  const channels = await getCollection('channels', ({ data }) => data.status === 'published');
-  return channels.sort((a, b) => a.data.order - b.data.order);
+  return (await getCollection("channels", ({ data }) => data.status === "published")).sort((a, b) => a.data.order - b.data.order);
 }
-
+/** Project lifecycle is not publication status: idea briefs remain publicly browsable. */
 export async function getProjects() {
-  const projects = await getCollection('projects');
-  return projects.sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || a.data.title.localeCompare(b.data.title));
+  return (await getCollection("projects")).sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || a.data.title.localeCompare(b.data.title));
 }
-
-export async function getProjectContext(projectId: string, options: QueryOptions = {}) {
-  const project = await getEntry('projects', projectId);
+/** Resolve project prerequisites through the public graph. */
+export async function getProjectContext(id: string, options: QueryOptions = {}) {
+  const [project, graph] = await Promise.all([getEntry("projects", id), getCurriculum(options)]);
   if (!project) return undefined;
-
-  const [paths, courses, lessons] = await Promise.all([
-    Promise.all(project.data.paths.map((path) => getEntry('paths', path.id))),
-    getCourses(options),
-    getCollection('lessons'),
-  ]);
-
-  return {
-    project,
-    paths: paths.filter((path) => path && isVisible(path, options.includeDrafts ?? false)),
-    courses: courses.filter((course) => course.data.project?.id === project.id),
-    lessons: lessons
-      .filter((lesson) => lesson.data.relatedProject?.id === project.id && isVisible(lesson, options.includeDrafts ?? false))
-      .sort((a, b) => a.data.lessonNumber - b.data.lessonNumber),
+  const courses = graph.courses.filter(course => course.data.project?.id === id);
+  return { project, paths: graph.paths.filter(path => project.data.paths.some(ref => ref.id === path.id)), courses,
+    courseCards: courses.map(course => graph.courseContext(course.id)!),
+    lessons: graph.lessons.filter(lesson => lesson.data.relatedProject?.id === id),
   };
 }
-
-export async function getChannelContext(channelId: string) {
-  const channel = await getEntry('channels', channelId);
-  if (!channel || channel.data.status !== 'published') return undefined;
-
-  const [articles, courses, projects] = await Promise.all([
-    Promise.all(channel.data.featuredArticles.map((article) => getEntry('blog', article.id))),
-    Promise.all(channel.data.featuredCourses.map((course) => getEntry('courses', course.id))),
-    Promise.all(channel.data.featuredProjects.map((project) => getEntry('projects', project.id))),
+/** Curated references cannot bypass parent publication checks. */
+export async function getChannelContext(id: string) {
+  const channel = await getEntry("channels", id);
+  if (!channel || channel.data.status !== "published") return undefined;
+  const [articles, graph, projects] = await Promise.all([
+    getCollection("blog"), getCurriculum(), getProjects(),
   ]);
-
-  return {
-    channel,
-    articles: articles.filter((article) => article && !article.data.draft),
-    courses: courses.filter((course) => course && course.data.status === 'published'),
-    projects: projects.filter(Boolean),
+  const courses = channel.data.featuredCourses.flatMap(ref => graph.courses.filter(course => course.id === ref.id));
+  return { channel, courses, courseCards: courses.map(course => graph.courseContext(course.id)!),
+    articles: channel.data.featuredArticles.flatMap(ref => articles.filter(article => article.id === ref.id && !article.data.draft)),
+    projects: channel.data.featuredProjects.flatMap(ref => projects.filter(project => project.id === ref.id)),
   };
 }

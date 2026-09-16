@@ -5,9 +5,10 @@ interface Props {
   course: CollectionEntry<'courses'>;
   path: CollectionEntry<'paths'>;
   lessonCount: number;
+  estimatedMinutes: number;
 }
 
-const { course, path, lessonCount } = Astro.props;
+const { course, path, lessonCount, estimatedMinutes } = Astro.props;
 ---
 
 <article class="course-card">
@@ -20,7 +21,7 @@ const { course, path, lessonCount } = Astro.props;
     <p>{course.data.description}</p>
     <div class="course-card-meta" aria-label="Course details">
       <span>{course.data.difficulty}</span>
-      <span>{course.data.estimatedMinutes} min</span>
+      <span>{estimatedMinutes} min</span>
       <span>{lessonCount} {lessonCount === 1 ? 'lesson' : 'lessons'}</span>
     </div>
     <div class="course-card-outcome">
@@ -49,7 +50,7 @@ const { course, path, lessonCount } = Astro.props;
   }
 
   .course-card > a:hover {
-    border-color: rgba(56, 189, 248, 0.5);
+    border-color: rgba(var(--color-accent-rgb), 0.5);
     color: inherit;
     transform: translateY(-2px);
   }

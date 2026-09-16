@@ -2,16 +2,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CourseCard from '../../components/CourseCard.astro';
-import { getCourses, getLearningPaths, getLessonsForCourse } from '../../utils/learning';
+import { getCourseSummaries } from '../../utils/learning';
 import { SITE_URL } from '../../consts';
 
-const [courses, paths] = await Promise.all([getCourses(), getLearningPaths()]);
-const pathMap = new Map(paths.map((path) => [path.id, path]));
-const courseCards = await Promise.all(courses.map(async (course) => ({
-  course,
-  path: pathMap.get(course.data.path.id),
-  lessonCount: (await getLessonsForCourse(course.id)).length,
-})));
+const courseCards = await getCourseSummaries();
 ---
 
 <BaseLayout
@@ -31,8 +25,8 @@ const courseCards = await Promise.all(courses.map(async (course) => ({
     </header>
 
     <section class="courses-grid" aria-label="Published courses">
-      {courseCards.map(({ course, path, lessonCount }) => path && (
-        <CourseCard course={course} path={path} lessonCount={lessonCount} />
+      {courseCards.map(({ course, path, lessonCount, estimatedMinutes }) => path && (
+        <CourseCard course={course} path={path} lessonCount={lessonCount} estimatedMinutes={estimatedMinutes} />
       ))}
     </section>
 
@@ -79,7 +73,7 @@ const courseCards = await Promise.all(courses.map(async (course) => ({
     justify-content: space-between;
     gap: 2rem;
     padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
-    border: 1px solid rgba(56, 189, 248, 0.25);
+    border: 1px solid rgba(var(--color-accent-rgb), 0.25);
     border-radius: 1rem;
     background: var(--dwc-card);
   }

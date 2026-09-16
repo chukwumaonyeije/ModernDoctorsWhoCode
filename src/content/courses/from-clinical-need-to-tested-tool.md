@@ -12,7 +12,6 @@ outcomes:
 prerequisites:
   - "Basic familiarity with Git and GitHub."
   - "Ability to read a simple JSON object."
-estimatedMinutes: 51
 project: "tested-clinical-calculator"
 order: 1
 status: "published"

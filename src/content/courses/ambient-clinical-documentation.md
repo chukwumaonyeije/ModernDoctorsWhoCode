@@ -10,7 +10,6 @@ outcomes:
   - "Evaluate ambient platforms using durable, vendor-neutral criteria."
 prerequisites:
   - "Routine use of at least one general-purpose AI assistant."
-estimatedMinutes: 67
 order: 2
 status: "published"
 ---

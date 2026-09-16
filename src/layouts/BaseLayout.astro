@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import themeScript from '../scripts/theme.js?raw';
 import Header from '../components/Header.astro';
 import {
   SITE_TITLE,
@@ -203,7 +204,9 @@ const combinedSchemas = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#0d1b2a" />
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0d1a" media="(prefers-color-scheme: dark)" />
+    <script is:inline set:html={themeScript} />
 
     <!-- Primary SEO -->
     <title>{fullTitle}</title>

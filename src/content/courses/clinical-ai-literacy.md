@@ -11,7 +11,6 @@ outcomes:
   - "Design a minimum viable clinical harness with meaningful physician supervision."
 prerequisites:
   - "Completion of Clinical AI Workflows or the ability to map an AI task from source data to human checkpoint."
-estimatedMinutes: 65
 project: "minimum-viable-clinical-harness"
 order: 3
 status: "published"

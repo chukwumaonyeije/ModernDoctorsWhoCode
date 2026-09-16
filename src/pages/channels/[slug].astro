@@ -1,11 +1,12 @@
 ---
-import { getEntry, type CollectionEntry } from 'astro:content';
+import { getReadingMetadata } from '../../utils/blog';
+import { type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CourseCard from '../../components/CourseCard.astro';
 import PostCard from '../../components/PostCard.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import { getChannelContext, getLessonsForCourse, getPublishedChannels } from '../../utils/learning';
+import { getChannelContext, getPublishedChannels } from '../../utils/learning';
 import { SITE_URL } from '../../consts';
 
 export async function getStaticPaths() {
@@ -21,11 +22,7 @@ const { channel } = Astro.props;
 const context = await getChannelContext(channel.id);
 if (!context) throw new Error(`Published channel ${channel.id} could not be resolved.`);
 const { articles, courses, projects } = context;
-const courseCards = await Promise.all(courses.map(async (course) => ({
-  course,
-  path: await getEntry('paths', course.data.path.id),
-  lessonCount: (await getLessonsForCourse(course.id)).length,
-})));
+const courseCards = context.courseCards;
 const channelUrl = `${SITE_URL}/channels/${channel.id}/`;
 const channelSchema = {
   '@context': 'https://schema.org',
@@ -90,7 +87,7 @@ const channelSchema = {
               slug={article.id}
               tags={article.data.tags}
               category={article.data.category}
-              readingTime={article.data.readingTime}
+              readingTime={getReadingMetadata(article).readingTime}
               image={article.data.image}
               featured={article.data.featured}
             />
@@ -108,8 +105,8 @@ const channelSchema = {
           </div>
         </div>
         <div class="channel-course-grid">
-          {courseCards.map(({ course, path, lessonCount }) => path && (
-            <CourseCard course={course} path={path} lessonCount={lessonCount} />
+          {courseCards.map(({ course, path, lessonCount, estimatedMinutes }) => path && (
+            <CourseCard course={course} path={path} lessonCount={lessonCount} estimatedMinutes={estimatedMinutes} />
           ))}
         </div>
       </section>

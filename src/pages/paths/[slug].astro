@@ -1,8 +1,8 @@
 ---
-import { getEntry, render, type CollectionEntry } from 'astro:content';
+import { render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import { getCoursesForPath, getLearningPaths, getLessonsForCourse } from '../../utils/learning';
+import { getPathContext, getLearningPaths } from '../../utils/learning';
 import { SITE_URL } from '../../consts';
 
 export async function getStaticPaths() {
@@ -16,14 +16,9 @@ interface Props {
 
 const { path } = Astro.props;
 const { Content } = await render(path);
-const courses = await getCoursesForPath(path.id);
-const courseSections = await Promise.all(courses.map(async (course) => {
-  const lessons = await getLessonsForCourse(course.id);
-  const project = course.data.project ? await getEntry('projects', course.data.project.id) : undefined;
-  return { course, lessons, project };
-}));
-const totalLessons = courseSections.reduce((total, section) => total + section.lessons.length, 0);
-const totalMinutes = courses.reduce((total, course) => total + course.data.estimatedMinutes, 0);
+const context = await getPathContext(path.id);
+if (!context) throw new Error(`Path ${path.id} could not be resolved.`);
+const { courses, courseSections, lessonCount: totalLessons, estimatedMinutes: totalMinutes } = context;
 const pathSchema = {
   '@context': 'https://schema.org',
   '@type': 'Course',
@@ -83,7 +78,7 @@ const pathSchema = {
         <p>The publication date does not determine the sequence. The learning dependency does.</p>
       </div>
 
-      {courseSections.map(({ course, lessons, project }) => (
+      {courseSections.map(({ course, lessons, project, estimatedMinutes }) => (
         <article class="course-panel">
           <header class="course-header">
             <div>
@@ -93,7 +88,7 @@ const pathSchema = {
             </div>
             <div class="course-badges" aria-label="Course details">
               <span>{course.data.difficulty}</span>
-              <span>{course.data.estimatedMinutes} min</span>
+              <span>{estimatedMinutes} min</span>
               <span>{lessons.length} lessons</span>
             </div>
           </header>
@@ -367,7 +362,7 @@ const pathSchema = {
   }
 
   .lesson-list a:hover {
-    border-color: rgba(56, 189, 248, 0.5);
+    border-color: rgba(var(--color-accent-rgb), 0.5);
     color: inherit;
   }
 
@@ -407,8 +402,8 @@ const pathSchema = {
     justify-content: space-between;
     gap: 2rem;
     padding: 1.25rem clamp(1.25rem, 1rem + 1vw, 1.75rem);
-    border-top: 1px solid rgba(56, 189, 248, 0.2);
-    background: rgba(56, 189, 248, 0.05);
+    border-top: 1px solid rgba(var(--color-accent-rgb), 0.2);
+    background: rgba(var(--color-accent-rgb), 0.05);
   }
 
   .course-project h4 {
@@ -432,10 +427,10 @@ const pathSchema = {
     justify-content: space-between;
     gap: 2rem;
     padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
-    border: 1px solid rgba(56, 189, 248, 0.25);
+    border: 1px solid rgba(var(--color-accent-rgb), 0.25);
     border-radius: 1rem;
     background:
-      radial-gradient(circle at right, rgba(56, 189, 248, 0.12), transparent 38%),
+      radial-gradient(circle at right, rgba(var(--color-accent-rgb), 0.12), transparent 38%),
       var(--dwc-card);
   }
 

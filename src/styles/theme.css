@@ -1,0 +1,86 @@
+/* Semantic palettes. Without JavaScript, the operating system determines the theme. */
+:root {
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-text: #142033;
+  --color-muted: #475569;
+  --color-border: #64748b;
+  --color-accent: #03638c;
+  --color-link-hover: #174ea6;
+  --color-purple: #7540b4;
+  --color-success: #087765;
+  --color-warning: #925200;
+  --color-accent-rgb: 3, 99, 140;
+  --color-background-rgb: 248, 250, 252;
+  --color-surface-rgb: 255, 255, 255;
+  --color-purple-rgb: 117, 64, 180;
+  color-scheme: light;
+  --color-code-background: #0d1117;
+  --color-code-text: #f8fafc;
+  --radius-control: 0.625rem;
+  --radius-card: 1rem;
+  --space-control: 0.75rem;
+}
+:root[data-theme="dark"] {
+  --color-background: #0a0d1a;
+  --color-surface: #0f1219;
+  --color-text: #f8fafc;
+  --color-muted: #94a3b8;
+  --color-border: #64748b;
+  --color-accent: #38bdf8;
+  --color-link-hover: #80c7ff;
+  --color-purple: #c084fc;
+  --color-success: #2dd4bf;
+  --color-warning: #fbbf24;
+  --color-accent-rgb: 56, 189, 248;
+  --color-background-rgb: 10, 13, 26;
+  --color-surface-rgb: 15, 18, 25;
+  --color-purple-rgb: 192, 132, 252;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+  --color-background: #0a0d1a;
+  --color-surface: #0f1219;
+  --color-text: #f8fafc;
+  --color-muted: #94a3b8;
+  --color-border: #64748b;
+  --color-accent: #38bdf8;
+  --color-link-hover: #80c7ff;
+  --color-purple: #c084fc;
+  --color-success: #2dd4bf;
+  --color-warning: #fbbf24;
+  --color-accent-rgb: 56, 189, 248;
+  --color-background-rgb: 10, 13, 26;
+  --color-surface-rgb: 15, 18, 25;
+  --color-purple-rgb: 192, 132, 252;
+    color-scheme: dark;
+  }
+}
+
+/* Scoped adapters preserve authored special-page files and their public assets. */
+html .dt-page {
+  --bg: var(--color-background);
+  --surface: var(--color-surface);
+  --surface2: var(--color-surface);
+  --border: var(--color-border);
+  --accent: var(--color-accent);
+  --accent2: var(--color-success);
+  --accent3: var(--color-warning);
+  --accent4: var(--color-warning);
+  --text: var(--color-text);
+  --text-muted: var(--color-muted);
+  --text-dim: var(--color-muted);
+  --inline-code-bg: var(--color-surface);
+}
+html .internal-post-embed-wrap { background: var(--color-surface); }
+html .internal-post-embed-toolbar { background: var(--color-surface); }
+html .dt-page .section p, html .dt-page .compare-table td { color: var(--color-text); }
+html .dt-page pre, html .dt-page pre code { color: var(--color-code-text); background: var(--color-code-background); }
+/* Grid items must shrink around long code examples instead of widening the page. */
+html .dt-page .content, html .dt-page .code-block, html .dt-page .step-body { min-width: 0; }
+html .dt-page .content { width: 100%; }
+/* Keep status text on the tested semantic surface in both palettes. */
+html .dt-page .badge.good,
+html .dt-page .badge.bad,
+html .dt-page .badge.ok { background: var(--color-surface); }

@@ -1,0 +1,247 @@
+[
+  {
+    "issue": "missing-fragment | /blog/internal-mfm-scoring-optimization-engine/ | /blog/internal-mfm-scoring-optimization-engine/#embedded-slideshow",
+    "owner": "Protected article maintenance",
+    "reason": "Heading is inside the encrypted body and is inserted after unlock; a static HTML scan cannot verify it. Preserve this exact exception pending runtime navigation review."
+  },
+  {
+    "issue": "missing-fragment | /blog/internal-mfm-scoring-optimization-engine/ | /blog/internal-mfm-scoring-optimization-engine/#what-the-engine-standardizes",
+    "owner": "Protected article maintenance",
+    "reason": "Heading is inside the encrypted body and is inserted after unlock; a static HTML scan cannot verify it. Preserve this exact exception pending runtime navigation review."
+  },
+  {
+    "issue": "missing-fragment | /blog/internal-mfm-scoring-optimization-engine/ | /blog/internal-mfm-scoring-optimization-engine/#why-local-and-deterministic",
+    "owner": "Protected article maintenance",
+    "reason": "Heading is inside the encrypted body and is inserted after unlock; a static HTML scan cannot verify it. Preserve this exact exception pending runtime navigation review."
+  },
+  {
+    "issue": "missing-fragment | /blog/internal-mfm-scoring-optimization-engine/ | /blog/internal-mfm-scoring-optimization-engine/#why-this-exists",
+    "owner": "Protected article maintenance",
+    "reason": "Heading is inside the encrypted body and is inserted after unlock; a static HTML scan cannot verify it. Preserve this exact exception pending runtime navigation review."
+  },
+  {
+    "issue": "missing-fragment | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/ | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/#DVS",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/ | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/#IABP",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/ | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/#QSBP",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/ | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/#RWCH",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/ | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/#SCE",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/ | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/#TBMI",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/ | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/#conclusion",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/ | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/#containerconcept",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/ | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/#futuredirect",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/ | /blog/revolutionizing-medical-imaging-with-container-technology-a-busy-physicians-guide/#introduction",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code/ | /blog/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code/#ambient",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code/ | /blog/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code/#codecraft2",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code/ | /blog/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code/#conclusion",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code/ | /blog/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code/#evidence",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code/ | /blog/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code/#introduction",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code/ | /blog/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code/#proposed",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code/ | /blog/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code/#structured",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code/ | /blog/the-future-of-clinical-documentation-a-practical-ai-tech-stack-for-physicians-who-code/#why-this-matters",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-fragment | /blog/transform-your-medical-practice-in-2025-the-ai-revolution-for-coding-doctors/ | /blog/transform-your-medical-practice-in-2025-the-ai-revolution-for-coding-doctors/#21f84a91-557a-4a04-ba21-ee9777cb4bb7",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing historical article fragment has no corresponding rendered anchor. Repair anchor compatibility without rewriting the article narrative."
+  },
+  {
+    "issue": "missing-link | /blog/building-the-physicians-knowledge-flywheel/ | /blog/building-the-physicians-knowledge-flywheel/the-physicians-second-brain-series-overview",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/building-the-physicians-knowledge-flywheel/ | /blog/building-the-physicians-knowledge-flywheel/the-thinking-partner-commands",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/from-fingersticks-to-the-future-how-cgm-is-transforming-gestational-diabetes-care/ | /blog/from-fingersticks-to-the-future-how-cgm-is-transforming-gestational-diabetes-care/link-to-upload",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/internal-mfm-scoring-optimization-engine/ | /tags/clinical-operations",
+    "owner": "Protected article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/internal-mfm-scoring-optimization-engine/ | /tags/documentation-quality",
+    "owner": "Protected article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/internal-mfm-scoring-optimization-engine/ | /tags/internal-tools",
+    "owner": "Protected article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/internal-mfm-scoring-optimization-engine/ | /tags/quality-assurance",
+    "owner": "Protected article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/internal-mfm-scoring-optimization-engine/ | /tags/standardization",
+    "owner": "Protected article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/pgis-when-medicine-endurance-and-code-collide-looking-for-collaborators/ | /blog/pgis-when-medicine-endurance-and-code-collide-looking-for-collaborators/chukwuma@doctorswhocode.blog",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/the-human-bottleneck/ | /posts/why-i-started-building-my-own-clinical-ai-tools",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/the-pdf-wall-clinical-rag-hallucination/ | /blog/rag-is-the-bridge-between-medical-knowledge-and-medical-practice",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/the-physicians-second-brain-series-overview/ | /blog/the-physicians-second-brain-series-overview/building-the-physicians-knowledge-flywheel",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/the-physicians-second-brain-series-overview/ | /blog/the-physicians-second-brain-series-overview/the-physicians-stack",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/the-physicians-second-brain-series-overview/ | /blog/the-physicians-second-brain-series-overview/the-pkm-system-that-was-never-built-for-you",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/the-physicians-second-brain-series-overview/ | /blog/the-physicians-second-brain-series-overview/the-thinking-partner-commands",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/the-physicians-second-brain-series-overview/ | /blog/the-physicians-second-brain-series-overview/what-karpathy-actually-built",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/the-physicians-stack/ | /blog/the-physicians-stack/the-thinking-partner-commands",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/the-physicians-stack/ | /blog/the-physicians-stack/what-karpathy-actually-built",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/the-pkm-system-that-was-never-built-for-you/ | /blog/the-pkm-system-that-was-never-built-for-you/the-physicians-second-brain-series-overview",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/the-pkm-system-that-was-never-built-for-you/ | /blog/the-pkm-system-that-was-never-built-for-you/what-karpathy-actually-built",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/the-rare-condition-you-have-seen-ten-times/ | /blog/the-rare-condition-you-have-seen-ten-times/logs-before-intelligence",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/the-thinking-partner-commands/ | /blog/the-thinking-partner-commands/building-the-physicians-knowledge-flywheel",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/the-thinking-partner-commands/ | /blog/the-thinking-partner-commands/the-physicians-stack",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/what-karpathy-actually-built/ | /blog/what-karpathy-actually-built/the-physicians-stack",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/what-karpathy-actually-built/ | /blog/what-karpathy-actually-built/the-pkm-system-that-was-never-built-for-you",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  },
+  {
+    "issue": "missing-link | /blog/you-are-still-prompting-you-should-be-building-agents/ | /blog/the-cognitive-surrender-how-ai-threatens-the-physician-mind",
+    "owner": "Article maintenance",
+    "reason": "Pre-existing missing local destination recorded in protected-routes.json; repair through a separately reviewed link or compatibility change."
+  }
+]

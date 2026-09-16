@@ -2,25 +2,15 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import LearningPathCard from '../components/LearningPathCard.astro';
-import { getCoursesForPath, getLearningPaths, getLessonsForCourse } from '../utils/learning';
+import { getPathSummaries } from '../utils/learning';
 import { SITE_URL } from '../consts';
 
-const paths = await getLearningPaths();
 const prompts = {
   'learn-to-code': 'I have not shipped code yet.',
   'use-ai-in-medicine': 'I use AI, but I still coordinate every step.',
   'build-medical-software': 'I am ready to build a clinical tool.',
 };
-const pathCards = await Promise.all(paths.map(async (path) => {
-  const courses = await getCoursesForPath(path.id);
-  const lessons = (await Promise.all(courses.map((course) => getLessonsForCourse(course.id)))).flat();
-  return {
-    path,
-    courseCount: courses.length,
-    lessonCount: lessons.length,
-    estimatedMinutes: courses.reduce((total, course) => total + course.data.estimatedMinutes, 0),
-  };
-}));
+const pathCards = await getPathSummaries();
 const startSchema = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
@@ -219,7 +209,7 @@ const startSchema = {
     gap: 2rem;
     padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
     border-left: 3px solid var(--dwc-cyan);
-    background: rgba(56, 189, 248, 0.06);
+    background: rgba(var(--color-accent-rgb), 0.06);
   }
 
   .start-fallback h2 {

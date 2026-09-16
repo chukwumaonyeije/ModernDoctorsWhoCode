@@ -1,0 +1,300 @@
+[
+  {
+    "path": "/",
+    "width": 375,
+    "fallback": {
+      "heading": {
+        "x": 16,
+        "y": 136.703125,
+        "width": 343,
+        "height": 115.59375
+      },
+      "bodyFont": "\"DM Sans-0d57a3a25ceb5dcf\", \"DM Sans-0d57a3a25ceb5dcf fallback: Arial\", sans-serif",
+      "headingFont": "Syne-6c03fd513c1cc132, \"Syne-6c03fd513c1cc132 fallback: Arial Bold\", sans-serif",
+      "overflow": false,
+      "shifts": 0
+    },
+    "loaded": {
+      "heading": {
+        "x": 16,
+        "y": 136.703125,
+        "width": 343,
+        "height": 192.65625
+      },
+      "bodyFont": "\"DM Sans-0d57a3a25ceb5dcf\", \"DM Sans-0d57a3a25ceb5dcf fallback: Arial\", sans-serif",
+      "headingFont": "Syne-6c03fd513c1cc132, \"Syne-6c03fd513c1cc132 fallback: Arial Bold\", sans-serif",
+      "overflow": false,
+      "shifts": 0.05656425555555556
+    },
+    "fontSwapShift": 0.05656425555555556,
+    "fonts": [
+      "/_astro/fonts/f12ed20c41529451.woff2",
+      "/_astro/fonts/ae83c293b333ae80.woff2",
+      "/_astro/fonts/319ef6449ccb2724.woff2"
+    ],
+    "resources": [
+      {
+        "url": "/_astro/fonts/f12ed20c41529451.woff2",
+        "bytes": 13684
+      },
+      {
+        "url": "/_astro/fonts/ae83c293b333ae80.woff2",
+        "bytes": 14200
+      },
+      {
+        "url": "/_astro/fonts/319ef6449ccb2724.woff2",
+        "bytes": 14072
+      }
+    ]
+  },
+  {
+    "path": "/courses/clinical-ai-literacy/",
+    "width": 375,
+    "fallback": {
+      "heading": {
+        "x": 16,
+        "y": 241.671875,
+        "width": 269.546875,
+        "height": 219.53125
+      },
+      "bodyFont": "\"DM Sans-0d57a3a25ceb5dcf\", \"DM Sans-0d57a3a25ceb5dcf fallback: Arial\", sans-serif",
+      "headingFont": "Syne-6c03fd513c1cc132, \"Syne-6c03fd513c1cc132 fallback: Arial Bold\", sans-serif",
+      "overflow": false,
+      "shifts": 0
+    },
+    "loaded": {
+      "heading": {
+        "x": 16,
+        "y": 241.671875,
+        "width": 343,
+        "height": 263.4375
+      },
+      "bodyFont": "\"DM Sans-0d57a3a25ceb5dcf\", \"DM Sans-0d57a3a25ceb5dcf fallback: Arial\", sans-serif",
+      "headingFont": "Syne-6c03fd513c1cc132, \"Syne-6c03fd513c1cc132 fallback: Arial Bold\", sans-serif",
+      "overflow": false,
+      "shifts": 0.16692093235596708
+    },
+    "fontSwapShift": 0.16692093235596708,
+    "fonts": [
+      "/_astro/fonts/f12ed20c41529451.woff2",
+      "/_astro/fonts/ae83c293b333ae80.woff2",
+      "/_astro/fonts/319ef6449ccb2724.woff2"
+    ],
+    "resources": [
+      {
+        "url": "/_astro/fonts/f12ed20c41529451.woff2",
+        "bytes": 13684
+      },
+      {
+        "url": "/_astro/fonts/ae83c293b333ae80.woff2",
+        "bytes": 14200
+      },
+      {
+        "url": "/_astro/fonts/319ef6449ccb2724.woff2",
+        "bytes": 14072
+      }
+    ]
+  },
+  {
+    "path": "/blog/physician-developer-stack-mdx/",
+    "width": 375,
+    "fallback": {
+      "heading": {
+        "x": 16,
+        "y": 136.140625,
+        "width": 321.015625,
+        "height": 77.0625
+      },
+      "bodyFont": "\"DM Sans-0d57a3a25ceb5dcf\", \"DM Sans-0d57a3a25ceb5dcf fallback: Arial\", sans-serif",
+      "headingFont": "Syne-6c03fd513c1cc132, \"Syne-6c03fd513c1cc132 fallback: Arial Bold\", sans-serif",
+      "overflow": false,
+      "shifts": 0
+    },
+    "loaded": {
+      "heading": {
+        "x": 16,
+        "y": 136.140625,
+        "width": 343,
+        "height": 154.125
+      },
+      "bodyFont": "\"DM Sans-0d57a3a25ceb5dcf\", \"DM Sans-0d57a3a25ceb5dcf fallback: Arial\", sans-serif",
+      "headingFont": "Syne-6c03fd513c1cc132, \"Syne-6c03fd513c1cc132 fallback: Arial Bold\", sans-serif",
+      "overflow": false,
+      "shifts": 0.13274361111111113
+    },
+    "fontSwapShift": 0.13274361111111113,
+    "fonts": [
+      "/_astro/fonts/f12ed20c41529451.woff2",
+      "/_astro/fonts/ae83c293b333ae80.woff2",
+      "/_astro/fonts/8e81e003b33669e6.woff2",
+      "/_astro/fonts/319ef6449ccb2724.woff2"
+    ],
+    "resources": [
+      {
+        "url": "/_astro/fonts/f12ed20c41529451.woff2",
+        "bytes": 13684
+      },
+      {
+        "url": "/_astro/fonts/ae83c293b333ae80.woff2",
+        "bytes": 14200
+      },
+      {
+        "url": "/_astro/fonts/8e81e003b33669e6.woff2",
+        "bytes": 14144
+      },
+      {
+        "url": "/_astro/fonts/319ef6449ccb2724.woff2",
+        "bytes": 14072
+      }
+    ]
+  },
+  {
+    "path": "/",
+    "width": 1440,
+    "fallback": {
+      "heading": {
+        "x": 144,
+        "y": 193.84375,
+        "width": 471.578125,
+        "height": 215.015625
+      },
+      "bodyFont": "\"DM Sans-0d57a3a25ceb5dcf\", \"DM Sans-0d57a3a25ceb5dcf fallback: Arial\", sans-serif",
+      "headingFont": "Syne-6c03fd513c1cc132, \"Syne-6c03fd513c1cc132 fallback: Arial Bold\", sans-serif",
+      "overflow": false,
+      "shifts": 0.000894655128761574
+    },
+    "loaded": {
+      "heading": {
+        "x": 144,
+        "y": 193.84375,
+        "width": 1023.359375,
+        "height": 215.015625
+      },
+      "bodyFont": "\"DM Sans-0d57a3a25ceb5dcf\", \"DM Sans-0d57a3a25ceb5dcf fallback: Arial\", sans-serif",
+      "headingFont": "Syne-6c03fd513c1cc132, \"Syne-6c03fd513c1cc132 fallback: Arial Bold\", sans-serif",
+      "overflow": false,
+      "shifts": 0.12169285672662682
+    },
+    "fontSwapShift": 0.12079820159786524,
+    "fonts": [
+      "/_astro/fonts/f12ed20c41529451.woff2",
+      "/_astro/fonts/319ef6449ccb2724.woff2",
+      "/_astro/fonts/ae83c293b333ae80.woff2"
+    ],
+    "resources": [
+      {
+        "url": "/_astro/fonts/f12ed20c41529451.woff2",
+        "bytes": 13684
+      },
+      {
+        "url": "/_astro/fonts/319ef6449ccb2724.woff2",
+        "bytes": 14072
+      },
+      {
+        "url": "/_astro/fonts/ae83c293b333ae80.woff2",
+        "bytes": 14200
+      }
+    ]
+  },
+  {
+    "path": "/courses/clinical-ai-literacy/",
+    "width": 1440,
+    "fallback": {
+      "heading": {
+        "x": 144,
+        "y": 249.703125,
+        "width": 440.140625,
+        "height": 358.359375
+      },
+      "bodyFont": "\"DM Sans-0d57a3a25ceb5dcf\", \"DM Sans-0d57a3a25ceb5dcf fallback: Arial\", sans-serif",
+      "headingFont": "Syne-6c03fd513c1cc132, \"Syne-6c03fd513c1cc132 fallback: Arial Bold\", sans-serif",
+      "overflow": false,
+      "shifts": 0.000894655128761574
+    },
+    "loaded": {
+      "heading": {
+        "x": 144,
+        "y": 249.703125,
+        "width": 647.03125,
+        "height": 430.03125
+      },
+      "bodyFont": "\"DM Sans-0d57a3a25ceb5dcf\", \"DM Sans-0d57a3a25ceb5dcf fallback: Arial\", sans-serif",
+      "headingFont": "Syne-6c03fd513c1cc132, \"Syne-6c03fd513c1cc132 fallback: Arial Bold\", sans-serif",
+      "overflow": false,
+      "shifts": 0.04665782937885802
+    },
+    "fontSwapShift": 0.04576317425009645,
+    "fonts": [
+      "/_astro/fonts/f12ed20c41529451.woff2",
+      "/_astro/fonts/ae83c293b333ae80.woff2",
+      "/_astro/fonts/319ef6449ccb2724.woff2"
+    ],
+    "resources": [
+      {
+        "url": "/_astro/fonts/f12ed20c41529451.woff2",
+        "bytes": 13684
+      },
+      {
+        "url": "/_astro/fonts/ae83c293b333ae80.woff2",
+        "bytes": 14200
+      },
+      {
+        "url": "/_astro/fonts/319ef6449ccb2724.woff2",
+        "bytes": 14072
+      }
+    ]
+  },
+  {
+    "path": "/blog/physician-developer-stack-mdx/",
+    "width": 1440,
+    "fallback": {
+      "heading": {
+        "x": 164,
+        "y": 158.25,
+        "width": 485.328125,
+        "height": 116.46875
+      },
+      "bodyFont": "\"DM Sans-0d57a3a25ceb5dcf\", \"DM Sans-0d57a3a25ceb5dcf fallback: Arial\", sans-serif",
+      "headingFont": "Syne-6c03fd513c1cc132, \"Syne-6c03fd513c1cc132 fallback: Arial Bold\", sans-serif",
+      "overflow": false,
+      "shifts": 0.000894655128761574
+    },
+    "loaded": {
+      "heading": {
+        "x": 164,
+        "y": 158.25,
+        "width": 760,
+        "height": 174.703125
+      },
+      "bodyFont": "\"DM Sans-0d57a3a25ceb5dcf\", \"DM Sans-0d57a3a25ceb5dcf fallback: Arial\", sans-serif",
+      "headingFont": "Syne-6c03fd513c1cc132, \"Syne-6c03fd513c1cc132 fallback: Arial Bold\", sans-serif",
+      "overflow": false,
+      "shifts": 0.08089674198689611
+    },
+    "fontSwapShift": 0.08000208685813454,
+    "fonts": [
+      "/_astro/fonts/f12ed20c41529451.woff2",
+      "/_astro/fonts/ae83c293b333ae80.woff2",
+      "/_astro/fonts/8e81e003b33669e6.woff2",
+      "/_astro/fonts/319ef6449ccb2724.woff2"
+    ],
+    "resources": [
+      {
+        "url": "/_astro/fonts/f12ed20c41529451.woff2",
+        "bytes": 13684
+      },
+      {
+        "url": "/_astro/fonts/ae83c293b333ae80.woff2",
+        "bytes": 14200
+      },
+      {
+        "url": "/_astro/fonts/8e81e003b33669e6.woff2",
+        "bytes": 14144
+      },
+      {
+        "url": "/_astro/fonts/319ef6449ccb2724.woff2",
+        "bytes": 14072
+      }
+    ]
+  }
+]

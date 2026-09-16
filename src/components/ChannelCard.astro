@@ -37,7 +37,7 @@ const { channel } = Astro.props;
   }
 
   .channel-card > a:hover {
-    border-color: rgba(56, 189, 248, 0.5);
+    border-color: rgba(var(--color-accent-rgb), 0.5);
     color: inherit;
   }
 
@@ -83,7 +83,6 @@ const { channel } = Astro.props;
 
   .channel-link {
     align-self: end;
-    white-space: nowrap;
   }
 
   @media (max-width: 620px) {
