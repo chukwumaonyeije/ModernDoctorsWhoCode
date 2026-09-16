@@ -2,13 +2,15 @@
 import ThemePicker from './ThemePicker.astro';
 const { pathname } = Astro.url;
 
+const currentPath = `${pathname.replace(/\/+$/, '')}/`;
+const learningLinks = [
+  { label: 'Start Here', href: '/start/', active: currentPath.startsWith('/start/') },
+  { label: 'Learning Paths', href: '/paths/', active: currentPath.startsWith('/paths/') },
+  { label: 'Courses', href: '/courses/', active: currentPath.startsWith('/courses/') },
+];
 const links = [
-  { label: 'Home', href: '/', active: pathname === '/' },
-  { label: 'Start Here', href: '/start/', active: pathname.startsWith('/start') },
-  { label: 'Learning Paths', href: '/paths/', active: pathname.startsWith('/paths') },
-  { label: 'Courses', href: '/courses/', active: pathname.startsWith('/courses') },
-  { label: 'Projects', href: '/projects/', active: pathname.startsWith('/projects') },
-  { label: 'Articles', href: '/blog/', active: pathname.startsWith('/blog') || pathname.startsWith('/tags') },
+  { label: 'Build', href: '/projects/', active: currentPath.startsWith('/projects/') },
+  { label: 'Journal', href: '/blog/', active: currentPath.startsWith('/blog/') || currentPath.startsWith('/tags/') },
   { label: 'About', href: '/about/', active: pathname === '/about/' || pathname === '/about' },
 ];
 ---
@@ -33,11 +35,22 @@ const links = [
 
     <div class="site-nav-panel" id="primary-navigation-links" data-nav-panel>
       <div class="site-nav-links">
+        <details class="site-nav-learn" data-nav-learn>
+          <summary class:list={['site-nav-link', { 'is-active': learningLinks.some(link => link.active) }]}>
+            Learn <span class="site-nav-chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="site-nav-learning-links">
+            {learningLinks.map(link => (
+              <a href={link.href} class:list={['site-nav-link', { 'is-active': link.active }]}
+                aria-current={currentPath === link.href ? 'page' : undefined}>{link.label}</a>
+            ))}
+          </div>
+        </details>
         {links.map((link) => (
           <a
             href={link.href}
             class:list={['site-nav-link', { 'is-active': link.active }]}
-            aria-current={link.active ? 'page' : undefined}
+            aria-current={currentPath === link.href ? 'page' : undefined}
           >
             {link.label}
           </a>
@@ -57,6 +70,8 @@ const links = [
   const header = document.querySelector('[data-site-header]');
   const toggle = header?.querySelector('[data-nav-toggle]');
   const panel = header?.querySelector('[data-nav-panel]');
+  const learn = header?.querySelector('[data-nav-learn]');
+  const learnSummary = learn?.querySelector('summary');
 
   if (header && toggle && panel) {
     header.dataset.enhanced = 'true';
@@ -64,6 +79,7 @@ const links = [
     const setOpen = (open) => {
       header.dataset.open = open ? 'true' : 'false';
       toggle.setAttribute('aria-expanded', String(open));
+      if (!open && learn) learn.open = false;
     };
 
     toggle.addEventListener('click', () => {
@@ -79,7 +95,20 @@ const links = [
       if (event.relatedTarget && !header.contains(event.relatedTarget)) setOpen(false);
     });
 
+    learn?.addEventListener('focusout', (event) => {
+      if (event.relatedTarget && !learn.contains(event.relatedTarget)) learn.open = false;
+    });
+    document.addEventListener('click', (event) => {
+      if (learn && !learn.contains(event.target)) learn.open = false;
+      if (!header.contains(event.target)) setOpen(false);
+    });
+
     document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && learn?.open) {
+        learn.open = false;
+        learnSummary.focus();
+        return;
+      }
       if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
         setOpen(false);
         toggle.focus();
@@ -87,7 +116,14 @@ const links = [
     });
 
     window.matchMedia('(min-width: 1321px)').addEventListener('change', (event) => {
-      if (event.matches) setOpen(false);
+      const focusInPanel = panel.contains(document.activeElement);
+      if (event.matches) {
+        if (learn?.contains(document.activeElement)) learnSummary.focus();
+        setOpen(false);
+        if (document.activeElement === toggle) learnSummary?.focus();
+      } else if (focusInPanel) {
+        setOpen(true);
+      }
     });
   }
 </script>
@@ -106,6 +142,7 @@ const links = [
   .site-nav {
     min-height: 4.25rem;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 1.5rem;
   }
@@ -149,6 +186,7 @@ const links = [
 
   .site-nav-panel {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 1.25rem;
@@ -159,6 +197,7 @@ const links = [
   .site-nav-links,
   .site-nav-actions {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
   }
 
@@ -169,6 +208,24 @@ const links = [
   .site-nav-actions {
     gap: 0.85rem;
   }
+
+  .site-nav-learn { position: relative; }
+  .site-nav-learn > summary { cursor: pointer; list-style: none; gap: 0.5rem; }
+  .site-nav-learn > summary::-webkit-details-marker { display: none; }
+  .site-nav-chevron { transition: transform 0.2s ease; }
+  .site-nav-learn[open] .site-nav-chevron { transform: rotate(180deg); }
+  .site-nav-learning-links {
+    position: absolute;
+    top: 100%;
+    left: -0.75rem;
+    min-width: 12rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--dwc-border);
+    border-radius: 0.55rem;
+    background: var(--dwc-card);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
+  }
+  .site-nav-learning-links .site-nav-link { display: flex; }
 
   .site-nav-link,
   .site-nav-search {
@@ -303,6 +360,17 @@ const links = [
 
     .site-nav-links {
       border-top: 1px solid var(--dwc-border);
+    }
+
+    .site-nav-learn > summary { display: flex; justify-content: space-between; }
+    .site-nav-learning-links {
+      position: static;
+      min-width: 0;
+      padding: 0 0 0 1rem;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
     }
 
     .site-nav-link,

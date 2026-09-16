@@ -8,7 +8,7 @@ Curriculum relationships and summaries are centralized in the pure typed `src/ut
 
 The upgrade explicitly retains `compressHTML: true` and the `unified()` processor from `@astrojs/markdown-remark` to preserve historical Markdown/MDX behavior. Moving to Astro 7's default Markdown processor is a separate optional change requiring the same preservation checks.
 
-`BaseLayout.astro` owns the HTML shell, metadata, Header and active footer. `PostLayout.astro` owns shared article presentation, optional curriculum context, TOC, audio and sharing. `BlogPost.astro` is a legacy layout, not the active article renderer.
+`BaseLayout.astro` owns the HTML shell, metadata and wiring for Header and SiteFooter. `SiteFooter.astro` owns the active footer markup and styles; the older `Footer.astro` remains part of the legacy layout. `PostLayout.astro` owns shared article presentation, optional curriculum context, TOC, audio and sharing. `BlogPost.astro` is a legacy layout, not the active article renderer.
 
 `src/pages/blog/[...slug].astro` renders collection articles at their existing URLs. Learning pages link to those articles rather than publish copies. `/paths/`, `/courses/`, `/projects/`, `/channels/`, `/tags/`, `/start/` and identity/contact pages are static. The Docling and protected internal MFM articles have dedicated Astro routes. Public slide HTML is copied without Astro rendering.
 

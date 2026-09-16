@@ -2,6 +2,7 @@
 import { getReadingMetadata } from '../../utils/blog';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import PostCard from '../../components/PostCard.astro';
 import { sortBlogPosts } from '../../utils/blog';
 import { getLearningPaths } from '../../utils/learning';
@@ -43,6 +44,7 @@ const blogSchema = {
   articleSchema={blogSchema}
 >
   <div class="page-shell article-index">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Journal' }]} />
     <header class="article-index-header">
       <div>
         <p class="label">Articles</p>

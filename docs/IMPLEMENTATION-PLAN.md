@@ -108,6 +108,8 @@ Acceptance: font/image layout stability, numeric contrast, visible focus includi
 
 ## Phase 2: navigation and shell
 
+September 16 local progress: Header regrouping is implemented and visually accepted by the owner. The active footer is extracted into SiteFooter with matching Build/Journal labels and preserved destinations. See [Browser verification](BROWSER-VERIFICATION.md) for the navigation and footer checks. The older proposal below is retained as planning history. New-disclosure Narrator/zoom acceptance remains open; no shell follow-up has been committed or deployed.
+
 PRD mapping: 8, 23, 26-29. Depends on Phase 1D. Single shell owner.
 
 **4.1 Required: group navigation into Learn, Build, Journal and About, with Search/Subscribe/Theme utilities.** Reuse Header's current progressive enhancement and no-JS links. Existing route destinations remain unchanged. Avoid placeholder Tools/Resources links: **recommended** reuse valid project/download destinations; a new resource index is **optional**.
@@ -120,11 +122,15 @@ Exit gate: global token, theme, navigation, footer and component interfaces are 
 
 ## Phase 3: learning experience
 
+September 16 local progress: course entry/next-step cleanup is implemented. Course summaries use authored course outcomes, first-lesson actions are prominent, path project titles link to project pages, and projectless terminal courses return to their parent path. Partial-course copy and derived counts remain intact. See Browser Verification for checks. Persistent lesson context and voluntary progress remain separate upcoming changes.
+
 PRD mapping: 9-12, 20, 27-29. Depends on graph, theme and shell contracts.
 
 **5.1 Required: extend path/course views using existing cards and queries.** Present course purpose, prerequisites, difficulty, counts, duration, outcome and project destination. Make existing “Build Afterward” destinations actual project links. Preserve partial courses such as The Middle Path honestly; future planned parts are not completed lessons.
 
 **5.2 Required: persistent lesson context.** Extend LessonContext/LessonNavigator with desktop course context and a native mobile curriculum disclosure. Keep previous/next links as real anchors to current article URLs. Coordinate course sidebar and TOC widths; maintain 65-75ch reading measure. Final actions must handle courses without projects.
+
+September 16 local implementation: CourseLessonList renders the shared ordered course data in the existing desktop sidebar and a native mobile disclosure. It marks the current lesson without implying completion. The bottom previous/next controls remain. Sidebar height is bounded with scrolling, preserving the article column. Automated checks cover no-JS navigation, both themes, enlarged text and keyboard reachability. Manual Narrator/zoom review of the new disclosure remains a release follow-up. Progress storage is not implemented.
 
 **5.3 Required: optional-to-use local progress.** Implement a small versioned `dwc-progress` store containing stable completed lesson IDs, current lesson and lastVisited. Validate reads, tolerate malformed JSON/storage errors, ignore stale IDs, allow undo/reset and separate visiting from completing. No account, server persistence or clinical data. Add Mark Complete and Continue plus course/path indicators.
 

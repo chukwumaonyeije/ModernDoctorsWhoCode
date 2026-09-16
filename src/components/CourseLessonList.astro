@@ -1,0 +1,49 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  course: CollectionEntry<'courses'>;
+  lessons: CollectionEntry<'lessons'>[];
+  currentLesson: CollectionEntry<'lessons'>;
+  mobile?: boolean;
+}
+
+const { course, lessons, currentLesson, mobile = false } = Astro.props;
+const Container = mobile ? 'details' : 'section';
+---
+
+<Container class:list={['course-lesson-list', { 'course-lesson-list--mobile': mobile }]}>
+  {mobile && <summary>Course lessons <span>{lessons.length} {lessons.length === 1 ? 'lesson' : 'lessons'}</span></summary>}
+  <div class="course-lesson-content">
+    <p class="label">In this course</p>
+    <a class="course-title" href={`/courses/${course.id}/`}>{course.data.title}</a>
+    <nav aria-label="Course syllabus">
+      <ol>
+        {lessons.map((lesson, index) => (
+          <li>
+            <a href={`/blog/${lesson.data.article.id}/`} aria-current={lesson.id === currentLesson.id ? 'page' : undefined}>
+              <span class="lesson-number" aria-hidden="true">{index + 1}</span>
+              <span>{lesson.data.title}{lesson.id === currentLesson.id && <small>Current lesson</small>}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  </div>
+</Container>
+
+<style>
+  .course-lesson-list { margin-bottom: 1rem; border: 1px solid var(--dwc-border); border-radius: 0.75rem; background: var(--dwc-card); }
+  .course-lesson-content { padding: 1rem; }
+  .course-title { display: block; margin: 0.5rem 0 1rem; font-weight: 700; }
+  ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
+  li a { display: grid; grid-template-columns: 1.2rem minmax(0, 1fr); gap: 0.4rem; padding: 0.5rem; border: 1px solid transparent; border-radius: 0.35rem; color: var(--dwc-muted); font-size: var(--font-size-meta); line-height: 1.5; }
+  li a:hover, li a[aria-current] { color: var(--dwc-white); border-color: var(--dwc-border); }
+  li a[aria-current] { background: rgba(var(--color-accent-rgb), 0.07); }
+  .lesson-number, small { color: var(--dwc-cyan); }
+  small { display: block; }
+  summary { cursor: pointer; padding: 1rem; color: var(--dwc-white); }
+  summary span { margin-left: 0.5rem; font-size: var(--font-size-meta); color: var(--dwc-muted); }
+  .course-lesson-list--mobile { display: none; }
+  @media (max-width: 900px) { .course-lesson-list--mobile { display: block; } }
+</style>

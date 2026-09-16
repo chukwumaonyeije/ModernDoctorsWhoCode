@@ -72,7 +72,10 @@ test('no-JS system theme and navigation remain usable', async ({ browser }, test
     const page=await context.newPage(); await page.goto('http://127.0.0.1:4321/');
     await expect(page.locator('body')).toHaveCSS('background-color',theme==='dark'?'rgb(10, 13, 26)':'rgb(248, 250, 252)');
     await expect(page.locator('[data-theme-picker]')).toBeHidden();
+    await page.locator('[data-nav-learn] > summary').click();
     await expect(page.getByRole('navigation',{name:'Primary navigation'}).getByRole('link',{name:'Courses',exact:true})).toBeVisible();
+    await page.getByRole('navigation',{name:'Primary navigation'}).getByRole('link',{name:'Courses',exact:true}).click();
+    await expect(page).toHaveURL(/\/courses\/$/);
     await context.close();
   }
 });

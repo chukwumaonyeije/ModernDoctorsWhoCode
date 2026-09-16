@@ -2,6 +2,7 @@
 import { getReadingMetadata } from '../../utils/blog';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import PostCard from '../../components/PostCard.astro';
 import { sortBlogPosts } from '../../utils/blog';
 import { buildTagIndex, slugifyTag } from '../../utils/tags';
@@ -32,9 +33,7 @@ const taggedPosts = sortBlogPosts(
 
     <!-- Header -->
     <div style="margin-bottom: 2.5rem;">
-      <a href="/blog" style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--dwc-muted); text-decoration: none;">
-        &larr; All posts
-      </a>
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Journal', href: '/blog/' }, { label: tag }]} />
       <p class="label" style="margin-top: 1.25rem; margin-bottom: 0.5rem;">Tag</p>
       <h1 class="gradient-text" style="font-size: 2.5rem; margin: 0 0 0.5rem;">{tag}</h1>
       <p style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--dwc-muted);">

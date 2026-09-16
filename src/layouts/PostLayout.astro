@@ -10,6 +10,7 @@ import AudioPlayer from '../components/AudioPlayer.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import LessonContext from '../components/LessonContext.astro';
 import LessonNavigator from '../components/LessonNavigator.astro';
+import CourseLessonList from '../components/CourseLessonList.astro';
 import ProjectCallout from '../components/ProjectCallout.astro';
 import ArticleToc from '../components/ArticleToc.astro';
 import {
@@ -185,7 +186,7 @@ const relatedPosts = allPosts
 
     <!-- Main post content -->
     <article aria-labelledby="article-title">
-      {lessonContext && (
+      {lessonContext ? (
         <Breadcrumbs items={[
           { label: 'Home', href: '/' },
           { label: 'Learning Paths', href: '/paths/' },
@@ -193,6 +194,8 @@ const relatedPosts = allPosts
           { label: lessonContext.course.data.title, href: `/courses/${lessonContext.course.id}/` },
           { label: lessonContext.lesson.data.title },
         ]} />
+      ) : (
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Journal', href: '/blog/' }, { label: title }]} />
       )}
 
       <!-- Category + reading time -->
@@ -260,6 +263,8 @@ const relatedPosts = allPosts
       )}
 
       {tocHeadings.length > 0 && <ArticleToc headings={tocHeadings} mobile />}
+
+      {lessonContext && <CourseLessonList course={lessonContext.course} lessons={lessonContext.courseLessons} currentLesson={lessonContext.lesson} mobile />}
 
       <!-- Post body -->
       <div class="prose">
@@ -362,6 +367,7 @@ const relatedPosts = allPosts
 
     <!-- Sidebar TOC -->
     <aside class="post-sidebar">
+      {lessonContext && <CourseLessonList course={lessonContext.course} lessons={lessonContext.courseLessons} currentLesson={lessonContext.lesson} />}
       {tocHeadings.length > 0 && (
         <ArticleToc headings={tocHeadings} />
       )}
@@ -542,6 +548,9 @@ const relatedPosts = allPosts
   .post-sidebar {
     position: sticky;
     top: 84px;
+    max-height: calc(100dvh - 100px);
+    overflow-y: auto;
+    padding: 0.25rem;
   }
 
   @media (max-width: 900px) {

@@ -2,9 +2,9 @@
 import '../styles/global.css';
 import themeScript from '../scripts/theme.js?raw';
 import Header from '../components/Header.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import {
   SITE_TITLE,
-  SITE_TAGLINE,
   SITE_DESCRIPTION,
   SITE_URL,
   AUTHOR_NAME,
@@ -274,128 +274,6 @@ const combinedSchemas = [
     </main>
 
     <!-- Footer -->
-    <footer class="site-footer">
-      <div class="site-shell site-footer-grid">
-        <div>
-          <p class="site-footer-title">Doctors Who Code</p>
-          <p class="site-footer-copy">{SITE_TAGLINE}</p>
-          <p class="site-footer-copy">Written by Chukwuma Onyeije, MD, FACOG</p>
-          <p class="site-footer-copy">Official site: doctorswhocode.blog</p>
-        </div>
-        <div>
-          <p class="label" style="margin-bottom: 0.75rem;">Learn and build</p>
-          <ul class="site-footer-list">
-            <li><a href="/start/" class="site-footer-link">Start Here</a></li>
-            <li><a href="/paths/" class="site-footer-link">Learning Paths</a></li>
-            <li><a href="/courses/" class="site-footer-link">Courses</a></li>
-            <li><a href="/projects/" class="site-footer-link">Projects</a></li>
-            <li><a href="/channels/" class="site-footer-link">Channels</a></li>
-            <li><a href="/blog/" class="site-footer-link">Articles</a></li>
-          </ul>
-        </div>
-        <div>
-          <p class="label" style="margin-bottom: 0.75rem;">Official projects</p>
-          <ul class="site-footer-list">
-            <li><a href="https://codecraftmd.com" class="site-footer-link">CodeCraftMD</a></li>
-            <li><a href="https://openmfm.org" class="site-footer-link">OpenMFM.org</a></li>
-          </ul>
-        </div>
-        <div>
-          <p class="label" style="margin-bottom: 0.75rem;">Official identity</p>
-          <ul class="site-footer-list">
-            <li><a href="/chukwuma-onyeije" class="site-footer-link">Official Profile</a></li>
-            <li><a href="/verified" class="site-footer-link">Verified Accounts</a></li>
-            <li><a href="https://chukwumaonyeije.com/" class="site-footer-link">ChukwumaOnyeije.com</a></li>
-            <li><a href="https://linkedin.com/in/chukwumaonyeije" class="site-footer-link">LinkedIn</a></li>
-            <li><a href="https://x.com/chukwumaonyeije" class="site-footer-link">X / Twitter</a></li>
-            <li><a href="https://bsky.app/profile/chukwumaonyeije.bsky.social" class="site-footer-link">Bluesky</a></li>
-            <li><a href="/contact" class="site-footer-link">Newsletter</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="site-shell site-footer-bottom">
-        <p class="site-footer-meta">
-          &copy; {new Date().getFullYear()} Chukwuma Onyeije, MD, FACOG
-        </p>
-        <p class="site-footer-meta">
-          <a href="/rss.xml" class="site-footer-link">RSS</a> &middot;
-          <a href="/sitemap-index.xml" class="site-footer-link">Sitemap</a>
-        </p>
-      </div>
-    </footer>
+    <SiteFooter />
   </body>
 </html>
-
-<style>
-  .site-footer {
-    border-top: 1px solid var(--dwc-border);
-    margin-top: clamp(4rem, 3rem + 2vw, 5rem);
-    padding-top: clamp(2.5rem, 2rem + 1vw, 3rem);
-    padding-bottom: clamp(2rem, 1.5rem + 1vw, 2.5rem);
-  }
-
-  .site-footer-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(1.5rem, 1rem + 2vw, 3rem);
-  }
-
-  .site-footer-title {
-    margin-bottom: 0.5rem;
-    font-family: var(--font-display);
-    font-size: clamp(1rem, 0.95rem + 0.3vw, 1.05rem);
-    font-weight: 700;
-    color: var(--dwc-white);
-  }
-
-  .site-footer-copy,
-  .site-footer-link,
-  .site-footer-meta {
-    font-size: var(--font-size-meta);
-    color: var(--dwc-muted);
-  }
-
-  .site-footer-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.45rem;
-  }
-
-  .site-footer-bottom {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--dwc-border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .site-footer-meta {
-    margin: 0;
-    font-family: var(--font-mono);
-    line-height: 1.5;
-  }
-
-  @media (max-width: 900px) {
-    .site-footer-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 560px) {
-    .site-footer-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .site-footer-bottom {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  }
-
-</style>

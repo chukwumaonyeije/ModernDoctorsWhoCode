@@ -36,7 +36,17 @@ Base-palette tests verify text, muted, accent, hover, purple, success and warnin
 
 The script is tested by executing the actual source in a controlled DOM/storage/media fixture. Playwright now exercises first-frame theme application and representative layouts. Manual screen-reader and zoom acceptance remain open; see BROWSER-VERIFICATION.md.
 
+## Shared navigation
+
+Shared Breadcrumbs now cover the Journal index, tag archives and ordinary articles, alongside the existing learning trails. Non-course articles return through Journal; course articles retain their path/course context. Long breadcrumb items may shrink and wrap within narrow containers. This changes page navigation only, not article bodies or canonical URLs.
+
+The September 16 local navigation follow-up groups Start Here, Learning Paths and Courses under a native Learn disclosure. Build retains `/projects/`; Journal retains `/blog/`; About, Search, Subscribe, the brand home link and native Theme selector remain available. No destination or article URL is renamed.
+
+Learn uses native `details`/`summary` so it works without JavaScript. Escape closes Learn and returns focus to its summary before closing the mobile navigation on a subsequent Escape. Leaving the disclosure by Tab or clicking outside closes it. Section highlighting is separate from `aria-current="page"`, which identifies only an exact destination. The existing responsive breakpoint and short-viewport scrolling behavior remain in place.
+
 ## Component compatibility
+
+Lesson articles use CourseLessonList beside the article contents on desktop and a native course disclosure before the article body on mobile. Both render the same ordered published lessons and current-page marker, with original article URLs. The existing bottom previous/next navigator stays available. Course position is not completion tracking. The desktop sidebar scrolls within the viewport so long course/contents lists remain reachable; article column widths are unchanged.
 
 Header, newsletter, curriculum cards, callouts and the existing React carousel now use semantic surfaces/accents rather than fixed shared dark surfaces. Scoped adapters map the Docling article palette and protected embed chrome without changing original public CSS. The subsequent browser pass added only keyboard-focus markup to the Docling source, documented in BROWSER-VERIFICATION.md.
 

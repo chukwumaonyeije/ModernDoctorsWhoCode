@@ -1,5 +1,7 @@
 # Browser verification
 
+Release authorization, September 16: after visually reviewing the shell, course and lesson updates below, the owner requested that today's work be pushed to GitHub for Vercel publication. Earlier "local and uncommitted" notes record the state at each checkpoint. See [Daily narrative](DAILY-NARRATIVE-2026-09-16.md) for the release scope and next-session plan. New-disclosure Narrator/actual zoom acceptance remains explicitly open and is not inferred from visual approval.
+
 Latest checkpoint status, September 16: the site owner reported the representative manual checklist passed and authorized publishing the reviewed foundation. See the user-acceptance entry below and [Checkpoint review](CHECKPOINT-2026-09-16.md). Earlier remaining-work entries describe the evidence available at the time; broader release coverage and performance work remain open.
 
 Date: September 15, 2026. Local production build, Microsoft Edge 153.0.4234.32 on Windows, headless Playwright. Playwright was explicitly authorized after the desktop browser connector could not attach. No deployment or external form submission was performed.
@@ -72,3 +74,47 @@ The Computer Use browser launch returned `Computer Use app approval timed out`. 
 | Content controls | Read an article with TOC/FAQ/carousel and the Docling page. Check protected content only through an authorized unlock session. | Disclosure state, carousel selection, code/table access and article reading order remain understandable. |
 
 Do not submit newsletter forms during acceptance. Repeat controls in light and dark themes. Wider image/layout stability, real Docling font delivery and release performance evidence remain open. Navigation regrouping is the next separate change after this checkpoint, retaining Fontsource while its alternative is investigated.
+
+## September 16 local navigation follow-up
+
+The owner subsequently reviewed the local navigation and reported "LOOKS GOOD. CONTINUE". This records visual acceptance, not a new Narrator or zoom result.
+
+Following the deployed foundation checkpoint, the shared header now groups Start Here, Learning Paths and Courses in a native Learn disclosure. Build links to `/projects/`, Journal to `/blog/`, and About retains its destination. The brand home link, Search, Subscribe and Theme controls remain. This follow-up is local and uncommitted; production has not been updated.
+
+The disclosure works without JavaScript. Keyboard checks cover opening Learn, traversing its links, Escape focus return, Tab exit, outside dismissal and responsive focus retention. The short-height test now opens Learn while traversing every control. Exact destination matching controls `aria-current="page"`; a nested article highlights Journal without announcing the archive as the current page.
+
+Validation: `npm run check` passed 22 Node tests, the production build and preservation of 725 HTML routes, 208 articles, 373 original assets and 14 redirects. All 32 Playwright tests passed across desktop/mobile projects, including light/dark theme checks and no-JS navigation through Learn to Courses. A supplemental open-header axe check passed at 375 and 1440 pixels in both themes. Open-panel screenshots were visually inspected. The 49 recorded reference issues remain unchanged, with no new failures. No preservation baseline, article body, narration, URL or dependency was changed.
+
+Evidence is saved locally in `tmp/navigation-check.log`, `tmp/navigation-browser.log`, `tmp/navigation-review.log` and `tmp/navigation-{light,dark}-{375,1440}.png`. These temporary artifacts are not publication inputs. Browser automation does not constitute a screen-reader session: the new Learn disclosure still needs user review with Narrator and actual browser zoom before its release.
+
+### Shared footer follow-up
+
+The owner subsequently reported "LOOKS GOOD. CONTINUE" after reviewing the footer.
+
+The active footer markup and scoped styles now live in `src/components/SiteFooter.astro`, rendered by BaseLayout. The legacy Footer component is unchanged. Build and Journal labels match the header; all footer destinations, identity text, RSS and sitemap links remain. A named navigation landmark identifies the learning links.
+
+`npm run check` passed all 22 Node tests and full preservation with the same 49 recorded reference issues. All 10 shared-shell browser checks passed. Footer-only axe, link and overflow checks passed in light/dark at 320, 375, 768, 1280 and 1440 pixels. Desktop and mobile screenshots were inspected. Evidence: `tmp/footer-check.log`, `tmp/footer-shell.log`, `tmp/footer-review.log` and `tmp/footer-*.png`. This work remains local and uncommitted.
+
+### Journal breadcrumb follow-up
+
+The complete 32-test desktop/mobile browser suite also passed after this change; results are saved in `tmp/breadcrumb-browser.log`.
+
+### Course entry and next-step follow-up
+
+The owner visually accepted these course updates and requested continuation.
+
+Course pages now offer Begin lesson one beside the summary and display the first authored course outcome instead of repeating the broader path outcome. Next-step links select the next course, an actual course project, or the parent path when neither exists. Path-page Build Afterward titles now link to their actual projects. No curriculum records, planned parts, lesson counts or article bodies were changed.
+
+`npm run check` passed 22 Node tests, production build and complete preservation with the same 49 recorded reference issues. A browser diagnostic exercised the first-lesson and next-step destinations of all eight courses with JavaScript disabled. The Middle Path retained its one available lesson and planned-parts explanation. Its course page passed 200% text reflow at 320/375/768/1280 in both themes and an axe scan; a desktop screenshot was inspected. Evidence: `tmp/course-check.log`, `tmp/course-review.log`, `tmp/course-review.png`. This is local, uncommitted work and does not add completion tracking or the planned lesson sidebar.
+
+### Lesson course context follow-up
+
+All 38 desktop/mobile browser tests passed, including six new lesson-context checks. The Node preservation suite passed all 22 tests.
+
+CourseLessonList adds ordered course links and a current-lesson marker to the existing desktop sidebar, plus a native mobile disclosure before article prose. It uses the existing course query results and article URLs. Bottom previous/next controls are retained and labeled Course Lessons instead of Course Progress, since visiting is not completion. Sidebar scrolling keeps links reachable in short viewports. No article body, reading-column width, curriculum source or completion state changes.
+
+New browser checks cover no-JS course navigation, mobile keyboard disclosure, both-theme axe, doubled text and short-viewport sidebar focus. The enlarged desktop test exposed header overflow; allowing the existing flex groups to wrap corrected it. Desktop/mobile screenshots were inspected. The full preservation pipeline passed with the same 49 known reference issues. Evidence: `tmp/lesson-context-check.log`, `tmp/lesson-context-browser.log` and `tmp/lesson-context-{1440,375}.png`. Manual Narrator and actual browser zoom acceptance of the new disclosure remain open. Work is local and uncommitted.
+
+Journal and tag archives now use the shared Breadcrumbs component. Articles without curriculum membership receive Home / Journal / article-title context; existing lesson path/course trails are unchanged. Long breadcrumb items can shrink within narrow containers. Original article text, metadata and URLs remain preserved.
+
+`npm run check` passed 22 Node tests and full preservation, with the same 49 recorded reference issues. A 24-case diagnostic covered Journal, a tag archive and a long-title article at 320/375/768/1280 pixels in both themes, with JavaScript disabled and root text enlarged to 200%. It checked current-page semantics, breadcrumb bounds and keyboard focus. A supplemental breadcrumb axe check passed, and an article screenshot was inspected. Root text enlargement is not actual browser zoom acceptance. Evidence: `tmp/breadcrumb-check.log`, `tmp/breadcrumb-review.log` and `tmp/breadcrumb-desktop.png`. All changes remain local.

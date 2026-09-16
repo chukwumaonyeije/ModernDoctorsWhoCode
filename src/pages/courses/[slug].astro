@@ -74,6 +74,9 @@ const syllabusSchema = {
           <span>{estimatedMinutes} minutes</span>
           <span>{lessons.length} {lessons.length === 1 ? 'lesson' : 'lessons'}</span>
         </div>
+        {lessons[0] && (
+          <a class="site-button site-button--primary course-start" href={`/blog/${lessons[0].data.article.id}/`}>Begin lesson one</a>
+        )}
       </div>
       <dl class="course-fit-card">
         <div>
@@ -81,8 +84,8 @@ const syllabusSchema = {
           <dd>{path.data.audience}</dd>
         </div>
         <div>
-          <dt>Course outcome</dt>
-          <dd>{path.data.outcome}</dd>
+          <dt>First course outcome</dt>
+          <dd>{course.data.outcomes[0]}</dd>
         </div>
       </dl>
     </header>
@@ -112,7 +115,7 @@ const syllabusSchema = {
           <p class="label">Ordered Syllabus</p>
           <h2 id="syllabus-title">Complete the lessons in sequence.</h2>
         </div>
-        <p>Each article remains at its original URL. Its position here supplies the learning context.</p>
+        <p>Follow the lessons in order, or return to a lesson you want to review.</p>
       </div>
 
       <ol>
@@ -142,12 +145,14 @@ const syllabusSchema = {
     <nav class="course-next" aria-label="Course next step">
       <div>
         <p class="label">Next Step</p>
-        <h2>{nextCourse ? `Continue with ${nextCourse.data.title}.` : 'Finish the build before adding another course.'}</h2>
+        <h2>{nextCourse ? `Continue with ${nextCourse.data.title}.` : project ? 'Put the lessons into practice.' : 'Review the lessons and choose your next course.'}</h2>
       </div>
       {nextCourse ? (
         <a href={`/courses/${nextCourse.id}/`} class="site-button site-button--primary">Next course</a>
-      ) : lessons[0] && (
-        <a href={`/blog/${lessons[0].data.article.id}/`} class="site-button site-button--primary">Begin lesson one</a>
+      ) : project ? (
+        <a href={`/projects/${project.id}/`} class="site-button site-button--primary">View course project</a>
+      ) : (
+        <a href={`/paths/${path.id}/`} class="site-button site-button--primary">Return to learning path</a>
       )}
     </nav>
   </div>
@@ -184,6 +189,10 @@ const syllabusSchema = {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    margin-top: 1.4rem;
+  }
+
+  .course-start {
     margin-top: 1.4rem;
   }
 
