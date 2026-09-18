@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import NewsletterForm from '../components/NewsletterForm.astro';
+import DwcBotCard from '../components/DwcBotCard.astro';
 
 const aboutUrl = 'https://www.doctorswhocode.blog/about/';
 const personId = `${aboutUrl}#person`;
@@ -309,6 +310,7 @@ const personSchema = {
         <a href="https://bsky.app/profile/chukwumaonyeije.bsky.social" target="_blank" rel="noopener noreferrer" class="site-button site-button--secondary about-connect-link">Bluesky</a>
         <a href="https://x.com/CodeCraftMD" target="_blank" rel="noopener noreferrer" class="site-button site-button--secondary about-connect-link">CodeCraftMD on X</a>
       </div>
+      <DwcBotCard />
     </section>
 
   </div>

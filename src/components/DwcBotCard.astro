@@ -1,0 +1,101 @@
+<section class="dwc-bot-card" aria-labelledby="dwc-bot-heading">
+  <img
+    class="dwc-bot-portrait"
+    src="/images/dwc-bot.png"
+    alt="DWC-Bot, the Doctors Who Code AI assistant."
+    width="593"
+    height="595"
+    loading="lazy"
+    decoding="async"
+  />
+  <div class="dwc-bot-content">
+    <h3 id="dwc-bot-heading">Meet DWC-Bot</h3>
+    <p class="dwc-bot-subtitle">My AI assistant for Doctors Who Code</p>
+    <p>
+      Call DWC-Bot to ask about Doctors Who Code, find a learning path, explore my projects,
+      or leave a speaking or collaboration inquiry. She can ask follow-up questions and
+      summarize your request. You can also leave a message by text.
+    </p>
+    <div class="dwc-bot-actions">
+      <a class="site-button site-button--primary" href="tel:+17638787305">Call DWC-Bot</a>
+      <a class="site-button site-button--secondary" href="sms:+17638787305">Text DWC-Bot</a>
+    </div>
+    <p class="dwc-bot-number">+1 (763) 878-7305</p>
+    <p class="dwc-bot-support">
+      Calls connect with an AI assistant and are recorded and transcribed. Text messages
+      are received, but automated text replies are not yet available.
+    </p>
+    <p class="dwc-bot-scope">
+      For educational and professional inquiries. Please do not share patient information.
+      This line does not provide medical advice or emergency assistance.
+    </p>
+  </div>
+</section>
+
+<style>
+  .dwc-bot-card {
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr);
+    align-items: start;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+  }
+
+  .dwc-bot-portrait {
+    width: 140px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+
+  .dwc-bot-content h3 {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+    color: var(--color-text);
+  }
+
+  .dwc-bot-content p {
+    margin: 0 0 1rem;
+    line-height: 1.7;
+  }
+
+  .dwc-bot-subtitle {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .dwc-bot-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .dwc-bot-number {
+    font-family: var(--font-mono);
+    color: var(--color-text);
+    user-select: text;
+  }
+
+  .dwc-bot-support,
+  .dwc-bot-scope {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .dwc-bot-content .dwc-bot-scope {
+    margin-bottom: 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 640px) {
+    .dwc-bot-card {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
