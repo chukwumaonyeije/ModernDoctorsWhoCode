@@ -20,7 +20,9 @@
       <a class="site-button site-button--primary" href="tel:+17638787305">Call DWC-Bot</a>
       <a class="site-button site-button--secondary" href="sms:+17638787305">Text DWC-Bot</a>
     </div>
-    <p class="dwc-bot-number">+1 (763) 878-7305</p>
+    <p class="dwc-bot-number">
+      <a href="tel:+17638787305" aria-label="Call DWC-Bot at +1 (763) 878-7305">+1 (763) 878-7305</a>
+    </p>
     <p class="dwc-bot-support">
       Calls connect with an AI assistant and are recorded and transcribed. Text messages
       are received, but automated text replies are not yet available.
@@ -79,6 +81,15 @@
     font-family: var(--font-mono);
     color: var(--color-text);
     user-select: text;
+  }
+
+  .dwc-bot-number a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 
   .dwc-bot-support,
