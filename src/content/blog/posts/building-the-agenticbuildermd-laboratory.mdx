@@ -1,0 +1,161 @@
+---
+title: "I Built an AI Agent. Now I Am Building the Laboratory Around It."
+description: "The Doctors Who Code phone bot led to AgenticBuilderMD: a public laboratory for learning agents, tools, memory, and human checkpoints through practical builds."
+pubDate: "2026-09-19T23:00:00-04:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+category: "Agentic AI"
+tags: ["AI Agents", "Physician Builders", "AgenticBuilderMD", "Voice AI", "Software Engineering", "Build in Public"]
+image:
+  url: "/images/posts/building-the-agenticbuildermd-laboratory-hero.png"
+  alt: "A telephone waveform flows through memory and tool modules to an amber human-review checkpoint on a physician-developer workbench."
+featured: true
+featuredRank: 17000
+readingTime: 9
+draft: false
+---
+
+I could pick up my phone, call a number, and talk to DWC-Bot about Doctors Who Code.
+
+I described that first experiment in [“I Gave Doctors Who Code a Phone Number”](/blog/i-gave-doctors-who-code-a-phone-number). The bot could answer questions about the project. Voice also offered a way to capture an idea when I was away from a keyboard.
+
+Once the bot worked, the question changed.
+
+> What happens after the agent understands what I want?
+
+An article idea spoken into a telephone still needs somewhere to go. A useful response still needs a path to useful work. Following that path means understanding tools, memory, permissions, and the software around the model.
+
+That is the work I am building toward at [AgenticBuilderMD.com](https://agenticbuildermd.com).
+
+The phone call was the first experiment. AgenticBuilderMD is the laboratory I am building around it.
+
+## I. The Conversation Became a Workflow Question
+
+The visible part of the project was straightforward. A person calls. An AI answers. They talk.
+
+Getting that interaction to work exposed a different set of questions. Where does the agent get its information? What should it retain after the call? What is it authorized to change? How will I know whether an action succeeded?
+
+Consider a future version of the phone bot. I call and say:
+
+> I just had an idea for an article about why physicians tolerate bad software.
+
+I want the system to capture the idea, ask a useful clarifying question, and save a structured note. Later, it might retrieve related notes or prepare an outline for review.
+
+Those are proposed capabilities. The phone conversation is the starting point.
+
+Each additional step introduces a design decision. The note needs a destination. The system needs permission to write there. It needs to distinguish a successful save from a failed request. An outline needs to remain a draft until I decide what to do with it.
+
+The conversation becomes an interface to a workflow. The work behind that interface is the next engineering problem.
+
+## II. The Curriculum Will Be the Builds
+
+Learning agent development can quickly become an exercise in collecting terminology. Tool calling leads to APIs. APIs lead to authentication. Persistent memory introduces storage and retrieval. External events introduce webhooks and background work.
+
+The concepts become easier to understand when a project gives each one a job.
+
+That is how I have learned software. I wanted a website. Building it gave HTML, CSS, JavaScript, version control, deployment, and DNS a practical purpose. Each problem supplied a reason to learn the next part.
+
+AgenticBuilderMD follows the same approach.
+
+Start with an agent that can answer a telephone. Give it a defined purpose and a source of information. When it needs to save an idea, examine storage. When it needs to act, examine tools and permissions. When a call ends and another process must begin, examine events.
+
+Reliability belongs in those builds from the beginning. A saved note needs a check that it actually exists. A failed request needs a visible result. An action with consequences needs a clear boundary.
+
+**Start with the need. Introduce the architecture when it has a job to do.**
+
+Each build should explain why a component exists, what it contributes, and what breaks without it.
+
+## III. A Public Laboratory With a Defined Purpose
+
+AgenticBuilderMD will document how I construct agentic systems. I intend to show working experiments, failed approaches, architecture decisions, and code where it helps explain the work.
+
+A useful build record should answer concrete questions. Why did I choose this service? What information moves through it? What did I test? What remains unresolved? What would make me replace it?
+
+Writing those answers is part of the learning. A system that works once can conceal assumptions I have not examined. Explaining the system forces those assumptions into view.
+
+Doctors Who Code remains the broader home for the physician-builder perspective: how software shapes clinical work, where workflows fail, and why physicians should participate in building better systems.
+
+AgenticBuilderMD gives that work a dedicated workshop. It will follow individual builds closely enough that another physician learning software can understand the decisions and attempt the next step.
+
+The relationship is simple. Doctors Who Code develops the argument for physician participation. AgenticBuilderMD documents the construction.
+
+## IV. Learn the Architecture in Low-Risk Workflows
+
+My perspective comes from medicine. The first experiments can begin with personal notes, article ideas, and other nonclinical work.
+
+A note-taking agent can teach me how to authenticate a request, save information, retrieve it later, and recover from a failure. An article workflow can teach me where an agent should prepare material and where it should wait for review.
+
+Those projects give the underlying engineering problems room to become visible before I consider applying the same patterns to patient care.
+
+Clinical work makes handoffs and accountability familiar. In a maternal-fetal medicine workflow, a prepared document, a reviewed assessment, and a communicated plan represent different states. Software has to preserve those distinctions.
+
+The same discipline belongs in a modest writing workflow. Capturing an idea does not authorize publication. Preparing an outline does not establish that its claims are correct.
+
+The **human checkpoint** is a design decision. It specifies where the system must wait, who reviews the work, and what approval permits next.
+
+That checkpoint belongs in the architecture from the first build.
+
+## V. Tools, Memory, and Events Need Separate Decisions
+
+Several topics keep returning because each solves a different problem behind the phone call.
+
+### Tools give an instruction somewhere to go
+
+“Save this note” sounds simple. The system still needs a tool that accepts the right information and writes to the right destination under the right permissions.
+
+I want to examine small tools first: save a note, search a collection of documents, or prepare a message for approval. For each one, the build should make its inputs, permissions, results, and failure behavior understandable.
+
+The Model Context Protocol, or MCP, enters this work as a way to connect AI applications with external tools and information through a common interface. I want to explore it when a build needs that connection, with a specific tool and a specific purpose.
+
+A connection still leaves the builder responsible for deciding what the system may do through it.
+
+### Memory requires decisions about information
+
+“Remember this” leaves several questions unanswered.
+
+What should be stored? Who should be able to retrieve it? How can I correct or delete it? When should it return to the agent's context?
+
+For an article idea, I might want the original note, its capture date, and a small set of tags. A later interaction should retrieve that note when it is relevant. Saving every conversation indefinitely would be a separate decision requiring its own justification.
+
+This is why memory leads directly into databases, retrieval, privacy, and product design. The build needs an explicit account of what persists and why.
+
+### Events let work begin after the conversation
+
+A call ends. A form arrives. A document changes. Each event can create a reason for another part of the system to act.
+
+A webhook gives one service a way to notify another about an event. The receiving system must still decide what that event means and whether any work should follow.
+
+For the phone bot, a future experiment might begin processing a captured idea after the call ends. That creates practical questions about incomplete calls, repeated notifications, and unsuccessful saves.
+
+The lesson comes from following one event through the system until its outcome is clear.
+
+## VI. The Model Is One Part of the Application
+
+The phone bot made the surrounding software difficult to ignore.
+
+A model can interpret my request. Storage preserves the result. Tools carry out permitted actions. Authentication identifies who is making the request. Records make the sequence inspectable. Human checkpoints define where execution must wait.
+
+Together, those pieces determine whether the workflow does useful work.
+
+That makes observability a practical requirement. I should be able to see what the system received, what it attempted, whether the operation succeeded, and where it stopped. A fluent confirmation is insufficient evidence that my note reached its destination.
+
+Evaluation needs the same specificity. For a note-capture experiment, I can check whether the saved note preserves the idea, belongs to the correct user, and remains recoverable. I can also test whether the system reports a failure accurately.
+
+These are small checks with concrete consequences. They make the difference between a demonstration and a workflow I can use.
+
+Physicians bring a useful perspective to this work. We encounter exceptions, incomplete information, and failed handoffs routinely. We know how much work can hide inside a phrase such as “the user enters the information.”
+
+That experience gives us questions worth asking. Learning the engineering gives us a way to turn those questions into design decisions.
+
+## VII. The Next Build Starts Behind the Call
+
+The first experiment gave Doctors Who Code a voice. The next experiment I want to explore is memory: saving an idea from an interaction and retrieving it later, with clear rules about what persists.
+
+That single build should make several concepts tangible. It needs a storage destination, a record structure, a retrieval path, permissions, and a way to verify the result. It also needs a boundary around what the agent may do with the saved material.
+
+Subsequent experiments can add tools and event-driven work as the need becomes clear. Each addition should earn its place by solving a problem I can explain and producing a result I can inspect.
+
+I will document that work at [AgenticBuilderMD.com](https://agenticbuildermd.com): the decisions, the failures, and the evidence that a build does what I intended.
+
+If I give an agent the ability to act, I am responsible for the system that makes that action possible.
+
+
