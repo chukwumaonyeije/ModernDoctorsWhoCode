@@ -3621,6 +3621,11 @@
       "canonical": [
         "https://www.doctorswhocode.blog/verified"
       ]
+    },
+    "/blog/building-the-agenticbuildermd-laboratory/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/blog/building-the-agenticbuildermd-laboratory/"
+      ]
     }
   },
   "articles": {
@@ -20287,6 +20292,89 @@
           "article:published_time": "2025-10-14T00:00:00.000Z"
         }
       }
+    },
+    "building-the-agenticbuildermd-laboratory.mdx": {
+      "id": "building-the-agenticbuildermd-laboratory",
+      "route": "/blog/building-the-agenticbuildermd-laboratory/",
+      "bodyHash": "267a3a2caaf204a66f402eb0c5b431958601163795ecb39a257fe787dd8e1c38",
+      "frontmatter": {
+        "audioUrl": "/audio/building-the-agenticbuildermd-laboratory.mp3",
+        "title": "I Built an AI Agent. Now I Am Building the Laboratory Around It.",
+        "description": "The Doctors Who Code phone bot led to AgenticBuilderMD: a public laboratory for learning agents, tools, memory, and human checkpoints through practical builds.",
+        "pubDate": "2026-09-19T23:00:00-04:00",
+        "author": "Chukwuma Onyeije, MD, FACOG",
+        "category": "Agentic AI",
+        "tags": [
+          "AI Agents",
+          "Physician Builders",
+          "AgenticBuilderMD",
+          "Voice AI",
+          "Software Engineering",
+          "Build in Public"
+        ],
+        "image": {
+          "url": "/images/posts/building-the-agenticbuildermd-laboratory-hero.png",
+          "alt": "A telephone waveform flows through memory and tool modules to an amber human-review checkpoint on a physician-developer workbench."
+        },
+        "featured": true,
+        "featuredRank": 17000,
+        "readingTime": 9,
+        "draft": false
+      },
+      "rendered": {
+        "title": "I Built an AI Agent. Now I Am Building the Laboratory Around It. | Doctors Who Code",
+        "description": "The Doctors Who Code phone bot led to AgenticBuilderMD: a public laboratory for learning agents, tools, memory, and human checkpoints through practical builds.",
+        "canonical": [
+          "https://www.doctorswhocode.blog/blog/building-the-agenticbuildermd-laboratory/"
+        ],
+        "published": "2026-09-20T03:00:00.000Z",
+        "ogImage": "https://www.doctorswhocode.blog/og/building-the-agenticbuildermd-laboratory.png",
+        "audio": [
+          "/audio/building-the-agenticbuildermd-laboratory.mp3"
+        ],
+        "contentMedia": [
+          {
+            "tag": "img",
+            "src": "/images/posts/building-the-agenticbuildermd-laboratory-hero.png"
+          }
+        ],
+        "metadata": {
+          "description": "The Doctors Who Code phone bot led to AgenticBuilderMD: a public laboratory for learning agents, tools, memory, and human checkpoints through practical builds.",
+          "author": "Chukwuma Onyeije, MD, FACOG",
+          "robots": "index, follow, max-image-preview:large",
+          "og:title": "I Built an AI Agent. Now I Am Building the Laboratory Around It. | Doctors Who Code",
+          "og:description": "The Doctors Who Code phone bot led to AgenticBuilderMD: a public laboratory for learning agents, tools, memory, and human checkpoints through practical builds.",
+          "og:image": "https://www.doctorswhocode.blog/og/building-the-agenticbuildermd-laboratory.png",
+          "og:image:alt": "I Built an AI Agent. Now I Am Building the Laboratory Around It. | Doctors Who Code",
+          "og:url": "https://www.doctorswhocode.blog/blog/building-the-agenticbuildermd-laboratory/",
+          "og:type": "article",
+          "og:site_name": "Doctors Who Code",
+          "og:locale": "en_US",
+          "twitter:card": "summary_large_image",
+          "twitter:site": "@chukwumaonyeije",
+          "twitter:creator": "@chukwumaonyeije",
+          "twitter:title": "I Built an AI Agent. Now I Am Building the Laboratory Around It. | Doctors Who Code",
+          "twitter:description": "The Doctors Who Code phone bot led to AgenticBuilderMD: a public laboratory for learning agents, tools, memory, and human checkpoints through practical builds.",
+          "twitter:image": "https://www.doctorswhocode.blog/og/building-the-agenticbuildermd-laboratory.png",
+          "article:published_time": "2026-09-20T03:00:00.000Z"
+        },
+        "headings": [
+          "article-title",
+          "i-the-conversation-became-a-workflow-question",
+          "ii-the-curriculum-will-be-the-builds",
+          "iii-a-public-laboratory-with-a-defined-purpose",
+          "iv-learn-the-architecture-in-low-risk-workflows",
+          "v-tools-memory-and-events-need-separate-decisions",
+          "tools-give-an-instruction-somewhere-to-go",
+          "memory-requires-decisions-about-information",
+          "events-let-work-begin-after-the-conversation",
+          "vi-the-model-is-one-part-of-the-application",
+          "vii-the-next-build-starts-behind-the-call",
+          "share-heading",
+          "related-articles-heading"
+        ],
+        "bodyTextHash": "0cae3ff50858ef297db0fdb2bf1ef15128a5e7ccd784160507629cfcab3c5671"
+      }
     }
   },
   "sourceHashes": {
@@ -20667,7 +20755,9 @@
     "/llms.txt": "07b610bfae08d3b6a8bbe04e4c73660ddeaadc30ede5d9ffab44a7df6bee5c80",
     "/robots.txt": "539f7cfa99d48f816a431157f05b40e5256e4e016a97fc169ae73d1d8d49bade",
     "/slides/fhir-playbook.html": "da093cb89e1c7bde08004a0ca000ebbe67114da2704d9623a7fa29ee3b076662",
-    "/slides/limits-of-viability.html": "ed91629857f74d497aab38392efa1d95d7a5f1c93761f0c5588f08afd02c1123"
+    "/slides/limits-of-viability.html": "ed91629857f74d497aab38392efa1d95d7a5f1c93761f0c5588f08afd02c1123",
+    "/audio/building-the-agenticbuildermd-laboratory.mp3": "dc967b11c57dae84ef68850d732651950ad2c5b2fe96a2b742efa58717905650",
+    "/images/posts/building-the-agenticbuildermd-laboratory-hero.png": "8909f33cc81cf439b4e8a988328435612226117814e99bcc6c9aa18f8a4ef863"
   },
   "endpoints": [
     "/.well-known/chukwuma-onyeije-identity.txt",
@@ -21252,7 +21342,10 @@
     "/rss.xml",
     "/search-index.json",
     "/sitemap-0.xml",
-    "/sitemap-index.xml"
+    "/sitemap-index.xml",
+    "/audio/building-the-agenticbuildermd-laboratory.mp3",
+    "/images/posts/building-the-agenticbuildermd-laboratory-hero.png",
+    "/og/building-the-agenticbuildermd-laboratory.png"
   ],
   "redirects": [
     {
@@ -22366,6 +22459,11 @@
       "title": "The Future of Medicine: Embracing Coding in Healthcare",
       "description": "In today&apos;s rapidly evolving healthcare landscape, the convergence of medicine, technology, and coding is more critical than ever. As a maternal-fetal me...",
       "published": "Mon, 02 Dec 2024 00:00:00 GMT"
+    },
+    "https://www.doctorswhocode.blog/blog/building-the-agenticbuildermd-laboratory/": {
+      "title": "I Built an AI Agent. Now I Am Building the Laboratory Around It.",
+      "description": "The Doctors Who Code phone bot led to AgenticBuilderMD: a public laboratory for learning agents, tools, memory, and human checkpoints through practical builds.",
+      "published": "Sun, 20 Sep 2026 03:00:00 GMT"
     }
   },
   "sitemapUrls": [
@@ -23091,6 +23189,7 @@
     "https://www.doctorswhocode.blog/tags/workflow-design/",
     "https://www.doctorswhocode.blog/tags/workflow/",
     "https://www.doctorswhocode.blog/tags/youtube-analysis/",
-    "https://www.doctorswhocode.blog/verified/"
+    "https://www.doctorswhocode.blog/verified/",
+    "https://www.doctorswhocode.blog/blog/building-the-agenticbuildermd-laboratory/"
   ]
 }
