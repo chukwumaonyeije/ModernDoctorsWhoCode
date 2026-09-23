@@ -32,3 +32,4 @@ baseline/*.candidate.json
 # Local browser verification artifacts.
 test-results/
 playwright-report/
+tmp/

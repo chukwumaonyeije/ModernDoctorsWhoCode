@@ -1,0 +1,137 @@
+---
+title: "Design the Workflow Before You Build the Agent"
+description: "Complete a clinical AI design canvas and turn it into a small, testable specification for an accountable workflow."
+pubDate: 2026-09-22T09:03:00-04:00
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - "agentic ai"
+  - "clinical ai"
+  - "system design"
+  - "workflow design"
+  - "physician-developer"
+  - "from-search-to-action"
+readingTime: 8
+draft: false
+featured: false
+---
+
+import Callout from '../../../components/Callout.astro';
+import SeriesNav from '../../../components/SeriesNav.astro';
+
+The demonstration prototype features a clean chat interface, a connection to a cloud model, and a button that dispatches a message. It still cannot answer a basic operational question: who manages patient follow-up when the message transmission succeeds but the reminder task creation fails?
+
+That fictional prototype illustrates why sequence matters. Define the clinical workflow, its decision boundaries, and its failure recovery paths before selecting software tools.
+
+Across the first three articles, we built an answer contract, an evidence interface, and an action map. Now we synthesize those components into an actionable build brief.
+
+---
+
+## I. Keep the First Version Narrow
+
+Our running example focuses on a glucose-review workflow in maternal-fetal medicine. The initial release will compile an organized review packet, flag discrepancies, and draft an outbound message once the physician approves the plan.
+
+This constitutes a complete, testable unit of software. It features a defined user, explicit inputs, inspectable outputs, and strict decision boundaries. It can be thoroughly validated without connecting to a live electronic health record or patient portal.
+
+<Callout type="clinical">
+  Attempting to build "an AI agent that manages diabetes" is an invitation to failure. That vague mandate leaves evidence standards, clinical authority, safety checks, and edge cases undefined.
+</Callout>
+
+State your version-one boundaries clearly at the top of your technical specification: clinical treatment adjustments remain with the attending physician; all generated communications remain drafts. Once your team verifies that preparation and review operate reliably, you can consider automated execution.
+
+Setting tight boundaries is one of the most effective safety controls a physician-developer can establish.
+
+## II. Complete the Clinical AI Design Canvas
+
+The Clinical AI Design Canvas organizes eight essential design requirements. Each entry must provide concrete criteria that allow an independent evaluator to test the system.
+
+| Canvas component | Worked clinical example |
+| --- | --- |
+| **1. Intent** | Compile a glucose-review packet and draft a response for clinician sign-off |
+| **2. Context** | Verified patient ID, reporting interval, raw log, relevant messages, and active orders |
+| **3. Answer** | Summarize current readings, highlight discrepancies, and list items needing review |
+| **4. Evidence** | Link every extracted value to its original document, with timestamps and author details |
+| **5. Uncertainty** | Surface unreadable entries, missing timing tags, and medication conflicts |
+| **6. Action** | Generate draft patient instructions from the approved plan; do not dispatch automatically |
+| **7. Human Checkpoint** | Clinician reconciles documented conflicts and signs off on the exact message text |
+| **8. Audit Trail** | Record source document versions, extracted data, user edits, draft versions, and sign-offs |
+
+The canvas does not require software jargon to establish rigor. Writing "the medication record contradicts the latest patient message" provides clearer direction than "apply contextual reasoning."
+
+The canvas also makes procedural dependencies obvious. Drafting patient guidance depends on an approved clinical plan. Approving that plan depends on resolving any contradictions in the record. These prerequisites belong in your software logic, not hidden inside a prompt.
+
+## III. Add Ownership and Recovery
+
+The eight canvas fields define the planned workflow. Before writing code, resolve two operational questions: who assumes responsibility for an incomplete task, and how does the system recover from an error?
+
+In version one, an illegible glucose log should trigger an incomplete review status with an assigned follow-up task for a clinic staff member. The task must not vanish simply because the language model could not parse the image.
+
+In later versions with messaging integrations, an unresolved delivery status demands investigation. A dropped calendar task needs a clear owner. If the primary clinician is out of the office, the system needs an established coverage route.
+
+These are standard clinical practice considerations. They become mandatory software specifications the moment code enters the care process.
+
+<Callout type="technical">
+  Your audit log must capture enough detail to reconstruct every consequential decision. Log the input versions, applied configurations, physician edits, approvals, system calls, and server responses.
+</Callout>
+
+Design your logging to respect patient privacy boundaries. Copying complete clinical charts into system event logs introduces privacy vulnerabilities without improving system auditing. Retain only what is required to reconstruct the decision path.
+
+## IV. Test the Workflow With Cases That Disagree
+
+Demonstrating a system on a single clean record proves very little. Assemble a collection of fictional test cases designed to challenge your system assumptions:
+
+| Test scenario | Expected software behavior |
+| --- | --- |
+| **Complete, consistent records** | Generate a source-referenced review packet |
+| **Conflicting medication plans** | Display both records and require manual clinician reconciliation |
+| **Illegible log values** | Highlight the specific unparsed entry without estimating a value |
+| **Historical readings uploaded recently** | Display measurement dates and submission date separately |
+| **Chart update after review** | Flag the draft message as outdated and request a new review |
+| **Patient identifier discrepancy** | Stop processing immediately and alert the clinical user |
+| **Duplicate transmission request** | Reject duplicate sends or route the job for manual confirmation |
+| **Message delivered, task creation failed** | Report individual subtask states and assign unfinished work to staff |
+
+Define expected outcomes before running test cases. Without upfront criteria, a fluent response can easily distort your standards of accuracy.
+
+Track failure categories systematically. Count unreferenced assertions, undetected conflicts, OCR extraction errors, and misreported task statuses. A synthetic test suite exposes structural bugs, though it does not replace clinical validation.
+
+Evaluate the clinician's time investment as well. Compare the time required to review, verify, and correct the automated packet against traditional chart review. A successful system reduces total cognitive effort, not just generation latency.
+
+## V. Choose the Simplest Implementation
+
+Many design requirements require no artificial intelligence. Standard code can validate required fields, compare dates, manage application state, and block unauthorized message dispatch.
+
+Use language models where they add genuine value: interpreting unstructured clinic notes or summarizing narrative logs. Confine the model to that specific subtask within a deterministic scaffold.
+
+<Callout type="note">
+  **Getting started:** Begin with a directory of synthetic records and a static browser interface. Implement structured data extraction first, then layer on draft generation. Introduce external APIs only after establishing rigorous error handling and recovery paths.
+</Callout>
+
+The [NIST Generative AI Profile (NIST AI 600-1)](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf) provides an extensive framework for managing AI risk. The canvas below helps you specify a single, reliable workflow.
+
+---
+
+### Observe
+Select a high-volume, repetitive task in your practice that produces a standardized output. Identify the person held accountable for that output today.
+
+### Interrogate
+Fill out the eight fields of the Clinical AI Design Canvas for that task, then add error-handling and ownership rules. Identify one clinical judgment that must remain under human control in version one.
+
+### Build
+Assemble a one-page build brief, an interface mockup, and five challenging fictional test cases. A colleague should be able to review your specification and understand what the tool performs, what stops it, and who handles edge cases.
+
+Download the complete companion template: [From Search to Action: Learner Workbook](/downloads/from-search-to-action-learner-workbook.md).
+
+---
+
+<SeriesNav
+  title="From Search to Action"
+  current={3}
+  posts={[
+    { label: "1. Who Assembles the Clinical Picture?", href: "/blog/search-to-action-01-from-search-to-answers" },
+    { label: "2. An Answer You Can Inspect", href: "/blog/search-to-action-02-an-answer-you-can-inspect" },
+    { label: "3. Before the Agent Acts", href: "/blog/search-to-action-03-from-answers-to-action" },
+    { label: "4. Design the Workflow First", href: "/blog/search-to-action-04-design-the-accountable-workflow", current: true },
+  ]}
+/>

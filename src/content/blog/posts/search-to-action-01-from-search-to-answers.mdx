@@ -1,0 +1,137 @@
+---
+title: "From Search Engines to Answer Engines: Who Assembles the Clinical Picture?"
+description: "Define the clinical question before building an AI interface, and learn what a useful answer must preserve."
+pubDate: 2026-09-22T09:00:00-04:00
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - "answer engines"
+  - "clinical ai"
+  - "clinical software"
+  - "workflow design"
+  - "physician-developer"
+  - "from-search-to-action"
+readingTime: 6
+draft: false
+featured: false
+---
+
+import Callout from '../../../components/Callout.astro';
+import SeriesNav from '../../../components/SeriesNav.astro';
+
+A patient's blood glucose log arrives as a mobile phone photograph. The current medication list sits in another section of the chart. The latest portal message describes a recent dosage adjustment that has not yet reached that list.
+
+Consider this routine review in a maternal-fetal medicine practice. The information exists across several systems. The clinician still has to assemble it manually before deciding what it means.
+
+That assembly work is where I begin when designing better clinical software.
+
+---
+
+## I. The Low-Value Tax Includes Assembly
+
+Searching is often only the visible fraction of a larger chore. We find the document, locate the relevant sentence, check its date, cross-reference another screen, and decide whether the pieces belong together.
+
+Some of that work is clinical judgment. Some is an administrative tax imposed by disconnected software. A useful architecture begins by separating the two.
+
+<Callout type="clinical">
+  Reading a glucose trend in the context of fetal growth and gestational age requires clinical judgment. Opening three screens to discover which insulin instruction was issued last is an information-management defect. Both consume attention. They do not deserve an equal share of it.
+</Callout>
+
+The distinction matters because a faster search box leaves the underlying burden intact. The clinician retrieves each fragment sooner, but still performs every reconciliation by hand.
+
+I want the interface to reflect the question that brought me to the chart.
+
+## II. Search Retrieves. An Answer Makes a Claim.
+
+A standard search box returns every chart item containing the word "glucose." An answer-oriented interface attempts something more specific: "What information is available for this week's glucose review, and what remains unresolved?"
+
+The second interface must select, organize, and interpret. Its output is a claim about the record. That transition changes the responsibility of the software.
+
+For our glucose-review example, an honest answer might say:
+
+> A patient-submitted log covers Monday through Sunday. Two entries lack timing labels. The medication list and the latest patient message disagree about the current regimen. The regimen needs reconciliation before this summary can support a treatment decision.
+
+That answer is valuable even though it does not recommend a medication adjustment. It organizes the evidence and exposes the next question.
+
+An interface that simply generates "Everything looks stable" has attempted a larger clinical conclusion while providing less usable information. Fluency never compensates for missing evidence.
+
+Answer systems also need distinctions that conversational interfaces frequently blur. A general synthesis about diabetes management during pregnancy draws on external medical literature. An answer about a specific patient requires correctly identified, current chart records. When a system provides a polished paragraph, it can conceal which of these two tasks was actually performed.
+
+## III. Write an Answer Contract
+
+Before writing code or selecting a model, I write an **answer contract**: a plain-language specification of what the system must return and what it must leave unresolved.
+
+As I argued in [The Prompt Is a Clinical Specification](/blog/the-prompt-is-a-clinical-specification/), prompt engineering is not a contest for clever phrasing. It is the disciplined work of defining sources, constraints, and boundaries.
+
+For our glucose-review scenario, the answer contract provides those explicit boundaries:
+
+| Element | Required behavior |
+| --- | --- |
+| **Question** | What information is ready for clinician review? |
+| **Scope** | One identified patient and one stated reporting interval |
+| **Evidence** | Original log, relevant medication records, and recent messages |
+| **Output** | Organized findings with direct links to their source passages |
+| **Missing Information** | Explicitly identify absent, ambiguous, or conflicting details |
+| **Boundary** | Do not infer an unconfirmed regimen or issue treatment instructions |
+
+This contract serves as a testable specification. A clinical colleague can review it and spot a missing safety boundary. A developer can build against it. A reviewer can determine whether the output complies.
+
+"Summarize this chart" provides none of those boundaries. It allows the model to decide what counts as relevant, how far back to look, and when an unresolved conflict can disappear into prose.
+
+The contract makes those choices visible before they harden into software behavior.
+
+## IV. Keep Retrieval Within Reach
+
+Search remains indispensable because clinicians often need to inspect the raw information landscape. A source excluded from an automated summary might change a clinical decision. An atypical reading might require inspection rather than compression.
+
+In practice, I maintain three concurrent views of the work:
+1. The original source records
+2. The organized evidence cards
+3. The proposed clinical answer
+
+Switching between these views must preserve the patient context, the reporting interval, and the clinical question.
+
+<Callout type="technical">
+  The answer serves as an entry point into the record, not a replacement for it. Evaluate the interface by the total time required to reach a verified, reviewable understanding, including inspections and corrections. Generation speed alone is an incomplete metric.
+</Callout>
+
+A tool that produces a draft in three seconds but requires ten minutes of forensic chart checking has not saved time. It has simply relocated the burden.
+
+## V. Build the Smallest Useful Answer
+
+The first prototype does not require software code. Use a fictional glucose log, a fictional medication list, and a contradictory patient message. Ask a colleague to produce the required output using only the answer contract.
+
+If two clinicians cannot agree on what the answer should contain, the workflow needs definition. Adding an AI model will not resolve clinical ambiguity.
+
+Once the expected output is stable, identify which parts require language interpretation. Reading a handwritten note or free-text message benefits from a language model. In contrast, verifying dates, counting entries, and validating required fields belong in deterministic code.
+
+This is where physician judgment becomes a decisive design asset. We understand which missing detail halts a clinical decision. We can build that check into the system before an interface glosses over it.
+
+---
+
+### Observe
+Choose one repetitive chart review in your practice. List each screen you open and the specific question it answers. Use a fictional case to map the steps.
+
+### Interrogate
+Label each step as retrieval, reconciliation, or clinical judgment. Which steps consume your focus because the software failed to organize the data?
+
+### Build
+Draft a six-line answer contract using the table structure above. Write one acceptable output and one unacceptable output. Explain the difference in one sentence.
+
+---
+
+<Callout type="note">
+  **Clinical context:** This exercise focuses on software workflow architecture, not clinical dosing protocols. [ACOG's gestational diabetes clinical resource](https://www.acog.org/womens-health/faqs/gestational-diabetes) provides background guidance for standard care; the answer contract above demonstrates software boundary design.
+</Callout>
+
+<SeriesNav
+  title="From Search to Action"
+  current={0}
+  posts={[
+    { label: "1. Who Assembles the Clinical Picture?", href: "/blog/search-to-action-01-from-search-to-answers", current: true },
+    { label: "2. An Answer You Can Inspect", href: "/blog/search-to-action-02-an-answer-you-can-inspect" },
+    { label: "3. Before the Agent Acts", href: "/blog/search-to-action-03-from-answers-to-action" },
+    { label: "4. Design the Workflow First", href: "/blog/search-to-action-04-design-the-accountable-workflow" },
+  ]}
+/>

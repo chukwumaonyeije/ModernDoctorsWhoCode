@@ -1,0 +1,127 @@
+---
+title: "An Answer Is Not Enough: Build the Evidence Into the Interface"
+description: "Design clinical AI answers that expose sources, missing context, and disagreements without asking clinicians to reconstruct the chart."
+pubDate: 2026-09-22T09:01:00-04:00
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - "answer engines"
+  - "clinical ai"
+  - "data provenance"
+  - "workflow design"
+  - "physician-developer"
+  - "from-search-to-action"
+readingTime: 6
+draft: false
+featured: false
+---
+
+import Callout from '../../../components/Callout.astro';
+import SeriesNav from '../../../components/SeriesNav.astro';
+
+The automated summary reports that the patient continues on her documented insulin regimen. One click reveals that its source is an outpatient medication reconciliation from two months ago. A newer portal message from yesterday afternoon describes a completely different dosing schedule.
+
+In this fictional glucose-review scenario, the summary reads cleanly only because the conflict was erased.
+
+That is the design risk I want to address. A reliable clinical answer must preserve the contradictory facts that make the question difficult to answer in the first place.
+
+---
+
+## I. Compression Makes Editorial Decisions
+
+Every summary omits information. A useful clinical summary removes repetitive noise while protecting the nuances that guide clinical decisions.
+
+In our glucose example, a formal medication order and a patient message represent distinct evidence categories. One records a prescribed plan. The other captures patient-reported adherence. Neither should silently replace the other.
+
+<Callout type="clinical">
+  When an interface merges conflicting records into a single smooth statement, it has executed an automated reconciliation. If the software hides that choice, the attending clinician must spend clinic time rediscovering the underlying dispute.
+</Callout>
+
+This is why I evaluate AI answers by testing individual assertions. The claim that "the log covers seven days" and the claim that "the regimen is current" require different types of substantiation. A source confirming the former offers no proof for the latter.
+
+The [NIST Generative AI Profile (NIST AI 600-1)](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf) highlights both confabulation and inappropriate human reliance as core risks. In my software designs, the primary countermeasure is direct inspectability for every consequential claim.
+
+## II. Answer, Evidence, Source
+
+I structure clinical interfaces around a three-tier hierarchy:
+
+**Answer → Evidence → Source**
+
+1. **Answer**: States what the system can definitively substantiate from the data.
+2. **Evidence**: Presents the specific observations and dates supporting each claim.
+3. **Source**: Opens the underlying original chart document in its original context.
+
+Consider an inspectable claim card:
+
+> **Current Regimen:** Unresolved. The active pharmacy order lists 12 units of NPH at bedtime. A patient message sent yesterday reports taking 8 units due to morning hypoglycemia.
+
+Below that claim, the screen should display both excerpts side by side, labeled with author and timestamp. The clinician must be able to open each original document without losing the comparative view.
+
+<Callout type="technical">
+  A row of generic footnotes at the bottom of a generated note does not satisfy inspectability. It forces the physician to guess which document supported which sentence. It also allows an accurate citation to accompany an unsupported assertion.
+</Callout>
+
+The link between assertion and evidence must be granular enough to inspect and challenge immediately.
+
+## III. Separate Three Kinds of Uncertainty
+
+A system that simply warns of "low confidence" leaves the clinician stranded. The reviewer needs to know what is uncertain and what action will resolve it.
+
+In our glucose-review workflow, three distinct forms of uncertainty routinely emerge:
+
+| Uncertainty type | Clinical example | Useful software behavior |
+| --- | --- | --- |
+| **Missing Information** | An entry lacks a pre-prandial or post-prandial label | Display the value, flag the missing label, and prompt for clarification |
+| **Conflicting Information** | Medication list and patient message disagree | Present both entries side by side and require manual clinician reconciliation |
+| **Interpretation Limits** | A photo of a handwritten log is partially illegible | Flag the unparsed entry and open the raw image for clinician review |
+
+Each condition demands a different response. Collapsing these distinct failures into a single confidence percentage obscures reality. A score of 78% gives a clinician no indication whether the issue is a blurry photo or a contradictory medication order.
+
+The interface must also differentiate between "not documented in reviewed records" and "absent from the patient history." An incomplete retrieval cannot establish chart-wide absence. The answer must respect the physical scope of the search.
+
+## IV. Show the Basis Without Inventing a Reasoning Chain
+
+When reviewing an automated clinical output, I need to see the relevant evidence, the applied clinical rule, and the system limitations. I do not need a lengthy narrative claiming to reproduce the model's inner thoughts.
+
+A generated chain-of-thought explanation can read persuasively and still remain factually detached from the underlying chart. True reliability rests on verifiable evidence.
+
+For this workflow, the interface should expose the reviewed documents, the detected conflict, and the missing data point. If the system applied an institutional guideline, the guideline version and reference rule should appear alongside the output.
+
+We must also track two separate timestamps: the date an event occurred and the date it was entered into the chart. A patient may upload a log today that reflects readings from three weeks ago. An interface that sorts exclusively by upload time risks presenting stale measurements as current data.
+
+## V. Make Correction Part of the Workflow
+
+A physician must be able to reject an extracted measurement, amend an interpretation, or tag an outdated order as superseded. The system must record what was changed, by whom, and when.
+
+Corrections must trigger cascade updates. If a physician resolves a medication conflict on the review card, every dependent summary sentence and draft order must refresh automatically. Otherwise, the interface risks displaying a corrected observation beside an outdated recommendation.
+
+<Callout type="note">
+  Test your designs by intentionally mutating a single data point in a fictional record. If changing that value does not prompt a refresh of dependent outputs, your architecture has hidden a critical failure path.
+</Callout>
+
+The operational benchmark is **reviewability**: can a physician verify and correct an automated answer without reconstructing the entire chart by hand? That requires direct source access, explicit uncertainty states, and a correction path that flows through to downstream actions.
+
+---
+
+### Observe
+Review a generated summary from a fictional chart. Underline every statement that informs a clinical decision. Count how many statements link to an identifiable source sentence.
+
+### Interrogate
+For each underlined assertion, verify whether the source directly supports it, whether the information is current, and whether another chart section contradicts it.
+
+### Build
+Sketch an evidence card featuring one clinical claim, its source links, the detected uncertainty type, and a correction button. Include a clear example of an unresolved medication conflict.
+
+---
+
+<SeriesNav
+  title="From Search to Action"
+  current={1}
+  posts={[
+    { label: "1. Who Assembles the Clinical Picture?", href: "/blog/search-to-action-01-from-search-to-answers" },
+    { label: "2. An Answer You Can Inspect", href: "/blog/search-to-action-02-an-answer-you-can-inspect", current: true },
+    { label: "3. Before the Agent Acts", href: "/blog/search-to-action-03-from-answers-to-action" },
+    { label: "4. Design the Workflow First", href: "/blog/search-to-action-04-design-the-accountable-workflow" },
+  ]}
+/>

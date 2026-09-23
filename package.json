@@ -24,7 +24,8 @@
     "validate:site": "npm run validate:identity && npm run validate:learning && npm run validate:articles && npm run validate:routes && npm run validate:preservation",
     "check": "npm test && npm run build && npm run validate:site",
     "test:browser": "playwright test",
-    "test:browser:review": "node tests/browser/theme-review.mjs"
+    "test:browser:review": "node tests/browser/theme-review.mjs",
+    "ship:audio": "pwsh -File scripts/ship-and-sync-audio.ps1"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "7.3.1",

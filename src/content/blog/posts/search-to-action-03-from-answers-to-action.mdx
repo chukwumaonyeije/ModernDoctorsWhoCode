@@ -1,0 +1,129 @@
+---
+title: "From Answers to Action: The Human Checkpoint Is Part of the Architecture"
+description: "Turn a clinical instruction into a bounded workflow with explicit approval, execution states, and recovery from failure."
+pubDate: 2026-09-22T09:02:00-04:00
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "AI in Medicine"
+tags:
+  - "agentic ai"
+  - "clinical ai"
+  - "human in the loop"
+  - "workflow design"
+  - "physician-developer"
+  - "from-search-to-action"
+readingTime: 7
+draft: false
+featured: false
+---
+
+import Callout from '../../../components/Callout.astro';
+import SeriesNav from '../../../components/SeriesNav.astro';
+
+"Send her the updated plan and ask for another log in three days."
+
+In our fictional glucose-review scenario, the physician has finished reviewing the records. That single sentence now represents several downstream software tasks: confirm the approved regimen, draft the patient instructions, verify the recipient, dispatch the portal message, schedule the follow-up reminder, and document the encounter.
+
+An ambient scribe records that verbal statement. An action-oriented agent must manage its operational consequences.
+
+---
+
+## I. Intent Needs a Defined Destination
+
+A physician's spoken instruction expresses clinical intent. It does not supply the mechanical parameters required for safe execution.
+
+Which patient is "her"? Which medication plan is the "updated" one? Does "in three days" indicate when the patient sends new values or when our clinic staff checks for them? Who assumes ownership of the follow-up task if the original physician goes off duty?
+
+A human colleague clarifies these gaps through shared clinical context. Automated software requires that context represented explicitly.
+
+As I demonstrated in [Your First Agentic Workflow](/blog/your-first-agentic-workflow/), delegating tasks to autonomous software requires explicit constraints, verifiable plans, and defined stopping conditions.
+
+I structure clinical action pipelines along an explicit sequence:
+
+**Intent → Verified Context → Proposed Action → Approval → Execution → Confirmation**
+
+Every transition requires an objective gate. If the medication regimen remains contradictory, the system cannot assemble instructions. If the patient portal contact is unverified, it cannot dispatch messages. If the messaging server times out, it cannot report completion.
+
+## II. Separate Preparation From Commitment
+
+Drafting an outbound communication and transmitting it carry entirely different liabilities. Proposing an adjusted insulin dose is fundamentally different from signing an active order.
+
+In this prototype, I grant software permission to compile review packets and draft instructions derived from a physician-approved plan. I require an attending physician to sign off on patient-facing instructions and medication adjustments. Authorized services can then carry out the approved plan within strict boundaries.
+
+| Operational step | Boundary in this prototype |
+| --- | --- |
+| **Organize source records** | Automated within read-only access boundaries |
+| **Flag conflicting records** | Automated with direct source citations |
+| **Draft instructions** | Automated preparation derived from the confirmed plan |
+| **Adjust clinical regimen** | Attending physician decision only |
+| **Approve patient message** | Authorized clinician review gate |
+| **Send approved communication** | Automated dispatch of the exact approved text |
+| **Log follow-up tasks** | Automated creation linked to confirmed delivery |
+
+<Callout type="clinical">
+  The human checkpoint belongs at the precise boundary where an automated proposal converts into an irreversible clinical commitment.
+</Callout>
+
+## III. Approval Must Refer to an Exact Action
+
+A simple button labeled "Approve" provides no safety guarantee unless the reviewer inspects the exact payload being authorized.
+
+The verification interface must show the verified patient identifier, current clinical plan, exact message text, intended recipient, scheduled follow-up date, and unresolved alerts. If a prescription is included, order details must appear in their own dedicated review block.
+
+Approval applies exclusively to that exact version. If the patient record, medication plan, or message wording changes after approval, the system must revoke the sign-off and require re-review. A prior approval cannot carry over to modified text.
+
+<Callout type="technical">
+  Avoid grouping disparate actions into a single click. Authorizing a patient message must not silently execute a pharmacy order. The physician must see the full scope of each commitment before confirming it.
+</Callout>
+
+This design ensures the human checkpoint functions as a true safeguard rather than a rubber stamp. It equips the physician with the context and authority needed to alter the outcome.
+
+## IV. A Request Is Not a Completed Action
+
+Suppose our clinic messaging service encounters a network timeout. The software issued a transmission request, but received no acknowledgment from the remote server.
+
+Did the communication fail? Did it deliver successfully? Would an immediate retry send a duplicate alert to the patient?
+
+Your software must represent this ambiguity explicitly. "Delivery unknown" is a distinct operational state. It must trigger an automated status query or alert a staff member. It must never display an unconfirmed success checkmark.
+
+When third-party interfaces allow it, assign an idempotency key to each transmission. This unique identifier prevents duplicate actions when retrying after a timeout. If the external system lacks idempotency support, your architecture must include a manual reconciliation step before reissuing the command.
+
+Partial failures also occur. The patient message may deliver successfully while the clinic task creation crashes. A generic green confirmation badge hides incomplete clinical care. The software must report the distinct status of each individual subtask and assign ownership of unfinished items.
+
+Certain clinical actions cannot be undone. You cannot unsend a delivered portal message. Recovery plans must detail corrective measures, such as drafting a clarification note, rather than promising a simple rollback button.
+
+## V. Build Ordinary Controls Around the Model
+
+Language models excel at parsing unstructured text and drafting initial communications. Deterministic code must govern authorization, mandatory fields, review checkpoints, and database writes.
+
+Incoming patient portal messages and uploaded records are external inputs. Instructions contained inside them must never possess system authority to redirect messages, bypass approval gates, or run software scripts. That separation must be enforced by application security rules.
+
+<Callout type="note">
+  **Data governance:** Moving clinical workflows to production requires rigorous data architecture. [HHS guidance on HIPAA and cloud computing](https://www.hhs.gov/hipaa/for-professionals/special-topics/health-information-technology/cloud-computing/index.html) outlines mandatory business associate agreements, audit logs, and safeguards for protected health information. A software vendor's badge does not absolve you of structural compliance.
+</Callout>
+
+Using fictional patient cases keeps learning safe and focused. We can stress-test approval controls, conflicting instructions, and communication failures without compromising patient privacy.
+
+---
+
+### Observe
+Select a clinical order or message in your practice that initiates multiple downstream actions. List each resulting task, along with the confirmation signal that proves it was completed.
+
+### Interrogate
+Determine who has authority to prepare, authorize, and run each step. What happens if a network request drops, a duplicate submission occurs, or a multi-part process fails midway through?
+
+### Build
+Diagram the path from physician intent to final task confirmation. Include an explicit human approval gate, an "unknown status" error state, and a designated team role responsible for resolving failed jobs.
+
+---
+
+<SeriesNav
+  title="From Search to Action"
+  current={2}
+  posts={[
+    { label: "1. Who Assembles the Clinical Picture?", href: "/blog/search-to-action-01-from-search-to-answers" },
+    { label: "2. An Answer You Can Inspect", href: "/blog/search-to-action-02-an-answer-you-can-inspect" },
+    { label: "3. Before the Agent Acts", href: "/blog/search-to-action-03-from-answers-to-action", current: true },
+    { label: "4. Design the Workflow First", href: "/blog/search-to-action-04-design-the-accountable-workflow" },
+  ]}
+/>
