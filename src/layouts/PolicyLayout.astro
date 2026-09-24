@@ -1,0 +1,27 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="page-shell page-shell--compact policy-page">
+    <p class="label">Doctors Who Code</p>
+    <h1>{title}</h1>
+    <div class="prose policy-copy"><slot /></div>
+  </article>
+</BaseLayout>
+
+<style>
+  .policy-page { max-width: 52rem; }
+  .policy-page > .label { margin-bottom: 0.75rem; }
+  .policy-page > h1 { margin-bottom: 1.5rem; }
+  .policy-copy :global(h2) { margin-top: 2rem; font-size: 1.4rem; }
+  .policy-copy :global(p), .policy-copy :global(li) { line-height: 1.75; }
+  .policy-copy :global(ul) { padding-left: 1.3rem; }
+</style>

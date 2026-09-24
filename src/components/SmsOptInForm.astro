@@ -1,0 +1,147 @@
+---
+import { smsConsentText, smsProgram } from '../data/sms-program';
+
+const consentMessage = `DWC OPT IN ${smsProgram.version}: ${smsConsentText} I am at least 18 and control the number sending this text. Privacy: ${smsProgram.privacyUrl} Terms: ${smsProgram.termsUrl}`;
+---
+
+<section class="sms-card" aria-labelledby="sms-form-heading" data-sms-signup>
+  <p class="label">Doctors Who Code · SMS</p>
+  <h2 id="sms-form-heading">Choose text updates</h2>
+  <p class="sms-intro">Review your consent here, then send the signup text from your phone to finish. Opening your texting app does not subscribe you.</p>
+
+  <!-- Controls stay disabled until the handler is attached: no accidental GET of a phone number. -->
+  <form id="sms-signup-form" aria-label="Text updates signup">
+    <fieldset disabled data-sms-fields>
+      <legend class="sr-only">Your mobile number and optional SMS consent</legend>
+      <label class="phone-label" for="sms-phone">Mobile phone number <span>(required)</span></label>
+      <input id="sms-phone" type="tel" autocomplete="tel" inputmode="tel" required maxlength="24" aria-describedby="sms-phone-help" placeholder="(201) 555-0123" />
+      <p class="sms-hint" id="sms-phone-help">Use a US mobile number you control. Send the signup text from this same number. This field stays in your browser.</p>
+
+      <div class="sms-consent-row">
+        <input id="sms-consent" type="checkbox" aria-describedby="sms-policy-links sms-age-note" />
+        <label for="sms-consent">{smsConsentText}</label>
+      </div>
+      <p id="sms-policy-links" class="sms-policy-links"><a href="/privacy/">Privacy Policy</a> · <a href="/terms/">SMS Terms</a></p>
+      <p id="sms-age-note" class="sms-hint">For adults 18 and older. SMS consent is optional. Leave the box unchecked to continue without signing up.</p>
+      <button class="site-button site-button--primary sms-submit" type="submit">Continue</button>
+    </fieldset>
+  </form>
+  <p id="sms-status" class="sms-status" role="status" aria-live="polite" aria-atomic="true"></p>
+
+  <section id="sms-next-step" class="sms-next-step" hidden aria-labelledby="sms-next-heading">
+    <h3 id="sms-next-heading" tabindex="-1">Send your signup text</h3>
+    <p>Send the message below to <strong>{smsProgram.displayNumber}</strong> from <strong id="sms-sending-number"></strong>. Your incoming text records your consent in Get Dial. Until you send it, you are not subscribed.</p>
+    <label for="sms-message">Your signup message</label>
+    <textarea id="sms-message" rows="6" readonly>{consentMessage}</textarea>
+    <div class="sms-actions">
+      <button type="button" class="site-button site-button--secondary" id="sms-copy">Copy message</button>
+      <a class="site-button site-button--primary" id="sms-open-app" href={`sms:${smsProgram.number}`}>Open texting app</a>
+    </div>
+    <p class="sms-hint">Paste the message if your app does not fill it in. On a computer without texting, open this page on your phone or copy the message into your usual SMS app. Message and data rates may apply.</p>
+    <p class="sms-hint">The website cannot confirm that your text was sent or received. Outbound updates will begin only after the program is approved for messaging.</p>
+  </section>
+
+  <noscript><p class="sms-status">Enable JavaScript to prepare your signup text with this form. No information has been submitted. You can still read the <a href="/privacy/">Privacy Policy</a> and <a href="/terms/">SMS Terms</a>, or email <a href={`mailto:${smsProgram.supportEmail}`}>{smsProgram.supportEmail}</a> for help.</p></noscript>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#sms-signup-form');
+  const fields = document.querySelector<HTMLFieldSetElement>('[data-sms-fields]');
+  const phone = document.querySelector<HTMLInputElement>('#sms-phone');
+  const consent = document.querySelector<HTMLInputElement>('#sms-consent');
+  const status = document.querySelector<HTMLParagraphElement>('#sms-status');
+  const nextStep = document.querySelector<HTMLElement>('#sms-next-step');
+  const sendingNumber = document.querySelector<HTMLElement>('#sms-sending-number');
+  const message = document.querySelector<HTMLTextAreaElement>('#sms-message');
+  const copy = document.querySelector<HTMLButtonElement>('#sms-copy');
+  const appLink = document.querySelector<HTMLAnchorElement>('#sms-open-app');
+
+  if (form && fields && phone && consent && status && nextStep && sendingNumber && message && copy && appLink) {
+    const recipientUri = appLink.getAttribute('href');
+    /** Never keep a prepared signup available after the visitor changes consent or number. */
+    function resetPreparedSignup() {
+      nextStep!.hidden = true;
+      status!.textContent = '';
+      phone!.setCustomValidity('');
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      nextStep.hidden = true;
+      if (!consent.checked) {
+        status.textContent = 'You have not signed up for texts. Your number has not been submitted. You can keep browsing without SMS updates.';
+        return;
+      }
+      const digits = phone.value.replace(/[\s()+.-]/g, '');
+      const local = digits.length === 11 && digits.startsWith('1') ? digits.slice(1) : digits;
+      if (!/^[2-9]\d{2}[2-9]\d{6}$/.test(local)) {
+        phone.setCustomValidity('Enter a valid 10-digit US mobile number, optionally starting with +1.');
+        phone.reportValidity();
+        return;
+      }
+      sendingNumber.textContent = `(${local.slice(0, 3)}) ${local.slice(3, 6)}-${local.slice(6)}`;
+      nextStep.hidden = false;
+      status.textContent = 'Your signup text is ready. Nothing has been sent. Complete signup in your texting app.';
+      document.querySelector<HTMLElement>('#sms-next-heading')?.focus();
+    });
+
+    phone.addEventListener('input', resetPreparedSignup);
+    consent.addEventListener('change', resetPreparedSignup);
+    form.addEventListener('reset', resetPreparedSignup);
+    // Page restoration must not turn a previous choice into a preselected consent checkbox.
+    window.addEventListener('pageshow', () => { consent.checked = false; resetPreparedSignup(); });
+
+    copy.addEventListener('click', async () => {
+      if (!consent.checked || nextStep.hidden) return;
+      try {
+        await navigator.clipboard.writeText(message.value);
+        status.textContent = 'Message copied. Paste it into your texting app and send it to finish signup.';
+      } catch {
+        message.focus();
+        message.select();
+        status.textContent = 'Automatic copying is unavailable. Copy the selected message, then paste and send it in your texting app.';
+      }
+    });
+
+    appLink.addEventListener('click', (event) => {
+      if (!consent.checked || nextStep.hidden) {
+        event.preventDefault();
+        return;
+      }
+      // SMS URI body support differs by device. The visible message and copy action are the fallback.
+      const ios = /iPad|iPhone|iPod/.test(navigator.userAgent)
+        || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      appLink.href = `${recipientUri}${ios ? '&' : '?'}body=${encodeURIComponent(message.value)}`;
+      status.textContent = 'Send the message in your texting app to finish. Opening the app alone does not subscribe you.';
+    });
+    fields.disabled = false;
+  }
+</script>
+
+<style>
+  .sms-card { padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--color-border); border-radius: 16px; background: var(--color-surface); }
+  .sms-card > .label { margin-bottom: 0.6rem; }
+  .sms-card h2 { font-size: clamp(1.55rem, 3vw, 1.9rem); }
+  .sms-intro, .sms-hint { color: var(--color-muted); }
+  .sms-intro { margin-bottom: 1.5rem; }
+  fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+  .phone-label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
+  .phone-label span { font-weight: 400; color: var(--color-muted); }
+  input[type="tel"], textarea { width: 100%; border: 1px solid var(--color-border); border-radius: 8px; padding: 0.75rem; color: var(--color-text); background: var(--color-background); }
+  input::placeholder { color: var(--color-muted); opacity: 1; }
+  .sms-hint { font-size: 0.875rem; line-height: 1.6; margin: 0.5rem 0 1.25rem; }
+  .sms-consent-row { display: grid; grid-template-columns: 1.25rem 1fr; gap: 0.75rem; align-items: start; }
+  input[type="checkbox"] { width: 1.2rem; height: 1.2rem; margin: 0.25rem 0 0; accent-color: var(--color-accent); }
+  .sms-consent-row label { line-height: 1.65; cursor: pointer; }
+  .sms-policy-links { margin: 0.75rem 0 0 2rem; }
+  .sms-card a:not(.site-button) { text-decoration: underline; text-underline-offset: 0.2em; }
+  .sms-submit { width: 100%; margin-top: 0.25rem; }
+  .sms-status { margin: 1rem 0 0; }
+  .sms-status:empty { display: none; }
+  .sms-next-step { border-top: 1px solid var(--color-border); margin-top: 1.5rem; padding-top: 1.5rem; }
+  .sms-next-step h3 { font-size: 1.4rem; }
+  textarea { display: block; margin-top: 0.5rem; resize: vertical; font-size: 0.9375rem; line-height: 1.6; }
+  .sms-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
+  .sms-actions > * { flex: 1 1 12rem; }
+  [hidden] { display: none !important; }
+</style>

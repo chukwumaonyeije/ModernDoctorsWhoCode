@@ -1,6 +1,21 @@
 {
   "version": 1,
   "pages": {
+    "/privacy/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/privacy/"
+      ]
+    },
+    "/terms/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/terms/"
+      ]
+    },
+    "/text-updates/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/text-updates/"
+      ]
+    },
     "/about/": {
       "canonical": [
         "https://www.doctorswhocode.blog/about/"

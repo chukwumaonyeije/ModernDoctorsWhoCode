@@ -1,0 +1,36 @@
+---
+import PolicyLayout from '../layouts/PolicyLayout.astro';
+import { smsProgram } from '../data/sms-program';
+---
+
+<PolicyLayout title="SMS Terms" description="Doctors Who Code text messaging program: purpose, frequency, consent, cancellation, and support.">
+  <p class="label">Updated September 24, 2026</p>
+  <p>These terms apply to the Doctors Who Code text messaging program, operated by Chukwuma Onyeije using Get Dial. Program messages come from <strong>{smsProgram.displayNumber}</strong>.</p>
+
+  <h2>What you are signing up for</h2>
+  <p>Subscribers receive {smsProgram.purpose}. Topics include physician technology literacy, AI agents, and clinical software. Messages are informational and educational.</p>
+
+  <h2>Consent is your choice</h2>
+  <p>Only sign up with a mobile number you control. You must be at least 18 years old. The consent box on the <a href="/text-updates/">Text Updates form</a> starts unchecked. Entering a number without affirmative consent does not enroll you.</p>
+  <p>After reviewing the form, send the prepared signup text from your own phone to {smsProgram.displayNumber}. Signup completes when that affirmative consent text reaches the program. Opening your texting app or clicking Continue alone does not subscribe you.</p>
+  <p>Consent is not a condition of purchase. You can read the website and subscribe to the email newsletter without signing up for texts.</p>
+
+  <h2>Frequency and cost</h2>
+  <p>{smsProgram.frequency} {smsProgram.rates} Your mobile carrier determines those charges. Contact your carrier if you have questions about your plan.</p>
+
+  <h2>Cancel or get help</h2>
+  <p>Reply <strong>STOP</strong> to cancel or <strong>HELP</strong> for help. You can also contact <a href={`mailto:${smsProgram.supportEmail}`}>{smsProgram.supportEmail}</a> for support or to request cancellation. Tell us if you give up or change your subscribed number.</p>
+
+  <h2>Delivery</h2>
+  <p>Message delivery depends on mobile networks and device availability. Delivery may be delayed or fail. Mobile carriers are not liable for delayed or undelivered messages.</p>
+
+  <h2>Privacy</h2>
+  <p>The <a href="/privacy/">Privacy Policy</a> explains how mobile information and consent records are handled. Mobile information and messaging consent are not sold or shared with third parties or affiliates for marketing or promotional purposes.</p>
+
+  <h2>Educational use</h2>
+  <p>The program does not provide medical care, individualized medical advice, or patient outreach. Do not send patient-identifying information or use this number for emergencies.</p>
+
+  <h2>Changes and contact</h2>
+  <p>Updates to these terms will appear here with a revised date. Any new use requiring consent will require a new opt-in. Contact Chukwuma Onyeije at <a href={`mailto:${smsProgram.supportEmail}`}>{smsProgram.supportEmail}</a> with questions.</p>
+  <p><a href="/text-updates/">Text Updates</a> · <a href="/privacy/">Privacy Policy</a></p>
+</PolicyLayout>

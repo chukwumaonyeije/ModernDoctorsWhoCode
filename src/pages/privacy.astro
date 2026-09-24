@@ -1,0 +1,36 @@
+---
+import PolicyLayout from '../layouts/PolicyLayout.astro';
+import { smsProgram } from '../data/sms-program';
+---
+
+<PolicyLayout title="Privacy Policy" description="How Doctors Who Code handles website, newsletter, and text messaging information.">
+  <p class="label">Updated September 24, 2026</p>
+  <p>I operate Doctors Who Code at doctorswhocode.blog. This policy explains how I handle information from this website, the email newsletter, and the Doctors Who Code text messaging program.</p>
+
+  <h2>Information you choose to provide</h2>
+  <p>The email newsletter collects your email address and any optional name or learning interests you provide. Beehiiv processes those subscriptions. If you contact me, I receive the contact information and message you send.</p>
+  <p>The SMS program uses your mobile number, your affirmative consent, the time consent is received, and your messages to operate the program and honor your preferences. Email subscription does not enroll you in SMS. Entering a phone number alone does not give consent.</p>
+  <p>The Text Updates form prepares a message in your browser. The website does not submit or store the number entered in that field. Signup is completed when you send the consent text from your mobile phone. Get Dial receives the sender number, message, and received timestamp as the consent record.</p>
+
+  <h2>Text messaging privacy</h2>
+  <p>I use mobile information to send the messages you requested, answer questions, document consent, and process opt-outs. Get Dial and the carriers involved in delivering texts process messaging information to provide those services.</p>
+  <p>No mobile information will be shared with third parties or affiliates for marketing or promotional purposes. Text messaging opt-in data and consent will not be sold or shared for those purposes. Service providers may process this information only as necessary to operate the messaging program.</p>
+  <p>{smsProgram.frequency} {smsProgram.rates} {smsProgram.optOut} Read the <a href="/terms/">SMS Terms</a> for program details.</p>
+
+  <h2>Website operation</h2>
+  <p>Vercel hosts this site and provides website analytics. Hosting and analytics services may process technical information about visits and requests, such as browser, device, page, and network information. The site stores your selected color theme in your browser when you choose a preference.</p>
+  <p>Some articles contain content embedded from other websites. Those providers may collect information when their content loads. Their own privacy policies apply to their services.</p>
+
+  <h2>Access and retention</h2>
+  <p>I limit access to personal information to the people and service providers who need it to operate the site or messaging program. Records are retained as needed to provide those services, document consent, honor opt-outs, and meet applicable obligations. An opt-out record may need to be retained to prevent further messages.</p>
+
+  <h2>Your choices</h2>
+  <p>Use the unsubscribe link in newsletter emails to stop email updates. Reply STOP to a program text to stop SMS updates. These are separate subscriptions. You can request access, correction, or deletion of your information by emailing <a href={`mailto:${smsProgram.supportEmail}`}>{smsProgram.supportEmail}</a>.</p>
+
+  <h2>Educational scope</h2>
+  <p>This program is for adults interested in physician technology education. It is not a clinical service or a channel for patient information. Do not send patient-identifying details or medical records.</p>
+
+  <h2>Contact and policy changes</h2>
+  <p>For privacy questions, contact Chukwuma Onyeije at <a href={`mailto:${smsProgram.supportEmail}`}>{smsProgram.supportEmail}</a>. Updates to this policy will appear on this page with a revised date.</p>
+  <p><a href="/text-updates/">Text Updates</a> · <a href="/terms/">SMS Terms</a></p>
+</PolicyLayout>

@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SmsOptInForm from '../components/SmsOptInForm.astro';
+import { smsProgram } from '../data/sms-program';
+---
+
+<BaseLayout title="Text Updates" description="Choose Doctors Who Code text updates about educational resources, lessons, articles, and account notices. Review SMS consent, privacy, and terms.">
+  <div class="page-shell sms-page">
+    <header class="sms-page-header">
+      <h1>Text updates from Doctors Who Code</h1>
+      <p>Lessons, articles, and educational reminders for physicians who build. {smsProgram.frequency}</p>
+    </header>
+    <SmsOptInForm />
+    <p class="sms-support">Questions? Email <a href={`mailto:${smsProgram.supportEmail}`}>{smsProgram.supportEmail}</a>. Prefer email updates? <a href="/contact/">Join the newsletter</a>.</p>
+    <p class="sms-scope">For educational updates only. Do not send patient information or use this program for medical care.</p>
+  </div>
+</BaseLayout>
+
+<style>
+  .sms-page { max-width: 49rem; }
+  .sms-page-header { margin-bottom: 1.5rem; }
+  .sms-page-header h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); }
+  .sms-page-header p { color: var(--color-muted); margin-bottom: 0; }
+  .sms-support { margin: 1.25rem 0 0.5rem; font-size: 0.9375rem; }
+  .sms-support a { text-decoration: underline; text-underline-offset: 0.2em; }
+  .sms-scope { color: var(--color-muted); font-size: 0.875rem; margin-bottom: 0; }
+</style>
