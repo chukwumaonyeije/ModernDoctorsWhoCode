@@ -1,13 +1,16 @@
 ---
-import { smsConsentText, smsProgram } from '../data/sms-program';
-
-const consentMessage = `DWC OPT IN ${smsProgram.version}: ${smsConsentText} I am at least 18 and control the number sending this text. Privacy: ${smsProgram.privacyUrl} Terms: ${smsProgram.termsUrl}`;
+import { smsConsentText, smsProgram, smsConsentMessage as consentMessage } from '../data/sms-program';
 ---
 
 <section class="sms-card" aria-labelledby="sms-form-heading" data-sms-signup>
   <p class="label">Doctors Who Code · SMS</p>
   <h2 id="sms-form-heading">Choose text updates</h2>
   <p class="sms-intro">Review your consent here, then send the signup text from your phone to finish. Opening your texting app does not subscribe you.</p>
+  <ol class="sms-steps" aria-label="How to sign up for texts">
+    <li>Enter your mobile number and choose whether to consent below.</li>
+    <li>If you consent, select Continue to review your complete signup message.</li>
+    <li>Send that message from your phone to <strong>{smsProgram.number}</strong>. It begins <strong>DWC OPT IN {smsProgram.version}:</strong> and includes the full consent wording. Send the complete message, not just the prefix.</li>
+  </ol>
 
   <!-- Controls stay disabled until the handler is attached: no accidental GET of a phone number. -->
   <form id="sms-signup-form" aria-label="Text updates signup">
@@ -30,9 +33,9 @@ const consentMessage = `DWC OPT IN ${smsProgram.version}: ${smsConsentText} I am
 
   <section id="sms-next-step" class="sms-next-step" hidden aria-labelledby="sms-next-heading">
     <h3 id="sms-next-heading" tabindex="-1">Send your signup text</h3>
-    <p>Send the message below to <strong>{smsProgram.displayNumber}</strong> from <strong id="sms-sending-number"></strong>. Your incoming text records your consent in Get Dial. Until you send it, you are not subscribed.</p>
+    <p>Send the complete message below to <strong>{smsProgram.number}</strong> from <strong id="sms-sending-number"></strong>. It begins <strong>DWC OPT IN {smsProgram.version}:</strong>. Your incoming text records your consent in Get Dial. Until you send it, you are not subscribed.</p>
     <label for="sms-message">Your signup message</label>
-    <textarea id="sms-message" rows="6" readonly>{consentMessage}</textarea>
+    <textarea id="sms-message" rows="12" readonly>{consentMessage}</textarea>
     <div class="sms-actions">
       <button type="button" class="site-button site-button--secondary" id="sms-copy">Copy message</button>
       <a class="site-button site-button--primary" id="sms-open-app" href={`sms:${smsProgram.number}`}>Open texting app</a>
@@ -124,6 +127,8 @@ const consentMessage = `DWC OPT IN ${smsProgram.version}: ${smsConsentText} I am
   .sms-card h2 { font-size: clamp(1.55rem, 3vw, 1.9rem); }
   .sms-intro, .sms-hint { color: var(--color-muted); }
   .sms-intro { margin-bottom: 1.5rem; }
+  .sms-steps { margin: 0 0 1.5rem; padding-left: 1.4rem; line-height: 1.65; list-style: decimal; }
+  .sms-steps li + li { margin-top: 0.5rem; }
   fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
   .phone-label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
   .phone-label span { font-weight: 400; color: var(--color-muted); }

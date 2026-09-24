@@ -14,6 +14,8 @@ test('initial disclosure is readable, unchecked, optional, and linked to real po
   await expect(consent).not.toHaveAttribute('required');
   await expect(page.locator('#sms-phone')).toHaveAttribute('required');
   await expect(page.locator('#sms-next-step')).toBeHidden();
+  await expect(page.getByRole('list', { name: 'How to sign up for texts' })).toContainText('+17638787305');
+  await expect(page.getByRole('list', { name: 'How to sign up for texts' })).toContainText('DWC OPT IN 2026-09-24:');
   for (const text of ['Message frequency varies.', 'Message and data rates may apply.', 'Reply STOP to cancel or HELP for help.']) {
     await expect(page.locator('label[for="sms-consent"]')).toContainText(text);
   }

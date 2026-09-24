@@ -15,3 +15,7 @@ export const smsProgram = {
 } as const;
 
 export const smsConsentText = `I agree to receive text messages from ${smsProgram.brand} (${smsProgram.operator}) about ${smsProgram.purpose}. ${smsProgram.frequency} ${smsProgram.rates} ${smsProgram.optOut} Consent is not a condition of purchase.`;
+
+export const smsConsentMessage = `DWC OPT IN ${smsProgram.version}: ${smsConsentText} I am at least 18 and control the number sending this text. Privacy: ${smsProgram.privacyUrl} Terms: ${smsProgram.termsUrl}`;
+
+export const smsWelcomeMessage = `Doctors Who Code: You are subscribed to educational text updates and account notices. ${smsProgram.frequency} ${smsProgram.rates} Reply HELP for help or contact ${smsProgram.supportEmail}. Reply STOP to cancel.`;

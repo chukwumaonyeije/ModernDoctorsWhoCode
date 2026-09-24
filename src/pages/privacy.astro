@@ -13,6 +13,7 @@ import { smsProgram } from '../data/sms-program';
   <p>The Text Updates form prepares a message in your browser. The website does not submit or store the number entered in that field. Signup is completed when you send the consent text from your mobile phone. Get Dial receives the sender number, message, and received timestamp as the consent record.</p>
 
   <h2>Text messaging privacy</h2>
+  <p>A private Vercel-hosted SMS handler also records the sender number, consent wording and version, received time, opt-out status, and reply-processing records. These records support enrollment confirmations, HELP responses, and opt-outs. The handler does not store unrelated incoming message bodies or attachments.</p>
   <p>I use mobile information to send the messages you requested, answer questions, document consent, and process opt-outs. Get Dial and the carriers involved in delivering texts process messaging information to provide those services.</p>
   <p>No mobile information will be shared with third parties or affiliates for marketing or promotional purposes. Text messaging opt-in data and consent will not be sold or shared for those purposes. Service providers may process this information only as necessary to operate the messaging program.</p>
   <p>{smsProgram.frequency} {smsProgram.rates} {smsProgram.optOut} Read the <a href="/terms/">SMS Terms</a> for program details.</p>
