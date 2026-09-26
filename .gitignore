@@ -33,3 +33,6 @@ baseline/*.candidate.json
 test-results/
 playwright-report/
 tmp/
+
+# Private registration backup contains personal contact and address information.
+docs/GETDIAL-RESUBMISSION-2026-09-24.private.md

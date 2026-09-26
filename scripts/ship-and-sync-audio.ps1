@@ -18,8 +18,8 @@ Write-Host "==========================================================" -Foregro
 Write-Host "`n[1/5] Checking local changes..." -ForegroundColor Yellow
 $status = git status --porcelain
 if ($status) {
-    Write-Host "Staging new content, downloads, and skills..."
-    git add src/content public/downloads .agents scripts package.json .gitignore
+    Write-Host "Staging new content, images, downloads, and skills..."
+    git add src/content public/images public/downloads .agents scripts package.json .gitignore
     $staged = git diff --cached --name-only
     if ($staged) {
         Write-Host "Committing staged changes with message: '$CommitMessage'"
