@@ -3641,6 +3641,11 @@
       "canonical": [
         "https://www.doctorswhocode.blog/blog/building-the-agenticbuildermd-laboratory/"
       ]
+    },
+    "/blog/ai-wardrobe-md-physician-learning-to-code/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/blog/ai-wardrobe-md-physician-learning-to-code/"
+      ]
     }
   },
   "articles": {
@@ -20390,6 +20395,83 @@
         ],
         "bodyTextHash": "0cae3ff50858ef297db0fdb2bf1ef15128a5e7ccd784160507629cfcab3c5671"
       }
+    },
+    "ai-wardrobe-md-physician-learning-to-code.mdx": {
+      "id": "ai-wardrobe-md-physician-learning-to-code",
+      "route": "/blog/ai-wardrobe-md-physician-learning-to-code/",
+      "bodyHash": "e7f7145d71b83fd513571400d5db0c56393eee4bf54fce7c9e3b8f8d5e57a77b",
+      "frontmatter": {
+        "audioUrl": "/audio/ai-wardrobe-md-physician-learning-to-code.mp3",
+        "title": "I Built a Digital Closet. It Belongs in a Physician's Coding Education.",
+        "description": "How a private digital closet helps physicians learn coding, structured data, AI review, and application design without using patient information.",
+        "pubDate": "2026-10-04T00:00:00.000Z",
+        "author": "Chukwuma Onyeije, MD, FACOG",
+        "authorUrl": "https://www.linkedin.com/in/chukwumaonyeije",
+        "slug": "ai-wardrobe-md-physician-learning-to-code",
+        "tags": [
+          "Physician Development",
+          "Learn to Code",
+          "Personal Software",
+          "AI Wardrobe MD"
+        ],
+        "category": "Technology",
+        "image": {
+          "url": "/images/posts/ai-wardrobe-md-physician-learning-to-code.png",
+          "alt": "A blazer, shirt, and trousers in a closet connected by cyan lines to matching garment cards on a laptop."
+        },
+        "draft": false,
+        "featured": true,
+        "featuredRank": 19000
+      },
+      "rendered": {
+        "title": "I Built a Digital Closet. It Belongs in a Physician's Coding Education. | Doctors Who Code",
+        "description": "How a private digital closet helps physicians learn coding, structured data, AI review, and application design without using patient information.",
+        "canonical": [
+          "https://www.doctorswhocode.blog/blog/ai-wardrobe-md-physician-learning-to-code/"
+        ],
+        "published": "2026-10-04T00:00:00.000Z",
+        "ogImage": "https://www.doctorswhocode.blog/og/ai-wardrobe-md-physician-learning-to-code.png",
+        "audio": [
+          "/audio/ai-wardrobe-md-physician-learning-to-code.mp3"
+        ],
+        "contentMedia": [
+          {
+            "tag": "img",
+            "src": "/images/posts/ai-wardrobe-md-physician-learning-to-code.png"
+          }
+        ],
+        "metadata": {
+          "description": "How a private digital closet helps physicians learn coding, structured data, AI review, and application design without using patient information.",
+          "author": "Chukwuma Onyeije, MD, FACOG",
+          "robots": "index, follow, max-image-preview:large",
+          "og:title": "I Built a Digital Closet. It Belongs in a Physician's Coding Education. | Doctors Who Code",
+          "og:description": "How a private digital closet helps physicians learn coding, structured data, AI review, and application design without using patient information.",
+          "og:image": "https://www.doctorswhocode.blog/og/ai-wardrobe-md-physician-learning-to-code.png",
+          "og:image:alt": "I Built a Digital Closet. It Belongs in a Physician's Coding Education. | Doctors Who Code",
+          "og:url": "https://www.doctorswhocode.blog/blog/ai-wardrobe-md-physician-learning-to-code/",
+          "og:type": "article",
+          "og:site_name": "Doctors Who Code",
+          "og:locale": "en_US",
+          "twitter:card": "summary_large_image",
+          "twitter:site": "@chukwumaonyeije",
+          "twitter:creator": "@chukwumaonyeije",
+          "twitter:title": "I Built a Digital Closet. It Belongs in a Physician's Coding Education. | Doctors Who Code",
+          "twitter:description": "How a private digital closet helps physicians learn coding, structured data, AI review, and application design without using patient information.",
+          "twitter:image": "https://www.doctorswhocode.blog/og/ai-wardrobe-md-physician-learning-to-code.png",
+          "article:published_time": "2026-10-04T00:00:00.000Z"
+        },
+        "headings": [
+          "article-title",
+          "a-photograph-has-to-become-useful-data",
+          "an-ai-suggestion-has-to-earn-its-place-in-the-record",
+          "the-application-has-to-remain-useful-when-ai-is-unavailable",
+          "a-private-collection-needs-ownership-rules",
+          "learning-to-code-includes-learning-to-verify",
+          "share-heading",
+          "related-articles-heading"
+        ],
+        "bodyTextHash": "eb2cdc39c940d5de758c900b208c14476595ffb5465018be89ac3b827da724bf"
+      }
     }
   },
   "sourceHashes": {
@@ -20772,7 +20854,9 @@
     "/slides/fhir-playbook.html": "da093cb89e1c7bde08004a0ca000ebbe67114da2704d9623a7fa29ee3b076662",
     "/slides/limits-of-viability.html": "ed91629857f74d497aab38392efa1d95d7a5f1c93761f0c5588f08afd02c1123",
     "/audio/building-the-agenticbuildermd-laboratory.mp3": "dc967b11c57dae84ef68850d732651950ad2c5b2fe96a2b742efa58717905650",
-    "/images/posts/building-the-agenticbuildermd-laboratory-hero.png": "8909f33cc81cf439b4e8a988328435612226117814e99bcc6c9aa18f8a4ef863"
+    "/images/posts/building-the-agenticbuildermd-laboratory-hero.png": "8909f33cc81cf439b4e8a988328435612226117814e99bcc6c9aa18f8a4ef863",
+    "/images/posts/ai-wardrobe-md-physician-learning-to-code.png": "a90eeabbfcfb73a89fbdbca9d6a2534338c547a3dc6dc08d45edc7f41927b3f1",
+    "/audio/ai-wardrobe-md-physician-learning-to-code.mp3": "a17ace52c5b1294997f0b42b4bd0dc4d000bc19921c0de39812dd2ec2da233bf"
   },
   "endpoints": [
     "/.well-known/chukwuma-onyeije-identity.txt",
@@ -21360,7 +21444,10 @@
     "/sitemap-index.xml",
     "/audio/building-the-agenticbuildermd-laboratory.mp3",
     "/images/posts/building-the-agenticbuildermd-laboratory-hero.png",
-    "/og/building-the-agenticbuildermd-laboratory.png"
+    "/og/building-the-agenticbuildermd-laboratory.png",
+    "/images/posts/ai-wardrobe-md-physician-learning-to-code.png",
+    "/audio/ai-wardrobe-md-physician-learning-to-code.mp3",
+    "/og/ai-wardrobe-md-physician-learning-to-code.png"
   ],
   "redirects": [
     {
@@ -22479,6 +22566,11 @@
       "title": "I Built an AI Agent. Now I Am Building the Laboratory Around It.",
       "description": "The Doctors Who Code phone bot led to AgenticBuilderMD: a public laboratory for learning agents, tools, memory, and human checkpoints through practical builds.",
       "published": "Sun, 20 Sep 2026 03:00:00 GMT"
+    },
+    "https://www.doctorswhocode.blog/blog/ai-wardrobe-md-physician-learning-to-code/": {
+      "title": "I Built a Digital Closet. It Belongs in a Physician&apos;s Coding Education.",
+      "description": "How a private digital closet helps physicians learn coding, structured data, AI review, and application design without using patient information.",
+      "published": "Sun, 04 Oct 2026 00:00:00 GMT"
     }
   },
   "sitemapUrls": [
@@ -23205,6 +23297,7 @@
     "https://www.doctorswhocode.blog/tags/workflow/",
     "https://www.doctorswhocode.blog/tags/youtube-analysis/",
     "https://www.doctorswhocode.blog/verified/",
-    "https://www.doctorswhocode.blog/blog/building-the-agenticbuildermd-laboratory/"
+    "https://www.doctorswhocode.blog/blog/building-the-agenticbuildermd-laboratory/",
+    "https://www.doctorswhocode.blog/blog/ai-wardrobe-md-physician-learning-to-code/"
   ]
 }
