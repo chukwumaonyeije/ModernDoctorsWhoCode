@@ -1,0 +1,104 @@
+---
+title: "I Built a Digital Closet. It Belongs in a Physician's Coding Education."
+description: "How a private digital closet helps physicians learn coding, structured data, AI review, and application design without using patient information."
+pubDate: 2026-10-04
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+slug: "ai-wardrobe-md-physician-learning-to-code"
+tags: ["Physician Development", "Learn to Code", "Personal Software", "AI Wardrobe MD"]
+category: "Technology"
+image:
+  url: "/images/posts/ai-wardrobe-md-physician-learning-to-code.png"
+  alt: "A blazer, shirt, and trousers in a closet connected by cyan lines to matching garment cards on a laptop."
+draft: false
+featured: true
+featuredRank: 19000
+---
+
+*AI Wardrobe MD turns an everyday problem into practice with data, interfaces, AI, and human judgment, without requiring patient information.*
+
+A photograph of a jacket is a useful place to begin learning software.
+
+It gives you something concrete to work with. An image to upload. A color to describe. A category to assign. A record to save and find again.
+
+That is the starting point for AI Wardrobe MD, a private digital closet I am building around a practical question: how can I make better use of the clothing I already own?
+
+As a maternal-fetal medicine physician, I spend much of my professional life working with complex clinical information. This project gives me a different setting in which to practice building useful software. The inputs are garments, photographs, and personal preferences. No patient record is needed.
+
+The learning is substantial.
+
+The idea began with the possibility of photographing my clothes and turning that collection into something searchable. From there, the questions became more interesting. Which shirt works with this jacket? What could I pack for a short trip? Could I recreate an outfit using pieces already in my closet?
+
+Those questions appear in the original project concept. They also reveal why the first step matters: before a system can help me use what I own, it needs an accurate record of what I own.
+
+So I started with the closet.
+
+A physician learning to code can use the same approach. Choose a familiar problem with consequences you can contain. Build a complete workflow around it. Learn to explain what the software does and how you know it works.
+
+I think of this as **practice with consequences you can contain**. An incorrect clothing tag is easy to inspect and correct. It still exposes a real engineering problem.
+
+AI Wardrobe MD makes that visible through a short sequence:
+
+**Add a photo → review the tags → refine the description → save → search the closet.**
+
+The landing page introduces this with a sample collection: a slate tailored blazer, a white Oxford shirt, and stone straight trousers. These are explicitly labeled illustrative garments. They let someone explore categories, open item details, and try favorites without confusing demonstration content with a private wardrobe.
+
+Even that small distinction teaches something important. A convincing demonstration and a saved user record have different responsibilities. The interface should tell the user which one they are seeing.
+
+In the private workflow, the user selects a garment photograph and can request AI-generated tags. The proposed details remain editable. The user can supply a name, category, primary color, material, brand, occasions, and a description.
+
+Consider a jacket photographed under warm indoor lighting. The suggested color might be wrong. The user can correct it, add a note about wearing it to conferences, and review the result before saving. In a supported browser, that refinement can be spoken; typing remains available.
+
+This is a human checkpoint with an actual job. The person who owns the garment supplies context the photograph cannot establish.
+
+The app also tells the user when requesting suggestions sends the photograph and current notes to OpenAI. Private storage does not mean that every operation happens only on the phone. Understanding where information travels is part of learning to build.
+
+Several lessons follow from this small workflow.
+
+## A photograph has to become useful data.
+
+A gallery of pictures is a starting point. Search requires consistent fields. If I want to find a white shirt, the application needs a usable representation of its category and color.
+
+That introduces data modeling: deciding what to store, what a field means, and what can remain unknown. The app has a defined set of garment categories. Its material and brand fields can be left blank. A model should not invent a fabric composition because a completed form looks more polished.
+
+Physicians already recognize the difference between an observation and an assumption. Software makes us encode that distinction.
+
+## An AI suggestion has to earn its place in the record.
+
+The AI response follows a defined structure and is checked against that structure. Then the interface presents proposed changes for review. Applying a suggestion and saving the garment are separate actions.
+
+Structural validation answers whether the response fits the expected fields. Human review addresses whether those fields describe the garment accurately. Both are necessary.
+
+That is a useful lesson for anyone beginning to build with AI: fluent output is not the same as dependable application data.
+
+## The application has to remain useful when AI is unavailable.
+
+AI analysis is optional. The user can enter details manually. If the service times out, the interface explains the failure and retains the current edits.
+
+Building this behavior teaches more than obtaining one successful response. It requires thinking about delay, interruption, missing configuration, and recovery. The user still has a task to finish when a service fails.
+
+## A private collection needs ownership rules.
+
+The project uses sign-in, owner-specific database policies, and private image storage. That creates an opportunity to learn authentication (who is using the app) and authorization (which records that person may access).
+
+Avoiding patient information does not remove the obligation to protect personal information. It creates room to learn those responsibilities with a bounded, nonclinical project.
+
+## Learning to code includes learning to verify.
+
+AI coding assistance can help produce an interface or explain a database query. The physician-builder still needs to inspect the result.
+
+Can I save a garment and find it again? Can I correct a tag without losing my notes? What happens if an upload fails? Can one account retrieve another account's photographs? Does the form remain usable on a phone?
+
+These are concrete questions. They turn a generated application into something the builder can assess.
+
+The project uses Next.js and TypeScript for the application, Supabase for accounts and stored data, and an optional OpenAI image-analysis step. A beginner does not need to master all of that before starting. A sensible first exercise is smaller: create one garment record manually, display it, and edit it. Add the photograph next. Introduce AI after the ordinary workflow is understandable.
+
+The broader wardrobe concept includes outfit suggestions, packing assistance, and learning from preferences. Those remain future directions. The implemented foundation centers on cataloging, reviewing, editing, and retrieving garments. Calling a feature an ambition is part of describing software honestly.
+
+This is why the project belongs in a physician's coding education. It offers repeated practice in turning an idea into a specification, a specification into working behavior, and working behavior into something that can be checked.
+
+The same development habits matter when a physician later approaches a clinical application. Clinical use introduces additional requirements and validation. A wardrobe project is practice in the underlying craft.
+
+If you would like more information about building your own version, or choosing a similar project to learn coding, visit the [Doctors Who Code contact page](https://www.doctorswhocode.blog/contact) and submit your request through the contact method listed there. Mention **AI Wardrobe MD**, your current experience, and the everyday problem you would like to solve.
+
+A physician's coding education can begin with a jacket. The responsibility is to understand the system built around it.
