@@ -1,0 +1,181 @@
+---
+audioUrl: /audio/what-smfm-2026-reveals-about-physician-developers.mp3
+title: "What the 2026 SMFM Oral Abstracts Reveal About the Physician-Developer"
+description: "Remote fetal monitoring, labor models, and Bayesian counseling point to a shared obligation: physicians must help build the software carrying clinical judgment."
+pubDate: "2026-10-12T08:00:00-04:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Maternal-Fetal Medicine"
+tags:
+  - "maternal-fetal-medicine"
+  - "physician-developer"
+  - "smfm-2026"
+  - "clinical-ai"
+  - "remote-monitoring"
+  - "machine-learning"
+  - "bayesian-analysis"
+image:
+  url: "/images/posts/smfm-2026-physician-developers-hero.png"
+  alt: "Concept illustration of an MFM dashboard with fetal heart rate tracings, ultrasound images, labor curves, and risk distributions."
+featured: true
+featuredRank: 19500
+draft: false
+---
+
+import Callout from '../../../components/Callout.astro';
+
+Abstract 41 concerns a non-stress test performed away from the testing unit. Abstract 45 concerns a labor curve examined through machine learning. Abstract 10 concerns counseling after emergency cerclage using Bayesian analysis.
+
+I read those entries together and see an engineering obligation.
+
+Each begins with a familiar maternal-fetal medicine problem. Each raises a second problem that belongs in the codebase: how to move a measurement, interpret its limitations, and return something useful to the clinician responsible for the patient.
+
+The [2026 SMFM Global Congress oral program](https://smfmglobal26.eventscribe.net/SearchByBucket.asp?f=CustomPresfield2&pfp=TopicsOrals) puts those questions beside one another. My reading is that physician-developers belong inside the work of answering them.
+
+An abstract establishes a research question and reports work. It does not, by itself, establish that a system is ready for bedside deployment. The architecture below is my interpretation of the work these topics demand, not a description of the investigators' software.
+
+## I. The Missing Signal Is Part of the Clinical Problem
+
+The program includes the REACTIVE randomized trial of remote non-stress testing, a hybrid remote and in-person surveillance model, and the HOLA study of self-performed home ultrasound. These appear as abstracts 41, 43, and 44 in the [official oral listing](https://smfmglobal26.eventscribe.net/SearchByBucket.asp?f=CustomPresfield2&pfp=TopicsOrals).
+
+Moving a test into the home changes who carries the device. It also changes who carries the uncertainty when the device stops communicating.
+
+Consider a hypothetical home monitoring session. The last received segment is readable. Then the connection drops. A dashboard that continues to display the previous tracing without a conspicuous timestamp creates a clinical problem through a presentation decision.
+
+I want the system to distinguish three states: usable data, inadequate data, and absent data. Each needs an explicit next step and an accountable recipient.
+
+```text
+Home acquisition
+    |
+    v
+Identity, timestamps, signal quality, transmission status
+    |
+    +--> Missing or inadequate data --> Recovery and escalation pathway
+    |
+    v
+Reviewable recording --> Assigned clinician --> Documented disposition
+```
+
+This is a conceptual workflow. A scheduled recording and a continuous stream have different staffing and response requirements. Remote care does not automatically mean continuous surveillance.
+
+The **human checkpoint** belongs in the design from the beginning. Someone must own the review queue, know when coverage ends, and receive an escalation if review does not occur within the service's defined interval.
+
+<Callout type="technical" title="The missing-data rule">
+Missing data must never inherit the reassuring status of the last successful measurement. The interface needs to show what is known, when it was measured, and what remains unresolved.
+</Callout>
+
+For a system handling patient information, I would put HIPAA review on the architecture agenda: access controls, audit trails, service-provider agreements, and limits on what enters operational logs. These decisions belong before deployment.
+
+In [You Are Still Prompting. You Should Be Building Agents.](/blog/you-are-still-prompting-you-should-be-building-agents/), I argued for building around workflows. Here, that means designing the entire path from acquisition to disposition. A successful upload is only one step.
+
+## II. A Labor Curve Contains the Workflow That Recorded It
+
+Abstract 45 examines labor partograms through unsupervised machine learning. Abstract 46 addresses machine learning for intrapartum cesarean prediction in patients with obesity. Both appear in the [SMFM oral program](https://smfmglobal26.eventscribe.net/SearchByBucket.asp?f=CustomPresfield2&pfp=TopicsOrals).
+
+A cervical examination has a value and a timestamp. It also has an observer, a reason for occurring, and a place in a sequence of clinical decisions.
+
+Those details matter before model selection begins.
+
+An interval without an examination is not proof that dilation stopped. An examination documented late is not necessarily an examination performed late. A dataset can encode staffing, documentation habits, and intervention thresholds alongside physiology.
+
+Unsupervised learning does not remove those assumptions. Investigators still choose the cohort, features, scaling, missing-data strategy, and definition of similarity. A cluster is a pattern requiring interpretation.
+
+I would start a labor-model review with the data dictionary. Which timestamp represents the examination? How are repeated observations reconciled? Which variables were actually available at the moment a prediction would have been made?
+
+That last question protects against information leakage. A model intended to support an earlier decision cannot borrow information recorded after the outcome became apparent.
+
+Clinical guidance also belongs in this discussion. [ACOG's First and Second Stage Labor Management guideline](https://www.acog.org/clinical/clinical-guidance/clinical-practice-guideline/articles/2024/01/first-and-second-stage-labor-management) already accounts for active-phase status, membrane status, uterine activity, and time when defining active-phase arrest. Reducing labor management to a universal one-centimeter-per-hour rule misrepresents the current standard.
+
+I would not publish a two-examination dilation-rate function as a substitute for that assessment. Calculating a slope is easy. Establishing what action that slope justifies is the clinical work.
+
+## III. A Probability Needs a Defined Outcome
+
+The program's Bayesian post-emergency cerclage counseling abstract is number 10. PREDICT-GDM and individualized fetal cystic hygroma risk prediction appear as abstracts 24 and 59. Their inclusion points toward a practical question: how should a risk estimate enter a consultation? [SMFM oral program](https://smfmglobal26.eventscribe.net/SearchByBucket.asp?f=CustomPresfield2&pfp=TopicsOrals).
+
+In a hypothetical consultation after emergency cerclage, a family asks about reaching a later gestational age. Before software returns a percentage, the model needs to specify the outcome it estimates.
+
+Remaining pregnant to 28 weeks, neonatal survival, and survival without major morbidity are different endpoints. A calculator that blurs them can be numerically consistent and clinically misleading.
+
+Bayesian analysis provides a framework for combining prior information with evidence under explicit assumptions. Daily individualized updating requires an additional commitment: longitudinal data and a model that supports those updates. The word "Bayesian" does not supply either one.
+
+For a time-to-delivery model, remaining pregnant through a given day changes the population to which the next estimate applies. Adding new observations also requires knowing how those observations relate to the outcome and to information already included.
+
+Repeatedly entering correlated findings as though they were independent can manufacture confidence.
+
+My requirements for a counseling interface are concrete: the endpoint, the time horizon, the applicable population, the uncertainty interval, and the model version. I also want a clear explanation when the patient falls outside the model's validated use.
+
+A precise-looking percentage carries authority. The software has to earn it.
+
+## IV. A Smaller Probe Still Needs a Measurement Standard
+
+Abstract 51 examines maternal ocular point-of-care ultrasound in preeclampsia. It places another familiar engineering problem inside an obstetric workflow: translating an image into a trustworthy measurement. [SMFM oral program](https://smfmglobal26.eventscribe.net/SearchByBucket.asp?f=CustomPresfield2&pfp=TopicsOrals).
+
+Optic nerve sheath measurement illustrates why the interface matters. Caliper placement, image quality, and acquisition technique affect what the number means. Automated measurement inherits those dependencies.
+
+The clinical evidence also requires care. A [2022 cohort study by Sterrett and colleagues](https://pubmed.ncbi.nlm.nih.gov/35305582/) did not find a significant elevation in the relative risk of enlarged optic nerve sheath diameter among patients with severe preeclampsia and neurologic features compared with controls. A promising measurement question is not an established seizure-prediction rule.
+
+For a proposed mobile implementation, I would want the original image available beside the measurement. I would want the software to flag inadequate acquisition and allow the clinician to reject an automated result.
+
+Offline operation also deserves an explicit design. The interface must distinguish an assessment completed locally from a record successfully synchronized with the clinical system.
+
+Shrinking the hardware does not shrink the verification work.
+
+## V. The Audit Must Follow the Patient
+
+The program also includes work on fetal heart rate tracings and outcomes across race and ethnicity, and on social determinants of health and stillbirth risk. These are abstracts 34 and 40 in the [oral listing](https://smfmglobal26.eventscribe.net/SearchByBucket.asp?f=CustomPresfield2&pfp=TopicsOrals).
+
+These research topics do not establish that a particular deployed algorithm is biased. They do identify questions that belong in a serious evaluation plan.
+
+I would ask how often a tool misses its target outcome, how often it triggers unnecessary review, and whether its predicted probabilities match observed outcomes. I would examine those results across relevant patient groups, with enough attention to sample size to avoid false reassurance.
+
+Then I would examine the workflow around the model.
+
+Who completes the home recording? Who loses connectivity? Who receives a callback? Who can reach the recommended assessment site?
+
+A model's reported performance cannot tell us whether an escalation pathway works for a patient without reliable transportation. A successful alert cannot tell us whether anyone acted on it.
+
+The **review-to-action gap** is the distance between recognizing a concern and completing the response. Software should make that gap visible through ownership, timestamps, acknowledgement, and disposition.
+
+That is a measurable engineering responsibility.
+
+## VI. Clinical Expertise Belongs in the Build
+
+I read this program as an argument for clinical expertise with direct access to implementation, working alongside engineering and statistical expertise.
+
+The physician-developer can translate a clinical concern into a reviewable requirement: stale data must be labeled; a prediction must declare its endpoint; an unreviewed recording must remain unresolved; a model update must carry a version and a validation record.
+
+Those requirements belong in code review and acceptance testing. They should be settled before the interface reaches a patient.
+
+This also changes what we mean by distribution. A published method needs a dependable path into practice: documented assumptions, reproducible computation, appropriate validation, and a workflow with an owner.
+
+The work continues after release. Devices change. Patient populations change. Clinical guidance changes. Someone must be able to explain what the software is doing today and how that differs from the version evaluated last year.
+
+## Frequently Asked Questions
+
+### Does this program establish that these tools are ready for routine care?
+
+No. Program entries identify research topics. Read the methods, results, limitations, and validation evidence before making a deployment decision. The engineering proposals in this essay are my interpretation of the responsibilities these topics create.
+
+### Does remote fetal monitoring require continuous streaming?
+
+No. The acquisition schedule and review model depend on the service. Scheduled recordings and continuous monitoring require different coverage, escalation, and patient instructions.
+
+### Does unsupervised learning eliminate bias from labor models?
+
+No. Cohort selection, measurement practices, missingness, and feature choices still shape the result. Clinical interpretation and external validation remain necessary.
+
+### Does a Bayesian model automatically support daily counseling updates?
+
+No. A model must explicitly support the intended longitudinal use. The endpoint, available observations, dependence assumptions, and validation determine which updates are justified.
+
+### Where should a physician-developer start?
+
+Choose one clinical workflow and write down its unresolved states. Identify the missing measurement, the uncertain interpretation, and the action awaiting ownership. Those are concrete places to begin designing and testing.
+
+## Sources and Clinical Context
+
+- [SMFM 2026 Global Congress oral program](https://smfmglobal26.eventscribe.net/SearchByBucket.asp?f=CustomPresfield2&pfp=TopicsOrals). Source for the abstract numbers and topics discussed here; it is not evidence for the proposed software architectures.
+- [ACOG: First and Second Stage Labor Management](https://www.acog.org/clinical/clinical-guidance/clinical-practice-guideline/articles/2024/01/first-and-second-stage-labor-management). Clinical Practice Guideline No. 8, 2024.
+- [Sterrett et al.: Optic nerve sheath diameter in severe preeclampsia with neurologic features versus controls](https://pubmed.ncbi.nlm.nih.gov/35305582/). *BMC Pregnancy and Childbirth*. 2022;22:224.
+
+Clinical judgment enters the system through the decisions we encode. We remain responsible for what happens when those decisions reach the bedside.

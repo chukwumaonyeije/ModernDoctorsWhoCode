@@ -3646,6 +3646,26 @@
       "canonical": [
         "https://www.doctorswhocode.blog/blog/ai-wardrobe-md-physician-learning-to-code/"
       ]
+    },
+    "/blog/what-smfm-2026-reveals-about-physician-developers/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/blog/what-smfm-2026-reveals-about-physician-developers/"
+      ]
+    },
+    "/tags/smfm-2026/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/tags/smfm-2026/"
+      ]
+    },
+    "/tags/bayesian-analysis/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/tags/bayesian-analysis/"
+      ]
+    },
+    "/tags/remote-monitoring/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/tags/remote-monitoring/"
+      ]
     }
   },
   "articles": {
@@ -20472,6 +20492,93 @@
         ],
         "bodyTextHash": "eb2cdc39c940d5de758c900b208c14476595ffb5465018be89ac3b827da724bf"
       }
+    },
+    "what-smfm-2026-reveals-about-physician-developers.mdx": {
+      "id": "what-smfm-2026-reveals-about-physician-developers",
+      "route": "/blog/what-smfm-2026-reveals-about-physician-developers/",
+      "bodyHash": "e0f8f3dddae6f2aedabf6808f764206a0d4371dc52641b8594e0b635422a2c7f",
+      "frontmatter": {
+        "audioUrl": "/audio/what-smfm-2026-reveals-about-physician-developers.mp3",
+        "title": "What the 2026 SMFM Oral Abstracts Reveal About the Physician-Developer",
+        "description": "Remote fetal monitoring, labor models, and Bayesian counseling point to a shared obligation: physicians must help build the software carrying clinical judgment.",
+        "pubDate": "2026-10-12T08:00:00-04:00",
+        "author": "Chukwuma Onyeije, MD, FACOG",
+        "authorUrl": "https://www.linkedin.com/in/chukwumaonyeije",
+        "category": "Maternal-Fetal Medicine",
+        "tags": [
+          "maternal-fetal-medicine",
+          "physician-developer",
+          "smfm-2026",
+          "clinical-ai",
+          "remote-monitoring",
+          "machine-learning",
+          "bayesian-analysis"
+        ],
+        "image": {
+          "url": "/images/posts/smfm-2026-physician-developers-hero.png",
+          "alt": "Concept illustration of an MFM dashboard with fetal heart rate tracings, ultrasound images, labor curves, and risk distributions."
+        },
+        "featured": true,
+        "featuredRank": 19500,
+        "draft": false
+      },
+      "rendered": {
+        "title": "What the 2026 SMFM Oral Abstracts Reveal About the Physician-Developer | Doctors Who Code",
+        "description": "Remote fetal monitoring, labor models, and Bayesian counseling point to a shared obligation: physicians must help build the software carrying clinical judgment.",
+        "canonical": [
+          "https://www.doctorswhocode.blog/blog/what-smfm-2026-reveals-about-physician-developers/"
+        ],
+        "published": "2026-10-12T12:00:00.000Z",
+        "ogImage": "https://www.doctorswhocode.blog/og/what-smfm-2026-reveals-about-physician-developers.png",
+        "audio": [
+          "/audio/what-smfm-2026-reveals-about-physician-developers.mp3"
+        ],
+        "contentMedia": [
+          {
+            "tag": "img",
+            "src": "/images/posts/smfm-2026-physician-developers-hero.png"
+          }
+        ],
+        "metadata": {
+          "description": "Remote fetal monitoring, labor models, and Bayesian counseling point to a shared obligation: physicians must help build the software carrying clinical judgment.",
+          "author": "Chukwuma Onyeije, MD, FACOG",
+          "robots": "index, follow, max-image-preview:large",
+          "og:title": "What the 2026 SMFM Oral Abstracts Reveal About the Physician-Developer | Doctors Who Code",
+          "og:description": "Remote fetal monitoring, labor models, and Bayesian counseling point to a shared obligation: physicians must help build the software carrying clinical judgment.",
+          "og:image": "https://www.doctorswhocode.blog/og/what-smfm-2026-reveals-about-physician-developers.png",
+          "og:image:alt": "What the 2026 SMFM Oral Abstracts Reveal About the Physician-Developer | Doctors Who Code",
+          "og:url": "https://www.doctorswhocode.blog/blog/what-smfm-2026-reveals-about-physician-developers/",
+          "og:type": "article",
+          "og:site_name": "Doctors Who Code",
+          "og:locale": "en_US",
+          "twitter:card": "summary_large_image",
+          "twitter:site": "@chukwumaonyeije",
+          "twitter:creator": "@chukwumaonyeije",
+          "twitter:title": "What the 2026 SMFM Oral Abstracts Reveal About the Physician-Developer | Doctors Who Code",
+          "twitter:description": "Remote fetal monitoring, labor models, and Bayesian counseling point to a shared obligation: physicians must help build the software carrying clinical judgment.",
+          "twitter:image": "https://www.doctorswhocode.blog/og/what-smfm-2026-reveals-about-physician-developers.png",
+          "article:published_time": "2026-10-12T12:00:00.000Z"
+        },
+        "headings": [
+          "article-title",
+          "i-the-missing-signal-is-part-of-the-clinical-problem",
+          "ii-a-labor-curve-contains-the-workflow-that-recorded-it",
+          "iii-a-probability-needs-a-defined-outcome",
+          "iv-a-smaller-probe-still-needs-a-measurement-standard",
+          "v-the-audit-must-follow-the-patient",
+          "vi-clinical-expertise-belongs-in-the-build",
+          "frequently-asked-questions",
+          "does-this-program-establish-that-these-tools-are-ready-for-routine-care",
+          "does-remote-fetal-monitoring-require-continuous-streaming",
+          "does-unsupervised-learning-eliminate-bias-from-labor-models",
+          "does-a-bayesian-model-automatically-support-daily-counseling-updates",
+          "where-should-a-physician-developer-start",
+          "sources-and-clinical-context",
+          "share-heading",
+          "related-articles-heading"
+        ],
+        "bodyTextHash": "4a38e08107eb40f7918a0a5abad9defa88edb9f95c750c387c85c0547778093f"
+      }
     }
   },
   "sourceHashes": {
@@ -20856,7 +20963,9 @@
     "/audio/building-the-agenticbuildermd-laboratory.mp3": "dc967b11c57dae84ef68850d732651950ad2c5b2fe96a2b742efa58717905650",
     "/images/posts/building-the-agenticbuildermd-laboratory-hero.png": "8909f33cc81cf439b4e8a988328435612226117814e99bcc6c9aa18f8a4ef863",
     "/images/posts/ai-wardrobe-md-physician-learning-to-code.png": "a90eeabbfcfb73a89fbdbca9d6a2534338c547a3dc6dc08d45edc7f41927b3f1",
-    "/audio/ai-wardrobe-md-physician-learning-to-code.mp3": "a17ace52c5b1294997f0b42b4bd0dc4d000bc19921c0de39812dd2ec2da233bf"
+    "/audio/ai-wardrobe-md-physician-learning-to-code.mp3": "a17ace52c5b1294997f0b42b4bd0dc4d000bc19921c0de39812dd2ec2da233bf",
+    "/audio/what-smfm-2026-reveals-about-physician-developers.mp3": "4caac7a9de25fb413e373269e09016a97b70c5b978809470c5923abc5870f8cd",
+    "/images/posts/smfm-2026-physician-developers-hero.png": "7c7a1b433712f6fa3545e5cc6f5b314cf3423a4702786418a24964b8eb024db4"
   },
   "endpoints": [
     "/.well-known/chukwuma-onyeije-identity.txt",
@@ -21447,7 +21556,10 @@
     "/og/building-the-agenticbuildermd-laboratory.png",
     "/images/posts/ai-wardrobe-md-physician-learning-to-code.png",
     "/audio/ai-wardrobe-md-physician-learning-to-code.mp3",
-    "/og/ai-wardrobe-md-physician-learning-to-code.png"
+    "/og/ai-wardrobe-md-physician-learning-to-code.png",
+    "/audio/what-smfm-2026-reveals-about-physician-developers.mp3",
+    "/images/posts/smfm-2026-physician-developers-hero.png",
+    "/og/what-smfm-2026-reveals-about-physician-developers.png"
   ],
   "redirects": [
     {
@@ -22571,6 +22683,11 @@
       "title": "I Built a Digital Closet. It Belongs in a Physician&apos;s Coding Education.",
       "description": "How a private digital closet helps physicians learn coding, structured data, AI review, and application design without using patient information.",
       "published": "Sun, 04 Oct 2026 00:00:00 GMT"
+    },
+    "https://www.doctorswhocode.blog/blog/what-smfm-2026-reveals-about-physician-developers/": {
+      "title": "What the 2026 SMFM Oral Abstracts Reveal About the Physician-Developer",
+      "description": "Remote fetal monitoring, labor models, and Bayesian counseling point to a shared obligation: physicians must help build the software carrying clinical judgment.",
+      "published": "Mon, 12 Oct 2026 12:00:00 GMT"
     }
   },
   "sitemapUrls": [
@@ -23298,6 +23415,10 @@
     "https://www.doctorswhocode.blog/tags/youtube-analysis/",
     "https://www.doctorswhocode.blog/verified/",
     "https://www.doctorswhocode.blog/blog/building-the-agenticbuildermd-laboratory/",
-    "https://www.doctorswhocode.blog/blog/ai-wardrobe-md-physician-learning-to-code/"
+    "https://www.doctorswhocode.blog/blog/ai-wardrobe-md-physician-learning-to-code/",
+    "https://www.doctorswhocode.blog/blog/what-smfm-2026-reveals-about-physician-developers/",
+    "https://www.doctorswhocode.blog/tags/smfm-2026/",
+    "https://www.doctorswhocode.blog/tags/bayesian-analysis/",
+    "https://www.doctorswhocode.blog/tags/remote-monitoring/"
   ]
 }
