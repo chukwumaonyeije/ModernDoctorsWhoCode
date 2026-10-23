@@ -20620,13 +20620,13 @@
           "Physician Developers"
         ],
         "image": {
-          "url": "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.png",
+          "url": "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.jpeg",
           "alt": "Editorial illustration of a pregnant patient and physician discussing research calmly during a prenatal consultation."
         },
         "draft": false,
         "featured": true,
-        "readingTime": 6,
-        "featuredRank": 20000
+        "featuredRank": 20000,
+        "readingTime": 6
       },
       "rendered": {
         "title": "What Physicians Owe Patients After a Frightening Research Headline | Doctors Who Code",
@@ -20642,7 +20642,7 @@
         "contentMedia": [
           {
             "tag": "img",
-            "src": "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.png"
+            "src": "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.jpeg"
           }
         ],
         "metadata": {
@@ -21060,7 +21060,8 @@
     "/audio/what-smfm-2026-reveals-about-physician-developers.mp3": "4caac7a9de25fb413e373269e09016a97b70c5b978809470c5923abc5870f8cd",
     "/images/posts/smfm-2026-physician-developers-hero.png": "7c7a1b433712f6fa3545e5cc6f5b314cf3423a4702786418a24964b8eb024db4",
     "/audio/what-physicians-owe-patients-after-a-frightening-research-headline.mp3": "7a5f2964b40581ae53326ff393a85e266a53392fdf564dbc9bad449142a71183",
-    "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.png": "732d5b1318d23951ab5ea3ead9847cd85a38cdfa2cfdc5a67594d723b472a21e"
+    "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.png": "732d5b1318d23951ab5ea3ead9847cd85a38cdfa2cfdc5a67594d723b472a21e",
+    "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.jpeg": "6207732d605157708a7f520dcbda5409cfa37584d98123329df43001a39c42eb"
   },
   "endpoints": [
     "/.well-known/chukwuma-onyeije-identity.txt",
@@ -21657,7 +21658,8 @@
     "/og/what-smfm-2026-reveals-about-physician-developers.png",
     "/audio/what-physicians-owe-patients-after-a-frightening-research-headline.mp3",
     "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.png",
-    "/og/what-physicians-owe-patients-after-a-frightening-research-headline.png"
+    "/og/what-physicians-owe-patients-after-a-frightening-research-headline.png",
+    "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.jpeg"
   ],
   "redirects": [
     {
