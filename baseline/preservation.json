@@ -20624,8 +20624,9 @@
           "alt": "Editorial illustration of a pregnant patient and physician discussing research calmly during a prenatal consultation."
         },
         "draft": false,
-        "featured": false,
-        "readingTime": 6
+        "featured": true,
+        "readingTime": 6,
+        "featuredRank": 20000
       },
       "rendered": {
         "title": "What Physicians Owe Patients After a Frightening Research Headline | Doctors Who Code",
