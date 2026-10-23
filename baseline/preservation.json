@@ -3666,6 +3666,26 @@
       "canonical": [
         "https://www.doctorswhocode.blog/tags/remote-monitoring/"
       ]
+    },
+    "/blog/what-physicians-owe-patients-after-a-frightening-research-headline/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/blog/what-physicians-owe-patients-after-a-frightening-research-headline/"
+      ]
+    },
+    "/tags/clinical-communication/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/tags/clinical-communication/"
+      ]
+    },
+    "/tags/physician-developers/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/tags/physician-developers/"
+      ]
+    },
+    "/tags/prenatal-stress/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/tags/prenatal-stress/"
+      ]
     }
   },
   "articles": {
@@ -20579,6 +20599,78 @@
         ],
         "bodyTextHash": "4a38e08107eb40f7918a0a5abad9defa88edb9f95c750c387c85c0547778093f"
       }
+    },
+    "what-physicians-owe-patients-after-a-frightening-research-headline.mdx": {
+      "id": "what-physicians-owe-patients-after-a-frightening-research-headline",
+      "route": "/blog/what-physicians-owe-patients-after-a-frightening-research-headline/",
+      "bodyHash": "10c1c11745a4963654cb5853ebbc62c165e6bcfcfe150b9127e02872a25613b0",
+      "frontmatter": {
+        "audioUrl": "/audio/what-physicians-owe-patients-after-a-frightening-research-headline.mp3",
+        "title": "What Physicians Owe Patients After a Frightening Research Headline",
+        "description": "A prenatal stress study shows why physicians must explain the limits of research, support patients, and build accessible tools for better clinical conversations.",
+        "pubDate": "2026-10-23",
+        "author": "Chukwuma Onyeije, MD, FACOG",
+        "category": "Physician Development",
+        "tags": [
+          "Clinical Communication",
+          "Evidence-Based Medicine",
+          "Prenatal Stress",
+          "Maternal-Fetal Medicine",
+          "OpenMFM",
+          "Physician Developers"
+        ],
+        "image": {
+          "url": "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.png",
+          "alt": "Editorial illustration of a pregnant patient and physician discussing research calmly during a prenatal consultation."
+        },
+        "draft": false,
+        "featured": false,
+        "readingTime": 6
+      },
+      "rendered": {
+        "title": "What Physicians Owe Patients After a Frightening Research Headline | Doctors Who Code",
+        "description": "A prenatal stress study shows why physicians must explain the limits of research, support patients, and build accessible tools for better clinical conversations.",
+        "canonical": [
+          "https://www.doctorswhocode.blog/blog/what-physicians-owe-patients-after-a-frightening-research-headline/"
+        ],
+        "published": "2026-10-23T00:00:00.000Z",
+        "ogImage": "https://www.doctorswhocode.blog/og/what-physicians-owe-patients-after-a-frightening-research-headline.png",
+        "audio": [
+          "/audio/what-physicians-owe-patients-after-a-frightening-research-headline.mp3"
+        ],
+        "contentMedia": [
+          {
+            "tag": "img",
+            "src": "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.png"
+          }
+        ],
+        "metadata": {
+          "description": "A prenatal stress study shows why physicians must explain the limits of research, support patients, and build accessible tools for better clinical conversations.",
+          "author": "Chukwuma Onyeije, MD, FACOG",
+          "robots": "index, follow, max-image-preview:large",
+          "og:title": "What Physicians Owe Patients After a Frightening Research Headline | Doctors Who Code",
+          "og:description": "A prenatal stress study shows why physicians must explain the limits of research, support patients, and build accessible tools for better clinical conversations.",
+          "og:image": "https://www.doctorswhocode.blog/og/what-physicians-owe-patients-after-a-frightening-research-headline.png",
+          "og:image:alt": "What Physicians Owe Patients After a Frightening Research Headline | Doctors Who Code",
+          "og:url": "https://www.doctorswhocode.blog/blog/what-physicians-owe-patients-after-a-frightening-research-headline/",
+          "og:type": "article",
+          "og:site_name": "Doctors Who Code",
+          "og:locale": "en_US",
+          "twitter:card": "summary_large_image",
+          "twitter:site": "@chukwumaonyeije",
+          "twitter:creator": "@chukwumaonyeije",
+          "twitter:title": "What Physicians Owe Patients After a Frightening Research Headline | Doctors Who Code",
+          "twitter:description": "A prenatal stress study shows why physicians must explain the limits of research, support patients, and build accessible tools for better clinical conversations.",
+          "twitter:image": "https://www.doctorswhocode.blog/og/what-physicians-owe-patients-after-a-frightening-research-headline.png",
+          "article:published_time": "2026-10-23T00:00:00.000Z"
+        },
+        "headings": [
+          "article-title",
+          "share-heading",
+          "related-articles-heading"
+        ],
+        "bodyTextHash": "dd5806611a03dfa7a0a6f4babd139177fdffeb52e6c939a3299ba7aeb2a1bb7d"
+      }
     }
   },
   "sourceHashes": {
@@ -20965,7 +21057,9 @@
     "/images/posts/ai-wardrobe-md-physician-learning-to-code.png": "a90eeabbfcfb73a89fbdbca9d6a2534338c547a3dc6dc08d45edc7f41927b3f1",
     "/audio/ai-wardrobe-md-physician-learning-to-code.mp3": "a17ace52c5b1294997f0b42b4bd0dc4d000bc19921c0de39812dd2ec2da233bf",
     "/audio/what-smfm-2026-reveals-about-physician-developers.mp3": "4caac7a9de25fb413e373269e09016a97b70c5b978809470c5923abc5870f8cd",
-    "/images/posts/smfm-2026-physician-developers-hero.png": "7c7a1b433712f6fa3545e5cc6f5b314cf3423a4702786418a24964b8eb024db4"
+    "/images/posts/smfm-2026-physician-developers-hero.png": "7c7a1b433712f6fa3545e5cc6f5b314cf3423a4702786418a24964b8eb024db4",
+    "/audio/what-physicians-owe-patients-after-a-frightening-research-headline.mp3": "7a5f2964b40581ae53326ff393a85e266a53392fdf564dbc9bad449142a71183",
+    "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.png": "732d5b1318d23951ab5ea3ead9847cd85a38cdfa2cfdc5a67594d723b472a21e"
   },
   "endpoints": [
     "/.well-known/chukwuma-onyeije-identity.txt",
@@ -21559,7 +21653,10 @@
     "/og/ai-wardrobe-md-physician-learning-to-code.png",
     "/audio/what-smfm-2026-reveals-about-physician-developers.mp3",
     "/images/posts/smfm-2026-physician-developers-hero.png",
-    "/og/what-smfm-2026-reveals-about-physician-developers.png"
+    "/og/what-smfm-2026-reveals-about-physician-developers.png",
+    "/audio/what-physicians-owe-patients-after-a-frightening-research-headline.mp3",
+    "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.png",
+    "/og/what-physicians-owe-patients-after-a-frightening-research-headline.png"
   ],
   "redirects": [
     {
@@ -22688,6 +22785,11 @@
       "title": "What the 2026 SMFM Oral Abstracts Reveal About the Physician-Developer",
       "description": "Remote fetal monitoring, labor models, and Bayesian counseling point to a shared obligation: physicians must help build the software carrying clinical judgment.",
       "published": "Mon, 12 Oct 2026 12:00:00 GMT"
+    },
+    "https://www.doctorswhocode.blog/blog/what-physicians-owe-patients-after-a-frightening-research-headline/": {
+      "title": "What Physicians Owe Patients After a Frightening Research Headline",
+      "description": "A prenatal stress study shows why physicians must explain the limits of research, support patients, and build accessible tools for better clinical conversations.",
+      "published": "Fri, 23 Oct 2026 00:00:00 GMT"
     }
   },
   "sitemapUrls": [
@@ -23419,6 +23521,10 @@
     "https://www.doctorswhocode.blog/blog/what-smfm-2026-reveals-about-physician-developers/",
     "https://www.doctorswhocode.blog/tags/smfm-2026/",
     "https://www.doctorswhocode.blog/tags/bayesian-analysis/",
-    "https://www.doctorswhocode.blog/tags/remote-monitoring/"
+    "https://www.doctorswhocode.blog/tags/remote-monitoring/",
+    "https://www.doctorswhocode.blog/blog/what-physicians-owe-patients-after-a-frightening-research-headline/",
+    "https://www.doctorswhocode.blog/tags/clinical-communication/",
+    "https://www.doctorswhocode.blog/tags/physician-developers/",
+    "https://www.doctorswhocode.blog/tags/prenatal-stress/"
   ]
 }
