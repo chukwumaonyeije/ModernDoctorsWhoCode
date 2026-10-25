@@ -1,6 +1,6 @@
 # Part 1 publication preparation
 
-Status: editorial preparation only, 2026-10-25. PR #10 remains draft. Nothing in this document registers an article, course, lesson or project in the live content collections.
+Status: release preparation authorized on 2026-10-25. The user explicitly authorized completing release requirements, merging PR #10 and publishing Part 1. The plan below records the original proposal; the approved implementation now lives in the article, course and lesson content files. The source repository remains private; a scoped public ZIP supplies the exercise without publishing its history or personal learning journal.
 
 ## Article metadata
 
@@ -11,7 +11,7 @@ Future content file: `src/content/blog/posts/mcp-for-physicians-part-01.md`.
 Future route: `/blog/mcp-for-physicians-part-01` (proposed, not live).
 Keep the current article in `docs/drafts/` until release preparation is authorized. Move the article when ready; do not create two active copies.
 
-The required `pubDate` is intentionally not assigned: no publication date has been approved. Set it to the actual planned release date before schema validation in the blog collection. `last_tested` is not a publication date. This preparatory draft is therefore not yet a complete blog-collection entry.
+The publication entry now assigns `pubDate: 2026-10-25` for the authorized release. At the planning stage, no publication date had been approved. Set it to the actual planned release date before schema validation in the blog collection. `last_tested` is not a publication date. This preparatory draft is therefore not yet a complete blog-collection entry.
 
 Let the shared reading metadata helper derive reading time. Do not confuse article reading time with the two-hour lesson budget. Omit `canonical` until a distinct canonical URL is needed; use the site's normal route-derived canonical handling. Preserve `featured: false` unless a featured placement is separately selected.
 

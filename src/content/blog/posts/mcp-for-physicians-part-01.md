@@ -1,5 +1,5 @@
 ---
-status: draft
+audioUrl: /audio/mcp-for-physicians-part-01.mp3
 title: "MCP for Physician Developers, Part 1: Trace One Request"
 description: "Learn how MCP connects a client to a research notebook through a physician's tested example of tool discovery, note search, and retrieval."
 author: "Chukwuma Onyeije, MD, FACOG"
@@ -13,23 +13,20 @@ tags:
   - TypeScript
   - testing
   - tutorial
-draft: true
+draft: false
 featured: false
-# pubDate: set to the approved publication date during release preparation.
-# image and audioUrl: add only after the actual assets are prepared and verified.
-# readingTime: omit so the site's shared helper derives it from the article.
+pubDate: 2026-10-25
+image:
+  url: /images/posts/mcp-for-physicians-part-01-hero.webp
+  alt: "Inspector client with search_notes and get_note tools exchanges requests and responses with an MCP server and synthetic research notes."
 series: "MCP for Physician Developers: From First Principles to a Working Cloudflare Project"
 part: 1
 sources:
-  - https://github.com/chukwumaonyeije/mcp-for-physicians/blob/setup/physician-research-notebook/docs/learning-journal.md
-  - https://github.com/chukwumaonyeije/mcp-for-physicians/blob/setup/physician-research-notebook/docs/technical-baseline.md
   - https://ts.sdk.modelcontextprotocol.io/v2/
   - https://ts.sdk.modelcontextprotocol.io/v2/get-started/first-client.html
   - https://ts.sdk.modelcontextprotocol.io/v2/serving/stdio.html
 last_tested: 2026-10-25
 ---
-
-# MCP for Physician Developers, Part 1: Trace One Request
 
 I searched a small teaching notebook for `critical-reading` and received one matching entry: `synthetic-001`. I was using MCP Inspector, an application that lets developers test the connection between software programs and see the information they exchange.
 
@@ -94,7 +91,7 @@ That test called the retrieval function directly. A separate automated test used
 
 Each check answered a different question. The unit test checked the matching behavior. The integration test checked communication. Inspector let me examine the returned data myself.
 
-For the practical exercise, follow the [repository setup and inspection guide](https://github.com/chukwumaonyeije/mcp-for-physicians/blob/setup/physician-research-notebook/docs/setup.md). It contains the installation commands, test commands, and Inspector launch instructions. The repository remains private during preparation; the exercise link is for readers with access until a separate release is approved.
+For the practical exercise, download the [Part 1 notebook and exercise guide](/downloads/mcp-for-physicians-part-01.zip). Extract the ZIP and open its README for installation commands, test commands, and Inspector instructions. This public teaching snapshot includes the code, synthetic notes, and tests needed to reproduce the exercise. No GitHub account or access to the private preparation repository is required.
 
 The expected interactive result is two discovered tools, one match for `critical-reading`, and a complete record when that ID is passed to `get_note`. Record what actually appears, including errors. If the topic is already present in your checkout, the removal-and-restoration experiment demonstrates the test's purpose.
 

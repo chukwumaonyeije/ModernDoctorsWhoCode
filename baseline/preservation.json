@@ -3686,6 +3686,16 @@
       "canonical": [
         "https://www.doctorswhocode.blog/tags/prenatal-stress/"
       ]
+    },
+    "/blog/mcp-for-physicians-part-01/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/blog/mcp-for-physicians-part-01/"
+      ]
+    },
+    "/courses/mcp-for-physician-developers/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/courses/mcp-for-physician-developers/"
+      ]
     }
   },
   "articles": {
@@ -20672,6 +20682,88 @@
         ],
         "bodyTextHash": "dd5806611a03dfa7a0a6f4babd139177fdffeb52e6c939a3299ba7aeb2a1bb7d"
       }
+    },
+    "mcp-for-physicians-part-01.md": {
+      "id": "mcp-for-physicians-part-01",
+      "route": "/blog/mcp-for-physicians-part-01/",
+      "bodyHash": "a2ff721328f6708fc576d0d32dbce6add15a6929d776e61b89ac7ef05d57e721",
+      "frontmatter": {
+        "audioUrl": "/audio/mcp-for-physicians-part-01.mp3",
+        "title": "MCP for Physician Developers, Part 1: Trace One Request",
+        "description": "Learn how MCP connects a client to a research notebook through a physician's tested example of tool discovery, note search, and retrieval.",
+        "author": "Chukwuma Onyeije, MD, FACOG",
+        "authorUrl": "https://www.linkedin.com/in/chukwumaonyeije",
+        "category": "Physician Development",
+        "tags": [
+          "MCP",
+          "physician-developer",
+          "beginner",
+          "API",
+          "TypeScript",
+          "testing",
+          "tutorial"
+        ],
+        "draft": false,
+        "featured": false,
+        "pubDate": "2026-10-25T00:00:00.000Z",
+        "image": {
+          "url": "/images/posts/mcp-for-physicians-part-01-hero.webp",
+          "alt": "Inspector client with search_notes and get_note tools exchanges requests and responses with an MCP server and synthetic research notes."
+        },
+        "series": "MCP for Physician Developers: From First Principles to a Working Cloudflare Project",
+        "part": 1,
+        "sources": [
+          "https://ts.sdk.modelcontextprotocol.io/v2/",
+          "https://ts.sdk.modelcontextprotocol.io/v2/get-started/first-client.html",
+          "https://ts.sdk.modelcontextprotocol.io/v2/serving/stdio.html"
+        ],
+        "last_tested": "2026-10-25T00:00:00.000Z"
+      },
+      "rendered": {
+        "title": "MCP for Physician Developers, Part 1: Trace One Request | Doctors Who Code",
+        "description": "Learn how MCP connects a client to a research notebook through a physician's tested example of tool discovery, note search, and retrieval.",
+        "canonical": [
+          "https://www.doctorswhocode.blog/blog/mcp-for-physicians-part-01/"
+        ],
+        "published": "2026-10-25T00:00:00.000Z",
+        "ogImage": "https://www.doctorswhocode.blog/og/mcp-for-physicians-part-01.png",
+        "audio": [
+          "/audio/mcp-for-physicians-part-01.mp3"
+        ],
+        "contentMedia": [
+          {
+            "tag": "img",
+            "src": "/images/posts/mcp-for-physicians-part-01-hero.webp"
+          }
+        ],
+        "metadata": {
+          "description": "Learn how MCP connects a client to a research notebook through a physician's tested example of tool discovery, note search, and retrieval.",
+          "author": "Chukwuma Onyeije, MD, FACOG",
+          "robots": "index, follow, max-image-preview:large",
+          "og:title": "MCP for Physician Developers, Part 1: Trace One Request | Doctors Who Code",
+          "og:description": "Learn how MCP connects a client to a research notebook through a physician's tested example of tool discovery, note search, and retrieval.",
+          "og:image": "https://www.doctorswhocode.blog/og/mcp-for-physicians-part-01.png",
+          "og:image:alt": "MCP for Physician Developers, Part 1: Trace One Request | Doctors Who Code",
+          "og:url": "https://www.doctorswhocode.blog/blog/mcp-for-physicians-part-01/",
+          "og:type": "article",
+          "og:site_name": "Doctors Who Code",
+          "og:locale": "en_US",
+          "twitter:card": "summary_large_image",
+          "twitter:site": "@chukwumaonyeije",
+          "twitter:creator": "@chukwumaonyeije",
+          "twitter:title": "MCP for Physician Developers, Part 1: Trace One Request | Doctors Who Code",
+          "twitter:description": "Learn how MCP connects a client to a research notebook through a physician's tested example of tool discovery, note search, and retrieval.",
+          "twitter:image": "https://www.doctorswhocode.blog/og/mcp-for-physicians-part-01.png",
+          "article:published_time": "2026-10-25T00:00:00.000Z"
+        },
+        "headings": [
+          "article-title",
+          "lesson-context-title",
+          "share-heading",
+          "related-articles-heading"
+        ],
+        "bodyTextHash": "e89b036cc8240795ab5ee3298ec74e289913fe6f4932b2cb163074aff6b03dfa"
+      }
     }
   },
   "sourceHashes": {
@@ -21061,7 +21153,10 @@
     "/images/posts/smfm-2026-physician-developers-hero.png": "7c7a1b433712f6fa3545e5cc6f5b314cf3423a4702786418a24964b8eb024db4",
     "/audio/what-physicians-owe-patients-after-a-frightening-research-headline.mp3": "7a5f2964b40581ae53326ff393a85e266a53392fdf564dbc9bad449142a71183",
     "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.png": "732d5b1318d23951ab5ea3ead9847cd85a38cdfa2cfdc5a67594d723b472a21e",
-    "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.jpeg": "6207732d605157708a7f520dcbda5409cfa37584d98123329df43001a39c42eb"
+    "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.jpeg": "6207732d605157708a7f520dcbda5409cfa37584d98123329df43001a39c42eb",
+    "/audio/mcp-for-physicians-part-01.mp3": "bb7d50a2dec5afa0a34c2cbf55babe597e9fdaaac8bc78b5da7bcf3689f2373e",
+    "/downloads/mcp-for-physicians-part-01.zip": "d53321a219557c891d090eb1160d4fcf571aee2c747733b7d2c2f0ecd1dfcff9",
+    "/images/posts/mcp-for-physicians-part-01-hero.webp": "18d4760035a7c96cb8ebfd2341a743537b00349d553a55458438318c2f42051f"
   },
   "endpoints": [
     "/.well-known/chukwuma-onyeije-identity.txt",
@@ -21659,7 +21754,11 @@
     "/audio/what-physicians-owe-patients-after-a-frightening-research-headline.mp3",
     "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.png",
     "/og/what-physicians-owe-patients-after-a-frightening-research-headline.png",
-    "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.jpeg"
+    "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.jpeg",
+    "/audio/mcp-for-physicians-part-01.mp3",
+    "/downloads/mcp-for-physicians-part-01.zip",
+    "/images/posts/mcp-for-physicians-part-01-hero.webp",
+    "/og/mcp-for-physicians-part-01.png"
   ],
   "redirects": [
     {
@@ -22793,6 +22892,11 @@
       "title": "What Physicians Owe Patients After a Frightening Research Headline",
       "description": "A prenatal stress study shows why physicians must explain the limits of research, support patients, and build accessible tools for better clinical conversations.",
       "published": "Fri, 23 Oct 2026 00:00:00 GMT"
+    },
+    "https://www.doctorswhocode.blog/blog/mcp-for-physicians-part-01/": {
+      "title": "MCP for Physician Developers, Part 1: Trace One Request",
+      "description": "Learn how MCP connects a client to a research notebook through a physician&apos;s tested example of tool discovery, note search, and retrieval.",
+      "published": "Sun, 25 Oct 2026 00:00:00 GMT"
     }
   },
   "sitemapUrls": [
@@ -23528,6 +23632,8 @@
     "https://www.doctorswhocode.blog/blog/what-physicians-owe-patients-after-a-frightening-research-headline/",
     "https://www.doctorswhocode.blog/tags/clinical-communication/",
     "https://www.doctorswhocode.blog/tags/physician-developers/",
-    "https://www.doctorswhocode.blog/tags/prenatal-stress/"
+    "https://www.doctorswhocode.blog/tags/prenatal-stress/",
+    "https://www.doctorswhocode.blog/blog/mcp-for-physicians-part-01/",
+    "https://www.doctorswhocode.blog/courses/mcp-for-physician-developers/"
   ]
 }
