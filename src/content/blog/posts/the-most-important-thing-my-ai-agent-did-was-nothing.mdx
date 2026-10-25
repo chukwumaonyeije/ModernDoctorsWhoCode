@@ -1,0 +1,83 @@
+---
+title: "The Most Important Thing My AI Agent Did Was Nothing"
+description: "A trivial billing errand shows what physicians should demand from AI agents: memory, verification, and the discipline not to act."
+pubDate: 2026-10-25T12:00:00Z
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags:
+  - "AI agents"
+  - "clinical workflow"
+  - "human checkpoint"
+  - "clinical judgment"
+  - "physician-developer"
+category: "Clinical AI"
+image:
+  url: "/images/posts/the-most-important-thing-my-ai-agent-did-was-nothing-hero.png"
+  alt: "A translucent robotic hand pauses above an untouched control beside verified evidence cards and a stethoscope."
+draft: false
+featured: false
+---
+
+This week my AI agent, Hark, did something I could have done myself in five minutes. Its morning brief flagged that HostGator couldn't charge my card for onyeije.net and asked whether it should renew the hosting for about $185.
+
+The problem: I left HostGator months ago. onyeije.net now lives on Hostinger.
+
+So I said that, in one line. Then I said yes when it offered to make sure the old account wouldn't keep trying my card.
+
+Here is what it did next, and why I think it matters more than the errand.
+
+## What the agent actually did
+
+- It took the correction and kept it. It didn't just apologize. It updated what it knows about me: this domain is on Hostinger, and HostGator notices about it should be ignored. I shouldn't see that renewal prompt again.
+- It removed the stale item from my dashboard instead of leaving me to dismiss it.
+- It signed in to the old account and looked before acting. It checked the renewal center, orders, payment methods, and domain list.
+- It worked inside limits I never had to spell out. Turn off auto-renew if possible. Don't pay the past-due invoice. Don't touch the domain registration, DNS, or nameservers. If the only option is closing the whole account, stop and ask me first.
+- It reported back with evidence. Both plans had expired in August. The auto-renew switches were locked. No card was saved. No balance was due. The domain wasn't registered at HostGator at all.
+
+Conclusion: nothing left to charge, and nothing to change. So it changed nothing.
+
+## Why this is not a story about convenience
+
+I didn't need help clicking through a hosting portal. The interesting part is the shape of the work, because it's the same shape we need from any agent that touches clinical systems.
+
+### 1. Correction becomes durable context.
+
+The agent was wrong. It had read old billing emails and assumed the service was still mine. One sentence from me fixed that for good. In medicine we call this updating the problem list. A tool that apologizes and then makes the same mistake tomorrow isn't an assistant. It's noise.
+
+### 2. Verify before you act.
+
+The agent didn't treat my words as a command to cancel something. It treated them as a hypothesis to check against the actual system. That's a chart review before an order: confirm the current state, then decide.
+
+### 3. The smallest action that fixes the problem.
+
+It had permission to act and access to the account, and it still chose to do nothing once the evidence showed nothing needed doing. It didn't close the account, pay the old invoice, or touch DNS. In clinical terms that's a full workup and no intervention, the right call when watchful waiting is correct.
+
+### 4. Hard stops around irreversible actions.
+
+Domain registration and DNS were off limits. Closing the account required my explicit yes. Spending money requires my approval every time. These aren't nice touches. They're the design. Every agent that can act on your behalf needs the equivalent of a two-person check for anything you can't undo.
+
+### 5. Observable, auditable output.
+
+I didn't get "done." I got what was checked, what was found, and why no change was made. If I disagreed, I could see exactly where.
+
+## Why this matters for Doctors Who Code
+
+Our [Use AI in Medicine path](/paths/use-ai-in-medicine/) teaches one idea above all: move from isolated prompts to observable workflows with deliberate human checkpoints. This errand is a small, safe, non-clinical example of that idea working.
+
+Replace "hosting account" with "medication reconciliation," "prior authorization," or "results follow-up" and the requirements barely change:
+
+- The agent must remember corrections from the clinician who owns the decision.
+- It must check the system of record before acting on a message, an email, or its own memory.
+- It must prefer the least invasive action, including no action.
+- It must stop at irreversible steps and ask a human.
+- It must report what it saw, not just what it did.
+
+If you're building clinical tools, don't judge an agent by how much it can do. Judge it by how well it knows when to stop.
+
+## Try this yourself
+
+Pick one low-stakes administrative errand this week: an old subscription, a renewal notice, a cluttered account. Hand it to whatever agent you use and watch for five things. Does it learn from your correction? Does it verify? Does it choose the smallest action? Does it stop before anything irreversible? Does it show its evidence?
+
+If it fails any of these on your hosting bill, it will not pass them on your patients.
+
+— Chukwuma Onyeije, MD, FACOG
