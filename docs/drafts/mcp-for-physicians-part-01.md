@@ -1,6 +1,23 @@
 ---
 status: draft
 title: "MCP for Physician Developers, Part 1: Trace One Request"
+description: "Learn how MCP connects a client to a research notebook through a physician's tested example of tool discovery, note search, and retrieval."
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Development"
+tags:
+  - MCP
+  - physician-developer
+  - beginner
+  - API
+  - TypeScript
+  - testing
+  - tutorial
+draft: true
+featured: false
+# pubDate: set to the approved publication date during release preparation.
+# image and audioUrl: add only after the actual assets are prepared and verified.
+# readingTime: omit so the site's shared helper derives it from the article.
 series: "MCP for Physician Developers: From First Principles to a Working Cloudflare Project"
 part: 1
 sources:
