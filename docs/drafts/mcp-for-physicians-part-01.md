@@ -4,7 +4,7 @@ title: "MCP for Physician Developers, Part 1: Trace One Request"
 series: "MCP for Physician Developers: From First Principles to a Working Cloudflare Project"
 part: 1
 sources:
-  - https://github.com/chukwumaonyeije/mcp-for-physicians/blob/setup/physician-research-notebook/docs/learning-journal.mdhttps://github.com/chukwumaonyeije/mcp-for-physicians/blob/setup/physician-research-notebook/docs/learning-journal.md
+  - https://github.com/chukwumaonyeije/mcp-for-physicians/blob/setup/physician-research-notebook/docs/learning-journal.md
   - https://github.com/chukwumaonyeije/mcp-for-physicians/blob/setup/physician-research-notebook/docs/technical-baseline.md
   - https://ts.sdk.modelcontextprotocol.io/v2/
   - https://ts.sdk.modelcontextprotocol.io/v2/get-started/first-client.html
@@ -14,13 +14,13 @@ last_tested: 2026-10-25
 
 # MCP for Physician Developers, Part 1: Trace One Request
 
-The result in MCP Inspector contained one matching note: `synthetic-001`.
+I searched a small teaching notebook for `critical-reading` and received one matching entry: `synthetic-001`. I was using MCP Inspector, an application that lets developers test the connection between software programs and see the information they exchange.
 
-I had searched for `critical-reading`, a topic I had just added to a small research notebook. Then I selected a second tool, entered that note's ID, and received `found: true` with the full record. The topics included my addition. The summary, source information, date, and limitations were visible.
+I then requested the complete note using that identifier. The response included its summary, topics, source information, date, and limitations. This was a fictional teaching example, clearly labeled as synthetic.
 
-No AI model was involved in those calls. I was operating the client myself.
+Inspector sent my requests to the local notebook server, the program responsible for searching and returning stored notes. I selected each action myself. No AI model was needed to find or retrieve the entry.
 
-That is a useful place to begin learning the Model Context Protocol: with a request whose path we can inspect.
+That exchange gives us a concrete starting point for the Model Context Protocol, or MCP: a shared set of rules that lets applications discover available operations and request their results. We can follow one request from beginning to end before adding an AI model.
 
 Consider a physician preparing for journal club. A notebook may contain summaries, source details, and questions to revisit. Finding the right entry is one task. Deciding whether its contents are trustworthy is another responsibility. Software should make that distinction visible.
 
@@ -77,7 +77,7 @@ That test called the retrieval function directly. A separate automated test used
 
 Each check answered a different question. The unit test checked the matching behavior. The integration test checked communication. Inspector let me examine the returned data myself.
 
-For the practical exercise, follow the [repository setup and inspection guide](../docs/setup.md). It contains the installation commands, test commands, and Inspector launch instructions. The repository remains private during preparation; the exercise link is for readers with access until a separate release is approved.
+For the practical exercise, follow the [repository setup and inspection guide](https://github.com/chukwumaonyeije/mcp-for-physicians/blob/setup/physician-research-notebook/docs/setup.md). It contains the installation commands, test commands, and Inspector launch instructions. The repository remains private during preparation; the exercise link is for readers with access until a separate release is approved.
 
 The expected interactive result is two discovered tools, one match for `critical-reading`, and a complete record when that ID is passed to `get_note`. Record what actually appears, including errors. If the topic is already present in your checkout, the removal-and-restoration experiment demonstrates the test's purpose.
 
