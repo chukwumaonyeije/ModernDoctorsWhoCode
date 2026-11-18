@@ -20,7 +20,7 @@
     "validate:routes": "node scripts/site-guardrails.mjs",
     "validate:preservation": "node scripts/validate-preservation.mjs",
     "baseline:preservation": "node scripts/validate-preservation.mjs --candidate",
-    "test": "node --experimental-strip-types --test tests/preservation.test.mjs tests/learning-guardrails.test.mjs tests/curriculum.test.mjs tests/theme.test.mjs tests/sms-handler.test.mjs",
+    "test": "node --experimental-strip-types --test tests/preservation.test.mjs tests/learning-guardrails.test.mjs tests/curriculum.test.mjs tests/theme.test.mjs tests/sms-handler.test.mjs tests/article-search.test.mjs",
     "validate:site": "npm run validate:identity && npm run validate:learning && npm run validate:articles && npm run validate:routes && npm run validate:preservation",
     "check": "npm test && npm run build && npm run validate:site",
     "test:browser": "playwright test",

@@ -47,10 +47,10 @@ const blogSchema = {
     <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Journal' }]} />
     <header class="article-index-header">
       <div>
-        <p class="label">Articles</p>
-        <h1>Search the complete publication.</h1>
+        <p class="label">Journal</p>
+        <h1>Find your next read.</h1>
         <p class="lede-copy">
-          Courses provide sequence. Channels provide durable subjects. The archive preserves every published argument, build note, tutorial, and clinical analysis.
+          Search the full text of every article, or narrow the Journal by topic, date, and format.
         </p>
       </div>
       <a href="/channels/" class="site-button site-button--secondary">Browse channels</a>
@@ -63,7 +63,7 @@ const blogSchema = {
           type="search"
           id="post-search"
           name="q"
-          placeholder="Search titles, descriptions, and topics"
+          placeholder="Search titles, topics, or words inside an article"
           class="site-input"
           autocomplete="off"
         />
@@ -115,6 +115,23 @@ const blogSchema = {
         </label>
       </div>
 
+      <div class="article-filters">
+        <label>
+          <span>Sort by</span>
+          <select name="sort" class="site-input">
+            <option value="">Best match / newest</option>
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+          </select>
+        </label>
+        <label>
+          <span>Selection</span>
+          <select name="selection" class="site-input">
+            <option value="">All articles</option>
+            <option value="featured">Featured picks ({allPosts.filter((post) => post.data.featured).length})</option>
+          </select>
+        </label>
+      </div>
       <div class="article-discovery-footer">
         <p id="article-result-count" role="status" aria-live="polite">{sortedPosts.length} articles</p>
         <button type="reset" class="article-reset">Clear search and filters</button>
@@ -151,6 +168,7 @@ const blogSchema = {
 </BaseLayout>
 
 <script>
+  import { articleSearchScore } from '../../utils/article-search';
   interface SearchRecord {
     id: string;
     title: string;
@@ -163,6 +181,8 @@ const blogSchema = {
     published: string;
     year: number;
     keywords: string[];
+    text: string;
+    featured: boolean;
   }
 
   const form = document.getElementById('article-discovery') as HTMLFormElement;
@@ -172,6 +192,7 @@ const blogSchema = {
   const items = new Map(
     [...document.querySelectorAll<HTMLElement>('.post-item')].map((item) => [item.dataset.postId ?? '', item]),
   );
+  let requestVersion = 0;
   let indexPromise: Promise<SearchRecord[]> | undefined;
 
   function loadIndex() {
@@ -179,7 +200,7 @@ const blogSchema = {
       .then((response) => {
         if (!response.ok) throw new Error('Search index unavailable');
         return response.json() as Promise<SearchRecord[]>;
-      });
+      }).catch((error) => { indexPromise = undefined; throw error; });
     return indexPromise;
   }
 
@@ -192,6 +213,8 @@ const blogSchema = {
       difficulty: String(data.get('difficulty') ?? ''),
       topic: String(data.get('topic') ?? ''),
       recency: String(data.get('recency') ?? ''),
+      sort: String(data.get('sort') ?? ''),
+      selection: String(data.get('selection') ?? ''),
     };
   }
 
@@ -206,7 +229,7 @@ const blogSchema = {
 
   function restoreFromUrl() {
     const params = new URLSearchParams(window.location.search);
-    ['q', 'path', 'format', 'difficulty', 'topic', 'recency'].forEach((name) => {
+    ['q', 'path', 'format', 'difficulty', 'topic', 'recency', 'sort', 'selection'].forEach((name) => {
       const field = form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement | null;
       if (field) field.value = params.get(name) ?? '';
     });
@@ -226,36 +249,48 @@ const blogSchema = {
   }
 
   async function applyDiscovery() {
+    const version = ++requestVersion;
     const state = getState();
     syncUrl(state);
     grid.setAttribute('aria-busy', 'true');
 
     try {
       const records = await loadIndex();
+      if (version !== requestVersion) return;
       let visible = 0;
 
-      records.forEach((record) => {
-        const haystack = [record.title, record.description, record.category, ...record.keywords].join(' ').toLowerCase();
+      const ranked = records.map((record) => ({ record, score: articleSearchScore(record, state.q) }));
+      ranked.sort((a, b) => {
+        if (!state.sort && state.q && a.score !== b.score) return b.score - a.score;
+        const dateDifference = Date.parse(b.record.published) - Date.parse(a.record.published);
+        return state.sort === 'oldest' ? -dateDifference : dateDifference;
+      });
+      ranked.forEach(({ record, score }) => {
         const matches =
-          (!state.q || haystack.includes(state.q)) &&
+          score > 0 &&
+          (!state.selection || record.featured) &&
           (!state.path || record.path === state.path) &&
           (!state.format || record.format === state.format) &&
           (!state.difficulty || record.difficulty === state.difficulty) &&
           (!state.topic || record.topics.includes(state.topic)) &&
           matchesRecency(record, state.recency);
         const item = items.get(record.id);
-        if (item) item.hidden = !matches;
-        if (matches) visible += 1;
+        if (item) {
+          item.hidden = !matches;
+          grid.append(item);
+          if (matches) visible += 1;
+        }
       });
 
       count.textContent = `${visible} ${visible === 1 ? 'article' : 'articles'}`;
       empty.hidden = visible !== 0;
     } catch {
+      if (version !== requestVersion) return;
       count.textContent = 'Search is temporarily unavailable. All articles remain visible.';
       items.forEach((item) => { item.hidden = false; });
       empty.hidden = true;
     } finally {
-      grid.setAttribute('aria-busy', 'false');
+      if (version === requestVersion) grid.setAttribute('aria-busy', 'false');
     }
   }
 
@@ -265,6 +300,7 @@ const blogSchema = {
     (form.elements.namedItem('q') as HTMLInputElement | null)?.focus();
   }
 
+  form.addEventListener('submit', (event) => { event.preventDefault(); void applyDiscovery(); });
   form.addEventListener('input', () => { void applyDiscovery(); });
   form.addEventListener('change', () => { void applyDiscovery(); });
   form.addEventListener('reset', () => { window.setTimeout(() => { void applyDiscovery(); }, 0); });
@@ -338,6 +374,7 @@ const blogSchema = {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 0.75rem;
+    margin-bottom: 0.75rem;
   }
 
   .article-filters label {

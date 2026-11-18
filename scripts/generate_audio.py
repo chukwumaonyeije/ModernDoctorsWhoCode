@@ -62,6 +62,7 @@ def strip_markdown(text: str) -> str:
         text,
     )
     text = re.sub(r'\{/\*[\s\S]*?\*/\}', '', text)
+    text = re.sub(r'<!--[\s\S]*?-->', '', text)
     text = re.sub(r'<[^>]+>', '', text)
     text = re.sub(r'```[\s\S]*?```', '', text)
     text = re.sub(r'`[^`]*`', '', text)
@@ -154,10 +155,6 @@ def process_post(post_path: Path, force: bool = False) -> bool:
     if has_audio_url and not audio_path.exists() and not force:
         print(f'  [redo] {slug} — frontmatter points to missing MP3, regenerating')
 
-    if force and audio_path.exists():
-        audio_path.unlink()
-        print(f'  [redo] {slug} — removed existing MP3 for regeneration')
-
     clean = strip_markdown(post.content)
     if not clean:
         print(f'  [skip] {slug} — no content after stripping')
@@ -177,7 +174,15 @@ def process_post(post_path: Path, force: bool = False) -> bool:
         if i < len(chunks) - 1:
             time.sleep(DELAY_SEC)
 
-    audio_path.write_bytes(audio_bytes)
+    if not audio_bytes:
+        raise ValueError('Fish Audio returned an empty recording')
+    # Keep the previous narration usable if generation or writing fails.
+    temporary_path = audio_path.with_suffix('.mp3.tmp')
+    try:
+        temporary_path.write_bytes(audio_bytes)
+        temporary_path.replace(audio_path)
+    finally:
+        temporary_path.unlink(missing_ok=True)
     print(f'         saved → {audio_path} ({len(audio_bytes):,} bytes)')
 
     write_audio_url(post_path, slug)

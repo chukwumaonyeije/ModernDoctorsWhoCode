@@ -1,3 +1,4 @@
+import { articleSearchText } from './article-search';
 import { getCollection } from 'astro:content';
 import { classifyArticleFormat, classifyArticleTopics, normalizeCategory } from '../data/taxonomy';
 import { sortBlogPosts } from './blog';
@@ -17,6 +18,8 @@ export interface ArticleSearchRecord {
   published: string;
   year: number;
   keywords: string[];
+  text: string;
+  featured: boolean;
 }
 
 export async function buildArticleSearchIndex(): Promise<ArticleSearchRecord[]> {
@@ -38,6 +41,8 @@ export async function buildArticleSearchIndex(): Promise<ArticleSearchRecord[]> 
 
     return {
       id: post.id,
+      text: articleSearchText(post.body ?? ''),
+      featured: post.data.featured,
       title: post.data.title,
       description: post.data.description,
       url: `/blog/${post.id}/`,

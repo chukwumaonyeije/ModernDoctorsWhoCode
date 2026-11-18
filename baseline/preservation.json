@@ -3696,6 +3696,11 @@
       "canonical": [
         "https://www.doctorswhocode.blog/courses/mcp-for-physician-developers/"
       ]
+    },
+    "/blog/retire-the-typing-olympics/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/blog/retire-the-typing-olympics/"
+      ]
     }
   },
   "articles": {
@@ -4259,7 +4264,7 @@
           "healthbench"
         ],
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 8,
         "image": {
           "url": "/images/posts/ai-just-outperformed-hero.png",
@@ -4420,8 +4425,7 @@
           "alt": "Layered, glowing knowledge graph representing a physician's longitudinal memory of a patient across years of clinical data"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 10500,
+        "featured": false,
         "readingTime": 10
       },
       "rendered": {
@@ -4506,8 +4510,7 @@
           "url": "/images/posts/hermes-ai-operations-partner-hero.jpeg",
           "alt": "Hermes AI operations partner dashboard concept with clinical, coding, and workflow systems connected around a physician-builder stack"
         },
-        "featured": true,
-        "featuredRank": 1000,
+        "featured": false,
         "draft": false,
         "readingTime": 12
       },
@@ -4807,7 +4810,7 @@
         "category": "AI in Medicine",
         "description": "The AMA's 2026 survey shows 81% of physicians now use AI in practice. But read the fine print. Physicians want a seat at the table. The best way to earn that seat is to be the person who wrote the code.",
         "draft": false,
-        "featured": true,
+        "featured": false,
         "image": {
           "alt": "Physician at dual-monitor workstation with EHR on one screen and code on the other",
           "url": "/images/posts/ama-augmented-intelligence-hero.jpeg"
@@ -5127,8 +5130,7 @@
           "alt": "Dr. Chukwuma Onyeije surrounded by a clinical AI verification workflow showing grounded facts and fabricated outputs"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 15105,
+        "featured": false,
         "readingTime": 14
       },
       "rendered": {
@@ -5821,7 +5823,7 @@
           "alt": "Physician workstation showing a clinical evidence synthesis knowledge vault beside medical references and notes"
         },
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 10,
         "series": "The Physician's Second Brain",
         "seriesPart": 5,
@@ -5910,8 +5912,7 @@
           "alt": "Physician-developer sitting with a laptop at night, surrounded by visible signs of technical friction and clinical responsibility"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 2000,
+        "featured": false,
         "readingTime": 7
       },
       "rendered": {
@@ -6062,7 +6063,7 @@
           "workflow-design"
         ],
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 8
       },
       "rendered": {
@@ -6144,8 +6145,7 @@
           "clinical-ai"
         ],
         "draft": false,
-        "featured": true,
-        "featuredRank": 5000,
+        "featured": false,
         "image": {
           "url": "/images/posts/clinical-tool-becomes-infrastructure-hero.jpeg",
           "alt": "A small clinical tool becoming the foundation of larger infrastructure, dark navy and cyan"
@@ -6560,8 +6560,7 @@
           "medical-informatics"
         ],
         "draft": false,
-        "featured": true,
-        "featuredRank": 110,
+        "featured": false,
         "image": {
           "url": "/images/posts/dead-weight-ebsteins-evidence.jpeg",
           "alt": "Vintage congenital heart disease textbook illustration of Ebstein's anomaly beside a modern cyan-lit echocardiography interface"
@@ -6698,7 +6697,7 @@
           "alt": "Physician-developer in scrubs working at a multi-monitor clinical workstation at night with imaging, code, and notes visible on screen"
         },
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 9
       },
       "rendered": {
@@ -7027,7 +7026,7 @@
           "alt": "Terminal window showing Astro build output alongside a stethoscope"
         },
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 8
       },
       "rendered": {
@@ -7163,7 +7162,7 @@
           "url": "/images/posts/doctors-who-code-build-systems-not-models-hero.jpeg",
           "alt": "Physician at a workstation reviewing medical images, code, and system monitoring dashboards side by side"
         },
-        "featured": true,
+        "featured": false,
         "readingTime": 8,
         "draft": false
       },
@@ -7241,7 +7240,7 @@
           "series"
         ],
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 4
       },
       "rendered": {
@@ -7533,8 +7532,7 @@
           "alt": "A physician-developer workstation with clinical literature, code, an agentic health architecture diagram, and a stethoscope"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 15107,
+        "featured": false,
         "readingTime": 9
       },
       "rendered": {
@@ -7842,7 +7840,7 @@
           "url": "/images/posts/fatigue-failure-pgis.jpeg",
           "alt": "Morning PGIS dashboard showing HRV, glucose trend, and Body Battery after a training restart at dawn"
         },
-        "featured": true,
+        "featured": false,
         "draft": false,
         "readingTime": 8
       },
@@ -7920,8 +7918,7 @@
           "doctors-who-code"
         ],
         "draft": false,
-        "featured": true,
-        "featuredRank": 13000,
+        "featured": false,
         "readingTime": 18,
         "image": {
           "url": "/images/posts/fda-clearance-not-monitoring-plan-hero.jpeg",
@@ -8015,7 +8012,7 @@
         "author": "Chukwuma Onyeije, MD, FACOG",
         "category": "Practical Development",
         "description": "A step-by-step tutorial for physician-developers on authenticating with the Epic FHIR sandbox, making your first API call in Python, and building toward a SMART on FHIR clinical app -- no enterprise contract required.",
-        "featured": true,
+        "featured": false,
         "image": {
           "alt": "Python code connecting to the Epic FHIR sandbox API, displayed on a dark terminal background",
           "url": "/images/fhir-playbook-cover.jpg"
@@ -8379,8 +8376,7 @@
           "version-control"
         ],
         "draft": false,
-        "featured": true,
-        "featuredRank": 4999,
+        "featured": false,
         "image": {
           "url": "/images/posts/from-excel-to-python-hero.jpeg",
           "alt": "Excel spreadsheet formula cracking under pressure, transitioning to clean Python code"
@@ -8529,8 +8525,7 @@
           "doctors-who-code"
         ],
         "draft": false,
-        "featured": true,
-        "featuredRank": 12000,
+        "featured": false,
         "readingTime": 6,
         "image": {
           "url": "/images/posts/from-meetings-to-modules-hero.jpeg",
@@ -9052,8 +9047,7 @@
           "alt": "A physician-developer in a white coat holding a glowing GitHub Gist icon, connected by streams of light to clinical diagrams, decision trees, and code panels around him"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 14000,
+        "featured": false,
         "readingTime": 9
       },
       "rendered": {
@@ -9138,8 +9132,7 @@
           "alt": "Expedition cruise ship at sea with a cinematic public health surveillance mood"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 1001,
+        "featured": false,
         "readingTime": 7
       },
       "rendered": {
@@ -9226,8 +9219,7 @@
           "url": "/images/posts/hermes-production-architecture-hero.jpeg",
           "alt": "Production architecture diagram concept for Hermes Agent showing infrastructure, routing, logs, and healthcare AI workflow boundaries"
         },
-        "featured": true,
-        "featuredRank": 999,
+        "featured": false,
         "draft": false,
         "readingTime": 13
       },
@@ -9465,7 +9457,7 @@
         "category": "Physician Development",
         "description": "It was a Tuesday evening consult. A doctor called with a patient at 31 weeks small for gestational age, elevated umbilical artery resistance, and a wo...",
         "draft": false,
-        "featured": true,
+        "featured": false,
         "image": {
           "alt": "FGRManager clinical decision support tool",
           "url": "/images/posts/fgrmanager-hero.jpeg"
@@ -9826,7 +9818,7 @@
           "url": "/images/posts/pgis-recipes-hero.jpeg",
           "alt": "Physician-builder reviewing a PGIS recipe library on a laptop while sketching the system architecture beside a plated meal"
         },
-        "featured": true,
+        "featured": false,
         "draft": false,
         "readingTime": 6
       },
@@ -9904,8 +9896,7 @@
           "alt": "Physician reviewing glucose-monitoring educational materials beside the title: I Had a Clinical Presumption. I Built Tools to Examine It."
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 15108,
+        "featured": false,
         "readingTime": 6
       },
       "rendered": {
@@ -9984,8 +9975,7 @@
           "alt": "A traveler using a password manager on a laptop during an overnight international flight"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 15100,
+        "featured": false,
         "readingTime": 6
       },
       "rendered": {
@@ -10048,7 +10038,7 @@
         "category": "Pillar Post",
         "description": "A physician-developer explores the powerful parallels between AI-driven glycemic control in the ICU and metabolic management for endurance athletes with Type 2 diabetes, introducing the Performance Glycemic Intelligence System (PGIS) as a real-world n-of-1 framework.",
         "draft": false,
-        "featured": true,
+        "featured": false,
         "image": {
           "alt": "A split-screen image showing an ICU monitor with glucose waveforms and a marathon runner at dawn, bridged by a line of glowing data.",
           "url": "/images/posts/hero_icu_to_marathon.jpg"
@@ -10141,8 +10131,7 @@
           "doctors-who-code"
         ],
         "draft": false,
-        "featured": true,
-        "featuredRank": 14750,
+        "featured": false,
         "readingTime": 6,
         "image": {
           "url": "/images/posts/ignorance-vs-ineptitude-hero.jpeg",
@@ -10226,7 +10215,7 @@
           "alt": "InboxDetox dashboard showing AI-categorized email subscriptions on a dark interface displayed on a monitor"
         },
         "readingTime": 5,
-        "featured": true,
+        "featured": false,
         "draft": false
       },
       "rendered": {
@@ -10326,7 +10315,7 @@
           "alt": "Cinematic physician-developer workflow showing research inputs flowing from Telegram and source materials into structured drafts, PDFs, and a publishable editorial pipeline"
         },
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 10
       },
       "rendered": {
@@ -10675,8 +10664,7 @@
           "doctors-who-code"
         ],
         "draft": false,
-        "featured": true,
-        "featuredRank": 7000,
+        "featured": false,
         "readingTime": 9,
         "image": {
           "url": "/images/posts/clinical-ai-growth-restriction-hero.jpeg",
@@ -10850,7 +10838,7 @@
           "fine-tuning"
         ],
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 12
       },
       "rendered": {
@@ -11108,8 +11096,7 @@
           "alt": "A physician teaches medical students about clinical AI while standing beside a healthcare robot"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 15102,
+        "featured": false,
         "readingTime": 12
       },
       "rendered": {
@@ -11591,8 +11578,7 @@
           "alt": "A physician-developer working across four organized Omarchy workspaces for evidence, code, testing, and documentation"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 15106,
+        "featured": false,
         "readingTime": 14
       },
       "rendered": {
@@ -11901,8 +11887,7 @@
           "alt": "Smartwatch, smart ring, and laptop with abstract medical-record data flows on a clinician desk"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 10000,
+        "featured": false,
         "readingTime": 9
       },
       "rendered": {
@@ -11985,7 +11970,7 @@
           "doctors-who-code"
         ],
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 10
       },
       "rendered": {
@@ -12054,7 +12039,7 @@
         "category": "Physician Development",
         "description": "A Maternal-Fetal Medicine specialist describes how his personal AI health system identified low HRV, recommended breathing exercises, and prompted him to build a custom evidence-based breathing app in a single afternoon. A case study in disposable software, physician agency, and the future of personal health technology.",
         "draft": false,
-        "featured": true,
+        "featured": false,
         "image": {
           "alt": "A physician reviews his HRV trend chart and PGIS Breathe app at dawn, Garmin watch on his wrist, running shoes in the background.",
           "url": "/images/posts/pgis-breathe-blog-hero.jpg"
@@ -12303,8 +12288,7 @@
           "alt": "A physician supervises a clinical AI robot during a consultation with a pregnant patient"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 15101,
+        "featured": false,
         "readingTime": 14
       },
       "rendered": {
@@ -12394,7 +12378,7 @@
           "alt": "Physician standing at the threshold of a modern software development workspace, one step from entering"
         },
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 9,
         "series": "The Physician-Developer Imperative",
         "seriesPart": 3,
@@ -12761,7 +12745,7 @@
           "alt": "A physician-developer standing between a clinical workstation and a coding setup with multiple screens"
         },
         "readingTime": 6,
-        "featured": true,
+        "featured": false,
         "draft": false
       },
       "rendered": {
@@ -13427,8 +13411,7 @@
           "alt": "Dr. Chukwuma Onyeije supervising DeepSeek Harness across a multi-monitor physician-developer workspace"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 15104,
+        "featured": false,
         "readingTime": 11
       },
       "rendered": {
@@ -13848,8 +13831,7 @@
           "knowledge-management"
         ],
         "draft": false,
-        "featured": true,
-        "featuredRank": 4997,
+        "featured": false,
         "image": {
           "url": "/images/posts/rag-bridge-hero.jpeg",
           "alt": "A precision bridge of glowing documents spanning from abstract medical knowledge to clinical practice"
@@ -13935,7 +13917,7 @@
           "alt": "Physician reviewing faxed referral pages beside a digital referral dashboard with ultrasound images"
         },
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 12
       },
       "rendered": {
@@ -14465,7 +14447,7 @@
           "alt": "Senior physician and resident reviewing AI diagnostic output on a tablet in a hospital corridor"
         },
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 8,
         "series": "The Physician-Developer Imperative",
         "seriesPart": 2,
@@ -14767,8 +14749,7 @@
           "doctors-who-code"
         ],
         "draft": false,
-        "featured": true,
-        "featuredRank": 11900,
+        "featured": false,
         "readingTime": 6,
         "image": {
           "url": "/images/posts/surviving-ai-native-transformation-hero.jpeg",
@@ -15077,8 +15058,7 @@
           "alt": "A physician reviewing an evidence-linked clinical workflow that turns a patient conversation into a note, orders, prescriptions, and coding actions"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 15103,
+        "featured": false,
         "readingTime": 11
       },
       "rendered": {
@@ -15957,7 +15937,7 @@
           "DoctorsWhoCode"
         ],
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 7,
         "canonical": "https://www.doctorswhocode.blog/blog/the-human-bottleneck"
       },
@@ -16039,8 +16019,7 @@
           "post-scarcity healthcare"
         ],
         "draft": false,
-        "featured": true,
-        "featuredRank": 100,
+        "featured": false,
         "readingTime": 9
       },
       "rendered": {
@@ -16205,8 +16184,7 @@
           "doctors-who-code"
         ],
         "draft": false,
-        "featured": true,
-        "featuredRank": 6000,
+        "featured": false,
         "image": {
           "url": "/images/posts/the-lemonade-machine-problem-hero.png",
           "alt": "Whimsical lemonade stand scene comparing a child-made lemonade stand with an automated lemonade machine"
@@ -16283,7 +16261,7 @@
           "url": "/images/posts/the-map-has-blind-spots.png",
           "alt": "A Go board with one glowing stone in the foreground, overlaid with retinal imaging, protein structure, ECG signals, and medical data visualizations"
         },
-        "featured": true,
+        "featured": false,
         "draft": false,
         "readingTime": 8
       },
@@ -16602,8 +16580,7 @@
           "alt": "A humanoid robot hand hovering protectively over an open human hand, rendered in muted retro-futurist tones"
         },
         "readingTime": 11,
-        "featured": true,
-        "featuredRank": 14900,
+        "featured": false,
         "draft": false
       },
       "rendered": {
@@ -16838,7 +16815,7 @@
           "alt": "Physician seated in a clinical office with a circular second-brain knowledge vault of case notes, guidelines, literature, protocols, and insights"
         },
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 3,
         "series": "The Physician's Second Brain",
         "seriesPart": 0,
@@ -16929,7 +16906,7 @@
           "alt": "Physician-builder at a laptop with a local clinical knowledge graph, binders, stethoscope, and private local server"
         },
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 12,
         "series": "The Physician's Second Brain",
         "seriesPart": 3,
@@ -17029,7 +17006,7 @@
           "alt": "Physician overwhelmed by unread medical PDFs, journal articles, guidelines, treatment protocols, and abandoned digital notes"
         },
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 9,
         "series": "The Physician's Second Brain",
         "seriesPart": 1,
@@ -17323,8 +17300,7 @@
           "alt": "Second brain knowledge system visual showing connected clinical information and memory architecture"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 7000,
+        "featured": false,
         "readingTime": 7
       },
       "rendered": {
@@ -17643,7 +17619,7 @@
           "alt": "Physician using a command-driven clinical reasoning interface across dual monitors with case comparison and SOAP structure"
         },
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 11,
         "series": "The Physician's Second Brain",
         "seriesPart": 4,
@@ -18425,8 +18401,7 @@
           "alt": "Diagram showing an email flowing through Gmail, an Apps Script gear, a distributed node graph, and GitHub into a locked notebook"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 11000,
+        "featured": false,
         "readingTime": 8
       },
       "rendered": {
@@ -18603,7 +18578,7 @@
           "alt": "Physician workstation showing clinical evidence synthesis in a dark knowledge vault interface beside medical references"
         },
         "draft": false,
-        "featured": true,
+        "featured": false,
         "readingTime": 9,
         "series": "The Physician's Second Brain",
         "seriesPart": 2,
@@ -18750,7 +18725,7 @@
           "url": "/images/posts/when-ai-told-a-dying-man.jpg",
           "alt": "A lone silhouette stands before a towering AI medical dashboard glowing cyan, while a warm doctor's office with a stethoscope waits through an open door behind him"
         },
-        "featured": true,
+        "featured": false,
         "draft": false
       },
       "rendered": {
@@ -19193,8 +19168,7 @@
           "ai-generated-code"
         ],
         "draft": false,
-        "featured": true,
-        "featuredRank": 4998,
+        "featured": false,
         "image": {
           "url": "/images/posts/why-clinical-calculator-needs-tests-hero.jpeg",
           "alt": "Clinical calculator interface with glowing test checkpoints at critical boundary thresholds"
@@ -19416,8 +19390,7 @@
           "alt": "Two physicians designing clinical software beside a patient, with interfaces for ambient documentation, evidence-based algorithms, and standardized patient care"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 15000,
+        "featured": false,
         "readingTime": 13
       },
       "rendered": {
@@ -19564,7 +19537,7 @@
         ],
         "category": "Technology",
         "author": "Chukwuma Onyeije, MD, FACOG",
-        "featured": true,
+        "featured": false,
         "image": {
           "url": "/images/posts/ai-tools-fail.jpeg",
           "alt": "Shattered circuit board shaped like a stethoscope, symbolizing failed physician-built AI tools"
@@ -19650,8 +19623,7 @@
           "alt": "Clinic workstation with dual monitors, local GPU tower, and ultrasound equipment in a quiet medical office"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 7600,
+        "featured": false,
         "readingTime": 7
       },
       "rendered": {
@@ -19733,8 +19705,7 @@
           "alt": "Physician-developer reviewing three parallel agent workflows on screens representing clinical documentation, content publishing, and daily training readiness"
         },
         "draft": false,
-        "featured": true,
-        "featuredRank": 3000,
+        "featured": false,
         "readingTime": 11
       },
       "rendered": {
@@ -20386,8 +20357,7 @@
           "url": "/images/posts/building-the-agenticbuildermd-laboratory-hero.png",
           "alt": "A telephone waveform flows through memory and tool modules to an amber human-review checkpoint on a physician-developer workbench."
         },
-        "featured": true,
-        "featuredRank": 17000,
+        "featured": false,
         "readingTime": 9,
         "draft": false
       },
@@ -20763,6 +20733,68 @@
           "related-articles-heading"
         ],
         "bodyTextHash": "e89b036cc8240795ab5ee3298ec74e289913fe6f4932b2cb163074aff6b03dfa"
+      }
+    },
+    "retire-the-typing-olympics.mdx": {
+      "id": "retire-the-typing-olympics",
+      "route": "/blog/retire-the-typing-olympics/",
+      "bodyHash": "9919be660e51f13aa10e389ad9091af7c1d6db87c4574d16cf2d379ad445a7be",
+      "frontmatter": {
+        "audioUrl": "/audio/retire-the-typing-olympics.mp3",
+        "title": "Dear Colleagues, We Can Retire the Typing Olympics",
+        "description": "A friendly rant about physicians, AI resistance, and the habit of treating unnecessary suffering as a professional credential. Keep the judgment. Question the workflow.",
+        "pubDate": "2026-11-14T00:00:00.000Z",
+        "author": "Chukwuma Onyeije, MD, FACOG",
+        "authorUrl": "https://www.linkedin.com/in/chukwumaonyeije",
+        "tags": [
+          "ai in medicine",
+          "clinical judgment",
+          "physician-developer",
+          "clinical documentation",
+          "doctors-who-code"
+        ],
+        "category": "AI in Medicine",
+        "draft": false,
+        "featured": false
+      },
+      "rendered": {
+        "title": "Dear Colleagues, We Can Retire the Typing Olympics | Doctors Who Code",
+        "description": "A friendly rant about physicians, AI resistance, and the habit of treating unnecessary suffering as a professional credential. Keep the judgment. Question the workflow.",
+        "canonical": [
+          "https://www.doctorswhocode.blog/blog/retire-the-typing-olympics/"
+        ],
+        "published": "2026-11-14T00:00:00.000Z",
+        "ogImage": "https://www.doctorswhocode.blog/og/retire-the-typing-olympics.png",
+        "audio": [
+          "/audio/retire-the-typing-olympics.mp3"
+        ],
+        "contentMedia": [],
+        "metadata": {
+          "description": "A friendly rant about physicians, AI resistance, and the habit of treating unnecessary suffering as a professional credential. Keep the judgment. Question the workflow.",
+          "author": "Chukwuma Onyeije, MD, FACOG",
+          "robots": "index, follow, max-image-preview:large",
+          "og:title": "Dear Colleagues, We Can Retire the Typing Olympics | Doctors Who Code",
+          "og:description": "A friendly rant about physicians, AI resistance, and the habit of treating unnecessary suffering as a professional credential. Keep the judgment. Question the workflow.",
+          "og:image": "https://www.doctorswhocode.blog/og/retire-the-typing-olympics.png",
+          "og:image:alt": "Dear Colleagues, We Can Retire the Typing Olympics | Doctors Who Code",
+          "og:url": "https://www.doctorswhocode.blog/blog/retire-the-typing-olympics/",
+          "og:type": "article",
+          "og:site_name": "Doctors Who Code",
+          "og:locale": "en_US",
+          "twitter:card": "summary_large_image",
+          "twitter:site": "@chukwumaonyeije",
+          "twitter:creator": "@chukwumaonyeije",
+          "twitter:title": "Dear Colleagues, We Can Retire the Typing Olympics | Doctors Who Code",
+          "twitter:description": "A friendly rant about physicians, AI resistance, and the habit of treating unnecessary suffering as a professional credential. Keep the judgment. Question the workflow.",
+          "twitter:image": "https://www.doctorswhocode.blog/og/retire-the-typing-olympics.png",
+          "article:published_time": "2026-11-14T00:00:00.000Z"
+        },
+        "headings": [
+          "article-title",
+          "share-heading",
+          "related-articles-heading"
+        ],
+        "bodyTextHash": "e9ac8fc62a2be6b7755379479648048e0216dad1e823947716e5f17a0f2e198c"
       }
     }
   },
@@ -21156,7 +21188,8 @@
     "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.jpeg": "6207732d605157708a7f520dcbda5409cfa37584d98123329df43001a39c42eb",
     "/audio/mcp-for-physicians-part-01.mp3": "bb7d50a2dec5afa0a34c2cbf55babe597e9fdaaac8bc78b5da7bcf3689f2373e",
     "/downloads/mcp-for-physicians-part-01.zip": "d53321a219557c891d090eb1160d4fcf571aee2c747733b7d2c2f0ecd1dfcff9",
-    "/images/posts/mcp-for-physicians-part-01-hero.webp": "18d4760035a7c96cb8ebfd2341a743537b00349d553a55458438318c2f42051f"
+    "/images/posts/mcp-for-physicians-part-01-hero.webp": "18d4760035a7c96cb8ebfd2341a743537b00349d553a55458438318c2f42051f",
+    "/audio/retire-the-typing-olympics.mp3": "c50d972813c0bf4cedd1c78801076453c5e9d64f00f99b87597923f4d2365463"
   },
   "endpoints": [
     "/.well-known/chukwuma-onyeije-identity.txt",
