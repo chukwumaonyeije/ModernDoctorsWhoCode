@@ -20755,7 +20755,11 @@
         ],
         "category": "AI in Medicine",
         "draft": false,
-        "featured": false
+        "featured": false,
+        "image": {
+          "url": "/images/posts/retire-the-typing-olympics-hero.webp",
+          "alt": "A keyboard and gold medal rest on a winners' podium while a physician listens to a patient in the background."
+        }
       },
       "rendered": {
         "title": "Dear Colleagues, We Can Retire the Typing Olympics | Doctors Who Code",
@@ -20768,7 +20772,12 @@
         "audio": [
           "/audio/retire-the-typing-olympics.mp3"
         ],
-        "contentMedia": [],
+        "contentMedia": [
+          {
+            "tag": "img",
+            "src": "/images/posts/retire-the-typing-olympics-hero.webp"
+          }
+        ],
         "metadata": {
           "description": "A friendly rant about physicians, AI resistance, and the habit of treating unnecessary suffering as a professional credential. Keep the judgment. Question the workflow.",
           "author": "Chukwuma Onyeije, MD, FACOG",
@@ -21189,7 +21198,8 @@
     "/audio/mcp-for-physicians-part-01.mp3": "bb7d50a2dec5afa0a34c2cbf55babe597e9fdaaac8bc78b5da7bcf3689f2373e",
     "/downloads/mcp-for-physicians-part-01.zip": "d53321a219557c891d090eb1160d4fcf571aee2c747733b7d2c2f0ecd1dfcff9",
     "/images/posts/mcp-for-physicians-part-01-hero.webp": "18d4760035a7c96cb8ebfd2341a743537b00349d553a55458438318c2f42051f",
-    "/audio/retire-the-typing-olympics.mp3": "c50d972813c0bf4cedd1c78801076453c5e9d64f00f99b87597923f4d2365463"
+    "/audio/retire-the-typing-olympics.mp3": "c50d972813c0bf4cedd1c78801076453c5e9d64f00f99b87597923f4d2365463",
+    "/images/posts/retire-the-typing-olympics-hero.webp": "15028f513ca4a383b76df01a616ef09dbe25a8c06cc5bb6bc3676ab7539bed28"
   },
   "endpoints": [
     "/.well-known/chukwuma-onyeije-identity.txt",
