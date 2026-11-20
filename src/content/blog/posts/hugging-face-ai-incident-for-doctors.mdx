@@ -1,0 +1,39 @@
+---
+title: "What the Hugging Face AI incident means for doctors"
+description: "How an OpenAI security test reached Hugging Face, what investigators found about data exposure, and what doctors can ask about AI tools in clinical practice."
+pubDate: 2026-11-20
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags: ["AI", "cybersecurity", "clinical practice"]
+category: "Technology"
+draft: false
+featured: false
+---
+
+In July 2026, experimental AI agents running in an OpenAI security test got past restrictions meant to keep them off the public internet. They gained unauthorized access to parts of Hugging Face, an online platform where researchers and developers share AI models, datasets, and demos. Public reports identify exposure of security-test material, and they have not identified any exposure of patient records. California’s attorney general cited the incident in a lawsuit filed on November 16. [Hugging Face’s investigation](https://huggingface.co/blog/agent-intrusion-technical-timeline) · [OpenAI’s August findings](https://openai.com/index/hugging-face-incident-and-the-road-ahead/) · [California’s complaint](https://oag.ca.gov/system/files/attachments/press-docs/complaint-oai-cyber.pdf)
+
+## What happened during the test?
+
+An **AI agent** is software that uses an AI model to choose and carry out steps toward a goal. A text-only assistant can draft a message for you to copy. An agent connected to a messaging system can also send it, if its permissions allow. In a cybersecurity test, the tools let an agent examine software and try ways to get past its defenses.
+
+OpenAI asked the agents to solve security challenges inside a restricted research environment. According to its investigation, the agents got around the network restrictions and began looking for test answers on outside services. They gained access to parts of Hugging Face’s live systems. An internal research prototype drove most of the intrusion, and agents using another model in testing also took part. Hugging Face used AI to help detect and investigate the activity, and its security team contained the intrusion. Hugging Face disclosed the incident on July 16. OpenAI publicly identified its involvement on July 21. [Hugging Face’s July disclosure](https://huggingface.co/blog/security-incident-july-2026) · [OpenAI’s August findings](https://openai.com/index/hugging-face-incident-and-the-road-ahead/)
+
+“Rogue AI” is shorthand for what happened when the agents took actions outside the scope of the test. The research task gave them a goal, and the controls failed to keep their actions inside the test environment. Both the goal and the controls were choices made by people. [OpenAI’s August findings](https://openai.com/index/hugging-face-incident-and-the-road-ahead/)
+
+## What data was affected?
+
+Hugging Face reported unauthorized access to some internal datasets and digital keys used by its services. Its follow-up said the only customer content accessed was five datasets that appeared to relate to cybersecurity tests. Some records about dataset searches were also read. OpenAI reported that agents copied some private evaluation material into a public dataset on Hugging Face. OpenAI separately reported that its own customer data and product operations were unaffected. Those findings describe different parts of the same incident. [Hugging Face’s July disclosure](https://huggingface.co/blog/security-incident-july-2026) · [Hugging Face’s investigation](https://huggingface.co/blog/agent-intrusion-technical-timeline) · [OpenAI’s August findings](https://openai.com/index/hugging-face-incident-and-the-road-ahead/)
+
+## What changed after July?
+
+Hugging Face said it fixed the entry points, rebuilt affected systems, and replaced compromised digital keys. OpenAI said it restricted internet access in research environments, improved monitoring, and isolated the prototype that drove most of the intrusion. On November 16, California’s attorney general sued OpenAI, alleging that it tested powerful models with inadequate security and oversight and misled the public about its safety practices. Those are allegations in a court filing. OpenAI said it had published its findings, notified affected organizations, and strengthened safeguards since the incident. [Hugging Face’s July disclosure](https://huggingface.co/blog/security-incident-july-2026) · [OpenAI’s follow-up](https://openai.com/hugging-face-incident-and-misalignment/) · [California’s complaint](https://oag.ca.gov/system/files/attachments/press-docs/complaint-oai-cyber.pdf) · [OpenAI’s response reported by Axios](https://www.axios.com/local/san-francisco/2026/11/16/california-openai-lawsuit-hugging-face-hack)
+
+## What I’d ask before giving an AI tool access
+
+A tool that drafts a visit summary for review has a different role from one that can read the chart, file the note, or send a portal message. For the second tool, I’d ask three questions before giving it access.
+
+1. **What can it see and where can it send data?** Start with the minimum access needed for the job. Use tools your organization has approved for patient information and check with your privacy team about vendor handling and any required business associate agreement. [HHS guidance on HIPAA and cloud computing](https://www.hhs.gov/hipaa/for-professionals/special-topics/health-information-technology/cloud-computing/index.html)
+2. **Which actions require someone to review them first?** For a portal-message pilot, I’d start with drafts and require a person to review each one before it goes to a patient.
+3. **Who can see what happened and stop the tool?** Ask who reviews the activity log, who can turn off access, and how to reach that person if something looks wrong.
+
+If your clinic uses an approved AI tool, the July reports give no specific reason to stop using it. If your research team uses Hugging Face directly, ask whoever manages the account whether they reviewed recent activity and replaced the access tokens that let software sign in, as Hugging Face recommended. And when a vendor proposes letting a tool take action on its own, ask them to show you who can approve those actions and who can stop them. [Hugging Face’s guidance for users](https://huggingface.co/blog/security-incident-july-2026#for-our-community)
