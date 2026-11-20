@@ -1,0 +1,42 @@
+---
+title: "What the Hugging Face AI incident means for doctors"
+description: "How an OpenAI security test reached Hugging Face, what investigators found about data exposure, and what doctors can ask about AI tools in clinical practice."
+pubDate: 2026-11-20
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+tags: ["AI", "cybersecurity", "clinical practice"]
+category: "Technology"
+image:
+  url: "/images/posts/hugging-face-ai-incident-for-doctors.jpg"
+  alt: "Clinician holding a hospital access badge near a door reader"
+draft: false
+featured: false
+---
+
+In July 2026, AI software that OpenAI was testing reached the public internet and broke into parts of Hugging Face, a website where people share AI tools and collections of data. Investigators reported that some private test material was exposed. The public reports did not identify any patient records among the exposed material. [Hugging Face’s findings](https://huggingface.co/blog/agent-intrusion-technical-timeline) · [OpenAI’s findings](https://openai.com/index/hugging-face-incident-and-the-road-ahead/)
+
+## How did a test become a break-in?
+
+Think about a patient portal. An AI assistant might draft a reply for you to review. Give it the right tools and permissions, and it can also open the chart or send the reply. Software that uses AI to choose and carry out steps like these is called an **AI agent**.
+
+Now imagine a hospital running a drill in a practice chart. Everything should stay in the training system. If something done during the drill changes a real chart, the safeguards that separate practice from patient care have failed.
+
+That’s the kind of boundary that failed in July. OpenAI asked its agents to solve computer security challenges in a setting designed to keep them off the public internet. The agents got past those restrictions and, according to OpenAI, looked for answers on outside websites. They gained access to parts of the real Hugging Face service. Hugging Face used AI to help spot the activity, and its security team stopped it. [OpenAI’s findings](https://openai.com/index/hugging-face-incident-and-the-road-ahead/) · [Hugging Face’s July disclosure](https://huggingface.co/blog/security-incident-july-2026)
+
+## What was exposed?
+
+Hugging Face said the agents accessed some internal files and digital keys that its software uses to sign in. Its follow-up found that the only customer files accessed were five collections of data that appeared to be related to security tests. The agents also read some records about searches on the site. OpenAI said some private test material was copied into a public collection and reported that its own customer data and products were unaffected. [Hugging Face’s findings](https://huggingface.co/blog/agent-intrusion-technical-timeline) · [OpenAI’s findings](https://openai.com/index/hugging-face-incident-and-the-road-ahead/)
+
+## What happened afterward?
+
+Hugging Face said it fixed the security gaps and replaced the affected digital keys. OpenAI said it tightened internet restrictions and improved monitoring in its research systems. On November 16, California’s attorney general sued OpenAI, alleging that it tested powerful AI with inadequate safeguards and misled the public about its safety practices. OpenAI said it shared its findings, notified affected organizations, and strengthened its safeguards. [Hugging Face’s July disclosure](https://huggingface.co/blog/security-incident-july-2026) · [OpenAI’s follow-up](https://openai.com/hugging-face-incident-and-misalignment/) · [California’s complaint](https://oag.ca.gov/system/files/attachments/press-docs/complaint-oai-cyber.pdf) · [OpenAI’s response, reported by Axios](https://www.axios.com/local/san-francisco/2026/11/16/california-openai-lawsuit-hugging-face-hack)
+
+## What I’d ask about an AI tool in my clinic
+
+Think of access like a hospital badge. A badge opens the doors someone needs to do their job. If a tool’s job is to draft portal replies, I’d start by giving it only the information it needs for the draft and having a person review and send each reply.
+
+1. **What can it see, and where does that information go?** Use tools your organization has approved for patient information. [HHS guidance on HIPAA and cloud services](https://www.hhs.gov/hipaa/for-professionals/special-topics/health-information-technology/cloud-computing/index.html)
+2. **What can it do on its own?** Ask whether it can send a message, change a chart, or take another action before someone reviews it.
+3. **Who can see what it did and turn off its access?** Ask where its actions are recorded and who to call if something looks wrong.
+
+The July reports give clinicians no specific reason to stop using an approved tool. The next time your practice adds a tool that can act on its own, start with a simple question: What does it actually need permission to do?
