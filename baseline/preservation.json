@@ -3701,6 +3701,16 @@
       "canonical": [
         "https://www.doctorswhocode.blog/blog/retire-the-typing-olympics/"
       ]
+    },
+    "/blog/claude-riemann-hypothesis-future-doctors-who-code/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/blog/claude-riemann-hypothesis-future-doctors-who-code/"
+      ]
+    },
+    "/tags/formal-verification/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/tags/formal-verification/"
+      ]
     }
   },
   "articles": {
@@ -20805,6 +20815,92 @@
         ],
         "bodyTextHash": "e9ac8fc62a2be6b7755379479648048e0216dad1e823947716e5f17a0f2e198c"
       }
+    },
+    "claude-riemann-hypothesis-future-doctors-who-code.mdx": {
+      "id": "claude-riemann-hypothesis-future-doctors-who-code",
+      "route": "/blog/claude-riemann-hypothesis-future-doctors-who-code/",
+      "bodyHash": "6b84e6f704f2b002bf49d42f4af5c0e33a5936386148a86f52428c699b2a518f",
+      "frontmatter": {
+        "audioUrl": "/audio/claude-riemann-hypothesis-future-doctors-who-code.mp3",
+        "title": "Claude, the Riemann Hypothesis, and the Future of Doctors Who Code",
+        "description": "A claimed AI-assisted proof of the Riemann hypothesis offers physicians who build software a lesson in verification, even if they hated calculus.",
+        "pubDate": "2026-11-22T00:00:00.000Z",
+        "author": "Chukwuma Onyeije, MD, FACOG",
+        "category": "Artificial Intelligence",
+        "tags": [
+          "Artificial Intelligence",
+          "Physician Developers",
+          "Vibe Coding",
+          "Software Engineering",
+          "Formal Verification"
+        ],
+        "image": {
+          "url": "/images/posts/claude-riemann-hypothesis-future-doctors-who-code.webp",
+          "alt": "A physician in navy scrubs works at a laptop beside an abstract grid with points aligned on a vertical line."
+        },
+        "draft": false,
+        "featured": false
+      },
+      "rendered": {
+        "title": "Claude, the Riemann Hypothesis, and the Future of Doctors Who Code | Doctors Who Code",
+        "description": "A claimed AI-assisted proof of the Riemann hypothesis offers physicians who build software a lesson in verification, even if they hated calculus.",
+        "canonical": [
+          "https://www.doctorswhocode.blog/blog/claude-riemann-hypothesis-future-doctors-who-code/"
+        ],
+        "published": "2026-11-22T00:00:00.000Z",
+        "ogImage": "https://www.doctorswhocode.blog/og/claude-riemann-hypothesis-future-doctors-who-code.png",
+        "audio": [
+          "/audio/claude-riemann-hypothesis-future-doctors-who-code.mp3"
+        ],
+        "contentMedia": [
+          {
+            "tag": "img",
+            "src": "/images/posts/claude-riemann-hypothesis-future-doctors-who-code.webp"
+          }
+        ],
+        "metadata": {
+          "description": "A claimed AI-assisted proof of the Riemann hypothesis offers physicians who build software a lesson in verification, even if they hated calculus.",
+          "author": "Chukwuma Onyeije, MD, FACOG",
+          "robots": "index, follow, max-image-preview:large",
+          "og:title": "Claude, the Riemann Hypothesis, and the Future of Doctors Who Code | Doctors Who Code",
+          "og:description": "A claimed AI-assisted proof of the Riemann hypothesis offers physicians who build software a lesson in verification, even if they hated calculus.",
+          "og:image": "https://www.doctorswhocode.blog/og/claude-riemann-hypothesis-future-doctors-who-code.png",
+          "og:image:alt": "Claude, the Riemann Hypothesis, and the Future of Doctors Who Code | Doctors Who Code",
+          "og:url": "https://www.doctorswhocode.blog/blog/claude-riemann-hypothesis-future-doctors-who-code/",
+          "og:type": "article",
+          "og:site_name": "Doctors Who Code",
+          "og:locale": "en_US",
+          "twitter:card": "summary_large_image",
+          "twitter:site": "@chukwumaonyeije",
+          "twitter:creator": "@chukwumaonyeije",
+          "twitter:title": "Claude, the Riemann Hypothesis, and the Future of Doctors Who Code | Doctors Who Code",
+          "twitter:description": "A claimed AI-assisted proof of the Riemann hypothesis offers physicians who build software a lesson in verification, even if they hated calculus.",
+          "twitter:image": "https://www.doctorswhocode.blog/og/claude-riemann-hypothesis-future-doctors-who-code.png",
+          "article:published_time": "2026-11-22T00:00:00.000Z"
+        },
+        "headings": [
+          "article-title",
+          "first-dont-worry-there-wont-be-a-math-test",
+          "what-is-the-riemann-hypothesis-anyway",
+          "what-lean-can-verify",
+          "the-end-of-coding-as-we-know-it",
+          "consider-a-maternalfetal-medicine-example",
+          "the-physician-developers-new-superpower",
+          "from-vibe-coding-to-verified-coding",
+          "1-describe-the-problem",
+          "2-write-the-rules-before-generating-code",
+          "3-generate-tests-alongside-the-application",
+          "4-give-the-work-a-separate-review",
+          "5-preserve-human-accountability",
+          "a-second-proposed-proof",
+          "what-i-think-happens-next",
+          "my-takeaway",
+          "further-reading",
+          "share-heading",
+          "related-articles-heading"
+        ],
+        "bodyTextHash": "a30349a2764db9b11de983da37ade5f3394bced731951724b20555560b3d23ac"
+      }
     }
   },
   "sourceHashes": {
@@ -21199,7 +21295,9 @@
     "/downloads/mcp-for-physicians-part-01.zip": "d53321a219557c891d090eb1160d4fcf571aee2c747733b7d2c2f0ecd1dfcff9",
     "/images/posts/mcp-for-physicians-part-01-hero.webp": "18d4760035a7c96cb8ebfd2341a743537b00349d553a55458438318c2f42051f",
     "/audio/retire-the-typing-olympics.mp3": "c50d972813c0bf4cedd1c78801076453c5e9d64f00f99b87597923f4d2365463",
-    "/images/posts/retire-the-typing-olympics-hero.webp": "15028f513ca4a383b76df01a616ef09dbe25a8c06cc5bb6bc3676ab7539bed28"
+    "/images/posts/retire-the-typing-olympics-hero.webp": "15028f513ca4a383b76df01a616ef09dbe25a8c06cc5bb6bc3676ab7539bed28",
+    "/images/posts/claude-riemann-hypothesis-future-doctors-who-code.webp": "7641f91413db4b09cb364133129dad6ef9ed6b7530de87208cdb7cfad0162f12",
+    "/audio/claude-riemann-hypothesis-future-doctors-who-code.mp3": "2dfdad1fd5df2753336f0e7d8b9618d411c5033a085952e98722d09a7e6d6f22"
   },
   "endpoints": [
     "/.well-known/chukwuma-onyeije-identity.txt",
@@ -21221,6 +21319,7 @@
     "/audio/ai-powered-maternal-health-how-advanced-technology-can-reduce-preeclampsia-complications.mp3",
     "/audio/ai-powered-ultrasound-transforming-prenatal-care-with-cutting-edge-technology.mp3",
     "/audio/ai-scribes-are-failing-doctors-heres-the-brutal-truth-the-nejm-wont-say-out-loud.mp3",
+    "/audio/ai-wardrobe-md-physician-learning-to-code.mp3",
     "/audio/ama-augmented-intelligence-physician-developer.mp3",
     "/audio/ambient-ai-let-me-stop-interrupting-my-patients.mp3",
     "/audio/ambient-documentation-is-not-transcription.mp3",
@@ -21234,9 +21333,11 @@
     "/audio/build-the-clinical-engine-before-the-interface.mp3",
     "/audio/build-the-minimum-viable-clinical-harness.mp3",
     "/audio/building-pgis-a-vibe-coded-performance-glycemic-intelligence-system.mp3",
+    "/audio/building-the-agenticbuildermd-laboratory.mp3",
     "/audio/building-the-physicians-knowledge-flywheel.mp3",
     "/audio/burnout-wrong-things-physician-developer-automation.mp3",
     "/audio/can-artificial-intelligence-probiotics-collaborate-to-prevent-preterm-birth.mp3",
+    "/audio/claude-riemann-hypothesis-future-doctors-who-code.mp3",
     "/audio/clinical-documentation-automation-should-remove-friction-not-replace-the-doctor.mp3",
     "/audio/clinical-tool-becomes-infrastructure.mp3",
     "/audio/codecraftmd-on-hiatus-not-abandoned-what-happens-after-the-weekend-prototype.mp3",
@@ -21302,6 +21403,7 @@
     "/audio/local-llm-physician-advantage.mp3",
     "/audio/logs-before-intelligence.mp3",
     "/audio/make-the-clinical-logic-visible-before-you-code.mp3",
+    "/audio/mcp-for-physicians-part-01.mp3",
     "/audio/medical-education-does-not-need-an-ai-course.mp3",
     "/audio/monte-carlo-simulations-in-maternal-fetal-medicine-a-computational-approach-to-clinical-uncertainty.mp3",
     "/audio/my-slides-became-code-why-i-use-marp-for-ai-generated-presentations.mp3",
@@ -21393,7 +21495,9 @@
     "/audio/weekend-project-sending-emails-to-my-second-brain.mp3",
     "/audio/what-is-machine-learning.mp3",
     "/audio/what-karpathy-actually-built.mp3",
+    "/audio/what-physicians-owe-patients-after-a-frightening-research-headline.mp3",
     "/audio/what-should-be-the-response-for-doctors-who-code-and-humanitys-next-medical-exam.mp3",
+    "/audio/what-smfm-2026-reveals-about-physician-developers.mp3",
     "/audio/when-ai-told-a-dying-man-what-he-wanted-to-hear.mp3",
     "/audio/when-algorithm-fails.mp3",
     "/audio/when-code-meets-care-a-doctors-journey-into-ai-powered-medicine.mp3",
@@ -21429,6 +21533,7 @@
     "/downloads/lead-magnets/series/physician-coding-starter-pack-02-github-for-physicians-quickstart.pdf",
     "/downloads/lead-magnets/series/physician-coding-starter-pack-03-medical-app-ideas-for-busy-clinicians.pdf",
     "/downloads/lead-magnets/with-folded-hands-post-reading-executive-summary.pdf",
+    "/downloads/mcp-for-physicians-part-01.zip",
     "/favicon.ico",
     "/favicon.svg",
     "/fonts/DMSans-Regular.ttf",
@@ -21446,6 +21551,7 @@
     "/images/posts/ai-memory-not-bigger-models.jpg",
     "/images/posts/ai-scribes-failing.jpeg",
     "/images/posts/ai-tools-fail.jpeg",
+    "/images/posts/ai-wardrobe-md-physician-learning-to-code.png",
     "/images/posts/ama-augmented-intelligence-hero.jpeg",
     "/images/posts/ambient-ai-let-me-stop-interrupting-my-patients-hero.jpeg",
     "/images/posts/ambient-documentation-is-not-transcription-hero.jpeg",
@@ -21453,8 +21559,10 @@
     "/images/posts/build-an-ambient-documentation-lab-before-you-buy-one-hero.jpeg",
     "/images/posts/build-the-clinical-engine-before-the-interface-hero.png",
     "/images/posts/build-the-minimum-viable-clinical-harness-hero.png",
+    "/images/posts/building-the-agenticbuildermd-laboratory-hero.png",
     "/images/posts/building-the-physicians-knowledge-flywheel-hero.jpeg",
     "/images/posts/burnout-wrong-things.jpeg",
+    "/images/posts/claude-riemann-hypothesis-future-doctors-who-code.webp",
     "/images/posts/clinic-workstation-gpu-hero.png",
     "/images/posts/clinical-ai-growth-restriction-hero.jpeg",
     "/images/posts/clinical-documentation-automation-hero.jpeg",
@@ -21508,6 +21616,7 @@
     "/images/posts/logs-before-intelligence-hero.jpeg",
     "/images/posts/make-the-clinical-logic-visible-before-you-code-hero.png",
     "/images/posts/marp-presentations-hero.jpeg",
+    "/images/posts/mcp-for-physicians-part-01-hero.webp",
     "/images/posts/medical-education-agentic-ai-curriculum-hero.jpeg",
     "/images/posts/navigating-medical-ai-github.svg",
     "/images/posts/nurse-benjamins-warning-hero.jpeg",
@@ -21536,6 +21645,7 @@
     "/images/posts/referrals-are-broken-hero.jpeg",
     "/images/posts/same-model-different-system-hero.png",
     "/images/posts/skill-loss-wrong-fear-hero.jpg",
+    "/images/posts/smfm-2026-physician-developers-hero.png",
     "/images/posts/steve-ballmer-hard-truth-healthcare-code.jpeg",
     "/images/posts/stop-lurking-github-physicians.svg",
     "/images/posts/surviving-ai-native-transformation-hero.jpeg",
@@ -21561,6 +21671,8 @@
     "/images/posts/vibe-coding-clinicians.jpeg",
     "/images/posts/weekend-project-second-brain-hero.jpeg",
     "/images/posts/what-karpathy-actually-built-hero.jpeg",
+    "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.jpeg",
+    "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.png",
     "/images/posts/when-ai-told-a-dying-man.jpg",
     "/images/posts/when-algorithm-fails-hero.jpeg",
     "/images/posts/when-medical-algorithms-code-racism-into-patient-care-hero.jpeg",
@@ -21586,6 +21698,7 @@
     "/og/ai-powered-maternal-health-how-advanced-technology-can-reduce-preeclampsia-complications.png",
     "/og/ai-powered-ultrasound-transforming-prenatal-care-with-cutting-edge-technology.png",
     "/og/ai-scribes-are-failing-doctors-heres-the-brutal-truth-the-nejm-wont-say-out-loud.png",
+    "/og/ai-wardrobe-md-physician-learning-to-code.png",
     "/og/ama-augmented-intelligence-physician-developer.png",
     "/og/ambient-ai-let-me-stop-interrupting-my-patients.png",
     "/og/ambient-documentation-is-not-transcription.png",
@@ -21599,9 +21712,11 @@
     "/og/build-the-clinical-engine-before-the-interface.png",
     "/og/build-the-minimum-viable-clinical-harness.png",
     "/og/building-pgis-a-vibe-coded-performance-glycemic-intelligence-system.png",
+    "/og/building-the-agenticbuildermd-laboratory.png",
     "/og/building-the-physicians-knowledge-flywheel.png",
     "/og/burnout-wrong-things-physician-developer-automation.png",
     "/og/can-artificial-intelligence-probiotics-collaborate-to-prevent-preterm-birth.png",
+    "/og/claude-riemann-hypothesis-future-doctors-who-code.png",
     "/og/clinical-documentation-automation-should-remove-friction-not-replace-the-doctor.png",
     "/og/clinical-tool-becomes-infrastructure.png",
     "/og/codecraftmd-on-hiatus-not-abandoned-what-happens-after-the-weekend-prototype.png",
@@ -21668,6 +21783,7 @@
     "/og/local-llm-physician-advantage.png",
     "/og/logs-before-intelligence.png",
     "/og/make-the-clinical-logic-visible-before-you-code.png",
+    "/og/mcp-for-physicians-part-01.png",
     "/og/medical-education-does-not-need-an-ai-course.png",
     "/og/monte-carlo-simulations-in-maternal-fetal-medicine-a-computational-approach-to-clinical-uncertainty.png",
     "/og/my-slides-became-code-why-i-use-marp-for-ai-generated-presentations.png",
@@ -21761,7 +21877,9 @@
     "/og/weekend-project-sending-emails-to-my-second-brain.png",
     "/og/what-is-machine-learning.png",
     "/og/what-karpathy-actually-built.png",
+    "/og/what-physicians-owe-patients-after-a-frightening-research-headline.png",
     "/og/what-should-be-the-response-for-doctors-who-code-and-humanitys-next-medical-exam.png",
+    "/og/what-smfm-2026-reveals-about-physician-developers.png",
     "/og/when-ai-told-a-dying-man-what-he-wanted-to-hear.png",
     "/og/when-algorithm-fails.png",
     "/og/when-code-meets-care-a-doctors-journey-into-ai-powered-medicine.png",
@@ -21784,24 +21902,7 @@
     "/rss.xml",
     "/search-index.json",
     "/sitemap-0.xml",
-    "/sitemap-index.xml",
-    "/audio/building-the-agenticbuildermd-laboratory.mp3",
-    "/images/posts/building-the-agenticbuildermd-laboratory-hero.png",
-    "/og/building-the-agenticbuildermd-laboratory.png",
-    "/images/posts/ai-wardrobe-md-physician-learning-to-code.png",
-    "/audio/ai-wardrobe-md-physician-learning-to-code.mp3",
-    "/og/ai-wardrobe-md-physician-learning-to-code.png",
-    "/audio/what-smfm-2026-reveals-about-physician-developers.mp3",
-    "/images/posts/smfm-2026-physician-developers-hero.png",
-    "/og/what-smfm-2026-reveals-about-physician-developers.png",
-    "/audio/what-physicians-owe-patients-after-a-frightening-research-headline.mp3",
-    "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.png",
-    "/og/what-physicians-owe-patients-after-a-frightening-research-headline.png",
-    "/images/posts/what-physicians-owe-patients-after-a-frightening-research-headline.jpeg",
-    "/audio/mcp-for-physicians-part-01.mp3",
-    "/downloads/mcp-for-physicians-part-01.zip",
-    "/images/posts/mcp-for-physicians-part-01-hero.webp",
-    "/og/mcp-for-physicians-part-01.png"
+    "/sitemap-index.xml"
   ],
   "redirects": [
     {
@@ -22940,6 +23041,11 @@
       "title": "MCP for Physician Developers, Part 1: Trace One Request",
       "description": "Learn how MCP connects a client to a research notebook through a physician&apos;s tested example of tool discovery, note search, and retrieval.",
       "published": "Sun, 25 Oct 2026 00:00:00 GMT"
+    },
+    "https://www.doctorswhocode.blog/blog/claude-riemann-hypothesis-future-doctors-who-code/": {
+      "title": "Claude, the Riemann Hypothesis, and the Future of Doctors Who Code",
+      "description": "A claimed AI-assisted proof of the Riemann hypothesis offers physicians who build software a lesson in verification, even if they hated calculus.",
+      "published": "Sun, 22 Nov 2026 00:00:00 GMT"
     }
   },
   "sitemapUrls": [
@@ -22960,6 +23066,7 @@
     "https://www.doctorswhocode.blog/blog/ai-powered-maternal-health-how-advanced-technology-can-reduce-preeclampsia-complications/",
     "https://www.doctorswhocode.blog/blog/ai-powered-ultrasound-transforming-prenatal-care-with-cutting-edge-technology/",
     "https://www.doctorswhocode.blog/blog/ai-scribes-are-failing-doctors-heres-the-brutal-truth-the-nejm-wont-say-out-loud/",
+    "https://www.doctorswhocode.blog/blog/ai-wardrobe-md-physician-learning-to-code/",
     "https://www.doctorswhocode.blog/blog/ama-augmented-intelligence-physician-developer/",
     "https://www.doctorswhocode.blog/blog/ambient-ai-let-me-stop-interrupting-my-patients/",
     "https://www.doctorswhocode.blog/blog/ambient-documentation-is-not-transcription/",
@@ -22973,9 +23080,11 @@
     "https://www.doctorswhocode.blog/blog/build-the-clinical-engine-before-the-interface/",
     "https://www.doctorswhocode.blog/blog/build-the-minimum-viable-clinical-harness/",
     "https://www.doctorswhocode.blog/blog/building-pgis-a-vibe-coded-performance-glycemic-intelligence-system/",
+    "https://www.doctorswhocode.blog/blog/building-the-agenticbuildermd-laboratory/",
     "https://www.doctorswhocode.blog/blog/building-the-physicians-knowledge-flywheel/",
     "https://www.doctorswhocode.blog/blog/burnout-wrong-things-physician-developer-automation/",
     "https://www.doctorswhocode.blog/blog/can-artificial-intelligence-probiotics-collaborate-to-prevent-preterm-birth/",
+    "https://www.doctorswhocode.blog/blog/claude-riemann-hypothesis-future-doctors-who-code/",
     "https://www.doctorswhocode.blog/blog/clinical-documentation-automation-should-remove-friction-not-replace-the-doctor/",
     "https://www.doctorswhocode.blog/blog/clinical-tool-becomes-infrastructure/",
     "https://www.doctorswhocode.blog/blog/codecraftmd-on-hiatus-not-abandoned-what-happens-after-the-weekend-prototype/",
@@ -23044,6 +23153,7 @@
     "https://www.doctorswhocode.blog/blog/local-llm-physician-advantage/",
     "https://www.doctorswhocode.blog/blog/logs-before-intelligence/",
     "https://www.doctorswhocode.blog/blog/make-the-clinical-logic-visible-before-you-code/",
+    "https://www.doctorswhocode.blog/blog/mcp-for-physicians-part-01/",
     "https://www.doctorswhocode.blog/blog/medical-education-does-not-need-an-ai-course/",
     "https://www.doctorswhocode.blog/blog/monte-carlo-simulations-in-maternal-fetal-medicine-a-computational-approach-to-clinical-uncertainty/",
     "https://www.doctorswhocode.blog/blog/my-slides-became-code-why-i-use-marp-for-ai-generated-presentations/",
@@ -23137,7 +23247,9 @@
     "https://www.doctorswhocode.blog/blog/weekend-project-sending-emails-to-my-second-brain/",
     "https://www.doctorswhocode.blog/blog/what-is-machine-learning/",
     "https://www.doctorswhocode.blog/blog/what-karpathy-actually-built/",
+    "https://www.doctorswhocode.blog/blog/what-physicians-owe-patients-after-a-frightening-research-headline/",
     "https://www.doctorswhocode.blog/blog/what-should-be-the-response-for-doctors-who-code-and-humanitys-next-medical-exam/",
+    "https://www.doctorswhocode.blog/blog/what-smfm-2026-reveals-about-physician-developers/",
     "https://www.doctorswhocode.blog/blog/when-ai-told-a-dying-man-what-he-wanted-to-hear/",
     "https://www.doctorswhocode.blog/blog/when-algorithm-fails/",
     "https://www.doctorswhocode.blog/blog/when-code-meets-care-a-doctors-journey-into-ai-powered-medicine/",
@@ -23173,6 +23285,7 @@
     "https://www.doctorswhocode.blog/courses/clinical-ai-workflows/",
     "https://www.doctorswhocode.blog/courses/from-clinical-need-to-tested-tool/",
     "https://www.doctorswhocode.blog/courses/from-evidence-to-software/",
+    "https://www.doctorswhocode.blog/courses/mcp-for-physician-developers/",
     "https://www.doctorswhocode.blog/courses/physician-developer-foundations/",
     "https://www.doctorswhocode.blog/courses/the-middle-path/",
     "https://www.doctorswhocode.blog/paths/",
@@ -23248,6 +23361,7 @@
     "https://www.doctorswhocode.blog/tags/autonomic-nervous-system/",
     "https://www.doctorswhocode.blog/tags/autonomous-ai/",
     "https://www.doctorswhocode.blog/tags/backend/",
+    "https://www.doctorswhocode.blog/tags/bayesian-analysis/",
     "https://www.doctorswhocode.blog/tags/bedside-clinical-tool/",
     "https://www.doctorswhocode.blog/tags/beginner-coding/",
     "https://www.doctorswhocode.blog/tags/beginner/",
@@ -23267,6 +23381,7 @@
     "https://www.doctorswhocode.blog/tags/clinical-api/",
     "https://www.doctorswhocode.blog/tags/clinical-automation/",
     "https://www.doctorswhocode.blog/tags/clinical-calculators/",
+    "https://www.doctorswhocode.blog/tags/clinical-communication/",
     "https://www.doctorswhocode.blog/tags/clinical-coordination/",
     "https://www.doctorswhocode.blog/tags/clinical-data-architecture/",
     "https://www.doctorswhocode.blog/tags/clinical-data/",
@@ -23384,6 +23499,7 @@
     "https://www.doctorswhocode.blog/tags/fine-tuning/",
     "https://www.doctorswhocode.blog/tags/firebase/",
     "https://www.doctorswhocode.blog/tags/first-project/",
+    "https://www.doctorswhocode.blog/tags/formal-verification/",
     "https://www.doctorswhocode.blog/tags/future-of-medicine/",
     "https://www.doctorswhocode.blog/tags/garmin/",
     "https://www.doctorswhocode.blog/tags/genetic-testing/",
@@ -23554,6 +23670,7 @@
     "https://www.doctorswhocode.blog/tags/physician-burnout/",
     "https://www.doctorswhocode.blog/tags/physician-coding/",
     "https://www.doctorswhocode.blog/tags/physician-developer/",
+    "https://www.doctorswhocode.blog/tags/physician-developers/",
     "https://www.doctorswhocode.blog/tags/physician-development/",
     "https://www.doctorswhocode.blog/tags/physician-leadership/",
     "https://www.doctorswhocode.blog/tags/physician-productivity/",
@@ -23573,6 +23690,7 @@
     "https://www.doctorswhocode.blog/tags/predictive-analytics/",
     "https://www.doctorswhocode.blog/tags/preeclampsia/",
     "https://www.doctorswhocode.blog/tags/prenatal-care/",
+    "https://www.doctorswhocode.blog/tags/prenatal-stress/",
     "https://www.doctorswhocode.blog/tags/prior-authorization/",
     "https://www.doctorswhocode.blog/tags/prisma/",
     "https://www.doctorswhocode.blog/tags/probability/",
@@ -23594,6 +23712,7 @@
     "https://www.doctorswhocode.blog/tags/recovery/",
     "https://www.doctorswhocode.blog/tags/referrals/",
     "https://www.doctorswhocode.blog/tags/reinforcement-learning/",
+    "https://www.doctorswhocode.blog/tags/remote-monitoring/",
     "https://www.doctorswhocode.blog/tags/remote-patient-monitoring/",
     "https://www.doctorswhocode.blog/tags/research-automation/",
     "https://www.doctorswhocode.blog/tags/responsible-ai/",
@@ -23616,6 +23735,7 @@
     "https://www.doctorswhocode.blog/tags/smart-labor-management/",
     "https://www.doctorswhocode.blog/tags/smart-medical-diagnostics/",
     "https://www.doctorswhocode.blog/tags/smart-on-fhir/",
+    "https://www.doctorswhocode.blog/tags/smfm-2026/",
     "https://www.doctorswhocode.blog/tags/smfm-guidelines/",
     "https://www.doctorswhocode.blog/tags/smfm/",
     "https://www.doctorswhocode.blog/tags/software-architecture/",
@@ -23665,18 +23785,6 @@
     "https://www.doctorswhocode.blog/tags/workflow-design/",
     "https://www.doctorswhocode.blog/tags/workflow/",
     "https://www.doctorswhocode.blog/tags/youtube-analysis/",
-    "https://www.doctorswhocode.blog/verified/",
-    "https://www.doctorswhocode.blog/blog/building-the-agenticbuildermd-laboratory/",
-    "https://www.doctorswhocode.blog/blog/ai-wardrobe-md-physician-learning-to-code/",
-    "https://www.doctorswhocode.blog/blog/what-smfm-2026-reveals-about-physician-developers/",
-    "https://www.doctorswhocode.blog/tags/smfm-2026/",
-    "https://www.doctorswhocode.blog/tags/bayesian-analysis/",
-    "https://www.doctorswhocode.blog/tags/remote-monitoring/",
-    "https://www.doctorswhocode.blog/blog/what-physicians-owe-patients-after-a-frightening-research-headline/",
-    "https://www.doctorswhocode.blog/tags/clinical-communication/",
-    "https://www.doctorswhocode.blog/tags/physician-developers/",
-    "https://www.doctorswhocode.blog/tags/prenatal-stress/",
-    "https://www.doctorswhocode.blog/blog/mcp-for-physicians-part-01/",
-    "https://www.doctorswhocode.blog/courses/mcp-for-physician-developers/"
+    "https://www.doctorswhocode.blog/verified/"
   ]
 }
