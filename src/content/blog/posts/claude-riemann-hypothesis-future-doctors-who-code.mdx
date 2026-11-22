@@ -1,0 +1,140 @@
+---
+title: "Claude, the Riemann Hypothesis, and the Future of Doctors Who Code"
+description: "A claimed AI-assisted proof of the Riemann hypothesis offers physicians who build software a lesson in verification, even if they hated calculus."
+pubDate: 2026-11-22
+author: "Chukwuma Onyeije, MD, FACOG"
+category: "Artificial Intelligence"
+tags: ["Artificial Intelligence", "Physician Developers", "Vibe Coding", "Software Engineering", "Formal Verification"]
+image:
+  url: "/images/posts/claude-riemann-hypothesis-future-doctors-who-code.webp"
+  alt: "A physician in navy scrubs works at a laptop beside an abstract grid with points aligned on a vertical line."
+draft: false
+featured: false
+---
+
+## First, Don't Worry. There Won't Be a Math Test.
+
+On November 20, 2026, Levent Alpöge, a mathematician at Anthropic, announced that he believed he had proved the Riemann hypothesis with substantial help from Claude. The problem dates to 1859. That's 167 years. The timeline in Alpöge's announcement spans about six weeks. [Alpöge's announcement](https://alpo.ge/remark.pdf)
+
+Alpöge released a Lean library containing 17 million lines of code. On November 21, the Lean and Mathlib communities reported that independent tools confirmed the formal theorem matched Mathlib's statement of the Riemann hypothesis. Several proof checkers also validated the exported proof. Understanding and explaining the mathematical argument will take longer. [Joint Lean and Mathlib verification statement](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/)
+
+I'm a physician who codes. I suspect many readers of Doctors Who Code have about as much interest in the Riemann hypothesis as they have in memorizing the Krebs cycle again.
+
+What caught my attention was the glimpse it offers into the future of software development, and perhaps medicine itself.
+
+## What Is the Riemann Hypothesis, Anyway?
+
+Remember prime numbers from elementary school? Think of 2, 3, 5, 7, 11, and 13. Each is divisible only by 1 and itself. Prime numbers can seem to appear unpredictably as we count upward, but mathematicians have spent centuries trying to understand the patterns in their distribution.
+
+In 1859, the German mathematician Bernhard Riemann proposed a conjecture about where certain zeros of the Riemann zeta function lie. If true, it would tell us how precisely we can estimate the distribution of prime numbers. The Clay Mathematics Institute chose the conjecture as one of its seven Millennium Prize Problems, each carrying a $1 million prize for a qualifying solution. [Clay Mathematics Institute](https://www.claymath.org/millennium/Riemann-Hypothesis/)
+
+Think of it as the mathematical equivalent of a medical problem that has challenged researchers for generations. Now imagine a researcher working with AI announces a solution and gives other researchers a way to check its logic by computer.
+
+## What Lean Can Verify
+
+The headlines naturally focus on Claude. For those of us who develop software, the decision to express the proof in Lean deserves just as much attention.
+
+Imagine asking an AI coding assistant to write a program that calculates medication doses. The code looks reasonable. A few examples give the expected answers. What happens with an unusually low patient weight, a missing laboratory value, or an unexpected unit conversion?
+
+Lean is a programming language and interactive theorem prover. It lets mathematicians state a claim precisely and construct a proof that the system can check against its logical rules. [Lean documentation](https://lean-lang.org/)
+
+- **AI-generated explanation.** The assistant gives reasons to believe the code is correct.
+- **Traditional software testing.** The code produces the expected results for the cases you ran.
+- **Formal verification.** A stated property follows under explicitly defined assumptions.
+
+A program can meet a verified specification and still implement the wrong requirements. The guarantees depend on the specification, the assumptions, and the trusted software components used to check the proof.
+
+As AI generates more sophisticated code, independent checks can help us decide whether that code satisfies requirements we can state precisely. For physician developers, that distinction matters.
+
+## The End of Coding as We Know It?
+
+I've spent several years experimenting with AI-assisted development. Claude Code, Codex, and other coding agents have changed how I work. I can describe an application in ordinary English, ask an agent to implement it, review the result, and iterate. People sometimes call this vibe coding.
+
+A physician with an idea for a calculator, an educational application, or a workflow automation can now build things that once might have required a development team. The easier it becomes to generate software, the easier it becomes to generate software we don't fully understand.
+
+An agent can produce database schemas, authentication systems, APIs, and interfaces in minutes. It can also introduce subtle errors, security vulnerabilities, and incorrect assumptions. A polished demo and a few passing tests can leave those problems hidden.
+
+Learning to code still matters. We also need to get better at defining what correct software should do and determining whether it actually does it.
+
+## Consider a Maternal–Fetal Medicine Example
+
+Suppose I ask Claude to build a tool that accepts gestational age, estimated fetal weight percentile, umbilical artery Doppler findings, and relevant maternal information. I ask it to use established guidelines to generate fetal growth restriction (FGR) surveillance and delivery-timing recommendations.
+
+A coding agent might produce a convincing application in minutes. As a maternal–fetal medicine physician, I would have questions.
+
+- Does it distinguish absent from reversed end-diastolic flow?
+- Does it handle gestational age boundaries correctly?
+- How does it account for preeclampsia or nonreassuring fetal testing when they may supersede a routine FGR recommendation?
+- Can it distinguish isolated growth restriction from a complicated pregnancy?
+- What happens when critical data are missing? Which guideline version is it using?
+
+These decisions can have serious clinical consequences. I would specify the rules up front, test the boundaries, and arrange independent clinical validation. For selected components, formal methods might verify unit handling or prove that the application can't generate a recommendation from a defined unsafe state.
+
+I'd ask the agent to build an application that satisfies those requirements and show me the evidence. The evidence for the software's behavior is one part of the work. Clinical evidence, guideline interpretation, external validation, and physician oversight determine whether its recommendations are appropriate.
+
+## The Physician Developer's New Superpower
+
+Physicians understand why a clinical decision tree exists, where the exceptions occur, and which errors matter most. In maternal–fetal medicine, a single week of gestational age can change a management decision. An emergency physician understands the cost of a delay in recognizing deterioration. A primary care physician knows when an otherwise sound recommendation is practically impossible for a patient to follow.
+
+As AI handles more implementation, physicians can spend more time defining the problem, specifying acceptable behavior, identifying dangerous edge cases, and evaluating performance. That's where clinical judgment can shape the software before it reaches a patient.
+
+## From Vibe Coding to Verified Coding
+
+### 1. Describe the problem
+
+Who will use the application? What decisions will it support? What could go wrong? Answer those questions before you write code.
+
+### 2. Write the rules before generating code
+
+Ask your AI assistant to help turn requirements into statements you can test. For example, the application must withhold a delivery-timing recommendation if gestational age is missing.
+
+### 3. Generate tests alongside the application
+
+Ask for tests that cover ordinary cases, unusual cases, missing information, and boundary conditions. Review them yourself. AI-generated tests can repeat the same misunderstanding as AI-generated code.
+
+### 4. Give the work a separate review
+
+Use a second coding agent or a separate review process to look for incorrect assumptions, security problems, and misleading results. For clinical applications, involve qualified clinical reviewers and use validated reference cases.
+
+### 5. Preserve human accountability
+
+The physician developer remains responsible for deciding whether the application is appropriate for its intended purpose. Formal verification, automated tests, and AI reviews support that decision. Clinical validation, privacy safeguards, regulatory compliance, and professional judgment each have their own role. Software that influences patient care needs a higher standard of evidence than an educational tool.
+
+## A Second Proposed Proof
+
+Shortly after Alpöge's announcement, Stanford mathematician Ravi Vakil shared a separate draft by Alessandro Maria Masullo that proposed a proof of a generalized version of the hypothesis. Masullo described it as the product of about 12 years of work, and Vakil said it was written without AI assistance. That draft also requires careful evaluation. [TechCrunch reporting on both proposals](https://techcrunch.com/2026/11/20/ai-claimed-a-solution-to-the-167-year-old-riemann-hypothesis-and-a-human-did-too/)
+
+I find the juxtaposition fascinating. One mathematician spent years developing an argument through traditional mathematical reasoning. The other worked intensively with AI and produced a machine-checkable result. The collaboration still depended on a mathematician who could direct the investigation, recognize promising approaches, and interpret the results.
+
+I can see a similar role emerging in software development for people who combine domain expertise, computational tools, and rigorous validation.
+
+## What I Think Happens Next
+
+First, generating a working application will get easier. Reliability, security, maintainability, and usefulness will take up more of the work.
+
+Second, I expect AI coding environments to get better at generating tests, checking requirements, identifying contradictions, and providing evidence that software behaves as intended. Most physician developers can benefit from that progress without learning Lean. Formal verification is likely to be especially valuable for selected high-risk components.
+
+Third, domain expertise will become more valuable. Physicians who know clinical workflows, patient safety, and the limits of medical evidence can build useful tools and judge where AI-generated systems need closer scrutiny.
+
+## My Takeaway
+
+I started Doctors Who Code because physicians should help build the technologies that shape medicine. AI-assisted development makes that more achievable. The Riemann hypothesis announcement is a reason to spend some of the time we save on building better evidence that our software works.
+
+A mathematical proof can be checked against formal logical rules. A clinical application also has to be medically appropriate, safe in real-world use, and accountable to the people affected by its recommendations.
+
+As AI helps us tackle harder problems, physicians who build software will need to get as good at verifying an answer as they are at asking for one.
+
+## Further Reading
+
+1. [Levent Alpöge's original announcement](https://alpo.ge/remark.pdf)
+2. [Joint Lean and Mathlib verification statement](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/)
+3. [Nature on the two proposed proofs and early mathematical review](https://www.nature.com/articles/d41586-026-03812-7)
+4. [TechCrunch on the proposed proofs and independent compilation](https://techcrunch.com/2026/11/20/ai-claimed-a-solution-to-the-167-year-old-riemann-hypothesis-and-a-human-did-too/)
+5. [Lean Theorem Prover](https://lean-lang.org/)
+6. [Clay Mathematics Institute on the Riemann hypothesis](https://www.claymath.org/millennium/Riemann-Hypothesis/)
+
+**Editorial note (November 22, 2026).** The Lean and Mathlib communities have confirmed the formal statement and checked the proof. The Clay Mathematics Institute still lists the problem as unsolved. Its prize rules require publication in a qualifying outlet, a waiting period of at least two years after publication, and general acceptance in the global mathematics community. [Clay Mathematics Institute prize rules](https://www.claymath.org/millennium-problems/rules/)
+
+**Discussion question.** If AI can write most of your application, what should physician developers focus on learning next? Programming, prompt engineering, software testing, or clinical validation?
+
+*Doctors Who Code explores the intersection of medicine, software development, and artificial intelligence.*
