@@ -3701,6 +3701,16 @@
       "canonical": [
         "https://www.doctorswhocode.blog/blog/retire-the-typing-olympics/"
       ]
+    },
+    "/blog/claude-riemann-hypothesis-future-doctors-who-code/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/blog/claude-riemann-hypothesis-future-doctors-who-code/"
+      ]
+    },
+    "/tags/formal-verification/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/tags/formal-verification/"
+      ]
     }
   },
   "articles": {
@@ -20805,6 +20815,92 @@
         ],
         "bodyTextHash": "e9ac8fc62a2be6b7755379479648048e0216dad1e823947716e5f17a0f2e198c"
       }
+    },
+    "claude-riemann-hypothesis-future-doctors-who-code.mdx": {
+      "id": "claude-riemann-hypothesis-future-doctors-who-code",
+      "route": "/blog/claude-riemann-hypothesis-future-doctors-who-code/",
+      "bodyHash": "6b84e6f704f2b002bf49d42f4af5c0e33a5936386148a86f52428c699b2a518f",
+      "frontmatter": {
+        "audioUrl": "/audio/claude-riemann-hypothesis-future-doctors-who-code.mp3",
+        "title": "Claude, the Riemann Hypothesis, and the Future of Doctors Who Code",
+        "description": "A claimed AI-assisted proof of the Riemann hypothesis offers physicians who build software a lesson in verification, even if they hated calculus.",
+        "pubDate": "2026-11-22T00:00:00.000Z",
+        "author": "Chukwuma Onyeije, MD, FACOG",
+        "category": "Artificial Intelligence",
+        "tags": [
+          "Artificial Intelligence",
+          "Physician Developers",
+          "Vibe Coding",
+          "Software Engineering",
+          "Formal Verification"
+        ],
+        "image": {
+          "url": "/images/posts/claude-riemann-hypothesis-future-doctors-who-code.webp",
+          "alt": "A physician in navy scrubs works at a laptop beside an abstract grid with points aligned on a vertical line."
+        },
+        "draft": false,
+        "featured": false
+      },
+      "rendered": {
+        "title": "Claude, the Riemann Hypothesis, and the Future of Doctors Who Code | Doctors Who Code",
+        "description": "A claimed AI-assisted proof of the Riemann hypothesis offers physicians who build software a lesson in verification, even if they hated calculus.",
+        "canonical": [
+          "https://www.doctorswhocode.blog/blog/claude-riemann-hypothesis-future-doctors-who-code/"
+        ],
+        "published": "2026-11-22T00:00:00.000Z",
+        "ogImage": "https://www.doctorswhocode.blog/og/claude-riemann-hypothesis-future-doctors-who-code.png",
+        "audio": [
+          "/audio/claude-riemann-hypothesis-future-doctors-who-code.mp3"
+        ],
+        "contentMedia": [
+          {
+            "tag": "img",
+            "src": "/images/posts/claude-riemann-hypothesis-future-doctors-who-code.webp"
+          }
+        ],
+        "metadata": {
+          "description": "A claimed AI-assisted proof of the Riemann hypothesis offers physicians who build software a lesson in verification, even if they hated calculus.",
+          "author": "Chukwuma Onyeije, MD, FACOG",
+          "robots": "index, follow, max-image-preview:large",
+          "og:title": "Claude, the Riemann Hypothesis, and the Future of Doctors Who Code | Doctors Who Code",
+          "og:description": "A claimed AI-assisted proof of the Riemann hypothesis offers physicians who build software a lesson in verification, even if they hated calculus.",
+          "og:image": "https://www.doctorswhocode.blog/og/claude-riemann-hypothesis-future-doctors-who-code.png",
+          "og:image:alt": "Claude, the Riemann Hypothesis, and the Future of Doctors Who Code | Doctors Who Code",
+          "og:url": "https://www.doctorswhocode.blog/blog/claude-riemann-hypothesis-future-doctors-who-code/",
+          "og:type": "article",
+          "og:site_name": "Doctors Who Code",
+          "og:locale": "en_US",
+          "twitter:card": "summary_large_image",
+          "twitter:site": "@chukwumaonyeije",
+          "twitter:creator": "@chukwumaonyeije",
+          "twitter:title": "Claude, the Riemann Hypothesis, and the Future of Doctors Who Code | Doctors Who Code",
+          "twitter:description": "A claimed AI-assisted proof of the Riemann hypothesis offers physicians who build software a lesson in verification, even if they hated calculus.",
+          "twitter:image": "https://www.doctorswhocode.blog/og/claude-riemann-hypothesis-future-doctors-who-code.png",
+          "article:published_time": "2026-11-22T00:00:00.000Z"
+        },
+        "headings": [
+          "article-title",
+          "first-dont-worry-there-wont-be-a-math-test",
+          "what-is-the-riemann-hypothesis-anyway",
+          "what-lean-can-verify",
+          "the-end-of-coding-as-we-know-it",
+          "consider-a-maternalfetal-medicine-example",
+          "the-physician-developers-new-superpower",
+          "from-vibe-coding-to-verified-coding",
+          "1-describe-the-problem",
+          "2-write-the-rules-before-generating-code",
+          "3-generate-tests-alongside-the-application",
+          "4-give-the-work-a-separate-review",
+          "5-preserve-human-accountability",
+          "a-second-proposed-proof",
+          "what-i-think-happens-next",
+          "my-takeaway",
+          "further-reading",
+          "share-heading",
+          "related-articles-heading"
+        ],
+        "bodyTextHash": "a30349a2764db9b11de983da37ade5f3394bced731951724b20555560b3d23ac"
+      }
     }
   },
   "sourceHashes": {
@@ -21199,7 +21295,9 @@
     "/downloads/mcp-for-physicians-part-01.zip": "d53321a219557c891d090eb1160d4fcf571aee2c747733b7d2c2f0ecd1dfcff9",
     "/images/posts/mcp-for-physicians-part-01-hero.webp": "18d4760035a7c96cb8ebfd2341a743537b00349d553a55458438318c2f42051f",
     "/audio/retire-the-typing-olympics.mp3": "c50d972813c0bf4cedd1c78801076453c5e9d64f00f99b87597923f4d2365463",
-    "/images/posts/retire-the-typing-olympics-hero.webp": "15028f513ca4a383b76df01a616ef09dbe25a8c06cc5bb6bc3676ab7539bed28"
+    "/images/posts/retire-the-typing-olympics-hero.webp": "15028f513ca4a383b76df01a616ef09dbe25a8c06cc5bb6bc3676ab7539bed28",
+    "/images/posts/claude-riemann-hypothesis-future-doctors-who-code.webp": "7641f91413db4b09cb364133129dad6ef9ed6b7530de87208cdb7cfad0162f12",
+    "/audio/claude-riemann-hypothesis-future-doctors-who-code.mp3": "2dfdad1fd5df2753336f0e7d8b9618d411c5033a085952e98722d09a7e6d6f22"
   },
   "endpoints": [
     "/.well-known/chukwuma-onyeije-identity.txt",
@@ -21237,6 +21335,7 @@
     "/audio/building-the-physicians-knowledge-flywheel.mp3",
     "/audio/burnout-wrong-things-physician-developer-automation.mp3",
     "/audio/can-artificial-intelligence-probiotics-collaborate-to-prevent-preterm-birth.mp3",
+    "/audio/claude-riemann-hypothesis-future-doctors-who-code.mp3",
     "/audio/clinical-documentation-automation-should-remove-friction-not-replace-the-doctor.mp3",
     "/audio/clinical-tool-becomes-infrastructure.mp3",
     "/audio/codecraftmd-on-hiatus-not-abandoned-what-happens-after-the-weekend-prototype.mp3",
@@ -21455,6 +21554,7 @@
     "/images/posts/build-the-minimum-viable-clinical-harness-hero.png",
     "/images/posts/building-the-physicians-knowledge-flywheel-hero.jpeg",
     "/images/posts/burnout-wrong-things.jpeg",
+    "/images/posts/claude-riemann-hypothesis-future-doctors-who-code.webp",
     "/images/posts/clinic-workstation-gpu-hero.png",
     "/images/posts/clinical-ai-growth-restriction-hero.jpeg",
     "/images/posts/clinical-documentation-automation-hero.jpeg",
@@ -21602,6 +21702,7 @@
     "/og/building-the-physicians-knowledge-flywheel.png",
     "/og/burnout-wrong-things-physician-developer-automation.png",
     "/og/can-artificial-intelligence-probiotics-collaborate-to-prevent-preterm-birth.png",
+    "/og/claude-riemann-hypothesis-future-doctors-who-code.png",
     "/og/clinical-documentation-automation-should-remove-friction-not-replace-the-doctor.png",
     "/og/clinical-tool-becomes-infrastructure.png",
     "/og/codecraftmd-on-hiatus-not-abandoned-what-happens-after-the-weekend-prototype.png",
@@ -22940,6 +23041,11 @@
       "title": "MCP for Physician Developers, Part 1: Trace One Request",
       "description": "Learn how MCP connects a client to a research notebook through a physician&apos;s tested example of tool discovery, note search, and retrieval.",
       "published": "Sun, 25 Oct 2026 00:00:00 GMT"
+    },
+    "https://www.doctorswhocode.blog/blog/claude-riemann-hypothesis-future-doctors-who-code/": {
+      "title": "Claude, the Riemann Hypothesis, and the Future of Doctors Who Code",
+      "description": "A claimed AI-assisted proof of the Riemann hypothesis offers physicians who build software a lesson in verification, even if they hated calculus.",
+      "published": "Sun, 22 Nov 2026 00:00:00 GMT"
     }
   },
   "sitemapUrls": [
@@ -22976,6 +23082,7 @@
     "https://www.doctorswhocode.blog/blog/building-the-physicians-knowledge-flywheel/",
     "https://www.doctorswhocode.blog/blog/burnout-wrong-things-physician-developer-automation/",
     "https://www.doctorswhocode.blog/blog/can-artificial-intelligence-probiotics-collaborate-to-prevent-preterm-birth/",
+    "https://www.doctorswhocode.blog/blog/claude-riemann-hypothesis-future-doctors-who-code/",
     "https://www.doctorswhocode.blog/blog/clinical-documentation-automation-should-remove-friction-not-replace-the-doctor/",
     "https://www.doctorswhocode.blog/blog/clinical-tool-becomes-infrastructure/",
     "https://www.doctorswhocode.blog/blog/codecraftmd-on-hiatus-not-abandoned-what-happens-after-the-weekend-prototype/",
@@ -23384,6 +23491,7 @@
     "https://www.doctorswhocode.blog/tags/fine-tuning/",
     "https://www.doctorswhocode.blog/tags/firebase/",
     "https://www.doctorswhocode.blog/tags/first-project/",
+    "https://www.doctorswhocode.blog/tags/formal-verification/",
     "https://www.doctorswhocode.blog/tags/future-of-medicine/",
     "https://www.doctorswhocode.blog/tags/garmin/",
     "https://www.doctorswhocode.blog/tags/genetic-testing/",
