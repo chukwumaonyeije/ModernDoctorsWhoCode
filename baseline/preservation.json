@@ -3746,6 +3746,11 @@
       "canonical": [
         "https://www.doctorswhocode.blog/courses/clinical-visuals-with-ai/"
       ]
+    },
+    "/blog/why-i-am-leaving-notion-for-obsidian-markdown-and-github/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/blog/why-i-am-leaving-notion-for-obsidian-markdown-and-github/"
+      ]
     }
   },
   "articles": {
@@ -21333,6 +21338,85 @@
         ],
         "bodyTextHash": "26681f30eed8ab57bf293f6f165286dbbc34d9a975b50e84b343d569e80f12db"
       }
+    },
+    "why-i-am-leaving-notion-for-obsidian-markdown-and-github.mdx": {
+      "id": "why-i-am-leaving-notion-for-obsidian-markdown-and-github",
+      "route": "/blog/why-i-am-leaving-notion-for-obsidian-markdown-and-github/",
+      "bodyHash": "5bfffc36bb868e918ca636819d1278652d4dcaa1d29eff6ef421d493ea704057",
+      "frontmatter": {
+        "audioUrl": "/audio/why-i-am-leaving-notion-for-obsidian-markdown-and-github.mp3",
+        "title": "Why I Am Leaving Notion for Obsidian, Markdown, and GitHub",
+        "description": "After years with Notion, I am moving my personal knowledge management to Obsidian, Markdown, and GitHub. More setup, fewer places to maintain the same work.",
+        "pubDate": "2026-11-25T00:00:00.000Z",
+        "author": "Chukwuma Onyeije, MD, FACOG",
+        "authorUrl": "https://www.linkedin.com/in/chukwumaonyeije",
+        "category": "Technology",
+        "image": {
+          "url": "/images/posts/notion-to-obsidian-markdown-github-hero.png",
+          "alt": "Notion workspace panels become Markdown files connected to an Obsidian crystal and a GitHub repository on a navy background."
+        },
+        "tags": [
+          "Obsidian",
+          "Markdown",
+          "GitHub",
+          "Notion",
+          "personal knowledge management",
+          "physician developer"
+        ],
+        "draft": false,
+        "featured": true,
+        "featuredRank": 21000
+      },
+      "rendered": {
+        "title": "Why I Am Leaving Notion for Obsidian, Markdown, and GitHub | Doctors Who Code",
+        "description": "After years with Notion, I am moving my personal knowledge management to Obsidian, Markdown, and GitHub. More setup, fewer places to maintain the same work.",
+        "canonical": [
+          "https://www.doctorswhocode.blog/blog/why-i-am-leaving-notion-for-obsidian-markdown-and-github/"
+        ],
+        "published": "2026-11-25T00:00:00.000Z",
+        "ogImage": "https://www.doctorswhocode.blog/og/why-i-am-leaving-notion-for-obsidian-markdown-and-github.png",
+        "audio": [
+          "/audio/why-i-am-leaving-notion-for-obsidian-markdown-and-github.mp3"
+        ],
+        "contentMedia": [
+          {
+            "tag": "img",
+            "src": "/images/posts/notion-to-obsidian-markdown-github-hero.png"
+          }
+        ],
+        "metadata": {
+          "description": "After years with Notion, I am moving my personal knowledge management to Obsidian, Markdown, and GitHub. More setup, fewer places to maintain the same work.",
+          "author": "Chukwuma Onyeije, MD, FACOG",
+          "robots": "index, follow, max-image-preview:large",
+          "og:title": "Why I Am Leaving Notion for Obsidian, Markdown, and GitHub | Doctors Who Code",
+          "og:description": "After years with Notion, I am moving my personal knowledge management to Obsidian, Markdown, and GitHub. More setup, fewer places to maintain the same work.",
+          "og:image": "https://www.doctorswhocode.blog/og/why-i-am-leaving-notion-for-obsidian-markdown-and-github.png",
+          "og:image:alt": "Why I Am Leaving Notion for Obsidian, Markdown, and GitHub | Doctors Who Code",
+          "og:url": "https://www.doctorswhocode.blog/blog/why-i-am-leaving-notion-for-obsidian-markdown-and-github/",
+          "og:type": "article",
+          "og:site_name": "Doctors Who Code",
+          "og:locale": "en_US",
+          "twitter:card": "summary_large_image",
+          "twitter:site": "@chukwumaonyeije",
+          "twitter:creator": "@chukwumaonyeije",
+          "twitter:title": "Why I Am Leaving Notion for Obsidian, Markdown, and GitHub | Doctors Who Code",
+          "twitter:description": "After years with Notion, I am moving my personal knowledge management to Obsidian, Markdown, and GitHub. More setup, fewer places to maintain the same work.",
+          "twitter:image": "https://www.doctorswhocode.blog/og/why-i-am-leaving-notion-for-obsidian-markdown-and-github.png",
+          "article:published_time": "2026-11-25T00:00:00.000Z"
+        },
+        "headings": [
+          "article-title",
+          "the-cost-of-keeping-another-place-current",
+          "markdown-gives-the-writing-a-durable-form",
+          "obsidian-and-github-have-different-jobs",
+          "free-matters-when-the-work-is-already-there",
+          "the-complexity-is-real",
+          "a-better-home-still-requires-better-habits",
+          "share-heading",
+          "related-articles-heading"
+        ],
+        "bodyTextHash": "77c55f0365af791b8e7ba11d0a5b36a8331990952fe0de866317fa5db856d066"
+      }
     }
   },
   "sourceHashes": {
@@ -21735,7 +21819,9 @@
     "/audio/clinical-visuals-03-make-the-diagram-readable.mp3": "80a7af68d8e1609179d4997852ec72308044636e7bbe82d0a6dba41f180d3470",
     "/audio/clinical-visuals-04-add-motion-with-hyperframes.mp3": "a0ebee24be5243ed4d1875214416efcf453eb5ed03bf6754955e76f48c509dd7",
     "/audio/clinical-visuals-05-use-3d-to-answer-a-spatial-question.mp3": "a8b75cd8c8901d980cce40fb657fcfa1febfd32b82810a2d35367dc9365ac4c9",
-    "/audio/clinical-visuals-06-deliver-a-visual-you-can-maintain.mp3": "371cbb819d35fef1f405b98231e266a64891d8cf8681024b827751d9d95c03f5"
+    "/audio/clinical-visuals-06-deliver-a-visual-you-can-maintain.mp3": "371cbb819d35fef1f405b98231e266a64891d8cf8681024b827751d9d95c03f5",
+    "/audio/why-i-am-leaving-notion-for-obsidian-markdown-and-github.mp3": "258d76a57b6cecd027d665b4d6dfac0b2b8023f65178d5a9298fe7b19748bdd1",
+    "/images/posts/notion-to-obsidian-markdown-github-hero.png": "9c72d4ed92b1cbd8dde0cba78cfd058dbfac4c7a331e524b5559543c30110fad"
   },
   "endpoints": [
     "/.well-known/chukwuma-onyeije-identity.txt",
@@ -22352,7 +22438,10 @@
     "/audio/clinical-visuals-05-use-3d-to-answer-a-spatial-question.mp3",
     "/og/clinical-visuals-05-use-3d-to-answer-a-spatial-question.png",
     "/audio/clinical-visuals-06-deliver-a-visual-you-can-maintain.mp3",
-    "/og/clinical-visuals-06-deliver-a-visual-you-can-maintain.png"
+    "/og/clinical-visuals-06-deliver-a-visual-you-can-maintain.png",
+    "/audio/why-i-am-leaving-notion-for-obsidian-markdown-and-github.mp3",
+    "/images/posts/notion-to-obsidian-markdown-github-hero.png",
+    "/og/why-i-am-leaving-notion-for-obsidian-markdown-and-github.png"
   ],
   "redirects": [
     {
@@ -23526,6 +23615,11 @@
       "title": "Deliver a Visual You Can Maintain",
       "description": "Package editable visual sources, reproduction notes, accessibility alternatives, and a demonstrated correction.",
       "published": "Wed, 25 Nov 2026 14:00:00 GMT"
+    },
+    "https://www.doctorswhocode.blog/blog/why-i-am-leaving-notion-for-obsidian-markdown-and-github/": {
+      "title": "Why I Am Leaving Notion for Obsidian, Markdown, and GitHub",
+      "description": "After years with Notion, I am moving my personal knowledge management to Obsidian, Markdown, and GitHub. More setup, fewer places to maintain the same work.",
+      "published": "Wed, 25 Nov 2026 00:00:00 GMT"
     }
   },
   "sitemapUrls": [
@@ -24272,6 +24366,7 @@
     "https://www.doctorswhocode.blog/blog/clinical-visuals-04-add-motion-with-hyperframes/",
     "https://www.doctorswhocode.blog/blog/clinical-visuals-05-use-3d-to-answer-a-spatial-question/",
     "https://www.doctorswhocode.blog/blog/clinical-visuals-06-deliver-a-visual-you-can-maintain/",
-    "https://www.doctorswhocode.blog/courses/clinical-visuals-with-ai/"
+    "https://www.doctorswhocode.blog/courses/clinical-visuals-with-ai/",
+    "https://www.doctorswhocode.blog/blog/why-i-am-leaving-notion-for-obsidian-markdown-and-github/"
   ]
 }
