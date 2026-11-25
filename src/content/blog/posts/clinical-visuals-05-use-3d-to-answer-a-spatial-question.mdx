@@ -1,0 +1,62 @@
+---
+audioUrl: /audio/clinical-visuals-05-use-3d-to-answer-a-spatial-question.mp3
+title: "Use 3D to Answer a Spatial Question"
+description: "Evaluate a documented 3D workflow, verify a simple section, and decide whether depth improves the explanation."
+pubDate: "2026-11-25T09:00:00-05:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Developer"
+tags: ["clinical education", "svg", "visual development", "physician-developer", "clinical-visuals-with-ai"]
+draft: false
+featured: false
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Editorial illustration for Doctors Who Code. An axonometric rectangular box with a central plane, paired with a second viewpoint and a detached section. Dark navy #0a0d1a, cyan #38bdf8, restrained teal #2dd4bf, off-white #f8fafc. Wide landscape composition, clear geometry, no text overlay, no readable text, no logos. */}
+
+Rotating the object reveals a relationship that was hidden in the flat view. That is a reason to use three dimensions.
+
+Start by stating the unresolved spatial question. Then evaluate a tool against that question. A plugin's ability to create a plausible-looking object does not establish that it can preserve geometry, labels, editable sources, or reproducible exports.
+
+The unidentified plugin in the source remains an open editorial item. Use the documented fallback below for the proposed exercise.
+
+<Callout type="technical">
+Add depth when the explanation requires it.
+</Callout>
+
+## Use a documented fallback with a bounded geometry problem
+
+The source names no specific SVG/3D Codex plugin. Its identity remains unresolved. I propose a small Three.js browser project as a fallback for this exercise, separate from the learning platform. Keep the exercise project separate from the site that will host the finished teaching asset.
+
+The official [BoxGeometry documentation](https://threejs.org/docs/pages/BoxGeometry.html) describes an axis-aligned cuboid centered on the origin. [PlaneGeometry](https://threejs.org/docs/pages/PlaneGeometry.html) supplies a plane with width and height along x and y. These references support the primitives; they do not establish that a complete prototype has been tested.
+
+Have the agent consult the [official manual](https://threejs.org/manual/) for the current setup, create a separate local project, and record its exact dependency version and start command. Keep the JavaScript, HTML, package manifest, and lockfile as editable source. Do not install an unidentified plugin to complete this lesson.
+
+## Construct a section you can verify
+
+Use a box of width 4, height 2, and depth 2. Translate its center to (2, 1, 1), matching the bounds in lesson 1. Place the cutting plane at z = 1. The four section corners are (0, 0, 1), (4, 0, 1), (4, 2, 1), and (0, 2, 1).
+
+Ask the agent to draw the section boundary from those coordinates. This constructs the known intersection for one axis-aligned case. It does not implement a general slicing algorithm. Disable plane dragging in the first prototype so the drawn section cannot silently become inconsistent with a moved plane.
+
+Add two explicit viewpoint controls and a reset control. Save the reference camera position and target in source. Label x, y, and z, and provide the same explanation as the still. Keep labels visible in both views; record any occlusion instead of assuming a rotated scene remains readable.
+
+Spend 15 minutes evaluating the workflow, 35 constructing the prototype, and 20 comparing views and documenting the decision. Capture two reference views with the camera settings recorded. If PNG capture is unavailable, document the actual supported format instead of promising an export that did not occur.
+
+Finish with one sentence: “The second view helps the learner see ___.” If there is no specific answer, recommend the approved 2D asset for delivery. Preserve the prototype as exercise evidence.
+
+## Practice and human checkpoint
+
+**Practice:** Build a box or cylinder with a plane and a reference viewpoint. Show the relationship from a second viewpoint, then return to the first. A geometric cross-section must agree with the object's geometry; a moving plane alone does not prove the displayed section is correct.
+
+**Agent prompt:**
+
+> First inspect the selected 3D tool's official documentation and summarize its editable-source and export options. Then prototype the supplied simple object and cutting plane. Preserve axis labels and provide a reproducible reference view. Do not claim a mathematically correct cross-section unless you construct or verify it. Flag unsupported operations instead of simulating them without explanation.
+
+**Tool evaluation worksheet:** Record tool/version, documentation URL, editable format, export format, orientation controls, label behavior, limitations, and whether the prototype answers the spatial question.
+
+**Checkpoint:** The learner can recover the reference view, explain the geometry, and state what the 3D version adds. If it adds no instructional value, retain it as a learning exercise and recommend the simpler visual for delivery.
+
+**Deliverable:** Editable spatial prototype, two reference views, and `tool-evaluation.md`.
+
+Depth earns its place by answering a spatial question.

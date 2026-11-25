@@ -1,0 +1,92 @@
+---
+audioUrl: /audio/clinical-visuals-06-deliver-a-visual-you-can-maintain.mp3
+title: "Deliver a Visual You Can Maintain"
+description: "Package editable visual sources, reproduction notes, accessibility alternatives, and a demonstrated correction."
+pubDate: "2026-11-25T09:00:00-05:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Developer"
+tags: ["clinical education", "svg", "visual development", "physician-developer", "clinical-visuals-with-ai"]
+draft: false
+featured: false
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Editorial illustration for Doctors Who Code. An orderly exploded arrangement of source sheets, a vector diagram, video frames, and two spatial views returning to one corrected asset. Dark navy #0a0d1a, cyan #38bdf8, restrained teal #2dd4bf, off-white #f8fafc. Wide landscape composition, clear geometry, no text overlay, no readable text, no logos. */}
+
+A colleague asks for one label to change. The project should contain enough information to make that correction without reconstructing the work.
+
+Package the source alongside the output. Include a short account of what was reviewed, what remains uncertain, and how to reproduce the exports. Record versions and references actually used rather than copying assumed values.
+
+<Callout type="technical">
+A teaching asset needs a correction path.
+</Callout>
+
+## Prove that a correction reaches the delivered asset
+
+I treat the final package as a maintenance handoff. A video alone cannot show the next educator which source to change or which review must be repeated.
+
+Spend 15 minutes assembling the files, 15 asking another person to locate and revise a label, and 15 regenerating the affected outputs and scoring the result. Setup and reviewer availability remain outside the estimate.
+
+Use this correction request: replace the ambiguous label “slice” with “section at z = 1.” Locate every occurrence in the SVG, animation, description, and spatial prototype. Keep the previous export, update the sources, regenerate affected outputs, and compare the new files with the request.
+
+In `README.md`, record the teaching objective, entry file, dependency versions, preview command, export command, actual output locations, and the person responsible for future review. In `sources.md`, distinguish the authored coordinate specification from technical documentation and any optional clinical reference.
+
+Add a correction row to `review.md` with the old and new versions, request, changed outputs, reviewer, date, scope, and remaining issues. Mark an unperformed check as pending. The agent can inventory files and compare wording; the educator owns the interpretation.
+
+## Choose the delivery format deliberately
+
+Include the static diagram and text description even if the animation is your primary teaching asset. Keep the spatial prototype when it answers a question the still leaves unresolved. A reasoned choice of the simpler format earns credit in this course.
+
+The folder tree below describes the desired handoff. Every named output must either exist or have a documented substitution. File presence alone does not demonstrate that the output opens or matches its source.
+
+## Practice and human checkpoint
+
+**Practice:** Assemble the package below. Ask another person to locate the objective, source reference, editable diagram, and final output. Make one requested label correction and regenerate the affected export.
+
+```text
+clinical-visual-project/
+  README.md
+  brief.md
+  sources.md
+  assumptions.md
+  review.md
+  description.md
+  storyboard.md
+  tool-evaluation.md
+  source/
+    diagram.svg
+    animation/
+    spatial-prototype/
+  exports/
+    diagram-preview.png
+    teaching-animation.mp4
+    final-frame.png
+    spatial-view-01.png
+    spatial-view-02.png
+```
+
+File formats are proposed exercise outputs, not a guarantee that every selected tool supports them. Document any substitutions.
+
+**Agent prompt:**
+
+> Audit this teaching package against its brief. Identify missing sources, broken file references, mismatches between the diagram and animation, and instructions needed to reproduce the export. Report findings without marking clinical content as verified. Draft a README separating completed checks from unresolved questions.
+
+**Checkpoint:** The package opens on review, its sources are locatable, and one correction can be carried through to a new export. The review record names the reviewer, date, scope, and unresolved issues. Exercise completion does not constitute clinical approval.
+
+## Capstone assessment
+Score each dimension 0 (missing), 1 (partial), or 2 (complete and demonstrated). This rubric is a proposed instructional assessment, not a validated instrument.
+
+| Dimension | Evidence for a score of 2 |
+|---|---|
+| Teaching purpose | One observable objective and a visual that addresses it |
+| Fidelity | Geometry, labels, and orientation checked against the supplied reference |
+| Readability | Small-screen and slide reviews, non-color cues, and text alternative |
+| Motion | Each movement has a purpose; actual export reviewed |
+| Spatial judgment | Prototype evaluated and a reasoned choice of 2D or 3D documented |
+| Maintainability | Editable sources, provenance, reproduction notes, and demonstrated correction |
+
+**Completion standard:** At least 10/12, with no zero scores. An unresolved material error in geometry, orientation, or clinical content requires revision regardless of total. Intended clinical use requires a separate appropriate content review.
+
+The next correction should begin with the source, the reference, and a named reviewer.

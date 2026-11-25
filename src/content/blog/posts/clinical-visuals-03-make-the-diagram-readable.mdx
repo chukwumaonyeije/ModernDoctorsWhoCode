@@ -1,0 +1,60 @@
+---
+audioUrl: /audio/clinical-visuals-03-make-the-diagram-readable.mp3
+title: "Make the Diagram Readable"
+description: "Review a teaching diagram at its delivery size, add text alternatives, and record an uncoached interpretation."
+pubDate: "2026-11-25T09:00:00-05:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Developer"
+tags: ["clinical education", "svg", "visual development", "physician-developer", "clinical-visuals-with-ai"]
+draft: false
+featured: false
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Editorial illustration for Doctors Who Code. Side-by-side phone and presentation screens showing the same clean geometric diagram, with generous label space and patterned lines. Dark navy #0a0d1a, cyan #38bdf8, restrained teal #2dd4bf, off-white #f8fafc. Wide landscape composition, clear geometry, no text overlay, no readable text, no logos. */}
+
+The diagram fits on a laptop. On a phone, its smallest label disappears into the background.
+
+Review at the size and in the setting where the learner will encounter the visual. Enlarging an SVG preserves vector sharpness; it does not automatically fix crowded labels, poor contrast, or an unclear explanation.
+
+Build a text alternative that communicates the essential relationship. For a complex diagram, a short identification and a separate longer description may both be useful. Assess the actual embedded result later in the destination site.
+
+<Callout type="technical">
+A readable source file still needs a readable presentation.
+</Callout>
+
+## Review the relationship, then the presentation
+
+I separate two questions in `review.md`: “Does this match the brief?” and “Can the intended learner read it here?” A sharp image can fail either question.
+
+For the first 10 minutes, compare the dimensions, section shape, and orientation with the coordinate definition. Next, spend 15 minutes viewing the diagram in a 360-pixel-wide presentation area and on the intended slide. Record the actual dimensions used. If the labels cannot fit, split the views or move explanation into adjacent text.
+
+Use the remaining 15 minutes for an uncoached interpretation and revision. Present the rectangle, square, and circle choices from lesson 1. Ask the reviewer to select the section and explain what the plane intersects. Record the response before offering the intended answer.
+
+## Write the explanation that survives without the image
+
+The [W3C guidance for complex images](https://www.w3.org/WAI/tutorials/images/complex/) describes a short identification paired with a longer description of the essential information. For this exercise, try the following draft and revise it to match your actual image.
+
+**Short alternative:** “Box cut halfway through its depth, with the resulting rectangular section shown separately. Full description follows.”
+
+**Long description:** “The box measures 4 units along x, 2 along y, and 2 along z. A plane at z = 1 is parallel to the x-y face. Its intersection is a rectangle measuring 4 by 2 units. The separate section view faces that plane directly.”
+
+Record reviewer, date, artifact version, viewing size, observed problem, correction, and unresolved question. Check the final embedding separately: an SVG title or a nearby description is only useful when the delivery page exposes it appropriately.
+
+If a reviewer chooses the square because perspective hides the long edge, revise the view and ask again. Approval alone does not tell you which relationship they understood.
+
+## Practice and human checkpoint
+
+**Practice:** Inspect the visual at phone width and slide size. Check it in grayscale. Replace color-only distinctions with labels or line patterns. Ask a colleague to identify the plane and match the section without coaching; record their response rather than inferring understanding from approval.
+
+**Agent prompt:**
+
+> Review this diagram against the brief. Suggest changes for label readability, spacing, contrast, and distinctions that currently rely on color alone. Draft a concise text alternative and a longer explanation of the depicted relationship. Separate visual-design findings from content questions requiring an educator's judgment.
+
+**Checkpoint:** No essential label is clipped or obscured. The main distinction survives grayscale viewing. The text description communicates the relationship. Misinterpretations identified by the colleague are corrected or recorded as unresolved.
+
+**Deliverable:** Revised `diagram.svg`, `description.md`, and the first entry in `review.md`.
+
+Record what the learner understood, then correct what the visual obscured.

@@ -1,0 +1,68 @@
+---
+audioUrl: /audio/clinical-visuals-01-define-what-the-learner-must-see.mp3
+title: "Define What the Learner Must See"
+description: "Write a visual brief that connects one observable teaching objective to a checkable geometric reference."
+pubDate: "2026-11-25T09:00:00-05:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Developer"
+tags: ["clinical education", "svg", "visual development", "physician-developer", "clinical-visuals-with-ai"]
+draft: false
+featured: false
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Editorial illustration for Doctors Who Code. Overhead view of a blank planning sheet beside a small translucent rectangular block and a single cutting plane. Dark navy #0a0d1a, cyan #38bdf8, restrained teal #2dd4bf, off-white #f8fafc. Wide landscape composition, clear geometry, no text overlay, no readable text, no logos. */}
+
+An arrow points toward a structure. Before choosing its color, decide what that arrow is supposed to explain.
+
+A visual brief is the first build artifact. It gives the agent a bounded problem and gives the physician a standard for judging the result. “Create an impressive medical animation” supplies neither.
+
+For this project, the objective is specific: after viewing the visual, the learner can identify the cutting plane and match it to the corresponding schematic section. This is an educational design objective, not evidence that the material improves learning.
+
+<Callout type="technical">
+Define the meaning before choosing the medium.
+</Callout>
+
+## Fix the reference before drawing
+
+I use **Meaning → Representation → Inspection** as the organizing framework for this course. Meaning is the relationship the learner must understand. Representation is the file that expresses it. Inspection compares that file with the brief and with a learner's explanation.
+
+Use one synthetic object throughout: a rectangular box spanning x = 0 to 4, y = 0 to 2, and z = 0 to 2. The cutting plane is z = 1. Its intersection with the box is a 4-by-2 rectangle. A perspective drawing can make that rectangle look skewed; the separately labeled section view must preserve its stated dimensions.
+
+Write this objective in `brief.md`: “Given the box and three candidate sections, the learner identifies the plane and selects the 4-by-2 rectangular section.” Include a square and a circle as distractors. Ask the learner to explain the selection, so a lucky choice does not stand in for understanding.
+
+For this geometry exercise, the coordinate definition is the reference. Record it in `sources.md` as an authored specification. Keep model coordinates separate from page coordinates and do not attach anatomical direction labels to an abstract box.
+
+This is a proposed teaching workflow. It has not been piloted. The six lessons budget 300 minutes of practice, excluding setup, troubleshooting, and time waiting for a reviewer. You need a coding agent, a text editor, and a browser for the first three lessons.
+
+## Complete the brief in 30 minutes
+
+Spend 10 minutes defining audience and objective, 10 minutes recording the reference and constraints, and 10 minutes asking a colleague to restate the intended lesson. If they describe a different relationship, revise the objective before generating the SVG.
+
+The optional ultrasound extension begins only after the geometric exercise works. Supply a reviewed educational reference and record its reuse permission. Use synthetic teaching material for this course; patient images and records are outside the exercise.
+
+## Practice and human checkpoint
+
+**Practice:** Complete this brief before asking the agent to draw:
+
+| Brief field | Learner input |
+|---|---|
+| Audience | Who is learning, and what do they already know? |
+| Objective | What should they identify or explain afterward? |
+| Essential relationship | What spatial or sequential relationship must remain correct? |
+| Reference | Which supplied source defines the content? |
+| Simplifications | What is omitted or deliberately schematic? |
+| Constraints | Required labels, dimensions, orientation, and viewing context |
+| Review | Who will assess content and how will understanding be checked? |
+
+**Agent prompt:**
+
+> Help me refine this visual brief for one teaching objective. Identify ambiguity, missing references, and unnecessary visual complexity. Preserve my intended meaning. Return a proposed brief and questions that must be resolved before drawing. Do not generate the visual yet.
+
+**Checkpoint:** A colleague can describe the intended lesson from the brief alone. The objective contains an observable action such as identify, match, or explain.
+
+**Deliverable:** `brief.md`, including the source and simplification notes.
+
+The brief defines what the next file must preserve.

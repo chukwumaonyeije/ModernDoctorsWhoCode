@@ -1,0 +1,70 @@
+---
+audioUrl: /audio/clinical-visuals-04-add-motion-with-hyperframes.mp3
+title: "Add Motion with HyperFrames"
+description: "Storyboard and export a short HyperFrames animation while preserving the approved diagram and its meaning."
+pubDate: "2026-11-25T09:00:00-05:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Developer"
+tags: ["clinical education", "svg", "visual development", "physician-developer", "clinical-visuals-with-ai"]
+draft: false
+featured: false
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Editorial illustration for Doctors Who Code. A horizontal sequence of four geometric frames revealing an object, a plane, a section, and a quiet final hold. Dark navy #0a0d1a, cyan #38bdf8, restrained teal #2dd4bf, off-white #f8fafc. Wide landscape composition, clear geometry, no text overlay, no readable text, no logos. */}
+
+The plane appears before the learner has identified the object. The animation is technically functional, but its sequence needs revision.
+
+Build a storyboard before generating motion. Use the approved SVG as the starting asset. The agent and HyperFrames workflow should preserve that asset's labels and relationships while adding an intentional sequence.
+
+Suggested storyboard: introduce the object, reveal the plane, show the corresponding section, and hold a final labeled frame. Allocate time for reading. A 20–30 second target constrains the exercise; it is not a claim about an optimal teaching duration.
+
+<Callout type="technical">
+Every movement must explain something.
+</Callout>
+
+## Give each interval one job
+
+I would start with a 25-second storyboard. This is a production constraint for the exercise, not an evidence-based claim about ideal teaching duration.
+
+| Time | Visible change | Teaching purpose |
+| --- | --- | --- |
+| 0–5 seconds | Show the approved box and axis labels | Establish the reference object |
+| 5–11 seconds | Reveal the fixed z = 1 plane | Locate the section |
+| 11–18 seconds | Reveal the separate 4-by-2 section view | Connect the intersection to its shape |
+| 18–25 seconds | Hold both labeled views | Allow comparison and reading |
+
+Reveal the plane in place. Sliding it through the object would introduce a changing section that this storyboard does not need. Retain the original SVG as the reviewed source and record any conversion into animation elements.
+
+## Set up a separate exercise project
+
+The [official HyperFrames repository](https://github.com/heygen-com/hyperframes) documents Node.js 22+ and FFmpeg for its local CLI workflow. Its developer quick start lists these commands, checked on November 25, 2026:
+
+```sh
+npx hyperframes init clinical-visual-animation
+cd clinical-visual-animation
+npx hyperframes preview
+npx hyperframes render
+```
+
+Run initialization in your exercise workspace. Have the agent inspect the current official setup and your installed prerequisites first, and record the version actually used. These commands are documentation-checked; this course draft does not report a local render test. Follow installed agent-skill instructions when they specify a different launcher.
+
+Budget 15 minutes for the storyboard, 30 for composition and preview, and 20 for export review and one pacing correction. Installation is outside that estimate. When an export fails, retain the error and fix it before assessing the animation.
+
+Watch the exported file from beginning to end. Pause at the plane reveal and at the final hold, compare both with the approved still, and record the filenames in `review.md`. Keep a static final frame and description available. If speech conveys additional information, supply captions and a transcript.
+
+## Practice and human checkpoint
+
+**Practice:** Have the agent check the current official HyperFrames setup instructions and local prerequisites. Create and preview the composition. Render an export, watch that actual file, and revise one pacing problem. Provide a static alternative; add captions if narration carries information.
+
+**Agent prompt:**
+
+> Using the approved SVG and storyboard, build a 20–30 second HyperFrames teaching animation. Preserve the approved wording, orientation, and geometry. Reveal one relationship at a time. Avoid decorative camera movement. Include a readable final hold. Keep project sources editable. Preview before export, then report the output location and any unresolved rendering issues.
+
+**Checkpoint:** The exported file opens, labels remain readable, and the visual agrees with the approved still. The learner explains why each animated change is present. The final frame and a text alternative are available separately.
+
+**Deliverable:** Editable project, `storyboard.md`, exported video, and final still.
+
+Review the file the learner will receive.

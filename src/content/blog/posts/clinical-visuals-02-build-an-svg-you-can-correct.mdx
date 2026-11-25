@@ -1,0 +1,60 @@
+---
+audioUrl: /audio/clinical-visuals-02-build-an-svg-you-can-correct.mp3
+title: "Build an SVG You Can Correct"
+description: "Build an editable SVG and make three isolated corrections while preserving the relationship it teaches."
+pubDate: "2026-11-25T09:00:00-05:00"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Physician Developer"
+tags: ["clinical education", "svg", "visual development", "physician-developer", "clinical-visuals-with-ai"]
+draft: false
+featured: false
+---
+
+import Callout from '../../../components/Callout.astro';
+
+{/* heroImagePrompt: Editorial illustration for Doctors Who Code. Close angled view of an editable vector diagram with visible control handles around a box, plane, and separate rectangular section. Dark navy #0a0d1a, cyan #38bdf8, restrained teal #2dd4bf, off-white #f8fafc. Wide landscape composition, clear geometry, no text overlay, no readable text, no logos. */}
+
+The first preview contains a label that overlaps the diagram. A useful next instruction identifies that label and moves it without changing the underlying relationship.
+
+SVG stores vector shapes and text in a structured file. That gives the learner concrete elements to inspect: a path, a label, a stroke, a group. The learner does not need to memorize the format, but should recognize where these elements appear and how edits affect the preview.
+
+Introduce the canvas and `viewBox`, basic shapes, text, grouping, and readable element names. Use simple geometry first. Do not ask the agent to invent anatomical relationships.
+
+<Callout type="technical">
+Keep the source that allows a correction.
+</Callout>
+
+## Read the file before asking for another version
+
+I want the first diagram to be small enough to inspect. SVG describes two-dimensional vector graphics in XML; the [MDN SVG reference](https://developer.mozilla.org/en-US/docs/Web/SVG) is the technical starting point. The preview shows the picture, while the source exposes the elements that make it.
+
+Ask the agent for two clearly separated groups: `object-view` and `section-view`. Give the plane, section outline, and each label stable IDs. The `viewBox` defines the internal drawing coordinates. Those drawing coordinates do not replace the model coordinates in your brief.
+
+Use the box and z = 1 plane from lesson 1. Label the section as 4 by 2 model units. Draw its outline in a separate view facing the section directly. Keep the object orientation fixed while making corrections.
+
+## Make a correction you can trace
+
+Save a first version before editing. In the source, locate the text for the plane label and the element that draws its boundary. Ask for one change at a time, then compare the saved files.
+
+1. Move the plane label away from the object without moving the plane.
+2. Make the plane boundary dashed without changing the section boundary.
+3. Increase the gap between the object view and the section view without altering dimensions.
+
+Reserve 10 minutes for reading the source, 20 for the first diagram, and 20 for these corrections. If a label moves because an entire group was translated, inspect whether the object moved with it. A visually plausible result can still change the lesson.
+
+Keep this exercise self-contained: shapes, editable text, and no external image or script dependencies. Reopen the saved SVG in a browser. If it fails to open, ask the agent to resolve the markup error before changing the design.
+
+## Practice and human checkpoint
+
+**Practice:** Generate the first diagram from the approved brief. Inspect its source alongside the preview. Request three isolated edits: relocate one label, change one line style, and improve spacing. Reopen the saved file to confirm the edits persisted.
+
+**Agent prompt:**
+
+> Create a self-contained SVG from the attached brief. Use simple geometry, meaningful element IDs, and editable text. Show a labeled plane intersecting the supplied object and a corresponding schematic section. Clearly label separate views. Do not infer missing anatomical details. Include “schematic, not to scale” where applicable. Return the SVG and a list of assumptions for review.
+
+**Checkpoint:** The learner can identify the source element for one label and one shape. The diagram opens successfully and the three requested edits are visible. Its depicted intersection agrees with the supplied reference.
+
+**Deliverable:** `diagram.svg` and `assumptions.md`.
+
+A correction must survive in the saved source.

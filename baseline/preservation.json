@@ -3711,6 +3711,41 @@
       "canonical": [
         "https://www.doctorswhocode.blog/tags/formal-verification/"
       ]
+    },
+    "/blog/clinical-visuals-01-define-what-the-learner-must-see/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/blog/clinical-visuals-01-define-what-the-learner-must-see/"
+      ]
+    },
+    "/blog/clinical-visuals-02-build-an-svg-you-can-correct/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/blog/clinical-visuals-02-build-an-svg-you-can-correct/"
+      ]
+    },
+    "/blog/clinical-visuals-03-make-the-diagram-readable/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/blog/clinical-visuals-03-make-the-diagram-readable/"
+      ]
+    },
+    "/blog/clinical-visuals-04-add-motion-with-hyperframes/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/blog/clinical-visuals-04-add-motion-with-hyperframes/"
+      ]
+    },
+    "/blog/clinical-visuals-05-use-3d-to-answer-a-spatial-question/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/blog/clinical-visuals-05-use-3d-to-answer-a-spatial-question/"
+      ]
+    },
+    "/blog/clinical-visuals-06-deliver-a-visual-you-can-maintain/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/blog/clinical-visuals-06-deliver-a-visual-you-can-maintain/"
+      ]
+    },
+    "/courses/clinical-visuals-with-ai/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/courses/clinical-visuals-with-ai/"
+      ]
     }
   },
   "articles": {
@@ -20901,6 +20936,403 @@
         ],
         "bodyTextHash": "a30349a2764db9b11de983da37ade5f3394bced731951724b20555560b3d23ac"
       }
+    },
+    "clinical-visuals-01-define-what-the-learner-must-see.mdx": {
+      "id": "clinical-visuals-01-define-what-the-learner-must-see",
+      "route": "/blog/clinical-visuals-01-define-what-the-learner-must-see/",
+      "bodyHash": "b37fa05afd4cf9af654075f8b70e0569aacc4719c30c2d14453c7c6e77597c45",
+      "frontmatter": {
+        "audioUrl": "/audio/clinical-visuals-01-define-what-the-learner-must-see.mp3",
+        "title": "Define What the Learner Must See",
+        "description": "Write a visual brief that connects one observable teaching objective to a checkable geometric reference.",
+        "pubDate": "2026-11-25T09:00:00-05:00",
+        "author": "Chukwuma Onyeije, MD, FACOG",
+        "authorUrl": "https://www.linkedin.com/in/chukwumaonyeije",
+        "category": "Physician Developer",
+        "tags": [
+          "clinical education",
+          "svg",
+          "visual development",
+          "physician-developer",
+          "clinical-visuals-with-ai"
+        ],
+        "draft": false,
+        "featured": false
+      },
+      "rendered": {
+        "title": "Define What the Learner Must See | Doctors Who Code",
+        "description": "Write a visual brief that connects one observable teaching objective to a checkable geometric reference.",
+        "canonical": [
+          "https://www.doctorswhocode.blog/blog/clinical-visuals-01-define-what-the-learner-must-see/"
+        ],
+        "published": "2026-11-25T14:00:00.000Z",
+        "ogImage": "https://www.doctorswhocode.blog/og/clinical-visuals-01-define-what-the-learner-must-see.png",
+        "audio": [
+          "/audio/clinical-visuals-01-define-what-the-learner-must-see.mp3"
+        ],
+        "contentMedia": [],
+        "metadata": {
+          "description": "Write a visual brief that connects one observable teaching objective to a checkable geometric reference.",
+          "author": "Chukwuma Onyeije, MD, FACOG",
+          "robots": "index, follow, max-image-preview:large",
+          "og:title": "Define What the Learner Must See | Doctors Who Code",
+          "og:description": "Write a visual brief that connects one observable teaching objective to a checkable geometric reference.",
+          "og:image": "https://www.doctorswhocode.blog/og/clinical-visuals-01-define-what-the-learner-must-see.png",
+          "og:image:alt": "Define What the Learner Must See | Doctors Who Code",
+          "og:url": "https://www.doctorswhocode.blog/blog/clinical-visuals-01-define-what-the-learner-must-see/",
+          "og:type": "article",
+          "og:site_name": "Doctors Who Code",
+          "og:locale": "en_US",
+          "twitter:card": "summary_large_image",
+          "twitter:site": "@chukwumaonyeije",
+          "twitter:creator": "@chukwumaonyeije",
+          "twitter:title": "Define What the Learner Must See | Doctors Who Code",
+          "twitter:description": "Write a visual brief that connects one observable teaching objective to a checkable geometric reference.",
+          "twitter:image": "https://www.doctorswhocode.blog/og/clinical-visuals-01-define-what-the-learner-must-see.png",
+          "article:published_time": "2026-11-25T14:00:00.000Z"
+        },
+        "headings": [
+          "article-title",
+          "lesson-context-title",
+          "fix-the-reference-before-drawing",
+          "complete-the-brief-in-30-minutes",
+          "practice-and-human-checkpoint",
+          "share-heading",
+          "related-articles-heading"
+        ],
+        "bodyTextHash": "fca44b6ed01f4d44eeb7e9d0ad1eac24b28469b057f66dc0378716aaa19a6827"
+      }
+    },
+    "clinical-visuals-02-build-an-svg-you-can-correct.mdx": {
+      "id": "clinical-visuals-02-build-an-svg-you-can-correct",
+      "route": "/blog/clinical-visuals-02-build-an-svg-you-can-correct/",
+      "bodyHash": "a64ad122e321100b21536311ab13d5555a93cc5fe3019c7b452612501cd0b14d",
+      "frontmatter": {
+        "audioUrl": "/audio/clinical-visuals-02-build-an-svg-you-can-correct.mp3",
+        "title": "Build an SVG You Can Correct",
+        "description": "Build an editable SVG and make three isolated corrections while preserving the relationship it teaches.",
+        "pubDate": "2026-11-25T09:00:00-05:00",
+        "author": "Chukwuma Onyeije, MD, FACOG",
+        "authorUrl": "https://www.linkedin.com/in/chukwumaonyeije",
+        "category": "Physician Developer",
+        "tags": [
+          "clinical education",
+          "svg",
+          "visual development",
+          "physician-developer",
+          "clinical-visuals-with-ai"
+        ],
+        "draft": false,
+        "featured": false
+      },
+      "rendered": {
+        "title": "Build an SVG You Can Correct | Doctors Who Code",
+        "description": "Build an editable SVG and make three isolated corrections while preserving the relationship it teaches.",
+        "canonical": [
+          "https://www.doctorswhocode.blog/blog/clinical-visuals-02-build-an-svg-you-can-correct/"
+        ],
+        "published": "2026-11-25T14:00:00.000Z",
+        "ogImage": "https://www.doctorswhocode.blog/og/clinical-visuals-02-build-an-svg-you-can-correct.png",
+        "audio": [
+          "/audio/clinical-visuals-02-build-an-svg-you-can-correct.mp3"
+        ],
+        "contentMedia": [],
+        "metadata": {
+          "description": "Build an editable SVG and make three isolated corrections while preserving the relationship it teaches.",
+          "author": "Chukwuma Onyeije, MD, FACOG",
+          "robots": "index, follow, max-image-preview:large",
+          "og:title": "Build an SVG You Can Correct | Doctors Who Code",
+          "og:description": "Build an editable SVG and make three isolated corrections while preserving the relationship it teaches.",
+          "og:image": "https://www.doctorswhocode.blog/og/clinical-visuals-02-build-an-svg-you-can-correct.png",
+          "og:image:alt": "Build an SVG You Can Correct | Doctors Who Code",
+          "og:url": "https://www.doctorswhocode.blog/blog/clinical-visuals-02-build-an-svg-you-can-correct/",
+          "og:type": "article",
+          "og:site_name": "Doctors Who Code",
+          "og:locale": "en_US",
+          "twitter:card": "summary_large_image",
+          "twitter:site": "@chukwumaonyeije",
+          "twitter:creator": "@chukwumaonyeije",
+          "twitter:title": "Build an SVG You Can Correct | Doctors Who Code",
+          "twitter:description": "Build an editable SVG and make three isolated corrections while preserving the relationship it teaches.",
+          "twitter:image": "https://www.doctorswhocode.blog/og/clinical-visuals-02-build-an-svg-you-can-correct.png",
+          "article:published_time": "2026-11-25T14:00:00.000Z"
+        },
+        "headings": [
+          "article-title",
+          "lesson-context-title",
+          "read-the-file-before-asking-for-another-version",
+          "make-a-correction-you-can-trace",
+          "practice-and-human-checkpoint",
+          "share-heading",
+          "related-articles-heading"
+        ],
+        "bodyTextHash": "5ced5fedcc234befe13a45b61283454cca2c1d52de1fd080b665b387397598a0"
+      }
+    },
+    "clinical-visuals-03-make-the-diagram-readable.mdx": {
+      "id": "clinical-visuals-03-make-the-diagram-readable",
+      "route": "/blog/clinical-visuals-03-make-the-diagram-readable/",
+      "bodyHash": "d3f953fa0d1c67f13c1f3fc2788eba3223a26c5c1361cfaad0a7314fcca17a91",
+      "frontmatter": {
+        "audioUrl": "/audio/clinical-visuals-03-make-the-diagram-readable.mp3",
+        "title": "Make the Diagram Readable",
+        "description": "Review a teaching diagram at its delivery size, add text alternatives, and record an uncoached interpretation.",
+        "pubDate": "2026-11-25T09:00:00-05:00",
+        "author": "Chukwuma Onyeije, MD, FACOG",
+        "authorUrl": "https://www.linkedin.com/in/chukwumaonyeije",
+        "category": "Physician Developer",
+        "tags": [
+          "clinical education",
+          "svg",
+          "visual development",
+          "physician-developer",
+          "clinical-visuals-with-ai"
+        ],
+        "draft": false,
+        "featured": false
+      },
+      "rendered": {
+        "title": "Make the Diagram Readable | Doctors Who Code",
+        "description": "Review a teaching diagram at its delivery size, add text alternatives, and record an uncoached interpretation.",
+        "canonical": [
+          "https://www.doctorswhocode.blog/blog/clinical-visuals-03-make-the-diagram-readable/"
+        ],
+        "published": "2026-11-25T14:00:00.000Z",
+        "ogImage": "https://www.doctorswhocode.blog/og/clinical-visuals-03-make-the-diagram-readable.png",
+        "audio": [
+          "/audio/clinical-visuals-03-make-the-diagram-readable.mp3"
+        ],
+        "contentMedia": [],
+        "metadata": {
+          "description": "Review a teaching diagram at its delivery size, add text alternatives, and record an uncoached interpretation.",
+          "author": "Chukwuma Onyeije, MD, FACOG",
+          "robots": "index, follow, max-image-preview:large",
+          "og:title": "Make the Diagram Readable | Doctors Who Code",
+          "og:description": "Review a teaching diagram at its delivery size, add text alternatives, and record an uncoached interpretation.",
+          "og:image": "https://www.doctorswhocode.blog/og/clinical-visuals-03-make-the-diagram-readable.png",
+          "og:image:alt": "Make the Diagram Readable | Doctors Who Code",
+          "og:url": "https://www.doctorswhocode.blog/blog/clinical-visuals-03-make-the-diagram-readable/",
+          "og:type": "article",
+          "og:site_name": "Doctors Who Code",
+          "og:locale": "en_US",
+          "twitter:card": "summary_large_image",
+          "twitter:site": "@chukwumaonyeije",
+          "twitter:creator": "@chukwumaonyeije",
+          "twitter:title": "Make the Diagram Readable | Doctors Who Code",
+          "twitter:description": "Review a teaching diagram at its delivery size, add text alternatives, and record an uncoached interpretation.",
+          "twitter:image": "https://www.doctorswhocode.blog/og/clinical-visuals-03-make-the-diagram-readable.png",
+          "article:published_time": "2026-11-25T14:00:00.000Z"
+        },
+        "headings": [
+          "article-title",
+          "lesson-context-title",
+          "review-the-relationship-then-the-presentation",
+          "write-the-explanation-that-survives-without-the-image",
+          "practice-and-human-checkpoint",
+          "share-heading",
+          "related-articles-heading"
+        ],
+        "bodyTextHash": "88e730a1d8faf1bf75174b535511be15cd414a2cc001ee380d5d94dbbf8af38b"
+      }
+    },
+    "clinical-visuals-04-add-motion-with-hyperframes.mdx": {
+      "id": "clinical-visuals-04-add-motion-with-hyperframes",
+      "route": "/blog/clinical-visuals-04-add-motion-with-hyperframes/",
+      "bodyHash": "420812033c85831593384f28665c27c1e5cccff729b931442d60335a74998d6d",
+      "frontmatter": {
+        "audioUrl": "/audio/clinical-visuals-04-add-motion-with-hyperframes.mp3",
+        "title": "Add Motion with HyperFrames",
+        "description": "Storyboard and export a short HyperFrames animation while preserving the approved diagram and its meaning.",
+        "pubDate": "2026-11-25T09:00:00-05:00",
+        "author": "Chukwuma Onyeije, MD, FACOG",
+        "authorUrl": "https://www.linkedin.com/in/chukwumaonyeije",
+        "category": "Physician Developer",
+        "tags": [
+          "clinical education",
+          "svg",
+          "visual development",
+          "physician-developer",
+          "clinical-visuals-with-ai"
+        ],
+        "draft": false,
+        "featured": false
+      },
+      "rendered": {
+        "title": "Add Motion with HyperFrames | Doctors Who Code",
+        "description": "Storyboard and export a short HyperFrames animation while preserving the approved diagram and its meaning.",
+        "canonical": [
+          "https://www.doctorswhocode.blog/blog/clinical-visuals-04-add-motion-with-hyperframes/"
+        ],
+        "published": "2026-11-25T14:00:00.000Z",
+        "ogImage": "https://www.doctorswhocode.blog/og/clinical-visuals-04-add-motion-with-hyperframes.png",
+        "audio": [
+          "/audio/clinical-visuals-04-add-motion-with-hyperframes.mp3"
+        ],
+        "contentMedia": [],
+        "metadata": {
+          "description": "Storyboard and export a short HyperFrames animation while preserving the approved diagram and its meaning.",
+          "author": "Chukwuma Onyeije, MD, FACOG",
+          "robots": "index, follow, max-image-preview:large",
+          "og:title": "Add Motion with HyperFrames | Doctors Who Code",
+          "og:description": "Storyboard and export a short HyperFrames animation while preserving the approved diagram and its meaning.",
+          "og:image": "https://www.doctorswhocode.blog/og/clinical-visuals-04-add-motion-with-hyperframes.png",
+          "og:image:alt": "Add Motion with HyperFrames | Doctors Who Code",
+          "og:url": "https://www.doctorswhocode.blog/blog/clinical-visuals-04-add-motion-with-hyperframes/",
+          "og:type": "article",
+          "og:site_name": "Doctors Who Code",
+          "og:locale": "en_US",
+          "twitter:card": "summary_large_image",
+          "twitter:site": "@chukwumaonyeije",
+          "twitter:creator": "@chukwumaonyeije",
+          "twitter:title": "Add Motion with HyperFrames | Doctors Who Code",
+          "twitter:description": "Storyboard and export a short HyperFrames animation while preserving the approved diagram and its meaning.",
+          "twitter:image": "https://www.doctorswhocode.blog/og/clinical-visuals-04-add-motion-with-hyperframes.png",
+          "article:published_time": "2026-11-25T14:00:00.000Z"
+        },
+        "headings": [
+          "article-title",
+          "lesson-context-title",
+          "give-each-interval-one-job",
+          "set-up-a-separate-exercise-project",
+          "practice-and-human-checkpoint",
+          "share-heading",
+          "related-articles-heading"
+        ],
+        "bodyTextHash": "b2a7916cc376bf92ea59d36eb15921cc93dd4ba7c9b5a1ed11a3bdcc8eaf0264"
+      }
+    },
+    "clinical-visuals-05-use-3d-to-answer-a-spatial-question.mdx": {
+      "id": "clinical-visuals-05-use-3d-to-answer-a-spatial-question",
+      "route": "/blog/clinical-visuals-05-use-3d-to-answer-a-spatial-question/",
+      "bodyHash": "0e9221c67b4ab23e972e9788f46ab3b7812d29319ce5c247afb00ddfeb7a5fe6",
+      "frontmatter": {
+        "audioUrl": "/audio/clinical-visuals-05-use-3d-to-answer-a-spatial-question.mp3",
+        "title": "Use 3D to Answer a Spatial Question",
+        "description": "Evaluate a documented 3D workflow, verify a simple section, and decide whether depth improves the explanation.",
+        "pubDate": "2026-11-25T09:00:00-05:00",
+        "author": "Chukwuma Onyeije, MD, FACOG",
+        "authorUrl": "https://www.linkedin.com/in/chukwumaonyeije",
+        "category": "Physician Developer",
+        "tags": [
+          "clinical education",
+          "svg",
+          "visual development",
+          "physician-developer",
+          "clinical-visuals-with-ai"
+        ],
+        "draft": false,
+        "featured": false
+      },
+      "rendered": {
+        "title": "Use 3D to Answer a Spatial Question | Doctors Who Code",
+        "description": "Evaluate a documented 3D workflow, verify a simple section, and decide whether depth improves the explanation.",
+        "canonical": [
+          "https://www.doctorswhocode.blog/blog/clinical-visuals-05-use-3d-to-answer-a-spatial-question/"
+        ],
+        "published": "2026-11-25T14:00:00.000Z",
+        "ogImage": "https://www.doctorswhocode.blog/og/clinical-visuals-05-use-3d-to-answer-a-spatial-question.png",
+        "audio": [
+          "/audio/clinical-visuals-05-use-3d-to-answer-a-spatial-question.mp3"
+        ],
+        "contentMedia": [],
+        "metadata": {
+          "description": "Evaluate a documented 3D workflow, verify a simple section, and decide whether depth improves the explanation.",
+          "author": "Chukwuma Onyeije, MD, FACOG",
+          "robots": "index, follow, max-image-preview:large",
+          "og:title": "Use 3D to Answer a Spatial Question | Doctors Who Code",
+          "og:description": "Evaluate a documented 3D workflow, verify a simple section, and decide whether depth improves the explanation.",
+          "og:image": "https://www.doctorswhocode.blog/og/clinical-visuals-05-use-3d-to-answer-a-spatial-question.png",
+          "og:image:alt": "Use 3D to Answer a Spatial Question | Doctors Who Code",
+          "og:url": "https://www.doctorswhocode.blog/blog/clinical-visuals-05-use-3d-to-answer-a-spatial-question/",
+          "og:type": "article",
+          "og:site_name": "Doctors Who Code",
+          "og:locale": "en_US",
+          "twitter:card": "summary_large_image",
+          "twitter:site": "@chukwumaonyeije",
+          "twitter:creator": "@chukwumaonyeije",
+          "twitter:title": "Use 3D to Answer a Spatial Question | Doctors Who Code",
+          "twitter:description": "Evaluate a documented 3D workflow, verify a simple section, and decide whether depth improves the explanation.",
+          "twitter:image": "https://www.doctorswhocode.blog/og/clinical-visuals-05-use-3d-to-answer-a-spatial-question.png",
+          "article:published_time": "2026-11-25T14:00:00.000Z"
+        },
+        "headings": [
+          "article-title",
+          "lesson-context-title",
+          "use-a-documented-fallback-with-a-bounded-geometry-problem",
+          "construct-a-section-you-can-verify",
+          "practice-and-human-checkpoint",
+          "share-heading",
+          "related-articles-heading"
+        ],
+        "bodyTextHash": "0a2b837620473bc5145868fd06f08855a71d4f15bfca1e5a1f1ad9187b319ccb"
+      }
+    },
+    "clinical-visuals-06-deliver-a-visual-you-can-maintain.mdx": {
+      "id": "clinical-visuals-06-deliver-a-visual-you-can-maintain",
+      "route": "/blog/clinical-visuals-06-deliver-a-visual-you-can-maintain/",
+      "bodyHash": "c15e4a2936294c1196358196a644c5a7358ee95ecf15f376301b332f9992957c",
+      "frontmatter": {
+        "audioUrl": "/audio/clinical-visuals-06-deliver-a-visual-you-can-maintain.mp3",
+        "title": "Deliver a Visual You Can Maintain",
+        "description": "Package editable visual sources, reproduction notes, accessibility alternatives, and a demonstrated correction.",
+        "pubDate": "2026-11-25T09:00:00-05:00",
+        "author": "Chukwuma Onyeije, MD, FACOG",
+        "authorUrl": "https://www.linkedin.com/in/chukwumaonyeije",
+        "category": "Physician Developer",
+        "tags": [
+          "clinical education",
+          "svg",
+          "visual development",
+          "physician-developer",
+          "clinical-visuals-with-ai"
+        ],
+        "draft": false,
+        "featured": false
+      },
+      "rendered": {
+        "title": "Deliver a Visual You Can Maintain | Doctors Who Code",
+        "description": "Package editable visual sources, reproduction notes, accessibility alternatives, and a demonstrated correction.",
+        "canonical": [
+          "https://www.doctorswhocode.blog/blog/clinical-visuals-06-deliver-a-visual-you-can-maintain/"
+        ],
+        "published": "2026-11-25T14:00:00.000Z",
+        "ogImage": "https://www.doctorswhocode.blog/og/clinical-visuals-06-deliver-a-visual-you-can-maintain.png",
+        "audio": [
+          "/audio/clinical-visuals-06-deliver-a-visual-you-can-maintain.mp3"
+        ],
+        "contentMedia": [],
+        "metadata": {
+          "description": "Package editable visual sources, reproduction notes, accessibility alternatives, and a demonstrated correction.",
+          "author": "Chukwuma Onyeije, MD, FACOG",
+          "robots": "index, follow, max-image-preview:large",
+          "og:title": "Deliver a Visual You Can Maintain | Doctors Who Code",
+          "og:description": "Package editable visual sources, reproduction notes, accessibility alternatives, and a demonstrated correction.",
+          "og:image": "https://www.doctorswhocode.blog/og/clinical-visuals-06-deliver-a-visual-you-can-maintain.png",
+          "og:image:alt": "Deliver a Visual You Can Maintain | Doctors Who Code",
+          "og:url": "https://www.doctorswhocode.blog/blog/clinical-visuals-06-deliver-a-visual-you-can-maintain/",
+          "og:type": "article",
+          "og:site_name": "Doctors Who Code",
+          "og:locale": "en_US",
+          "twitter:card": "summary_large_image",
+          "twitter:site": "@chukwumaonyeije",
+          "twitter:creator": "@chukwumaonyeije",
+          "twitter:title": "Deliver a Visual You Can Maintain | Doctors Who Code",
+          "twitter:description": "Package editable visual sources, reproduction notes, accessibility alternatives, and a demonstrated correction.",
+          "twitter:image": "https://www.doctorswhocode.blog/og/clinical-visuals-06-deliver-a-visual-you-can-maintain.png",
+          "article:published_time": "2026-11-25T14:00:00.000Z"
+        },
+        "headings": [
+          "article-title",
+          "lesson-context-title",
+          "prove-that-a-correction-reaches-the-delivered-asset",
+          "choose-the-delivery-format-deliberately",
+          "practice-and-human-checkpoint",
+          "capstone-assessment",
+          "share-heading",
+          "related-articles-heading"
+        ],
+        "bodyTextHash": "26681f30eed8ab57bf293f6f165286dbbc34d9a975b50e84b343d569e80f12db"
+      }
     }
   },
   "sourceHashes": {
@@ -21297,7 +21729,13 @@
     "/audio/retire-the-typing-olympics.mp3": "c50d972813c0bf4cedd1c78801076453c5e9d64f00f99b87597923f4d2365463",
     "/images/posts/retire-the-typing-olympics-hero.webp": "15028f513ca4a383b76df01a616ef09dbe25a8c06cc5bb6bc3676ab7539bed28",
     "/images/posts/claude-riemann-hypothesis-future-doctors-who-code.webp": "7641f91413db4b09cb364133129dad6ef9ed6b7530de87208cdb7cfad0162f12",
-    "/audio/claude-riemann-hypothesis-future-doctors-who-code.mp3": "2dfdad1fd5df2753336f0e7d8b9618d411c5033a085952e98722d09a7e6d6f22"
+    "/audio/claude-riemann-hypothesis-future-doctors-who-code.mp3": "2dfdad1fd5df2753336f0e7d8b9618d411c5033a085952e98722d09a7e6d6f22",
+    "/audio/clinical-visuals-01-define-what-the-learner-must-see.mp3": "b7d19d701fccdba1be984b9938acd7639df14ee088ecc7800e5b1af9facd67b7",
+    "/audio/clinical-visuals-02-build-an-svg-you-can-correct.mp3": "54763586c3d6c0cf971fea158bcb07b60d9b7973a77878224805f7fe1fbf2195",
+    "/audio/clinical-visuals-03-make-the-diagram-readable.mp3": "80a7af68d8e1609179d4997852ec72308044636e7bbe82d0a6dba41f180d3470",
+    "/audio/clinical-visuals-04-add-motion-with-hyperframes.mp3": "a0ebee24be5243ed4d1875214416efcf453eb5ed03bf6754955e76f48c509dd7",
+    "/audio/clinical-visuals-05-use-3d-to-answer-a-spatial-question.mp3": "a8b75cd8c8901d980cce40fb657fcfa1febfd32b82810a2d35367dc9365ac4c9",
+    "/audio/clinical-visuals-06-deliver-a-visual-you-can-maintain.mp3": "371cbb819d35fef1f405b98231e266a64891d8cf8681024b827751d9d95c03f5"
   },
   "endpoints": [
     "/.well-known/chukwuma-onyeije-identity.txt",
@@ -21902,7 +22340,19 @@
     "/audio/mcp-for-physicians-part-01.mp3",
     "/downloads/mcp-for-physicians-part-01.zip",
     "/images/posts/mcp-for-physicians-part-01-hero.webp",
-    "/og/mcp-for-physicians-part-01.png"
+    "/og/mcp-for-physicians-part-01.png",
+    "/audio/clinical-visuals-01-define-what-the-learner-must-see.mp3",
+    "/og/clinical-visuals-01-define-what-the-learner-must-see.png",
+    "/audio/clinical-visuals-02-build-an-svg-you-can-correct.mp3",
+    "/og/clinical-visuals-02-build-an-svg-you-can-correct.png",
+    "/audio/clinical-visuals-03-make-the-diagram-readable.mp3",
+    "/og/clinical-visuals-03-make-the-diagram-readable.png",
+    "/audio/clinical-visuals-04-add-motion-with-hyperframes.mp3",
+    "/og/clinical-visuals-04-add-motion-with-hyperframes.png",
+    "/audio/clinical-visuals-05-use-3d-to-answer-a-spatial-question.mp3",
+    "/og/clinical-visuals-05-use-3d-to-answer-a-spatial-question.png",
+    "/audio/clinical-visuals-06-deliver-a-visual-you-can-maintain.mp3",
+    "/og/clinical-visuals-06-deliver-a-visual-you-can-maintain.png"
   ],
   "redirects": [
     {
@@ -23046,6 +23496,36 @@
       "title": "Claude, the Riemann Hypothesis, and the Future of Doctors Who Code",
       "description": "A claimed AI-assisted proof of the Riemann hypothesis offers physicians who build software a lesson in verification, even if they hated calculus.",
       "published": "Sun, 22 Nov 2026 00:00:00 GMT"
+    },
+    "https://www.doctorswhocode.blog/blog/clinical-visuals-01-define-what-the-learner-must-see/": {
+      "title": "Define What the Learner Must See",
+      "description": "Write a visual brief that connects one observable teaching objective to a checkable geometric reference.",
+      "published": "Wed, 25 Nov 2026 14:00:00 GMT"
+    },
+    "https://www.doctorswhocode.blog/blog/clinical-visuals-02-build-an-svg-you-can-correct/": {
+      "title": "Build an SVG You Can Correct",
+      "description": "Build an editable SVG and make three isolated corrections while preserving the relationship it teaches.",
+      "published": "Wed, 25 Nov 2026 14:00:00 GMT"
+    },
+    "https://www.doctorswhocode.blog/blog/clinical-visuals-03-make-the-diagram-readable/": {
+      "title": "Make the Diagram Readable",
+      "description": "Review a teaching diagram at its delivery size, add text alternatives, and record an uncoached interpretation.",
+      "published": "Wed, 25 Nov 2026 14:00:00 GMT"
+    },
+    "https://www.doctorswhocode.blog/blog/clinical-visuals-04-add-motion-with-hyperframes/": {
+      "title": "Add Motion with HyperFrames",
+      "description": "Storyboard and export a short HyperFrames animation while preserving the approved diagram and its meaning.",
+      "published": "Wed, 25 Nov 2026 14:00:00 GMT"
+    },
+    "https://www.doctorswhocode.blog/blog/clinical-visuals-05-use-3d-to-answer-a-spatial-question/": {
+      "title": "Use 3D to Answer a Spatial Question",
+      "description": "Evaluate a documented 3D workflow, verify a simple section, and decide whether depth improves the explanation.",
+      "published": "Wed, 25 Nov 2026 14:00:00 GMT"
+    },
+    "https://www.doctorswhocode.blog/blog/clinical-visuals-06-deliver-a-visual-you-can-maintain/": {
+      "title": "Deliver a Visual You Can Maintain",
+      "description": "Package editable visual sources, reproduction notes, accessibility alternatives, and a demonstrated correction.",
+      "published": "Wed, 25 Nov 2026 14:00:00 GMT"
     }
   },
   "sitemapUrls": [
@@ -23785,6 +24265,13 @@
     "https://www.doctorswhocode.blog/tags/physician-developers/",
     "https://www.doctorswhocode.blog/tags/prenatal-stress/",
     "https://www.doctorswhocode.blog/blog/mcp-for-physicians-part-01/",
-    "https://www.doctorswhocode.blog/courses/mcp-for-physician-developers/"
+    "https://www.doctorswhocode.blog/courses/mcp-for-physician-developers/",
+    "https://www.doctorswhocode.blog/blog/clinical-visuals-01-define-what-the-learner-must-see/",
+    "https://www.doctorswhocode.blog/blog/clinical-visuals-02-build-an-svg-you-can-correct/",
+    "https://www.doctorswhocode.blog/blog/clinical-visuals-03-make-the-diagram-readable/",
+    "https://www.doctorswhocode.blog/blog/clinical-visuals-04-add-motion-with-hyperframes/",
+    "https://www.doctorswhocode.blog/blog/clinical-visuals-05-use-3d-to-answer-a-spatial-question/",
+    "https://www.doctorswhocode.blog/blog/clinical-visuals-06-deliver-a-visual-you-can-maintain/",
+    "https://www.doctorswhocode.blog/courses/clinical-visuals-with-ai/"
   ]
 }
