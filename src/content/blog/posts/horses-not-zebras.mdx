@@ -1,0 +1,158 @@
+---
+title: "Horses, Not Zebras: The Debugging Rule That Saves Your Weekend"
+description: "I spent 90 minutes investigating a framework. The problem was a missing variable. A physician's rule for debugging before adding complexity."
+pubDate: "2026-11-27"
+author: "Chukwuma Onyeije, MD, FACOG"
+authorUrl: "https://www.linkedin.com/in/chukwumaonyeije"
+category: "Clinical + Code"
+image:
+  url: "/images/posts/horses-not-zebras-hero.png"
+  alt: "A chestnut horse figurine in focus beside a laptop and stethoscope, with a zebra figurine in the shadowed background."
+tags:
+  - "clinical-reasoning"
+  - "debugging"
+  - "physician-developer"
+  - "software-design"
+draft: false
+featured: false
+---
+
+At 11:40 on a Tuesday night, I was reading Astro's source code to explain a blank field on my website.
+
+Ninety minutes later, the explanation was sitting in a settings panel.
+
+The page worked locally. It worked in preview. In production, one value was missing. I had theories about stale content, build order, and a subtle failure inside the framework.
+
+The variable existed in my local `.env` file. It was absent from the Vercel production settings.
+
+I had investigated the framework before checking whether I had given it the value it needed.
+
+Physicians have a name for this mistake. We learn it before we learn to code.
+
+**When you hear hoofbeats, think horses, not zebras.**
+
+That rule belongs beside the terminal. It can save a weekend. Applied to architecture, it can save years of maintaining a system you never needed.
+
+## I. Start With the Environment You Actually Have
+
+The useful part of the hoofbeats rule is its attention to context. What usually produces this finding, here?
+
+A static website and a distributed payment system have different failure patterns. A local script and a clinical application used across several hospitals have different operating conditions. The explanation that deserves first attention depends on the system in front of you.
+
+In my case, the important clue was already visible: the behavior changed between environments. That should have put configuration near the top of the list.
+
+Astro's [environment-variable documentation](https://docs.astro.build/en/guides/environment-variables/) explains that variables accessed through `import.meta.env` are statically replaced at build time, and that the `PUBLIC_` prefix makes a variable available to client code. For a statically built page, the production build needs the intended value when it runs.
+
+A successful build did not establish that my configuration was complete. It established that the build could finish.
+
+Those are different observations. I treated them as the same one.
+
+## II. An Interesting Explanation Is Easy to Overvalue
+
+Physician training gives us practice with unusual cases. The unexpected diagnosis stays with us. The routine explanation rarely becomes the teaching conference everyone remembers.
+
+That attention is useful when a pattern does not fit. It becomes expensive when the pleasure of solving a difficult problem starts determining which problem we think we have.
+
+I can spend an hour investigating a framework and feel that I am learning something substantial. Checking a deployment setting offers less intellectual reward. Both activities feel like work. Only one may address the failure.
+
+The same temptation appears when an AI workflow produces a bad answer. It is easy to begin with model quality, prompt design, or a more elaborate agent. The relevant paragraph may never have reached the model.
+
+Before explaining a system's behavior, inspect what entered it.
+
+| What I am tempted to investigate | What I should inspect first |
+| --- | --- |
+| A framework regression | The deployed commit, dependency versions, and build configuration |
+| A concurrency defect | Whether the failure also occurs with one request and a fixed input |
+| A database performance limit | The actual query, its execution plan, and available indexes |
+| An unreliable AI answer | The source text that was parsed, retrieved, and supplied to the model |
+| An agent's reasoning failure | Its tool inputs, schema, permissions, and returned errors |
+| A faulty calculation | The input units, conversions, and behavior on known reference cases |
+
+These checks do not prove that the deeper problem is absent. They establish whether there is a reason to investigate it.
+
+A missing `await` can cause a race condition. An array that grows without bound can cause a memory problem. Calling those causes simple does not make the larger failure category wrong. The task is to identify the mechanism precisely enough to repair it.
+
+## III. The Pasture Test
+
+I call the discipline the **Pasture Test**. Before I add a dependency, replace a component, or spend another hour defending a theory, I ask three questions.
+
+### 1. Where am I standing?
+
+Name the environment and the boundary where the behavior changes.
+
+Does the failure occur locally or only after deployment? With every input or one document? With one request or only under load? Before the model call or after it?
+
+For my blank field, the boundary was production. That made a comparison of environment settings more useful than a tour through the content loader.
+
+The word *here* does real work. Common causes are specific to the system, its recent changes, and its operating conditions.
+
+### 2. What is the smallest check that can change my mind?
+
+Choose a test that distinguishes explanations. Opening another log window without a question is just more looking.
+
+For a retrieval failure, inspect the extracted text before rewriting the prompt. For a slow query, inspect the execution plan before changing the database. For a deployment discrepancy, compare configuration and commit identifiers before blaming the framework.
+
+Write the expected result first: *If the required variable is absent from this build environment, that supports the configuration explanation.*
+
+Then perform the check. Record what it actually shows. A setting that exists today does not prove it existed when yesterday's artifact was built.
+
+### 3. What evidence would justify the bigger investigation?
+
+Define the escalation before the investigation becomes absorbing.
+
+A reproducible failure with the correct configuration, a fixed input, and a minimal example gives a framework investigation a useful starting point. A query that remains inadequate after measured tuning gives a larger architecture discussion something concrete to address.
+
+Set a time budget as well. For a low-risk display defect, I can time-box the initial checks and reassess. For a clinical calculation producing questionable results, containment and verification come first.
+
+The cost of being wrong belongs in the decision alongside the likelihood of each cause.
+
+## IV. The Bug Can Become a Permanent Obligation
+
+A mistaken theory costs time. Building infrastructure around that theory creates a continuing expense.
+
+A queue adds delivery semantics, retries, and monitoring. A separate service adds deployment and failure boundaries. A vector database adds an ingestion pipeline and another place where the source material can become stale.
+
+Each can be justified. Each should answer a demonstrated requirement.
+
+Before adding semantic retrieval, I want to know whether the task actually requires similarity search. If the question is to find records with a known identifier and date range, an indexed query deserves a measurement first. Before distributing a workflow across services, I want to know which observed constraint requires that separation.
+
+Architecture outlives the afternoon when it seemed like a good idea.
+
+Someone will patch it. Someone will investigate its failures. Someone will inherit the decision after the person who made it has forgotten why.
+
+For a physician-developer, maintainability is part of clinical responsibility. The next clinician needs a tool whose behavior can be explained and checked. Every additional component must earn the work it creates.
+
+## V. When the Zebra Deserves Immediate Attention
+
+The hoofbeats rule has a failure mode of its own: using a familiar explanation to stop thinking.
+
+An unusual observation can change the differential immediately. So can the consequence of missing a dangerous cause. Rarity does not require a condition to wait at the back of every queue.
+
+I apply the same distinction to software. A cosmetic discrepancy allows a measured investigation. Evidence of incorrect clinical output, exposed data, or corrupted records calls for containment while the cause is investigated.
+
+The order of investigation must reflect probability, evidence, and consequences. It cannot be a ritual in which every ordinary possibility receives a turn before an urgent one is considered.
+
+Nor does one negative check eliminate a whole category. Testing a single request does not exclude a defect that appears under load. Reviewing the current configuration does not reconstruct an earlier deployment.
+
+Keep the record specific:
+
+- What failed, and under which conditions?
+- What explanation did I test?
+- What result did I observe?
+- What remains unexplained?
+
+That record gives the next investigation a starting point. It also exposes when I am repeating a test because I forgot its result, or defending a theory after the evidence has moved elsewhere.
+
+## VI. The Clinical Responsibility Is in the Details
+
+Consider a calculator that accepts fetal weight. The formula can be correctly implemented while the input arrives in the wrong units. A polished percentile display does not establish that the calculation is valid.
+
+The interface needs explicit units. The calculation needs reference cases. The path from input to output needs to be inspectable. A suspicious result needs a way to be caught before someone relies on it.
+
+Those obligations remain even when the root cause turns out to be ordinary.
+
+That is what makes the horse worth finding. A configuration error, conversion mistake, or missing source table can pass through an impressive system and emerge wearing its authority.
+
+I want the clinician who inherits my tool to be able to trace that path. I want the evidence behind a repair to survive longer than my memory of making it.
+
+The next clinician should inherit a working tool and a traceable explanation. The work is not finished until both exist.
