@@ -3751,6 +3751,11 @@
       "canonical": [
         "https://www.doctorswhocode.blog/blog/why-i-am-leaving-notion-for-obsidian-markdown-and-github/"
       ]
+    },
+    "/blog/horses-not-zebras/": {
+      "canonical": [
+        "https://www.doctorswhocode.blog/blog/horses-not-zebras/"
+      ]
     }
   },
   "articles": {
@@ -21417,6 +21422,85 @@
         ],
         "bodyTextHash": "77c55f0365af791b8e7ba11d0a5b36a8331990952fe0de866317fa5db856d066"
       }
+    },
+    "horses-not-zebras.mdx": {
+      "id": "horses-not-zebras",
+      "route": "/blog/horses-not-zebras/",
+      "bodyHash": "eb45b1343d4caa22bee0ed8fe69c67fcca307888879ec02f84b4a0b594445134",
+      "frontmatter": {
+        "audioUrl": "/audio/horses-not-zebras.mp3",
+        "title": "Horses, Not Zebras: The Debugging Rule That Saves Your Weekend",
+        "description": "I spent 90 minutes investigating a framework. The problem was a missing variable. A physician's rule for debugging before adding complexity.",
+        "pubDate": "2026-11-27",
+        "author": "Chukwuma Onyeije, MD, FACOG",
+        "authorUrl": "https://www.linkedin.com/in/chukwumaonyeije",
+        "category": "Clinical + Code",
+        "image": {
+          "url": "/images/posts/horses-not-zebras-hero.png",
+          "alt": "A chestnut horse figurine in focus beside a laptop and stethoscope, with a zebra figurine in the shadowed background."
+        },
+        "tags": [
+          "clinical-reasoning",
+          "debugging",
+          "physician-developer",
+          "software-design"
+        ],
+        "draft": false,
+        "featured": false
+      },
+      "rendered": {
+        "title": "Horses, Not Zebras: The Debugging Rule That Saves Your Weekend | Doctors Who Code",
+        "description": "I spent 90 minutes investigating a framework. The problem was a missing variable. A physician's rule for debugging before adding complexity.",
+        "canonical": [
+          "https://www.doctorswhocode.blog/blog/horses-not-zebras/"
+        ],
+        "published": "2026-11-27T00:00:00.000Z",
+        "ogImage": "https://www.doctorswhocode.blog/og/horses-not-zebras.png",
+        "audio": [
+          "/audio/horses-not-zebras.mp3"
+        ],
+        "contentMedia": [
+          {
+            "tag": "img",
+            "src": "/images/posts/horses-not-zebras-hero.png"
+          }
+        ],
+        "metadata": {
+          "description": "I spent 90 minutes investigating a framework. The problem was a missing variable. A physician's rule for debugging before adding complexity.",
+          "author": "Chukwuma Onyeije, MD, FACOG",
+          "robots": "index, follow, max-image-preview:large",
+          "og:title": "Horses, Not Zebras: The Debugging Rule That Saves Your Weekend | Doctors Who Code",
+          "og:description": "I spent 90 minutes investigating a framework. The problem was a missing variable. A physician's rule for debugging before adding complexity.",
+          "og:image": "https://www.doctorswhocode.blog/og/horses-not-zebras.png",
+          "og:image:alt": "Horses, Not Zebras: The Debugging Rule That Saves Your Weekend | Doctors Who Code",
+          "og:url": "https://www.doctorswhocode.blog/blog/horses-not-zebras/",
+          "og:type": "article",
+          "og:site_name": "Doctors Who Code",
+          "og:locale": "en_US",
+          "twitter:card": "summary_large_image",
+          "twitter:site": "@chukwumaonyeije",
+          "twitter:creator": "@chukwumaonyeije",
+          "twitter:title": "Horses, Not Zebras: The Debugging Rule That Saves Your Weekend | Doctors Who Code",
+          "twitter:description": "I spent 90 minutes investigating a framework. The problem was a missing variable. A physician's rule for debugging before adding complexity.",
+          "twitter:image": "https://www.doctorswhocode.blog/og/horses-not-zebras.png",
+          "article:published_time": "2026-11-27T00:00:00.000Z"
+        },
+        "headings": [
+          "article-title",
+          "i-start-with-the-environment-you-actually-have",
+          "ii-an-interesting-explanation-is-easy-to-overvalue",
+          "iii-the-pasture-test",
+          "1-where-am-i-standing",
+          "2-what-is-the-smallest-check-that-can-change-my-mind",
+          "3-what-evidence-would-justify-the-bigger-investigation",
+          "iv-the-bug-can-become-a-permanent-obligation",
+          "v-when-the-zebra-deserves-immediate-attention",
+          "vi-the-clinical-responsibility-is-in-the-details",
+          "share-heading",
+          "related-articles-heading"
+        ],
+        "bodyTextHash": "a42e5aa52090d5954e484f942ed8fbfb8fb1b3c438c58cd9174acdc074c3aacf"
+      }
     }
   },
   "sourceHashes": {
@@ -21821,7 +21905,9 @@
     "/audio/clinical-visuals-05-use-3d-to-answer-a-spatial-question.mp3": "a8b75cd8c8901d980cce40fb657fcfa1febfd32b82810a2d35367dc9365ac4c9",
     "/audio/clinical-visuals-06-deliver-a-visual-you-can-maintain.mp3": "371cbb819d35fef1f405b98231e266a64891d8cf8681024b827751d9d95c03f5",
     "/audio/why-i-am-leaving-notion-for-obsidian-markdown-and-github.mp3": "258d76a57b6cecd027d665b4d6dfac0b2b8023f65178d5a9298fe7b19748bdd1",
-    "/images/posts/notion-to-obsidian-markdown-github-hero.png": "9c72d4ed92b1cbd8dde0cba78cfd058dbfac4c7a331e524b5559543c30110fad"
+    "/images/posts/notion-to-obsidian-markdown-github-hero.png": "9c72d4ed92b1cbd8dde0cba78cfd058dbfac4c7a331e524b5559543c30110fad",
+    "/audio/horses-not-zebras.mp3": "d4538f13d52821c9303961668eef34c399e55a3bf8963aac0e67ae600afc9128",
+    "/images/posts/horses-not-zebras-hero.png": "273c5eb7b6df01f32f2a1be866d0a1fdcd5acea71fc6ff3b2773ca53b72e22e1"
   },
   "endpoints": [
     "/.well-known/chukwuma-onyeije-identity.txt",
@@ -22441,7 +22527,10 @@
     "/og/clinical-visuals-06-deliver-a-visual-you-can-maintain.png",
     "/audio/why-i-am-leaving-notion-for-obsidian-markdown-and-github.mp3",
     "/images/posts/notion-to-obsidian-markdown-github-hero.png",
-    "/og/why-i-am-leaving-notion-for-obsidian-markdown-and-github.png"
+    "/og/why-i-am-leaving-notion-for-obsidian-markdown-and-github.png",
+    "/audio/horses-not-zebras.mp3",
+    "/images/posts/horses-not-zebras-hero.png",
+    "/og/horses-not-zebras.png"
   ],
   "redirects": [
     {
@@ -23620,6 +23709,11 @@
       "title": "Why I Am Leaving Notion for Obsidian, Markdown, and GitHub",
       "description": "After years with Notion, I am moving my personal knowledge management to Obsidian, Markdown, and GitHub. More setup, fewer places to maintain the same work.",
       "published": "Wed, 25 Nov 2026 00:00:00 GMT"
+    },
+    "https://www.doctorswhocode.blog/blog/horses-not-zebras/": {
+      "title": "Horses, Not Zebras: The Debugging Rule That Saves Your Weekend",
+      "description": "I spent 90 minutes investigating a framework. The problem was a missing variable. A physician&apos;s rule for debugging before adding complexity.",
+      "published": "Fri, 27 Nov 2026 00:00:00 GMT"
     }
   },
   "sitemapUrls": [
@@ -24367,6 +24461,7 @@
     "https://www.doctorswhocode.blog/blog/clinical-visuals-05-use-3d-to-answer-a-spatial-question/",
     "https://www.doctorswhocode.blog/blog/clinical-visuals-06-deliver-a-visual-you-can-maintain/",
     "https://www.doctorswhocode.blog/courses/clinical-visuals-with-ai/",
-    "https://www.doctorswhocode.blog/blog/why-i-am-leaving-notion-for-obsidian-markdown-and-github/"
+    "https://www.doctorswhocode.blog/blog/why-i-am-leaving-notion-for-obsidian-markdown-and-github/",
+    "https://www.doctorswhocode.blog/blog/horses-not-zebras/"
   ]
 }
